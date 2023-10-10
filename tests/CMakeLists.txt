@@ -22,3 +22,4 @@ endfunction()
 
 # Specify all tests here
 add_unit_test(multiply_test multiply_test.cpp)
+add_unit_test(subsystem_test subsystem_test.cpp)
