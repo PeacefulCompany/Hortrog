@@ -1,3 +1,13 @@
+# Name of the executable target
+set(BINARY ${CMAKE_PROJECT_NAME})
+
+# Name of the compiled library
+set(LIBRARY ${CMAKE_PROJECT_NAME}_lib)
+
+# File containing the entry point(main)
+set(ENTRY_POINT "main.cpp")
+
+# --- FETCH DEPENDENCIES ---
 include(FetchContent)
 FetchContent_Declare(
   SFML
@@ -6,25 +16,22 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(SFML)
 
-file(GLOB_RECURSE SOURCES 
-    *.cpp
-)
+# --- CONFIGURE SOURCE FILES ---
+file(GLOB_RECURSE SOURCES_BIN *.cpp)
+file(GLOB_RECURSE SOURCES_LIB *.cpp)
 
-FILE(GLOB_RECURSE LIB_FILES
-    *.cpp
-)
-
-FOREACH(item ${LIB_FILES})
-  IF(${item} MATCHES "main.cpp")
-    LIST(REMOVE_ITEM LIB_FILES ${item})
-  ENDIF(${item} MATCHES "main.cpp")
+FOREACH(item ${SOURCES_LIB})
+  IF(${item} MATCHES ${ENTRY_POINT})
+    LIST(REMOVE_ITEM SOURCES_LIB ${item})
+  ENDIF(${item} MATCHES ${ENTRY_POINT})
 ENDFOREACH(item)
-MESSAGE(STATUS "${LIB_FILES}")
+MESSAGE(STATUS "${SOURCES_LIB}")
 
-add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
-add_library(${CMAKE_PROJECT_NAME}_lib ${LIB_FILES})
-target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE .)
-target_include_directories(${CMAKE_PROJECT_NAME}_lib PUBLIC .)
+# --- CONFIGURE OUTPUT TARGETS ---
+add_executable(${BINARY} ${SOURCES_BIN})
+target_include_directories(${BINARY} PRIVATE .)
+target_link_libraries(${BINARY} PRIVATE sfml-graphics)
 
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE sfml-graphics)
-target_link_libraries(${CMAKE_PROJECT_NAME}_lib PUBLIC sfml-graphics)
+add_library(${LIBRARY} ${SOURCES_LIB})
+target_include_directories(${LIBRARY} PUBLIC .)
+target_link_libraries(${LIBRARY} PUBLIC sfml-graphics)
