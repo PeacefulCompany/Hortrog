@@ -1,11 +1,3 @@
-# Name of the executable target
-set(BINARY ${CMAKE_PROJECT_NAME})
-
-# Name of the compiled library
-set(LIBRARY ${CMAKE_PROJECT_NAME}_lib)
-
-# File containing the entry point(main)
-set(ENTRY_POINT "main.cpp")
 
 # --- FETCH DEPENDENCIES ---
 include(FetchContent)
