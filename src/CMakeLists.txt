@@ -1,7 +1,29 @@
-file(GLOB_RECURSE SOURCES 
-    *.cpp
+
+# --- FETCH DEPENDENCIES ---
+include(FetchContent)
+FetchContent_Declare(
+  SFML
+  GIT_REPOSITORY https://github.com/SFML/SFML
+  GIT_TAG        2.6.0
 )
-add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
-add_library(${CMAKE_PROJECT_NAME}_lib ${SOURCES})
-target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE .)
-target_include_directories(${CMAKE_PROJECT_NAME}_lib PUBLIC .)
+FetchContent_MakeAvailable(SFML)
+
+# --- CONFIGURE SOURCE FILES ---
+file(GLOB_RECURSE SOURCES_BIN *.cpp)
+file(GLOB_RECURSE SOURCES_LIB *.cpp)
+
+FOREACH(item ${SOURCES_LIB})
+  IF(${item} MATCHES ${ENTRY_POINT})
+    LIST(REMOVE_ITEM SOURCES_LIB ${item})
+  ENDIF(${item} MATCHES ${ENTRY_POINT})
+ENDFOREACH(item)
+MESSAGE(STATUS "${SOURCES_LIB}")
+
+# --- CONFIGURE OUTPUT TARGETS ---
+add_executable(${BINARY} ${SOURCES_BIN})
+target_include_directories(${BINARY} PRIVATE .)
+target_link_libraries(${BINARY} PRIVATE sfml-graphics)
+
+add_library(${LIBRARY} ${SOURCES_LIB})
+target_include_directories(${LIBRARY} PUBLIC .)
+target_link_libraries(${LIBRARY} PUBLIC sfml-graphics)

@@ -15,7 +15,7 @@ function(add_unit_test name)
     target_link_libraries(${name}
     PRIVATE
     GTest::GTest
-    ${CMAKE_PROJECT_NAME}_lib)
+    ${LIBRARY})
 
     add_test(${name} ${name})
 endfunction()
