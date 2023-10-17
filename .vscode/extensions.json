@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "llvm-vs-code-extensions.vscode-clangd",
+        "ms-vscode.cmake-tools",
+        "tdennis4496.cmantic",
+        "cschlosser.doxdocgen"
+    ]
+
+}
