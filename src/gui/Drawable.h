@@ -3,6 +3,7 @@
 #include "SFML/Graphics/Rect.hpp"
 #include "SFML/Graphics/Texture.hpp"
 #include "SFML/System/Vector2.hpp"
+#include "SFML/Window/Event.hpp"
 #include <memory>
 #include <type_traits>
 
@@ -11,6 +12,7 @@ using Rect = sf::FloatRect;
 using Vec2 = sf::Vector2f;
 using Tex2D = sf::Texture;
 using Target = sf::RenderTarget;
+using Event = sf::Event;
 
 /**
  * @brief Implemenation-agnostic representation of anything that can be rendered
@@ -42,7 +44,16 @@ public:
     virtual void update(float dt) {}
 
     /**
-     * @brief Computes the bounding box of the object
+     * @brief Handles an event on a drawable object
+     *
+     * @param event The event to handle
+     * @return true The event has been consumed and should not be propagated
+     * @return false The event was handled and can be propagated
+     */
+    virtual bool handleEvent(const Event& event) { return false; }
+
+    /**
+     * @brief omputes the bounding box of the object
      *
      * @return the bounding box
      */
@@ -60,6 +71,9 @@ class DrawableDecorator : public Drawable {
 public:
     inline virtual void draw(Target& t) const override { _pInternal->draw(t); }
     inline virtual void update(float dt) override { _pInternal->update(dt); }
+    inline virtual bool handleEvent(const Event& e) override {
+        return _pInternal->handleEvent(e);
+    }
     inline virtual Rect getBoundingBox() const override {
         return _pInternal->getBoundingBox();
     };
