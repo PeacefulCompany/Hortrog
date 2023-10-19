@@ -5,47 +5,48 @@ public:
     /**
      * @brief Construct a new Timer object
      *
-     * @param time The initial time of the timer
-     * @param completed Whether to start the timer in a completed state
+     * @param duration The duration of the timer (in seconds)
+     * @param completed Whether to initialise the timer as completed
      */
-    Timer(float time = 0, bool completed = false) : m_time(time) {
-        if (completed) m_current = time;
+    Timer(float duration = 0, bool completed = false) : duration_(duration) {
+        if (completed) current_ = duration;
     }
 
     /**
-     * @brief Updates the current time of the timer
+     * @brief Increments the current time of the timer
      *
      * @param dt The time (in seconds) since the last update
      */
-    inline void update(float dt) { m_current += dt; }
+    inline void update(float dt) { current_ += dt; }
 
     /**
-     * @brief Checks whether the timer is complete
+     * @brief Checks whether the timer has expired
      */
-    inline bool isComplete() const { return m_current >= m_time; }
+    inline bool expired() const { return current_ >= duration_; }
 
     /**
      * @brief Resets the time on the timer
      */
-    inline void reset() { m_current = 0; }
+    inline void reset() { current_ = 0; }
 
     /**
-     * @brief REsets the time on the timer
+     * @brief Resets the timer, but maintains any residual time
      */
-    inline void tick() { m_current -= m_time; }
-
-    inline void setTime(float time) { m_time = time; }
-    inline float getTime() const { return m_time; }
-    inline float getCurrent() const { return m_current; }
+    inline void tick() { current_ -= duration_; }
 
     /**
      * @brief Retrieves the completion status as a percentage
      *
      * @return float The completion percentage in the range [0, 1]
      */
-    inline float getProgress() const { return m_current / m_time; }
+    inline float progress() const { return current_ / duration_; }
+
+    inline void duration(float time) { duration_ = time; }
+    inline float duration() const { return duration_; }
+
+    inline float current() const { return current_; }
 
 private:
-    float m_time;
-    float m_current = 0;
+    float duration_;
+    float current_ = 0;
 };
