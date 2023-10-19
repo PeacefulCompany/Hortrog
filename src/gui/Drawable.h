@@ -69,13 +69,13 @@ concept IsDrawable = std::is_base_of<Drawable, T>::value;
  */
 class DrawableDecorator : public Drawable {
 public:
-    inline virtual void draw(Target& t) const override { _pInternal->draw(t); }
-    inline virtual void update(float dt) override { _pInternal->update(dt); }
+    inline virtual void draw(Target& t) const override { internal_->draw(t); }
+    inline virtual void update(float dt) override { internal_->update(dt); }
     inline virtual bool handleEvent(const Event& e) override {
-        return _pInternal->handleEvent(e);
+        return internal_->handleEvent(e);
     }
     inline virtual Rect getBoundingBox() const override {
-        return _pInternal->getBoundingBox();
+        return internal_->getBoundingBox();
     };
 
     /**
@@ -86,7 +86,7 @@ public:
      */
     template <IsDrawable D = Drawable>
     inline D* get() const {
-        return static_cast<D*>(_pInternal.get());
+        return static_cast<D*>(internal_.get());
     }
 
     /**
@@ -97,14 +97,14 @@ public:
      */
     template <IsDrawable D = Drawable>
     inline D* unwrap() {
-        return static_cast<D*>(_pInternal.release());
+        return static_cast<D*>(internal_.release());
     }
 
 protected:
     inline DrawableDecorator(std::unique_ptr<Drawable> internal)
-        : _pInternal(std::move(internal)) {}
+        : internal_(std::move(internal)) {}
 
-    std::unique_ptr<Drawable> _pInternal;
+    std::unique_ptr<Drawable> internal_;
 };
 
 } // namespace gui
