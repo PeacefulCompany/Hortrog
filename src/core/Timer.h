@@ -36,6 +36,7 @@ public:
 
     inline void setTime(float time) { m_time = time; }
     inline float getTime() const { return m_time; }
+    inline float getCurrent() const { return m_current; }
 
     /**
      * @brief Retrieves the completion status as a percentage
