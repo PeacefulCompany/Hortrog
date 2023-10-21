@@ -3,7 +3,9 @@
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "gui/Drawable.h"
 #include "multiply/multiply.h"
+#include "subsystem/Item.h"
 #include "subsystem/Order.h"
+#include "subsystem/Table.h"
 #include <iostream>
 #include <memory>
 #include <vector>
@@ -18,10 +20,18 @@ private:
 };
 
 int main() {
+    Order* newOrder = new Table("Table 4", 12);
+    newOrder->add(new Item("Burger", 10.00));
+    newOrder->add(new Item("Coke", 5.00));
+    newOrder->add(new Item("Fries", 5.00));
+    newOrder->add(new Item("Fries", 5.00));
+    newOrder->add(new Item("Fries", 5.00));
+    newOrder->add(new Item("Fries", 5.00));
+    std::cout << newOrder->getJson() << std::endl;
     std::cout << "COS 214 - Final Project" << std::endl;
     std::cout << "7 * 6 = " << multiply(7, 6) << std::endl;
     sf::RenderWindow w(sf::VideoMode(800, 600), "COS 214 Final Project");
-    //    Order* myorder = new Order();
+
     sf::RectangleShape r({300, 200});
     r.setPosition({10, 10});
     r.setFillColor(sf::Color(255, 0, 0));
