@@ -9,6 +9,10 @@
 #include <vector>
 
 #include "SFML/Graphics.hpp"
+#include "nlohmann/json.hpp"
+
+using json = nlohmann::json;
+
 class MyRectangle : gui::Drawable {
 public:
     MyRectangle(sf::RectangleShape& rect) : rect(rect) {}
@@ -25,11 +29,10 @@ void readAssetFile(const std::string& path) {
         std::cout << "Cannot open asset" << std::endl;
         return;
     }
-    std::string line;
-    do {
-        std::getline(file, line);
-        std::cout << line << std::endl;
-    } while (!file.eof());
+    json data = json::parse(file);
+
+    std::cout << data["name"].get<std::string>() << std::endl;
+    std::cout << data["age"].get<int>() << std::endl;
 }
 
 int main() {
