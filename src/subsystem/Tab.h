@@ -1,9 +1,7 @@
 #pragma once
-
 #include "Order.h"
 #include <iostream>
 #include <list>
-
 /**
  * @brief The Tab class represents a table's order and is the composite in the
  * composite pattern.

@@ -3,17 +3,15 @@
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "gui/Drawable.h"
 #include "multiply/multiply.h"
+#include "subsystem/Director.h"
 #include "subsystem/GlutenFree.h"
 #include "subsystem/Item.h"
 #include "subsystem/Order.h"
+#include "subsystem/OrderBuilder.h"
 #include "subsystem/Pescetarian.h"
-#include "subsystem/tab.h"
-#include <memory>
-
+#include "subsystem/Tab.h"
 #include <iostream>
 #include <memory>
-
-#include <vector>
 class MyRectangle : gui::Drawable {
 public:
     MyRectangle(sf::RectangleShape& rect) : rect(rect) {}
@@ -25,14 +23,21 @@ private:
 };
 
 int main() {
-    std::unique_ptr<Order> newOrder = std::make_unique<Tab>(1);
-    newOrder->add(
-        std::make_unique<Pescetarian>(std::make_unique<Item>("Fish", 10.00)));
-    newOrder->add(
-        std::make_unique<GlutenFree>(std::make_unique<Item>("Burger", 5.00)));
-    newOrder->add(std::make_unique<Item>("Steak", 15.00));
+    // std::unique_ptr<Order> newOrder = std::make_unique<Tab>(1);
+    // newOrder->add(
+    //     std::make_unique<Pescetarian>(std::make_unique<Item>("Fish", 10.00)));
+    // newOrder->add(std::make_unique<GlutenFree>(
+    //     std::make_unique<Pescetarian>(std::make_unique<Item>("Burger", 5.00))));
+    // newOrder->add(std::make_unique<Item>("Steak", 15.00));
+    // std::cout << newOrder->printOrder() << std::endl;
 
+    std::unique_ptr<Director> director = std::make_unique<Director>();
+    std::unique_ptr<OrderBuilder> Table1 = std::make_unique<OrderBuilder>(1, 4);
+    director->add(std::move(Table1));
+    director->Construct();
+    std::unique_ptr<Order> newOrder = Table1->GetResult();
     std::cout << newOrder->printOrder() << std::endl;
+
     std::cout << "COS 214 - Final Project" << std::endl;
     std::cout << "7 * 6 = " << multiply(7, 6) << std::endl;
     sf::RenderWindow w(sf::VideoMode(800, 600), "COS 214 Final Project");
