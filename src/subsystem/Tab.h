@@ -5,10 +5,10 @@
 class Tab : public Order {
 public:
     Tab(int tableNumber);
-    std::string print();
-    void addOrder(Order* order);
+    std::string printOrder();
+    void add(Order* order);
+    double total();
     void removeOrder(Order* order);
-    double getPrice();
 
 private:
     std::list<Order*> orders;

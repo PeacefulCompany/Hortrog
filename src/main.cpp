@@ -7,6 +7,8 @@
 #include "subsystem/Item.h"
 #include "subsystem/Order.h"
 #include "subsystem/Pescetarian.h"
+#include "subsystem/tab.h"
+
 #include <iostream>
 #include <memory>
 
@@ -23,15 +25,15 @@ private:
 
 int main() {
     Order* newOrder;
-    newOrder = new GlutenFree(new Pescetarian(new Item("Pizza", 100)));
+    newOrder = new Tab(1);
+    newOrder->add(new Pescetarian(new Item("Fish", 10.00)));
+    newOrder->add(new GlutenFree(new Item("Burger", 5.00)));
+    newOrder->add(new Item("Steak", 15.00));
 
     std::cout << newOrder->printOrder() << std::endl;
-    std::cout << newOrder->total() << std::endl;
-
     std::cout << "COS 214 - Final Project" << std::endl;
     std::cout << "7 * 6 = " << multiply(7, 6) << std::endl;
     sf::RenderWindow w(sf::VideoMode(800, 600), "COS 214 Final Project");
-
     sf::RectangleShape r({300, 200});
     r.setPosition({10, 10});
     r.setFillColor(sf::Color(255, 0, 0));
