@@ -2,11 +2,17 @@
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "gui/Drawable.h"
 #include "multiply/multiply.h"
+#include <fstream>
 #include <iostream>
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "SFML/Graphics.hpp"
+#include "nlohmann/json.hpp"
+
+using json = nlohmann::json;
+
 class MyRectangle : gui::Drawable {
 public:
     MyRectangle(sf::RectangleShape& rect) : rect(rect) {}
@@ -17,9 +23,22 @@ private:
     sf::RectangleShape rect;
 };
 
+void readAssetFile(const std::string& path) {
+    std::ifstream file("assets/" + path);
+    if (!file.is_open()) {
+        std::cout << "Cannot open asset" << std::endl;
+        return;
+    }
+    json data = json::parse(file);
+
+    std::cout << data["name"].get<std::string>() << std::endl;
+    std::cout << data["age"].get<int>() << std::endl;
+}
+
 int main() {
     std::cout << "COS 214 - Final Project" << std::endl;
     std::cout << "7 * 6 = " << multiply(7, 6) << std::endl;
+    readAssetFile("demo_asset.json");
     sf::RenderWindow w(sf::VideoMode(800, 600), "COS 214 Final Project");
 
     sf::RectangleShape r({300, 200});
