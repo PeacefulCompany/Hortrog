@@ -10,17 +10,16 @@ public:
      *
      * @param order The order to modify.
      */
-    Modifier(Order* order);
+    Modifier(std::unique_ptr<Order> order);
     /**
      * @brief Destructor for the Modifier class.
      * */
-    ~Modifier();
     /**
      * @brief Adds an order to the modifier
      *
      * @param order The order to add.
      */
-    void add(Order* order);
+    void add(std::unique_ptr<Order> order);
 
     /**
      * @brief Calculates the total cost of the modifier.
@@ -30,7 +29,7 @@ public:
     virtual double total();
 
 protected:
-    Order* Component; /**< The order being modified. */
+    std::unique_ptr<Order> Component; /**< The order being modified. */
     /**
      * @brief Returns a string representation of the modified order.
      *

@@ -8,19 +8,20 @@ class GlutenFree : public Modifier {
 public:
     /**
      * @brief Constructs a new GlutenFree object with the given order.
-     * 
+     *
      * @param order The order to modify.
      */
-    GlutenFree(Order* order);
+    GlutenFree(std::unique_ptr<Order> order);
 
     /**
      * @brief Returns a string representation of the modified order.
-     * 
+     *
      * @return A string representation of the modified order.
      */
     std::string printOrder();
 
 private:
-    const std::string spesification = "Gluten Free"; /**< The specification of the modifier. */
+    const std::string spesification =
+        "Gluten Free";         /**< The specification of the modifier. */
     const double price = 1.00; /**< The price of the modifier. */
 };

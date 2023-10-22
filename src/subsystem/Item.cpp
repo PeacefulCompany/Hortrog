@@ -1,5 +1,5 @@
 #include "Item.h"
-void Item::add(Order*) {}
+void Item::add(std::unique_ptr<Order> order) {}
 Item::Item(std::string menuItem, double price) : Order() {
     this->menuItem = menuItem;
     this->price = price;

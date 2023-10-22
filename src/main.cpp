@@ -8,6 +8,7 @@
 #include "subsystem/Order.h"
 #include "subsystem/Pescetarian.h"
 #include "subsystem/tab.h"
+#include <memory>
 
 #include <iostream>
 #include <memory>
@@ -24,11 +25,12 @@ private:
 };
 
 int main() {
-    Order* newOrder;
-    newOrder = new Tab(1);
-    newOrder->add(new Pescetarian(new Item("Fish", 10.00)));
-    newOrder->add(new GlutenFree(new Item("Burger", 5.00)));
-    newOrder->add(new Item("Steak", 15.00));
+    std::unique_ptr<Order> newOrder = std::make_unique<Tab>(1);
+    newOrder->add(
+        std::make_unique<Pescetarian>(std::make_unique<Item>("Fish", 10.00)));
+    newOrder->add(
+        std::make_unique<GlutenFree>(std::make_unique<Item>("Burger", 5.00)));
+    newOrder->add(std::make_unique<Item>("Steak", 15.00));
 
     std::cout << newOrder->printOrder() << std::endl;
     std::cout << "COS 214 - Final Project" << std::endl;
