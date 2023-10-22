@@ -1,17 +1,14 @@
 #pragma once
-#include "MenuItem.h"
-/**
- * @brief a leaf in the composite pattern
- *
- */
-class Item : public MenuItem {
+#include "Order.h"
+
+class Item : public Order {
 public:
-    /**
-     * @brief Construct a new Item object
-     *
-     * @param name
-     * @param price
-     */
-    Item(std::string name, double price);
+    Item(std::string menuItem, double price);
+    void add(Order*);
+    std::string printOrder();
+    virtual double total();
+
 private:
+    std::string menuItem;
+    double price;
 };

@@ -3,11 +3,13 @@
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "gui/Drawable.h"
 #include "multiply/multiply.h"
+#include "subsystem/GlutenFree.h"
 #include "subsystem/Item.h"
 #include "subsystem/Order.h"
-#include "subsystem/Table.h"
+#include "subsystem/Pescetarian.h"
 #include <iostream>
 #include <memory>
+
 #include <vector>
 class MyRectangle : gui::Drawable {
 public:
@@ -20,14 +22,12 @@ private:
 };
 
 int main() {
-    Order* newOrder = new Table("Table 4", 12);
-    newOrder->add(new Item("Burger", 10.00));
-    newOrder->add(new Item("Coke", 5.00));
-    newOrder->add(new Item("Fries", 5.00));
-    newOrder->add(new Item("Fries", 5.00));
-    newOrder->add(new Item("Fries", 5.00));
-    newOrder->add(new Item("Fries", 5.00));
-    std::cout << newOrder->getJson() << std::endl;
+    Order* newOrder;
+    newOrder = new GlutenFree(new Pescetarian(new Item("Pizza", 100)));
+
+    std::cout << newOrder->printOrder() << std::endl;
+    std::cout << newOrder->total() << std::endl;
+
     std::cout << "COS 214 - Final Project" << std::endl;
     std::cout << "7 * 6 = " << multiply(7, 6) << std::endl;
     sf::RenderWindow w(sf::VideoMode(800, 600), "COS 214 Final Project");
