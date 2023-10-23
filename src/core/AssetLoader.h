@@ -12,6 +12,7 @@ public:
     static AssetLoader& instance();
 
     const sf::Texture* loadTexture(const std::string& path);
+    gui::View* loadView(const std::string& path);
 
 protected:
     AssetLoader() = default;
@@ -20,4 +21,5 @@ protected:
 
 private:
     std::unordered_map<std::string, sf::Texture> textures_;
+    std::unordered_map<std::string, std::unique_ptr<gui::View>> views_;
 };

@@ -50,15 +50,16 @@ int main() {
     const sf::Texture* texture = loader.loadTexture("textures/hunny.png");
     assert(texture);
 
+    gui::View* view = loader.loadView("views/my_view.json");
+    view->position({0, 300});
+    assert(view);
+
     readAssetFile("demo_asset.json");
     sf::RenderWindow w(sf::VideoMode(800, 600), "COS 214 Final Project");
 
-    sf::Sprite sprite(*texture);
-    sprite.setPosition(0, 300);
-
     sf::RectangleShape r({300, 200});
     r.setTexture(texture);
-    std::unique_ptr<gui::View> view = std::make_unique<MyRectangle>(r);
+    std::unique_ptr<gui::View> view2 = std::make_unique<MyRectangle>(r);
     view->position({20, 10});
 
     while (w.isOpen()) {
@@ -69,7 +70,7 @@ int main() {
             }
         }
         view->draw(w);
-        w.draw(sprite);
+        view2->draw(w);
         w.display();
         // rect.draw(w);
     }
