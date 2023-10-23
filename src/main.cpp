@@ -1,6 +1,6 @@
 #include "SFML/Graphics/Color.hpp"
 #include "SFML/Graphics/RectangleShape.hpp"
-#include "gui/Drawable.h"
+#include "gui/View.h"
 #include "multiply/multiply.h"
 #include <fstream>
 #include <iostream>
@@ -13,11 +13,15 @@
 
 using json = nlohmann::json;
 
-class MyRectangle : gui::Drawable {
+class MyRectangle : public gui::View {
 public:
     MyRectangle(sf::RectangleShape& rect) : rect(rect) {}
-    gui::Rect getBoundingBox() const override { return rect.getGlobalBounds(); }
-    void draw(gui::Target& target) const override { target.draw(rect); }
+    sf::FloatRect getBoundingBox() const override {
+        return rect.getGlobalBounds();
+    }
+    void draw(sf::RenderTarget& target) const override { target.draw(rect); }
+    sf::Vector2f position() const override { return rect.getPosition(); }
+    void position(sf::Vector2f v) override { rect.setPosition(v); }
 
 private:
     sf::RectangleShape rect;
@@ -42,9 +46,10 @@ int main() {
     sf::RenderWindow w(sf::VideoMode(800, 600), "COS 214 Final Project");
 
     sf::RectangleShape r({300, 200});
-    r.setPosition({10, 10});
     r.setFillColor(sf::Color(255, 0, 0));
-    MyRectangle rect(r);
+    std::unique_ptr<gui::View> view = std::make_unique<MyRectangle>(r);
+    view->position({20, 10});
+
     while (w.isOpen()) {
         sf::Event event;
         while (w.pollEvent(event)) {
@@ -52,7 +57,7 @@ int main() {
                 w.close();
             }
         }
-        rect.draw(w);
+        view->draw(w);
         w.display();
         // rect.draw(w);
     }
