@@ -1,5 +1,8 @@
 #include "SFML/Graphics/Color.hpp"
 #include "SFML/Graphics/RectangleShape.hpp"
+#include "SFML/Graphics/Sprite.hpp"
+#include "SFML/Graphics/Texture.hpp"
+#include "core/AssetLoader.h"
 #include "gui/View.h"
 #include "multiply/multiply.h"
 #include <fstream>
@@ -42,11 +45,19 @@ void readAssetFile(const std::string& path) {
 int main() {
     std::cout << "COS 214 - Final Project" << std::endl;
     std::cout << "7 * 6 = " << multiply(7, 6) << std::endl;
+
+    AssetLoader& loader = AssetLoader::instance();
+    const sf::Texture* texture = loader.loadTexture("textures/hunny.png");
+    assert(texture);
+
     readAssetFile("demo_asset.json");
     sf::RenderWindow w(sf::VideoMode(800, 600), "COS 214 Final Project");
 
+    sf::Sprite sprite(*texture);
+    sprite.setPosition(0, 300);
+
     sf::RectangleShape r({300, 200});
-    r.setFillColor(sf::Color(255, 0, 0));
+    r.setTexture(texture);
     std::unique_ptr<gui::View> view = std::make_unique<MyRectangle>(r);
     view->position({20, 10});
 
@@ -58,6 +69,7 @@ int main() {
             }
         }
         view->draw(w);
+        w.draw(sprite);
         w.display();
         // rect.draw(w);
     }
