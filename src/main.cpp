@@ -32,8 +32,8 @@ int main() {
     // std::cout << newOrder->printOrder() << std::endl;
 
     std::unique_ptr<Director> director = std::make_unique<Director>();
-    std::unique_ptr<OrderBuilder> Table1 = std::make_unique<OrderBuilder>(1, 4);
-    director->add(std::move(Table1));
+    std::unique_ptr<OrderBuilder> Table1 = std::make_unique<OrderBuilder>(1);
+    director->add(Table1.get());
     director->Construct();
     std::unique_ptr<Order> newOrder = Table1->GetResult();
     std::cout << newOrder->printOrder() << std::endl;

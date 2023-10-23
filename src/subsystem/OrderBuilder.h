@@ -5,7 +5,7 @@
 class OrderBuilder : public Builder {
 public:
     void build();
-    OrderBuilder(int tablenumber, int number_of_clients);
+    OrderBuilder(int tablenumber);
     std::unique_ptr<Order> GetResult();
     void CreateTab(int tablenumber);
     void AddItem();

@@ -5,9 +5,9 @@
 class Director {
 public:
     Director();
-    void add(std::unique_ptr<Builder> builder);
+    void add(Builder* builder);
     void Construct();
 
 private:
-    std::list<std::unique_ptr<Builder>> builders;
+    std::list<Builder*> builders;
 };
