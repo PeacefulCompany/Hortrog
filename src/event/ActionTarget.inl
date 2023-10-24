@@ -1,7 +1,10 @@
+#pragma once
+
 #include "ActionTarget.h"
 #include "event/Action.h"
 
-bool ActionTarget::processEvent(const sf::Event& e) const {
+template <typename T>
+bool ActionTarget<T>::processEvent(const sf::Event& e) const {
     for (auto& action : eventsPoll_) {
         if (action.first != e) continue;
         action.second(e);
@@ -9,7 +12,8 @@ bool ActionTarget::processEvent(const sf::Event& e) const {
     }
     return false;
 }
-void ActionTarget::processEvents() const {
+template <typename T>
+void ActionTarget<T>::processEvents() const {
     for (auto& action : eventsRealTime_) {
         if (action.first.test()) {
             action.second(action.first.event_);
@@ -17,18 +21,23 @@ void ActionTarget::processEvents() const {
     }
 }
 
-void ActionTarget::bind(const Action& action, FuncType& callback) {
-    if (action.type_ & Action::ActionType::RealTime) {
+template <typename T>
+void ActionTarget<T>::bind(const T& key, FuncType& callback) {
+    const Action& action = actionMap_.get(key);
+    if (action.type() & Action::ActionType::RealTime) {
         eventsRealTime_.emplace_back(action, callback);
     } else {
         eventsPoll_.emplace_back(action, callback);
     }
 }
-void ActionTarget::unbind(const Action& action) {
+
+template <typename T>
+void ActionTarget<T>::unbind(const T& key) {
+    const Action& action = actionMap_.get(key);
     auto func = [&action](const std::pair<Action, FuncType>& pair) -> bool {
         return pair.first == action;
     };
-    if (action.type_ & Action::ActionType::RealTime) {
+    if (action.type() & Action::ActionType::RealTime) {
         eventsRealTime_.remove_if(func);
     } else {
         eventsPoll_.remove_if(func);
