@@ -1,10 +1,15 @@
 #include "SFML/Graphics/Color.hpp"
+#include "SFML/Graphics/Rect.hpp"
 #include "SFML/Graphics/RectangleShape.hpp"
-#include "SFML/Graphics/Sprite.hpp"
-#include "SFML/Graphics/Texture.hpp"
-#include "core/AssetLoader.h"
-#include "gui/View.h"
+#include "SFML/Graphics/RenderTarget.hpp"
+#include "SFML/System/Clock.hpp"
+#include "SFML/System/Vector2.hpp"
+#include "SFML/Window/Event.hpp"
+#include "SFML/Window/Keyboard.hpp"
+#include "event/ActionMap.h"
+#include "event/ActionTarget.h"
 #include "multiply/multiply.h"
+#include <corecrt_math.h>
 #include <fstream>
 #include <iostream>
 #include <memory>
@@ -16,18 +21,42 @@
 
 using json = nlohmann::json;
 
-class MyRectangle : public gui::View {
+enum class PlayerInput { Up, Left, Right, Down };
+
+class Player {
 public:
-    MyRectangle(sf::RectangleShape& rect) : rect(rect) {}
-    sf::FloatRect getBoundingBox() const override {
-        return rect.getGlobalBounds();
+    Player(const ActionMap<PlayerInput>& map) : actionTarget_(map) {
+        shape_ = sf::RectangleShape({40, 40});
+        shape_.setFillColor(sf::Color::Blue);
+        shape_.setOrigin(16, 16);
+
+        actionTarget_.bind(
+            PlayerInput::Up, [this](const sf::Event&) { movement_.y -= 1; });
+        actionTarget_.bind(
+            PlayerInput::Left, [this](const sf::Event&) { movement_.x -= 1; });
+        actionTarget_.bind(
+            PlayerInput::Right, [this](const sf::Event&) { movement_.x += 1; });
+        actionTarget_.bind(
+            PlayerInput::Down, [this](const sf::Event&) { movement_.y += 1; });
     }
-    void draw(sf::RenderTarget& target) const override { target.draw(rect); }
-    sf::Vector2f position() const override { return rect.getPosition(); }
-    void position(sf::Vector2f v) override { rect.setPosition(v); }
+
+    void processEvents() {
+        movement_ = sf::Vector2f();
+        actionTarget_.processEvents();
+        if (movement_.x != 0 || movement_.y != 0) {
+            auto [x, y] = movement_;
+            float mag = sqrtf(x * x + y * y);
+            movement_.x /= mag;
+            movement_.y /= mag;
+        }
+    }
+    void update(float dt) { shape_.move(movement_ * 200.f * dt); }
+    void draw(sf::RenderTarget& target) { target.draw(shape_); }
 
 private:
-    sf::RectangleShape rect;
+    ActionTarget<PlayerInput> actionTarget_;
+    sf::RectangleShape shape_;
+    sf::Vector2f movement_;
 };
 
 void readAssetFile(const std::string& path) {
@@ -43,34 +72,37 @@ void readAssetFile(const std::string& path) {
 }
 
 int main() {
+    ActionMap<PlayerInput> map;
+    map.map(PlayerInput::Up, Action(sf::Keyboard::Key::Up));
+    map.map(PlayerInput::Down, Action(sf::Keyboard::Key::Down));
+    map.map(PlayerInput::Right, Action(sf::Keyboard::Key::Right));
+    map.map(PlayerInput::Left, Action(sf::Keyboard::Key::Left));
+
+    Player player(map);
+
     std::cout << "COS 214 - Final Project" << std::endl;
     std::cout << "7 * 6 = " << multiply(7, 6) << std::endl;
-
-    AssetLoader& loader = AssetLoader::instance();
-    const sf::Texture* texture = loader.loadTexture("textures/hunny.png");
-    assert(texture);
-
-    gui::View* view = loader.loadView("views/my_view.json");
-    view->position({0, 300});
-    assert(view);
 
     readAssetFile("demo_asset.json");
     sf::RenderWindow w(sf::VideoMode(800, 600), "COS 214 Final Project");
 
-    sf::RectangleShape r({300, 200});
-    r.setTexture(texture);
-    std::unique_ptr<gui::View> view2 = std::make_unique<MyRectangle>(r);
-    view->position({20, 10});
-
+    sf::Clock clock;
+    float lastTime = clock.getElapsedTime().asSeconds();
     while (w.isOpen()) {
-        sf::Event event;
-        while (w.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
+        sf::Event e;
+        while (w.pollEvent(e)) {
+            if (e.type == sf::Event::EventType::Closed) {
                 w.close();
             }
         }
-        view->draw(w);
-        view2->draw(w);
+        w.clear();
+        float dt = clock.getElapsedTime().asSeconds() - lastTime;
+        lastTime += dt;
+
+        player.processEvents();
+        player.update(dt);
+
+        player.draw(w);
         w.display();
         // rect.draw(w);
     }

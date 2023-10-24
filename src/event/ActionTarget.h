@@ -22,7 +22,7 @@ public:
     bool processEvent(const sf::Event& e) const;
     void processEvents() const;
 
-    void bind(const T& key, FuncType& callback);
+    void bind(const T& key, FuncType&& callback);
     void unbind(const T& key);
 
 private:

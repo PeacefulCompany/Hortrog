@@ -4,6 +4,9 @@
 #include "event/Action.h"
 
 template <typename T>
+ActionTarget<T>::ActionTarget(const ActionMap<T>& map) : actionMap_(map) {}
+
+template <typename T>
 bool ActionTarget<T>::processEvent(const sf::Event& e) const {
     for (auto& action : eventsPoll_) {
         if (action.first != e) continue;
@@ -14,20 +17,21 @@ bool ActionTarget<T>::processEvent(const sf::Event& e) const {
 }
 template <typename T>
 void ActionTarget<T>::processEvents() const {
-    for (auto& action : eventsRealTime_) {
-        if (action.first.test()) {
-            action.second(action.first.event_);
+    for (auto& key : eventsRealTime_) {
+        const Action& action = actionMap_.get(key.first);
+        if (action.test()) {
+            key.second(action.event());
         }
     }
 }
 
 template <typename T>
-void ActionTarget<T>::bind(const T& key, FuncType& callback) {
+void ActionTarget<T>::bind(const T& key, FuncType&& callback) {
     const Action& action = actionMap_.get(key);
     if (action.type() & Action::ActionType::RealTime) {
-        eventsRealTime_.emplace_back(action, callback);
+        eventsRealTime_.emplace_back(key, callback);
     } else {
-        eventsPoll_.emplace_back(action, callback);
+        eventsPoll_.emplace_back(key, callback);
     }
 }
 
