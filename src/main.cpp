@@ -18,14 +18,15 @@
 
 #include "SFML/Graphics.hpp"
 #include "nlohmann/json.hpp"
+#include "resource/ResourceManager.h"
 
 using json = nlohmann::json;
 
-enum class PlayerInput { Up, Left, Right, Down };
+enum class PlayerInput { Up, Left, Right, Down, Click };
 
 class Player {
 public:
-    Player(const ActionMap<PlayerInput>& map) : actionTarget_(map) {
+    Player(ActionTarget<PlayerInput>& actions) : actionTarget_(actions) {
         shape_ = sf::RectangleShape({40, 40});
         shape_.setFillColor(sf::Color::Blue);
         shape_.setOrigin(16, 16);
@@ -38,23 +39,24 @@ public:
             PlayerInput::Right, [this](const sf::Event&) { movement_.x += 1; });
         actionTarget_.bind(
             PlayerInput::Down, [this](const sf::Event&) { movement_.y += 1; });
+        actionTarget_.bind(
+            PlayerInput::Down, [this](const sf::Event&) { movement_.y += 1; });
+        actionTarget_.bind(PlayerInput::Click, [this](const sf::Event& e) {
+            sf::Vector2f pos = {float(e.mouseButton.x), float(e.mouseButton.y)};
+            if (!shape_.getGlobalBounds().contains(pos)) return;
+
+            shape_.setFillColor(sf::Color::Red);
+        });
     }
 
-    void processEvents() {
+    void update(float dt) {
+        shape_.move(movement_ * 200.f * dt);
         movement_ = sf::Vector2f();
-        actionTarget_.processEvents();
-        if (movement_.x != 0 || movement_.y != 0) {
-            auto [x, y] = movement_;
-            float mag = sqrtf(x * x + y * y);
-            movement_.x /= mag;
-            movement_.y /= mag;
-        }
     }
-    void update(float dt) { shape_.move(movement_ * 200.f * dt); }
     void draw(sf::RenderTarget& target) { target.draw(shape_); }
 
 private:
-    ActionTarget<PlayerInput> actionTarget_;
+    ActionTarget<PlayerInput>& actionTarget_;
     sf::RectangleShape shape_;
     sf::Vector2f movement_;
 };
@@ -72,13 +74,19 @@ void readAssetFile(const std::string& path) {
 }
 
 int main() {
-    ActionMap<PlayerInput> map;
-    map.map(PlayerInput::Up, Action(sf::Keyboard::Key::Up));
-    map.map(PlayerInput::Down, Action(sf::Keyboard::Key::Down));
-    map.map(PlayerInput::Right, Action(sf::Keyboard::Key::Right));
-    map.map(PlayerInput::Left, Action(sf::Keyboard::Key::Left));
+    ResourceManager<sf::Texture> textures;
+    textures.load(0, "assets/hunny.png");
 
-    Player player(map);
+    ActionMap<PlayerInput> map;
+    map.map(PlayerInput::Up, Action(sf::Keyboard::Up));
+    map.map(PlayerInput::Down, Action(sf::Keyboard::Down));
+    map.map(PlayerInput::Right, Action(sf::Keyboard::Right));
+    map.map(PlayerInput::Left, Action(sf::Keyboard::Left));
+    map.map(PlayerInput::Click, Action(sf::Mouse::Left, Action::Pressed));
+
+    ActionTarget<PlayerInput> target(map);
+
+    Player player(target);
 
     std::cout << "COS 214 - Final Project" << std::endl;
     std::cout << "7 * 6 = " << multiply(7, 6) << std::endl;
@@ -86,11 +94,17 @@ int main() {
     readAssetFile("demo_asset.json");
     sf::RenderWindow w(sf::VideoMode(800, 600), "COS 214 Final Project");
 
+    sf::RectangleShape r({300, 200});
+    sf::Sprite sprite(textures.get(0));
+
+    r.setPosition({10, 10});
+    r.setFillColor(sf::Color(255, 0, 0));
     sf::Clock clock;
     float lastTime = clock.getElapsedTime().asSeconds();
     while (w.isOpen()) {
         sf::Event e;
         while (w.pollEvent(e)) {
+            target.processEvent(e);
             if (e.type == sf::Event::EventType::Closed) {
                 w.close();
             }
@@ -99,8 +113,10 @@ int main() {
         float dt = clock.getElapsedTime().asSeconds() - lastTime;
         lastTime += dt;
 
-        player.processEvents();
+        target.processEvents();
         player.update(dt);
+
+        w.draw(sprite);
 
         player.draw(w);
         w.display();

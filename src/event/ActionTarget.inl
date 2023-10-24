@@ -8,9 +8,10 @@ ActionTarget<T>::ActionTarget(const ActionMap<T>& map) : actionMap_(map) {}
 
 template <typename T>
 bool ActionTarget<T>::processEvent(const sf::Event& e) const {
-    for (auto& action : eventsPoll_) {
-        if (action.first != e) continue;
-        action.second(e);
+    for (auto& key : eventsPoll_) {
+        const Action& action = actionMap_.get(key.first);
+        if (action != e) continue;
+        key.second(e);
         return true;
     }
     return false;
