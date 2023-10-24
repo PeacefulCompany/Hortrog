@@ -1,24 +1,20 @@
-#include "SFML/Graphics/Color.hpp"
-#include "SFML/Graphics/Rect.hpp"
-#include "SFML/Graphics/RectangleShape.hpp"
-#include "SFML/Graphics/RenderTarget.hpp"
-#include "SFML/System/Clock.hpp"
-#include "SFML/System/Vector2.hpp"
-#include "SFML/Window/Event.hpp"
-#include "SFML/Window/Keyboard.hpp"
+#include "SFML/Graphics.hpp"
+#include "SFML/Graphics/View.hpp"
+#include "SFML/System.hpp"
+#include "SFML/Window.hpp"
+
+#include "SFML/Window/WindowStyle.hpp"
 #include "event/ActionMap.h"
 #include "event/ActionTarget.h"
 #include "multiply/multiply.h"
-#include <corecrt_math.h>
+#include "nlohmann/json.hpp"
+#include "resource/ResourceManager.h"
+
 #include <fstream>
 #include <iostream>
 #include <memory>
 #include <string>
 #include <vector>
-
-#include "SFML/Graphics.hpp"
-#include "nlohmann/json.hpp"
-#include "resource/ResourceManager.h"
 
 using json = nlohmann::json;
 
@@ -37,8 +33,6 @@ public:
             PlayerInput::Left, [this](const sf::Event&) { movement_.x -= 1; });
         actionTarget_.bind(
             PlayerInput::Right, [this](const sf::Event&) { movement_.x += 1; });
-        actionTarget_.bind(
-            PlayerInput::Down, [this](const sf::Event&) { movement_.y += 1; });
         actionTarget_.bind(
             PlayerInput::Down, [this](const sf::Event&) { movement_.y += 1; });
         actionTarget_.bind(PlayerInput::Click, [this](const sf::Event& e) {
@@ -92,10 +86,12 @@ int main() {
     std::cout << "7 * 6 = " << multiply(7, 6) << std::endl;
 
     readAssetFile("demo_asset.json");
-    sf::RenderWindow w(sf::VideoMode(800, 600), "COS 214 Final Project");
+    sf::RenderWindow w(sf::VideoMode(1280, 720),
+        "COS 214 Final Project",
+        sf::Style::Default ^ sf::Style::Resize);
 
     sf::RectangleShape r({300, 200});
-    sf::Sprite sprite(textures.get(0));
+    sf::Sprite sprite(*textures.get(0));
 
     r.setPosition({10, 10});
     r.setFillColor(sf::Color(255, 0, 0));

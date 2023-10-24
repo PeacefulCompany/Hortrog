@@ -17,6 +17,6 @@ inline bool ResourceManager<Res, Id>::load(const Id& id, Args&&... args) {
 }
 
 template <typename Res, typename Id>
-inline Res& ResourceManager<Res, Id>::get(const Id& id) const {
-    return *map_.at(id);
+inline Res* ResourceManager<Res, Id>::get(const Id& id) const {
+    return map_.at(id).get();
 }
