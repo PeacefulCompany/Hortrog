@@ -7,6 +7,13 @@
 
 #include "SFML/Graphics/Texture.hpp"
 
+/**
+ * @brief Singleton used for managing any kind of shared asset (JSON, Textures,
+ * Music, etc.)
+ *
+ * Note that currently this implementation is not feature complete
+ *
+ */
 class AssetLoader {
 public:
     static AssetLoader& instance();

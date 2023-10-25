@@ -4,7 +4,8 @@
 #include <unordered_map>
 
 /**
- * @brief Manages any resource that has a `loadFromFile` method
+ * @brief Manages any resource that has a default constructor and a
+ * `loadFromFile` method
  *
  * @tparam Res The type of resource being managed
  * @tparam Id The type used to identify a resource
