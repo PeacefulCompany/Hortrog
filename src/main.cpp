@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 
+#include "menu/Menu.cpp"
 #include "SFML/Graphics.hpp"
 #include "nlohmann/json.hpp"
 
@@ -56,4 +57,6 @@ int main() {
         w.display();
         // rect.draw(w);
     }
+	// Menu m = Menu();
+	// return 0;
 }

@@ -3,12 +3,16 @@
 #include <sstream>
 #include <iostream>
 #include <unordered_map>
+#include <fstream>
+#include "nlohmann/json.hpp"
+
 
 struct Item {
 	
 	Item(const std::string& name, double price, const std::string& restrictions)
 		: name(name), price(price), restrictions(restrictions) {}
-
+	//default constructor
+	Item() : name(""), price(0), restrictions("") {}
 	std::string getName() const { return name; }
 	double getPrice() const { return price; }
 	std::string getRestrictions() const { return restrictions; }
@@ -33,7 +37,7 @@ public:
 	* @return void
 	*/
     void addItem(const std::string& name, const Item& item) {
-        menuItems[name] = item;
+        menuItems_[name] = item;
     }
 	/**
 	* @brief Get the Item object.
@@ -44,8 +48,8 @@ public:
 	* @return Item 
 	*/
     Item getItem(const std::string& name) {
-        if (menuItems.find(name) != menuItems.end()) {
-            return menuItems[name];
+        if (menuItems_.find(name) != menuItems_.end()) {
+            return menuItems_[name];
         } else {
             return Item("", 0, "");
         }
