@@ -58,3 +58,4 @@ public:
 private:
     std::unordered_map<std::string, Item> menuItems_;
 };
+

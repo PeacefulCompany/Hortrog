@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-#include "menu/Menu.cpp"
+#include "menu/Menu.h"
 #include "SFML/Graphics.hpp"
 #include "nlohmann/json.hpp"
 
@@ -37,26 +37,26 @@ void readAssetFile(const std::string& path) {
 }
 
 int main() {
-    std::cout << "COS 214 - Final Project" << std::endl;
-    std::cout << "7 * 6 = " << multiply(7, 6) << std::endl;
-    readAssetFile("demo_asset.json");
-    sf::RenderWindow w(sf::VideoMode(800, 600), "COS 214 Final Project");
+    // std::cout << "COS 214 - Final Project" << std::endl;
+    // std::cout << "7 * 6 = " << multiply(7, 6) << std::endl;
+    // readAssetFile("demo_asset.json");
+    // sf::RenderWindow w(sf::VideoMode(800, 600), "COS 214 Final Project");
 
-    sf::RectangleShape r({300, 200});
-    r.setPosition({10, 10});
-    r.setFillColor(sf::Color(255, 0, 0));
-    MyRectangle rect(r);
-    while (w.isOpen()) {
-        sf::Event event;
-        while (w.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                w.close();
-            }
-        }
-        rect.draw(w);
-        w.display();
-        // rect.draw(w);
-    }
-	// Menu m = Menu();
-	// return 0;
+    // sf::RectangleShape r({300, 200});
+    // r.setPosition({10, 10});
+    // r.setFillColor(sf::Color(255, 0, 0));
+    // MyRectangle rect(r);
+    // while (w.isOpen()) {
+    //     sf::Event event;
+    //     while (w.pollEvent(event)) {
+    //         if (event.type == sf::Event::Closed) {
+    //             w.close();
+    //         }
+    //     }
+    //     rect.draw(w);
+    //     w.display();
+    //     // rect.draw(w);
+    // }
+	Menu * m = new Menu();
+	return 0;
 }

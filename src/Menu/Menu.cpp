@@ -10,16 +10,20 @@ Menu::Menu()
         return;
     }
     json data = json::parse(file);
+	std::cout << "[DEBUG] Parsed menu_items.json" << std::endl;
 
-	for (auto& item : data["items"]) {
+
+	for (auto& item : data["menu"]) {
+		std::cout << "[DEBUG] Iterating through items..." << std::endl;
 		std::string name = item["name"].get<std::string>();
 		double price = item["price"].get<double>();
-		std::string restrictions = item["restrictions"].get<std::string>();
+		std::string restrictions = item["diet"].get<std::string>();
 		addItem(name, Item(name, price, restrictions));
 	}
 
 	//print all items as debug
 	for (auto& item : menuItems_) {
+		std::cout << "[DEBUG] Item OUT: ";
 		std::cout << item.second.getName() << std::endl;
 		std::cout << item.second.getPrice() << std::endl;
 		std::cout << item.second.getRestrictions() << std::endl;
