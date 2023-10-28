@@ -58,5 +58,12 @@ int main() {
     //     // rect.draw(w);
     // }
 	Menu * m = new Menu();
+	m->initMenu();
+	std::string s = m->toString();
+	Item item = m->getItem("Lemonade");
+
+	std::cout << s << std::endl;
+	std::cout << item.getName() << std::endl;
+
 	return 0;
 }

@@ -26,6 +26,8 @@ struct Item {
 class Menu {
 public:
 	Menu();
+	//function to initialise the menu from the .json file
+	void initMenu();
 	/**
 	* @brief Add an item to the menu.
 	*
@@ -54,6 +56,14 @@ public:
             return Item("", 0, "");
         }
     }
+
+	std::string toString() {
+		std::stringstream ss;
+		for (auto& item : menuItems_) {
+			ss << item.second.getName() << " " << item.second.getPrice() << " " << item.second.getRestrictions() << std::endl;
+		}
+		return ss.str();
+	}
 
 private:
     std::unordered_map<std::string, Item> menuItems_;
