@@ -14,6 +14,8 @@
 #include "order/NullOrderBuilder.h"
 #include "order/OrderBuilder.h"
 #include "resource/ResourceManager.h"
+#include "views/TablePresenter.h"
+#include "views/TableView.h"
 
 #include <fstream>
 #include <iostream>
@@ -99,6 +101,9 @@ int main() {
         }
     }
 
+    ResourceManager<sf::Texture, TableView::SpriteType> tableSprites;
+    tableSprites.load(TableView::Single, "assets/textures/table.png");
+
     ResourceManager<sf::Texture> textures;
     textures.load(0, "assets/hunny.png");
 
@@ -124,13 +129,19 @@ int main() {
     sf::RectangleShape r({300, 200});
     sf::Sprite sprite(*textures.get(0));
 
+    TableView table(tableSprites);
+    TablePresenter presenter(table, w);
+    table.position({100, 100});
+
     r.setPosition({10, 10});
     r.setFillColor(sf::Color(255, 0, 0));
     sf::Clock clock;
     float lastTime = clock.getElapsedTime().asSeconds();
+
     while (w.isOpen()) {
         sf::Event e;
         while (w.pollEvent(e)) {
+            table.onEvent(e);
             target.processEvent(e);
             if (e.type == sf::Event::EventType::Closed) {
                 w.close();
@@ -146,6 +157,7 @@ int main() {
         w.draw(sprite);
 
         player.draw(w);
+        table.draw(w);
         w.display();
         // rect.draw(w);
     }
