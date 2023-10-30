@@ -14,6 +14,7 @@
 #include "order/NullOrderBuilder.h"
 #include "order/OrderBuilder.h"
 #include "resource/ResourceManager.h"
+#include "views/FloorView.h"
 #include "views/TablePresenter.h"
 #include "views/TableView.h"
 
@@ -101,8 +102,8 @@ int main() {
         }
     }
 
-    ResourceManager<sf::Texture, TableView::SpriteType> tableSprites;
-    tableSprites.load(TableView::Single, "assets/textures/table.png");
+    ResourceManager<sf::Texture, FloorView::SpriteType> tableSprites;
+    tableSprites.load(FloorView::SingleTable, "assets/textures/table.png");
 
     ResourceManager<sf::Texture> textures;
     textures.load(0, "assets/hunny.png");
@@ -129,20 +130,26 @@ int main() {
     sf::RectangleShape r({300, 200});
     sf::Sprite sprite(*textures.get(0));
 
-    TableView table(tableSprites);
-    TablePresenter presenter(table, w);
-    table.position({100, 100});
+    // TableView table(tableSprites);
+    // TablePresenter presenter(table, w);
+    // table.position({100, 100});
 
     r.setPosition({10, 10});
     r.setFillColor(sf::Color(255, 0, 0));
     sf::Clock clock;
     float lastTime = clock.getElapsedTime().asSeconds();
 
+    FloorView view(12, 7, tableSprites);
+    view.position({10, 10});
+    view.placeTable(1, 1);
+    view.placeTable(2, 1);
+    view.placeTable(3, 1);
+
     while (w.isOpen()) {
         // Handle Events
         sf::Event e;
         while (w.pollEvent(e)) {
-            table.onEvent(e);
+            // table.onEvent(e);
             target.processEvent(e);
             if (e.type == sf::Event::EventType::Closed) {
                 w.close();
@@ -155,14 +162,15 @@ int main() {
         lastTime += dt;
 
         player.update(dt);
-        presenter.update(dt);
+        // presenter.update(dt);
 
         // Render window
         w.clear();
 
         w.draw(sprite);
         player.draw(w);
-        table.draw(w);
+        // table.draw(w);
+        view.draw(w);
 
         w.display();
         // rect.draw(w);
