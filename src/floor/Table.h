@@ -4,11 +4,14 @@
 
 #include "Customer.h"
 
+class TableComponent;
+class TableGroup;
+
 class Table {
 public:
     virtual bool addCustomer(Customer* customer) = 0;
-    virtual Table* merge(Table* table) = 0;
-    virtual std::vector<Table*> split() = 0;
+    virtual TableGroup* merge(Table* table) = 0;
+    virtual std::vector<TableComponent*> split() = 0;
 
     virtual bool isEmpty() const = 0;
     virtual int getCapacity() const = 0;

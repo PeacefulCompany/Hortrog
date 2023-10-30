@@ -5,13 +5,15 @@
 
 class TableGroup : public Table {
 public:
-    Table* merge(Table* table) override;
-    std::vector<Table*> split() override;
+    TableGroup* merge(Table* table) override;
+    std::vector<TableComponent*> split() override;
     bool addCustomer(Customer* customer) override;
 
     bool isEmpty() const override;
-    inline int getCapacity() const override;
-    inline uint32_t id() const override;
+    int getCapacity() const override;
+    uint32_t id() const override;
+
+    void addTable(TableComponent* table);
 
 private:
     std::vector<TableComponent*> tables_;
