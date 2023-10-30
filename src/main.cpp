@@ -153,6 +153,7 @@ int main() {
 
         target.processEvents();
         player.update(dt);
+        presenter.update(dt);
 
         w.draw(sprite);
 
