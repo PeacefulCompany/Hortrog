@@ -1,6 +1,7 @@
 #include "TableComponent.h"
 
 #include "TableGroup.h"
+#include <sstream>
 
 TableGroup* TableComponent::merge(Table* table) {
     TableGroup* group = new TableGroup();
@@ -17,7 +18,16 @@ bool TableComponent::addCustomer(Customer* customer) {
     return true;
 }
 
-inline std::vector<TableComponent*> TableComponent::split() { return {this}; }
-inline bool TableComponent::isEmpty() const { return customers_.empty(); }
-inline int TableComponent::getCapacity() const { return capacity_; }
-inline uint32_t TableComponent::id() const { return id_; }
+std::vector<TableComponent*> TableComponent::split() { return {this}; }
+bool TableComponent::isEmpty() const { return customers_.empty(); }
+int TableComponent::getCapacity() const { return capacity_; }
+uint32_t TableComponent::id() const { return id_; }
+
+std::string TableComponent::toString() const {
+    std::stringstream s;
+    s << "Table(id=" << id_ << ", size=" << capacity_ << ") =";
+    for (auto& c : customers_) {
+        s << " " << c->name;
+    }
+    return s.str();
+}

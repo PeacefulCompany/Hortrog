@@ -17,5 +17,7 @@ public:
     virtual int getCapacity() const = 0;
     virtual uint32_t id() const = 0;
 
+    virtual std::string toString() const = 0;
+
 private:
 };

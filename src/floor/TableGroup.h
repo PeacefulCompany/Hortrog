@@ -15,6 +15,8 @@ public:
 
     void addTable(TableComponent* table);
 
+    std::string toString() const override;
+
 private:
     std::vector<TableComponent*> tables_;
 };

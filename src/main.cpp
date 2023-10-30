@@ -6,6 +6,9 @@
 #include "SFML/Window/WindowStyle.hpp"
 #include "event/ActionMap.h"
 #include "event/ActionTarget.h"
+#include "floor/Table.h"
+#include "floor/TableComponent.h"
+#include "floor/TableGroup.h"
 #include "multiply/multiply.h"
 #include "nlohmann/json.hpp"
 #include "resource/ResourceManager.h"
@@ -68,6 +71,22 @@ void readAssetFile(const std::string& path) {
 }
 
 int main() {
+    std::vector<Table*> tables;
+    tables.push_back(new TableComponent(0, 2));
+
+    TableGroup* g = new TableGroup();
+    g->addTable(new TableComponent(1, 1));
+    g->addTable(new TableComponent(2, 3));
+    g->addCustomer(new Customer("John"));
+    g->addCustomer(new Customer("Bob"));
+    g->addCustomer(new Customer("Alice"));
+    g->addCustomer(new Customer("Bingus"));
+    tables.push_back(g);
+
+    for (Table* table : tables) {
+        std::cout << table->toString() << std::endl;
+    }
+
     ResourceManager<sf::Texture> textures;
     textures.load(0, "assets/hunny.png");
 
