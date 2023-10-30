@@ -139,6 +139,7 @@ int main() {
     float lastTime = clock.getElapsedTime().asSeconds();
 
     while (w.isOpen()) {
+        // Handle Events
         sf::Event e;
         while (w.pollEvent(e)) {
             table.onEvent(e);
@@ -147,18 +148,22 @@ int main() {
                 w.close();
             }
         }
-        w.clear();
+        target.processEvents();
+
+        // Time-based update
         float dt = clock.getElapsedTime().asSeconds() - lastTime;
         lastTime += dt;
 
-        target.processEvents();
         player.update(dt);
         presenter.update(dt);
 
-        w.draw(sprite);
+        // Render window
+        w.clear();
 
+        w.draw(sprite);
         player.draw(w);
         table.draw(w);
+
         w.display();
         // rect.draw(w);
     }
