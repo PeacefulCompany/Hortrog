@@ -6,6 +6,12 @@
 #include "floor/TableGroup.h"
 #include <sstream>
 
+void TableGroup::buildOrder(OrderBuilder& builder) {
+    for (TableComponent* table : tables_) {
+        table->buildOrder(builder);
+    }
+}
+
 TableGroup* TableGroup::merge(Table* table) {
     TableGroup* group = new TableGroup();
     for (TableComponent* table : table->split()) {

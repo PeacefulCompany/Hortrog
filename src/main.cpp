@@ -11,6 +11,8 @@
 #include "floor/TableGroup.h"
 #include "multiply/multiply.h"
 #include "nlohmann/json.hpp"
+#include "order/NullOrderBuilder.h"
+#include "order/OrderBuilder.h"
 #include "resource/ResourceManager.h"
 
 #include <fstream>
@@ -84,7 +86,17 @@ int main() {
     tables.push_back(g);
 
     for (Table* table : tables) {
-        std::cout << table->toString() << std::endl;
+        NullOrderBuilder builder;
+        table->buildOrder(builder);
+
+        std::vector<json> order = builder.getResult();
+        if (order.size() == 0) {
+            std::cout << table->id() << " no order" << std::endl;
+            continue;
+        }
+        for (json o : order) {
+            std::cout << o << std::endl;
+        }
     }
 
     ResourceManager<sf::Texture> textures;

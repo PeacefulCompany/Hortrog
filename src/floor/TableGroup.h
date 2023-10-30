@@ -5,6 +5,7 @@
 
 class TableGroup : public Table {
 public:
+    void buildOrder(OrderBuilder& builder) override;
     TableGroup* merge(Table* table) override;
     std::vector<TableComponent*> split() override;
     bool addCustomer(Customer* customer) override;
