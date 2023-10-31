@@ -33,6 +33,7 @@ target_link_libraries(${BINARY}
   PRIVATE sfml-graphics
   PRIVATE nlohmann_json::nlohmann_json
 )
+add_dependencies(${BINARY} assets)
 
 add_library(${LIBRARY} ${SOURCES_LIB})
 target_include_directories(${LIBRARY} PUBLIC .)

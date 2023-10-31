@@ -46,6 +46,8 @@ public:
     virtual sf::Vector2f position() const = 0;
     virtual void position(sf::Vector2f v) = 0;
 
+    inline void setPresenter(Presenter* p) { presenter_ = p; }
+
 protected:
     Presenter* presenter_;
 };
