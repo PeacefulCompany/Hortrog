@@ -9,12 +9,14 @@ public:
     TableComponent(uint32_t id, int capacity) : id_(id), capacity_(capacity) {}
 
     void buildOrder(OrderBuilder& builder) override;
-    TableGroup* merge(Table* table) override;
+    bool merge(Table* table) override;
     std::vector<TableComponent*> split() override;
-    bool addCustomer(Customer* customer) override;
+
+    bool seatCustomer(Customer* customer) override;
+    bool removeCustomer(Customer* customer) override;
 
     bool isEmpty() const override;
-    int getCapacity() const override;
+    int capacity() const override;
     uint32_t id() const override;
 
     std::string toString() const override;

@@ -12,17 +12,23 @@ void TableGroup::buildOrder(OrderBuilder& builder) {
     }
 }
 
-TableGroup* TableGroup::merge(Table* table) {
-    TableGroup* group = new TableGroup();
-    for (TableComponent* table : table->split()) {
-        group->tables_.push_back(table);
+bool TableGroup::merge(Table* table) {
+    for (TableComponent* c : table->split()) {
+        tables_.push_back(c);
     }
-    return group;
+    return true;
 }
 
-bool TableGroup::addCustomer(Customer* customer) {
+bool TableGroup::seatCustomer(Customer* customer) {
     for (TableComponent* table : tables_) {
-        if (table->addCustomer(customer)) return true;
+        if (table->seatCustomer(customer)) return true;
+    }
+    return false;
+}
+
+bool TableGroup::removeCustomer(Customer* customer) {
+    for (TableComponent* table : tables_) {
+        if (table->removeCustomer(customer)) return true;
     }
     return false;
 }
@@ -34,21 +40,20 @@ bool TableGroup::isEmpty() const {
     return true;
 }
 
-int TableGroup::getCapacity() const {
+int TableGroup::capacity() const {
     int total = 0;
     for (TableComponent* table : tables_) {
-        total += table->getCapacity();
+        total += table->capacity();
     }
     return total;
 }
 
-inline std::vector<TableComponent*> TableGroup::split() { return tables_; }
-inline uint32_t TableGroup::id() const { return tables_[0]->id(); }
-void TableGroup::addTable(TableComponent* table) { tables_.push_back(table); }
+std::vector<TableComponent*> TableGroup::split() { return tables_; }
+uint32_t TableGroup::id() const { return tables_[0]->id(); }
 
 std::string TableGroup::toString() const {
     std::stringstream s;
-    s << "TableGroup(id=" << id() << ", size=" << getCapacity() << ")";
+    s << "TableGroup(id=" << id() << ", size=" << capacity() << ")";
     for (TableComponent* table : tables_) {
         s << "\n - " << table->toString();
     }

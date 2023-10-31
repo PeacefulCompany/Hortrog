@@ -80,12 +80,12 @@ int main() {
     tables.push_back(new TableComponent(0, 2));
 
     TableGroup* g = new TableGroup();
-    g->addTable(new TableComponent(1, 1));
-    g->addTable(new TableComponent(2, 3));
-    g->addCustomer(new Customer("John"));
-    g->addCustomer(new Customer("Bob"));
-    g->addCustomer(new Customer("Alice"));
-    g->addCustomer(new Customer("Bingus"));
+    g->merge(new TableComponent(1, 1));
+    g->merge(new TableComponent(2, 3));
+    g->seatCustomer(new Customer("John"));
+    g->seatCustomer(new Customer("Bob"));
+    g->seatCustomer(new Customer("Alice"));
+    g->seatCustomer(new Customer("Bingus"));
     tables.push_back(g);
 
     for (Table* table : tables) {

@@ -1,8 +1,8 @@
 #include "TableComponent.h"
 
-#include "TableGroup.h"
 #include <sstream>
 #include <stdlib.h>
+#include <vector>
 
 void TableComponent::buildOrder(OrderBuilder& builder) {
     for (Customer* c : customers_) {
@@ -16,25 +16,15 @@ void TableComponent::buildOrder(OrderBuilder& builder) {
     }
 }
 
-TableGroup* TableComponent::merge(Table* table) {
-    TableGroup* group = new TableGroup();
-    group->addTable(this);
-    for (TableComponent* t : table->split()) {
-        group->addTable(t);
-    }
-    return group;
-}
-
-bool TableComponent::addCustomer(Customer* customer) {
+bool TableComponent::seatCustomer(Customer* customer) {
     if (customers_.size() >= capacity_) return false;
     customers_.push_back(customer);
     return true;
 }
 
-std::vector<TableComponent*> TableComponent::split() { return {this}; }
-bool TableComponent::isEmpty() const { return customers_.empty(); }
-int TableComponent::getCapacity() const { return capacity_; }
-uint32_t TableComponent::id() const { return id_; }
+bool TableComponent::removeCustomer(Customer* customer) {
+    return std::erase(customers_, customer) > 0;
+}
 
 std::string TableComponent::toString() const {
     std::stringstream s;
@@ -44,3 +34,10 @@ std::string TableComponent::toString() const {
     }
     return s.str();
 }
+
+bool TableComponent::merge(Table* table) { return false; }
+std::vector<TableComponent*> TableComponent::split() { return {this}; }
+
+bool TableComponent::isEmpty() const { return customers_.empty(); }
+int TableComponent::capacity() const { return capacity_; }
+uint32_t TableComponent::id() const { return id_; }
