@@ -10,6 +10,8 @@
 #include "nlohmann/json.hpp"
 #include "resource/ResourceManager.h"
 
+#include "subsystem/MealItem.h"
+
 #include <fstream>
 #include <iostream>
 #include <memory>
@@ -68,54 +70,56 @@ void readAssetFile(const std::string& path) {
 }
 
 int main() {
-    ResourceManager<sf::Texture> textures;
-    textures.load(0, "assets/hunny.png");
 
-    ActionMap<PlayerInput> map;
-    map.map(PlayerInput::Up, Action(sf::Keyboard::Up));
-    map.map(PlayerInput::Down, Action(sf::Keyboard::Down));
-    map.map(PlayerInput::Right, Action(sf::Keyboard::Right));
-    map.map(PlayerInput::Left, Action(sf::Keyboard::Left));
-    map.map(PlayerInput::Click, Action(sf::Mouse::Left, Action::Pressed));
 
-    ActionTarget<PlayerInput> target(map);
+    // ResourceManager<sf::Texture> textures;
+    // textures.load(0, "assets/hunny.png");
 
-    Player player(target);
+    // ActionMap<PlayerInput> map;
+    // map.map(PlayerInput::Up, Action(sf::Keyboard::Up));
+    // map.map(PlayerInput::Down, Action(sf::Keyboard::Down));
+    // map.map(PlayerInput::Right, Action(sf::Keyboard::Right));
+    // map.map(PlayerInput::Left, Action(sf::Keyboard::Left));
+    // map.map(PlayerInput::Click, Action(sf::Mouse::Left, Action::Pressed));
 
-    std::cout << "COS 214 - Final Project" << std::endl;
-    std::cout << "7 * 6 = " << multiply(7, 6) << std::endl;
+    // ActionTarget<PlayerInput> target(map);
 
-    readAssetFile("demo_asset.json");
-    sf::RenderWindow w(sf::VideoMode(1280, 720),
-        "COS 214 Final Project",
-        sf::Style::Default ^ sf::Style::Resize);
+    // Player player(target);
 
-    sf::RectangleShape r({300, 200});
-    sf::Sprite sprite(*textures.get(0));
+    // std::cout << "COS 214 - Final Project" << std::endl;
+    // std::cout << "7 * 6 = " << multiply(7, 6) << std::endl;
 
-    r.setPosition({10, 10});
-    r.setFillColor(sf::Color(255, 0, 0));
-    sf::Clock clock;
-    float lastTime = clock.getElapsedTime().asSeconds();
-    while (w.isOpen()) {
-        sf::Event e;
-        while (w.pollEvent(e)) {
-            target.processEvent(e);
-            if (e.type == sf::Event::EventType::Closed) {
-                w.close();
-            }
-        }
-        w.clear();
-        float dt = clock.getElapsedTime().asSeconds() - lastTime;
-        lastTime += dt;
+    // readAssetFile("demo_asset.json");
+    // sf::RenderWindow w(sf::VideoMode(1280, 720),
+    //     "COS 214 Final Project",
+    //     sf::Style::Default ^ sf::Style::Resize);
 
-        target.processEvents();
-        player.update(dt);
+    // sf::RectangleShape r({300, 200});
+    // sf::Sprite sprite(*textures.get(0));
 
-        w.draw(sprite);
+    // r.setPosition({10, 10});
+    // r.setFillColor(sf::Color(255, 0, 0));
+    // sf::Clock clock;
+    // float lastTime = clock.getElapsedTime().asSeconds();
+    // while (w.isOpen()) {
+    //     sf::Event e;
+    //     while (w.pollEvent(e)) {
+    //         target.processEvent(e);
+    //         if (e.type == sf::Event::EventType::Closed) {
+    //             w.close();
+    //         }
+    //     }
+    //     w.clear();
+    //     float dt = clock.getElapsedTime().asSeconds() - lastTime;
+    //     lastTime += dt;
 
-        player.draw(w);
-        w.display();
-        // rect.draw(w);
-    }
+    //     target.processEvents();
+    //     player.update(dt);
+
+    //     w.draw(sprite);
+
+    //     player.draw(w);
+    //     w.display();
+    //     // rect.draw(w);
+    // }
 }
