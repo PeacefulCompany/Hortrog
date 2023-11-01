@@ -5,11 +5,12 @@
 
 class EatingState : public CustomerState {
 public:
+    EatingState(Customer* c) : CustomerState(c) {}
     void visit(Manager&) override;
     void visit(Waiter&) override;
 
     void update(float dt) override;
 
 private:
-    Timer eatTime_;
+    Timer eatTime_ = Timer(2);
 };

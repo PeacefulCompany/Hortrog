@@ -4,6 +4,7 @@
 
 class PayingState : public CustomerState {
 public:
+    PayingState(Customer* c) : CustomerState(c) {}
     void visit(Manager&) override;
     void visit(Waiter&) override;
 

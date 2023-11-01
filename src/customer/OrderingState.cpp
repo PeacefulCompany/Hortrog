@@ -13,7 +13,7 @@ void OrderingState::visit(Manager& m) {
 void OrderingState::visit(Waiter& w) {
     if (readyTimer_.expired()) {
         std::cout << "Ordering: Waiter" << std::endl;
-        customer_->changeState(new WaitingState());
+        customer_->changeState(new WaitingState(customer_));
     } else {
         std::cout << "Not ready to order" << std::endl;
     }

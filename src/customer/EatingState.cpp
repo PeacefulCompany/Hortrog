@@ -17,10 +17,10 @@ void EatingState::update(float dt) {
     if (eatTime_.expired()) {
         if (rand() % 2 == 0) {
             std::cout << "[Eating] Done eating, but I want more" << std::endl;
-            customer_->changeState(new OrderingState());
+            customer_->changeState(new OrderingState(customer_));
         } else {
             std::cout << "[Eating] Done eating, let me pay" << std::endl;
-            customer_->changeState(new PayingState());
+            customer_->changeState(new PayingState(customer_));
         }
     } else {
         std::cout << "Still eating: "

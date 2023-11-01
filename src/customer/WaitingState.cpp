@@ -12,7 +12,7 @@ void WaitingState::visit(Waiter& w) {
     // TODO: replace this with actual order pinging
     if (rand() % 2 == 0) {
         std::cout << "[Waiting]: Thanks for the food!!" << std::endl;
-        customer_->changeState(new EatingState());
+        customer_->changeState(new EatingState(customer_));
     } else {
         std::cout << "[Waiting]: Where's the food at???" << std::endl;
     }
