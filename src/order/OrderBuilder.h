@@ -1,7 +1,12 @@
 #pragma once
 //! #include "menu/Menu.h"
+#include "order_test/Order.h"
+#include "order_test/OrderComposite.h"
+#include "order_test/OrderItem.h"
+#include "order_test/Modifier.h"
 #include <sstream>
 #include <string>
+#include <vector>
 
 // actual
 //===============
