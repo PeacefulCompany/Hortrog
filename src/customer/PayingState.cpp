@@ -2,9 +2,9 @@
 #include <iostream>
 
 void PayingState::visit(Manager& m) {
-    std::cout << "Paying: Manager" << std::endl;
+    std::cout << "[Paying]: Give payment to manager" << std::endl;
 }
 
 void PayingState::visit(Waiter& w) {
-    std::cout << "Paying: Waiter" << std::endl;
+    std::cout << "[Paying]: Give payment to waiter" << std::endl;
 }
