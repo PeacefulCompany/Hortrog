@@ -4,11 +4,13 @@
 #include "SFML/Window.hpp"
 
 #include "SFML/Window/WindowStyle.hpp"
+#include "customer/Customer.h"
 #include "event/ActionMap.h"
 #include "event/ActionTarget.h"
 #include "multiply/multiply.h"
 #include "nlohmann/json.hpp"
 #include "resource/ResourceManager.h"
+#include "staff/FloorStaff.h"
 
 #include <fstream>
 #include <iostream>
@@ -68,6 +70,11 @@ void readAssetFile(const std::string& path) {
 }
 
 int main() {
+    FloorStaff* staff = new Waiter();
+
+    Customer customer("Bob", 4);
+    customer.interact(*staff);
+
     ResourceManager<sf::Texture> textures;
     textures.load(0, "assets/hunny.png");
 
