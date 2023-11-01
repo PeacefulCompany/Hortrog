@@ -11,6 +11,7 @@
 #include "nlohmann/json.hpp"
 #include "resource/ResourceManager.h"
 #include "staff/FloorStaff.h"
+#include "staff/Waiter.h"
 
 #include <fstream>
 #include <iostream>
@@ -71,7 +72,6 @@ void readAssetFile(const std::string& path) {
 
 int main() {
     FloorStaff* staff = new Waiter();
-
     Customer customer("Bob", 4);
     customer.interact(*staff);
 
