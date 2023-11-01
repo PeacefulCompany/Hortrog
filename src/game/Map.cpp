@@ -1,8 +1,12 @@
 #include "Map.h"
+#include "SFML/Graphics.hpp"
+#include "SFML/Graphics/RenderTarget.hpp"
 #include "game/Map.h"
 #include "game/Object.h"
+#include "gui/View.h"
 #include "nlohmann/json.hpp"
 #include "resource/ResourceManager.h"
+
 #include <iostream>
 #include <stdio.h>
 using namespace nlohmann;
@@ -82,7 +86,19 @@ Map::~Map() {
 }
 void Map::add(Object* object) {}
 void setOjectAt(int x, int y, Object* object) {}
-void Map::draw() const {}
+void Map::draw(sf::RenderTarget& window,
+    ResourceManager<sf::Texture, int>& textures) const {
+    for (int i = 0; i < this->height_; i++) {
+        Object* temp = rows_[i];
+        while (temp != nullptr) {
+            sf::Sprite S(*textures.get(temp->getIcon()));
+            S.setPosition(temp->getX() * 32 * 3, temp->getY() * 32 * 3);
+            S.setScale(3, 3);
+            window.draw(S);
+            temp = temp->getNextHoriz();
+        }
+    }
+}
 void Map::DebugPrint() const {
     cout << "row view=:" << endl;
     for (int i = 0; i < this->height_; i++) {

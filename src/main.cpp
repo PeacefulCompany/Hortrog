@@ -2,17 +2,17 @@
 #include "SFML/Graphics/View.hpp"
 #include "SFML/System.hpp"
 #include "SFML/Window.hpp"
-
 #include "SFML/Window/WindowStyle.hpp"
 #include "customer/Customer.h"
 #include "event/ActionMap.h"
 #include "event/ActionTarget.h"
 #include "floor/floorView.h"
+#include "game/Game.h"
+#include "game/Object.h"
+#include "game/Waiter.h"
 #include "multiply/multiply.h"
 #include "nlohmann/json.hpp"
 #include "resource/ResourceManager.h"
-#include "staff/FloorStaff.h"
-
 #include <fstream>
 #include <iostream>
 #include <memory>
@@ -20,9 +20,7 @@
 #include <vector>
 
 using json = nlohmann::json;
-
 enum class PlayerInput { Up, Left, Right, Down, Click };
-
 class Player {
 public:
     Player(ActionTarget<PlayerInput>& actions) : actionTarget_(actions) {
@@ -41,11 +39,9 @@ public:
         actionTarget_.bind(PlayerInput::Click, [this](const sf::Event& e) {
             sf::Vector2f pos = {float(e.mouseButton.x), float(e.mouseButton.y)};
             if (!shape_.getGlobalBounds().contains(pos)) return;
-
             shape_.setFillColor(sf::Color::Red);
         });
     }
-
     void update(float dt) {
         shape_.move(movement_ * 200.f * dt);
         movement_ = sf::Vector2f();
@@ -69,47 +65,54 @@ void readAssetFile(const std::string& path) {
     std::cout << data["name"].get<std::string>() << std::endl;
     std::cout << data["age"].get<int>() << std::endl;
 }
-
-int main() {
-    FloorStaff* staff = new Waiter();
-
-    Customer customer("Bob", 4);
-    customer.interact(*staff);
-
-    ResourceManager<sf::Texture> textures;
-    sf::RenderWindow w(sf::VideoMode(1280, 720),
-        "COS 214 Final Project",
-        sf::Style::Default ^ sf::Style::Resize);
-    textures.load(0, "assets/textures/floor1.png");
-    textures.load(1, "assets/textures/entrance.png");
-    textures.load(2, "assets/textures/waiter.png");
-    textures.load(3, "assets/textures/wall.png");
-    FloorView* view = new FloorView(textures);
-    sf::Clock clock;
-    float lastTime = clock.getElapsedTime().asSeconds();
-    while (w.isOpen()) {
-        sf::Event e;
-
-        while (w.pollEvent(e)) {
-            if (e.type == sf::Event::EventType::Closed) {
-                w.close();
-            }
-        }
-        w.clear();
-        float dt = clock.getElapsedTime().asSeconds() - lastTime;
-        lastTime += dt;
-        view->draw(w);
-        // load entrance sprite here
-        w.display();
-    }
+void start() {
+    cout << "Starting game" << endl;
+    Game* game = new Game();
+    game->DrawMap();
+    cout << "Done game" << endl;
+    delete game;
 }
+void getOrders() {
+    cout << "Getting orders" << endl;
+    Waiter* waiter = new Waiter(0, 0, 0);
+    waiter->TakeOrder({"Rubs", "Vinc", "Sebs"});
+    waiter->ServeOrder();
+}
+int main() {
+    // ResourceManager<sf::Texture> textures;
 
+    // textures.load(0, "assets/textures/floor1.png");
+    // textures.load(1, "assets/textures/entrance.png");
+    // textures.load(2, "assets/textures/waiter.png");
+    // textures.load(3, "assets/textures/wall.png");
+    // FloorView* view = new FloorView(textures);
+    // sf::Clock clock;
+    // float lastTime = clock.getElapsedTime().asSeconds();
+    // while (w.isOpen()) {
+    //     sf::Event e;
+
+    //     while (w.pollEvent(e)) {
+    //         if (e.type == sf::Event::EventType::Closed) {
+    //             w.close();
+    //         }
+    //     }
+    //     w.clear();
+    //     float dt = clock.getElapsedTime().asSeconds() - lastTime;
+    //     lastTime += dt;
+    //     view->draw(w);
+    //     // load entrance sprite here
+    //     w.display();
+    // }
+    start();
+    getOrders();
+}
 //     ActionMap<PlayerInput> map;
 //     map.map(PlayerInput::Up, Action(sf::Keyboard::Up));
 //     map.map(PlayerInput::Down, Action(sf::Keyboard::Down));
 //     map.map(PlayerInput::Right, Action(sf::Keyboard::Right));
 //     map.map(PlayerInput::Left, Action(sf::Keyboard::Left));
-//     map.map(PlayerInput::Click, Action(sf::Mouse::Left, Action::Pressed));
+//     map.map(PlayerInput::Click, Action(sf::Mouse::Left,
+//     Action::Pressed));
 
 //     ActionTarget<PlayerInput> target(map);
 
@@ -117,8 +120,6 @@ int main() {
 
 //     std::cout << "COS 214 - Final Project" << std::endl;
 //     std::cout << "7 * 6 = " << multiply(7, 6) << std::endl;
-
-//     readAssetFile("demo_asset.json");
 
 //     sf::RectangleShape r({300, 200});
 //     sf::Sprite sprite(*textures.get(0));

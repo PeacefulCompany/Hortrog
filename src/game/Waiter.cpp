@@ -13,7 +13,13 @@ void Waiter::TakeOrder(vector<string> CustomerList) {
     input += "] }";
     this->currentOrder_ = json::parse(input);
 }
-json Waiter::placeOrder() { return this->currentOrder_; }
 void Waiter::ServeOrder() {
     cout << "Serving order: " << this->currentOrder_.dump() << endl;
 }
+json Waiter::placeOrder() { return this->currentOrder_; }
+
+void Waiter::offerBill() { cout << "Offering bill" << endl; }
+sf::FloatRect Waiter::getBoundingBox() const { return sf::FloatRect(); }
+sf::Vector2f Waiter::position() const { return sf::Vector2f(); }
+void Waiter::position(sf::Vector2f v) {}
+void Waiter::draw(sf::RenderTarget& window) const {}
