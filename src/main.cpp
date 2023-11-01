@@ -6,6 +6,7 @@
 #include "SFML/Window/WindowStyle.hpp"
 #include "event/ActionMap.h"
 #include "event/ActionTarget.h"
+#include "floor/CustomerIterator.h"
 #include "floor/Table.h"
 #include "floor/TableComponent.h"
 #include "floor/TableGroup.h"
@@ -81,7 +82,8 @@ int main() {
 
     TableGroup* g = new TableGroup();
     g->merge(new TableComponent(1, 1));
-    g->merge(new TableComponent(2, 3));
+    g->merge(new TableComponent(2, 2));
+    g->merge(new TableComponent(3, 1));
     g->seatCustomer(new Customer("John"));
     g->seatCustomer(new Customer("Bob"));
     g->seatCustomer(new Customer("Alice"));
@@ -100,6 +102,11 @@ int main() {
         for (json o : order) {
             std::cout << o << std::endl;
         }
+    }
+    CustomerIterator* iterator = g->createIterator();
+    while (!iterator->isDone()) {
+        std::cout << iterator->get()->name << std::endl;
+        iterator->next();
     }
 
     ResourceManager<sf::Texture, FloorView::SpriteType> tableSprites;

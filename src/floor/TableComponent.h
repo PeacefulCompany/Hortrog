@@ -22,6 +22,7 @@ public:
     std::string toString() const override;
 
 private:
+    friend class CustomerIterator;
     int id_;
     int capacity_;
     std::vector<Customer*> customers_;

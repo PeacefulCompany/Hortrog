@@ -6,6 +6,7 @@
 #include "order/OrderBuilder.h"
 
 class TableComponent;
+class CustomerIterator;
 
 class Table {
 public:
@@ -58,6 +59,13 @@ public:
      * @return false There are no customers seated at the table
      */
     virtual bool isEmpty() const = 0;
+
+    /**
+     * @brief Create an iterator to traverse the customers seated at the table
+     *
+     * @return CustomerIterator*
+     */
+    CustomerIterator* createIterator();
 
     /**
      * @brief Computes the number of customers this table can accomadate
