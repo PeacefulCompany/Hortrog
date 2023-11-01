@@ -1,33 +1,43 @@
 #include "order/ConcreteOrderBuilder.h"
 #include "order_test/Modifier.h"
 #include "order_test/OrderItem.h"
+#include <memory>
 #include <string>
 
 void ConcreteOrderBuilder::begin() {
-	this->orderTemp = new std::vector<std::shared_ptr<Order>>();
+	this->tempOrder = std::vector<std::unique_ptr<Order>>();
 }
 
 bool ConcreteOrderBuilder::addItem(std::string key) {
-	if (this->menu->getItem(key).getName() != "") {
-	
-	}
-	// Add item to orderTemp from Menu
-	this->orderTemp->emplace_back(std::make_shared<Order>(new OrderItem(this->menu->getItem(key).getName(), this->menu->getItem(key).getPrice())));
+	if(this->menu->getItem(key).getName() == "") { return false; }
+	this->tempOrder.emplace_back(std::make_unique<OrderItem>(this->menu->getItem(key).getName(), this->menu->getItem(key).getPrice()));
 	return true;
 }
 
 bool ConcreteOrderBuilder::addModifier(std::string key) {
-	// Add a modifier to the last item in orderTemp
-	// create a new order item with the same name and price as the last item in orderTemp
+	// Return false if the vector is empty
+	if(this->tempOrder.empty()) { return false; } 
+	// Save then remove the  last OrderItem in the vector
+	std::unique_ptr<Order> lastOrder = std::move(this->tempOrder.back());
+	this->tempOrder.pop_back();
+	// Create a Modifier from the last OrderItem
+	std::unique_ptr<Order> modifier = std::make_unique<Modifier>(std::move(lastOrder));
+	// Add the modifier to the vector
+	this->tempOrder.emplace_back(std::move(modifier));
 	return true;
 }
 
 std::string ConcreteOrderBuilder::getResult() {
-	// Add all teh orders in orderTemp to order
-	for (auto order : *this->orderTemp) {
-		this->order->add(order);
+	// return empty string if the vector is empty
+	if(this->tempOrder.empty()) { return "{}"; }
+
+	// Create a new OrderComposite
+	this->order = new OrderComposite();
+	// Add all the Orders in the vector to the OrderComposite
+	for(auto& order : this->tempOrder) {
+		this->order->add(std::move(order));
 	}
-	// return the json representation of order
+	// Return the OrderComposite as a JSON string
 	return this->order->toJson();
 }
 

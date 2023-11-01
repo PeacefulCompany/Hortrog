@@ -13,6 +13,6 @@ class ConcreteOrderBuilder : public OrderBuilder {
 		void setMenu(Menu * menu);
 	private:
 		Menu * menu;
-		std::vector<std::shared_ptr<Order>> * orderTemp;
+		std::vector<std::unique_ptr<Order>> tempOrder;
 		OrderComposite * order;
 };
