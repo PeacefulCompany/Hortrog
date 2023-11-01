@@ -7,6 +7,7 @@
 #include "customer/Customer.h"
 #include "event/ActionMap.h"
 #include "event/ActionTarget.h"
+#include "floor/floorView.h"
 #include "multiply/multiply.h"
 #include "nlohmann/json.hpp"
 #include "resource/ResourceManager.h"
@@ -76,38 +77,20 @@ int main() {
     customer.interact(*staff);
 
     ResourceManager<sf::Texture> textures;
-    textures.load(0, "assets/hunny.png");
-
-    ActionMap<PlayerInput> map;
-    map.map(PlayerInput::Up, Action(sf::Keyboard::Up));
-    map.map(PlayerInput::Down, Action(sf::Keyboard::Down));
-    map.map(PlayerInput::Right, Action(sf::Keyboard::Right));
-    map.map(PlayerInput::Left, Action(sf::Keyboard::Left));
-    map.map(PlayerInput::Click, Action(sf::Mouse::Left, Action::Pressed));
-
-    ActionTarget<PlayerInput> target(map);
-
-    Player player(target);
-
-    std::cout << "COS 214 - Final Project" << std::endl;
-    std::cout << "7 * 6 = " << multiply(7, 6) << std::endl;
-
-    readAssetFile("demo_asset.json");
     sf::RenderWindow w(sf::VideoMode(1280, 720),
         "COS 214 Final Project",
         sf::Style::Default ^ sf::Style::Resize);
-
-    sf::RectangleShape r({300, 200});
-    sf::Sprite sprite(*textures.get(0));
-
-    r.setPosition({10, 10});
-    r.setFillColor(sf::Color(255, 0, 0));
+    textures.load(0, "assets/textures/floor1.png");
+    textures.load(1, "assets/textures/entrance.png");
+    textures.load(2, "assets/textures/waiter.png");
+    textures.load(3, "assets/textures/wall.png");
+    FloorView* view = new FloorView(textures);
     sf::Clock clock;
     float lastTime = clock.getElapsedTime().asSeconds();
     while (w.isOpen()) {
         sf::Event e;
+
         while (w.pollEvent(e)) {
-            target.processEvent(e);
             if (e.type == sf::Event::EventType::Closed) {
                 w.close();
             }
@@ -115,14 +98,52 @@ int main() {
         w.clear();
         float dt = clock.getElapsedTime().asSeconds() - lastTime;
         lastTime += dt;
-
-        target.processEvents();
-        player.update(dt);
-
-        w.draw(sprite);
-
-        player.draw(w);
+        view->draw(w);
+        // load entrance sprite here
         w.display();
-        // rect.draw(w);
     }
 }
+
+//     ActionMap<PlayerInput> map;
+//     map.map(PlayerInput::Up, Action(sf::Keyboard::Up));
+//     map.map(PlayerInput::Down, Action(sf::Keyboard::Down));
+//     map.map(PlayerInput::Right, Action(sf::Keyboard::Right));
+//     map.map(PlayerInput::Left, Action(sf::Keyboard::Left));
+//     map.map(PlayerInput::Click, Action(sf::Mouse::Left, Action::Pressed));
+
+//     ActionTarget<PlayerInput> target(map);
+
+//     Player player(target);
+
+//     std::cout << "COS 214 - Final Project" << std::endl;
+//     std::cout << "7 * 6 = " << multiply(7, 6) << std::endl;
+
+//     readAssetFile("demo_asset.json");
+
+//     sf::RectangleShape r({300, 200});
+//     sf::Sprite sprite(*textures.get(0));
+//     r.setPosition({10, 10});
+//     r.setFillColor(sf::Color(255, 0, 0));
+//     sf::Clock clock;
+//     float lastTime = clock.getElapsedTime().asSeconds();
+//     while (w.isOpen()) {
+//         sf::Event e;
+//         while (w.pollEvent(e)) {
+//             target.processEvent(e);
+//             if (e.type == sf::Event::EventType::Closed) {
+//                 w.close();
+//             }
+//         }
+//         w.clear();
+//         float dt = clock.getElapsedTime().asSeconds() - lastTime;
+//         lastTime += dt;
+
+//         target.processEvents();
+//         player.update(dt);
+
+//         w.draw(sprite);
+
+//         player.draw(w);
+//         w.display();
+//         // rect.draw(w);
+//     }
