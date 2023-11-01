@@ -10,6 +10,7 @@
 #include "nlohmann/json.hpp"
 #include "resource/ResourceManager.h"
 
+#include "core/Timer.h"
 #include "subsystem/MealItem.h"
 
 #include <fstream>
@@ -71,7 +72,21 @@ void readAssetFile(const std::string& path) {
 
 int main() {
 
+    std::chrono::system_clock::time_point current_time =
+        std::chrono::system_clock::now();
+    std::chrono::system_clock::time_point end_time =
+        current_time + std::chrono::seconds(5);
 
+    while (current_time < end_time) {
+        current_time = std::chrono::system_clock::now();
+        std::cout << "Time left: "
+                  << std::chrono::duration_cast<std::chrono::seconds>(
+                         end_time - current_time)
+                         .count()
+                  << std::endl;
+    }
+
+    std::cout << "Finally displaying" << std::endl;
     // ResourceManager<sf::Texture> textures;
     // textures.load(0, "assets/hunny.png");
 

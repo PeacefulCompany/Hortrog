@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 class Order {
 public:
@@ -22,11 +23,12 @@ public:
     // getters and setters
     std::string getCustomer() const;
     void setCustomer(std::string customer);
+    inline std::vector<Order*> getOrders() { return orders_; }
 
 private:
     // attributes
     std::string customer;
-
+    std::vector<Order*> orders_;
     // functions
 };
 

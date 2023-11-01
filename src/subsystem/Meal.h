@@ -25,6 +25,8 @@ public:
     std::vector<MealItem> takeMeal();
     void addItem(MealItem);
     bool isReady();
+    std::string getJSONOrder();
+    std::string getCustomer();
 };
 
 #endif

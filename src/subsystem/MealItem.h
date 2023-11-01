@@ -11,12 +11,12 @@ public:
     inline std::string getCustomer() const { return customer_; }
     inline float getQuality() const { return quality_; }
     inline bool isPrepared() const { return prepared_; }
+    inline void prepare() { prepared_ = true; }
 
 private:
     std::string food_;
     std::string customer_;
     float quality_;
-    float prepTime_;
     bool prepared_ = false;
 };
 
