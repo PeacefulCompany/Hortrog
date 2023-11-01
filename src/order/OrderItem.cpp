@@ -9,7 +9,7 @@ std::string OrderItem::toJson() {
 double OrderItem::total() {
     return price;
 }
-void OrderItem::add(std::shared_ptr<Order>) {}
+void OrderItem::add(std::unique_ptr<Order>) {}
 OrderItem::OrderItem(std::string id, double price) {
     this->id = id;
     this->price = price;

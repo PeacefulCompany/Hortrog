@@ -5,9 +5,9 @@
 
 class OrderComposite : public Order{
 private:
-    std::vector<std::shared_ptr<Order>> orders;
+    std::vector<std::unique_ptr<Order>> orders;
 public:
-    void add(std::shared_ptr<Order> order) override;
+    void add(std::unique_ptr<Order> order) override;
     std::string toJson() override;
     double total() override;
 };

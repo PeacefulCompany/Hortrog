@@ -9,7 +9,7 @@ private:
 public:
     std::string toJson() override;
     double total() override;
-    void add(std::shared_ptr<Order>) override;
+    void add(std::unique_ptr<Order>) override;
     OrderItem(std::string id, double price);
     void setPrice(double price);
     double getPrice();

@@ -1,7 +1,7 @@
 #include "Modifier.h"
 
-void Modifier::add(std::shared_ptr<Order> order) {
-    component = order;
+void Modifier::add(std::unique_ptr<Order> order) {
+    component = std::move(order);
 }
 
 double Modifier::total() {
@@ -17,6 +17,6 @@ std::string Modifier::toJson() {
     ret += component->toJson();
     return ret;
 }
-Modifier::Modifier(std::shared_ptr<Order> component) {
-    this->component = component;
+Modifier::Modifier(std::unique_ptr<Order> component) {
+    this->component = std::move(component);
 }
