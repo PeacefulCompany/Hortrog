@@ -8,7 +8,7 @@ double Modifier::total() {
     double ret = 0;
     ret += component->total();
     ret += price;
-    return ret;
+    return ret;//test
 }
 
 std::string Modifier::toJson() {
