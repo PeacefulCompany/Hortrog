@@ -12,6 +12,7 @@ public:
 
     void buildOrder(OrderBuilder& builder);
     void interact(FloorStaff& staff);
+    void update(float dt);
 
 private:
     CustomerState* state_;

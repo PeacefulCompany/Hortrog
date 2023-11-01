@@ -13,3 +13,5 @@ void Customer::buildOrder(OrderBuilder& builder) {
 }
 
 void Customer::interact(FloorStaff& staff) { staff.accept(*state_); }
+
+void Customer::update(float dt) { state_->update(dt); }
