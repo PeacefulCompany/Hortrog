@@ -16,29 +16,34 @@
 #include "Item.h"
 #include "OrderJSON.h"
 #include "HeadChef.h"
+#include "../core/Timer.h"
+#include <chrono>
 
 class NormalChef : public KitchenStaff
 {
 public:
     //constructors and destructors
     NormalChef(/* args */);
-    NormalChef(std::string name, std::string role, int level);
+    NormalChef(std::string name, std::string role, int level, int timeToPrepare, Kitchen* kitchen);
     ~NormalChef();
 
     //functions
     virtual void prepareMeal(Meal* meal);
-    virtual bool canPrepare(std::vector<Item*> items);
+    virtual bool canPrepare(std::string items);
     virtual void handlePreperation(Meal* meal);
+    virtual void wait();
+    // virtual void notify();
 
     //getters and setters
-    std::string addPreparableItem(std::string itemName);
-    std::string removePreparableItem(std::string itemName);
+    void addPreparableItem(std::string itemName);
+    void removePreparableItem(std::string itemName);
+    // MealItem* getPreparedItem();
 
     protected:
     //attributes
     std::vector<MealItem*> mealItems;
     std::vector<std::string> preparableItems;
-    HeadChef* headChef;
+    int timeToPrepare;
 };
 
 

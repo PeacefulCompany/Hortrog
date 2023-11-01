@@ -2,7 +2,6 @@
 
 HeadChef::HeadChef(/* args */)
 {
-    kitchen = nullptr;
 }
 
 HeadChef::HeadChef(std::string name, std::string role, int level, Kitchen* kitchen)
@@ -10,7 +9,6 @@ HeadChef::HeadChef(std::string name, std::string role, int level, Kitchen* kitch
     this->name = name;
     this->role = role;
     this->level = level;
-    this->kitchen = kitchen;
     this->next = nullptr;
 }
 
@@ -22,14 +20,8 @@ HeadChef::~HeadChef()
 
 void HeadChef::prepareMeal(Meal* meal)
 {
-    if(meal->getReady()){
-        kitchen->notify();
-    }
-    else
-    {
-        addMeal(meal);
-        KitchenStaff::prepareMeal(meal);
-    }
+    handlePreperation(meal);
+    KitchenStaff::prepareMeal(meal);
 }
 
 void HeadChef::addMeal(Meal* meal) {
@@ -45,20 +37,28 @@ void HeadChef::addMeal(Meal* meal) {
     }
 }
 
-bool HeadChef::canPrepare(std::vector<Item*> items)
+bool HeadChef::canPrepare(std::string items)
 {
     return false;
 }
 
-void HeadChef::handlePreperation(std::vector<Item*> items, std::string customer)
+void HeadChef::handlePreperation(Meal* meal)
 {
-    // for (int i = 0; i < items.size(); i++)
-    // {
-    //     MealItem* mealItem = new MealItem(customer, this->level, items[i]->getName());
-    // }
-    // notify();
-    
+    OrderJSON order = OrderJSON(meal->getJson());
+    std::vector<Item*> items = order.getItems();
+
+    std::vector<MealItem*> mealItems = meal->getItems();
+
+    for (int i = 0; i < items.size(); i++) {
+        for (int j = 0; j < mealItems.size(); j++) {
+            if (items[i]->getName() != mealItems[j]->getFood()) {
+                meal->setReady(false);
+            }
+        }
+    }
+    meal->setReady(true);
 }
+
 
 std::vector<Meal*> HeadChef::getPrepareMeals() {
     std::vector<Meal*> readyMeals;

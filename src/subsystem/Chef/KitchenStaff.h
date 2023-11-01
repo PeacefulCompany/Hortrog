@@ -13,22 +13,23 @@
 #include "Item.h"
 #include "OrderJSON.h"
 
+class Kitchen;
+
 class KitchenStaff
 {
 public:
 
     //constructors and destructors
 
-    KitchenStaff(std::string name, std::string role, int level);
+    KitchenStaff(std::string name, std::string role, int level, Kitchen* kitchen);
     KitchenStaff();
     ~KitchenStaff();
 
     //functions
-    
     virtual void prepareMeal(Meal* meal);
-    virtual bool canPrepare(std::vector<Item*> items);
-    virtual void handlePreperation(std::vector<Item*> items, std::string customer);
-
+    virtual bool canPrepare(std::string items);
+    virtual void handlePreperation(Meal* meal);
+    virtual void notify();
 
     //getters and setters
 
@@ -49,11 +50,12 @@ protected:
     std::string role;
     int level;
     KitchenStaff* next;
-
+    Kitchen* kitchen;
     //functions
 
     
 };
 
+#include "Kitchen.h"
 
 #endif // KITCHENSTAFF_H

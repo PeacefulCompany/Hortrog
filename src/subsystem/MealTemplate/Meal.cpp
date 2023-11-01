@@ -9,14 +9,14 @@ Meal::~Meal() {}
 
 // Functions
 void Meal::addItem(MealItem* item) {
-    items.push_back(*item);
+    items.push_back(item);
 }
 
 // Getters and Setters
-std::vector<MealItem> Meal::getItems() {
+std::vector<MealItem*> Meal::getItems() {
     return items;
 }
-void Meal::setItems(std::vector<MealItem> items) {
+void Meal::setItems(std::vector<MealItem*> items) {
     this->items = items;
 }
 bool Meal::getReady() {

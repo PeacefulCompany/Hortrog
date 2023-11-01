@@ -1,6 +1,6 @@
 #include "KitchenStaff.h"
 
-KitchenStaff::KitchenStaff(std::string name, std::string role, int level)
+KitchenStaff::KitchenStaff(std::string name, std::string role, int leve, Kitchen* kitchen)
 {
     this->name = name;
     this->role = role;
@@ -16,7 +16,7 @@ KitchenStaff::~KitchenStaff()
 {
 }
 
-bool KitchenStaff::canPrepare(std::vector<Item*> items)
+bool KitchenStaff::canPrepare(std::string items)
 {
     return false;
 }
@@ -33,10 +33,15 @@ void KitchenStaff::prepareMeal(Meal* meal)
     }
 }
 
-// void KitchenStaff::notify()
-// {
-//     std::cout << "default kitchenStaff notify!" << std::endl;
-// }
+void KitchenStaff::handlePreperation(Meal* meal)
+{
+    std::cout << "default kitchenStaff handlePreperation!" << std::endl;
+}
+
+void KitchenStaff::notify()
+{
+    std::cout << "default kitchenStaff notify!" << std::endl;
+}
 
 std::string KitchenStaff::getName() const
 {
