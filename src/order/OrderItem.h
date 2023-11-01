@@ -4,8 +4,8 @@
 
 class OrderItem : public Order{
 private:
-    std::string id;
-    double price;
+    std::string id_;
+    double price_;
 public:
     std::string toJson() override;
     double total() override;
