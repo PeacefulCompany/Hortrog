@@ -25,6 +25,8 @@ public:
     bool getReady();
     void setReady(bool ready);
     std::unique_ptr<Order> getOrder();
+    std::string getCustomer(){return order->getCustomer();};
+    std::string getJson(){return order->toJson();};
     void setOrder(std::unique_ptr<Order> order);
 
 private:
