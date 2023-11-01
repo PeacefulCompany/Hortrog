@@ -26,7 +26,7 @@ public:
      * @param id A resource identifier
      * @param args Parameters for loading the resource
      * @return true Resource was successfully loaded
-     * @return false Resource failed to load, or id_ already exists
+     * @return false Resource failed to load, or id already exists
      */
     template <typename... Args>
     bool load(const Id& id, Args&&... args);

@@ -5,7 +5,7 @@
 
 class Order{
 private:
-    std::string customer_;
+    std::string customer;
 public:
     virtual void add(std::unique_ptr<Order>) = 0;
     virtual std::string toJson() = 0;
