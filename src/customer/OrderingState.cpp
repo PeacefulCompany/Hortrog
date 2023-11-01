@@ -1,4 +1,5 @@
 #include "OrderingState.h"
+#include "customer/WaitingState.h"
 #include <iostream>
 
 void OrderingState::visit(Manager& m) {
@@ -12,6 +13,7 @@ void OrderingState::visit(Manager& m) {
 void OrderingState::visit(Waiter& w) {
     if (readyTimer_.expired()) {
         std::cout << "Ordering: Waiter" << std::endl;
+        customer_->changeState(new WaitingState());
     } else {
         std::cout << "Not ready to order" << std::endl;
     }

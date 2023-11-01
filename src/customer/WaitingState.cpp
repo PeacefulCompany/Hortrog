@@ -1,5 +1,7 @@
 #include "WaitingState.h"
+#include "customer/EatingState.h"
 #include <iostream>
+#include <stdlib.h>
 
 void WaitingState::visit(Manager& m) {
     std::cout << "[Waiting]: We're waiting for food, but it's chill"
@@ -7,5 +9,11 @@ void WaitingState::visit(Manager& m) {
 }
 
 void WaitingState::visit(Waiter& w) {
-    std::cout << "[Waiting]: Where's the food at???" << std::endl;
+    // TODO: replace this with actual order pinging
+    if (rand() % 2 == 0) {
+        std::cout << "[Waiting]: Thanks for the food!!" << std::endl;
+        customer_->changeState(new EatingState());
+    } else {
+        std::cout << "[Waiting]: Where's the food at???" << std::endl;
+    }
 }

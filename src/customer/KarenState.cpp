@@ -3,6 +3,7 @@
 
 void KarenState::visit(Manager& m) {
     std::cout << "[Karen]: COMPLAIN" << std::endl;
+    customer_->changeState(nullptr);
 }
 
 void KarenState::visit(Waiter& w) {
