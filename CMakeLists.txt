@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(COS214_FinalProject LANGUAGES CXX)
 
-# --- CMAKE-SPECIFIC CONFIGURATION ---
+# --- PROJECT-WIDE CONFIGURATION ---
 set(FETCHCONTENT_QUIET FALSE)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 20)
@@ -56,3 +56,11 @@ add_custom_target( doc_doxygen ALL
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Generating API documentation with Doxygen"
     VERBATIM )
+
+# --- COPY ASSETS ---
+add_custom_target(assets ALL
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/${DIR_ASSETS}
+    ${CMAKE_CURRENT_BINARY_DIR}/src/assets
+    COMMENT "Copying assets to build directory"
+)
