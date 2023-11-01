@@ -10,5 +10,4 @@ public:
     void add(std::shared_ptr<Order> order) override;
     std::string toJson() override;
     double total() override;
-    std::string getCustomer() override;
 };

@@ -17,3 +17,6 @@ std::string Modifier::toJson() {
     ret += component->toJson();
     return ret;
 }
+Modifier::Modifier(std::shared_ptr<Order> component) {
+    this->component = component;
+}

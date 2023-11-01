@@ -11,4 +11,5 @@ public:
     void add(std::shared_ptr<Order>) override;
     double total() override;
     std::string toJson() override;
+    explicit Modifier(std::shared_ptr<Order> component);
 };
