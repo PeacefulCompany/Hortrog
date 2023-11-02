@@ -4,6 +4,7 @@
 #include "SFML/Window.hpp"
 
 #include "SFML/Window/WindowStyle.hpp"
+#include "customer/Customer.h"
 #include "event/ActionMap.h"
 #include "event/ActionTarget.h"
 #include "floor/CustomerIterator.h"
@@ -18,6 +19,7 @@
 #include "views/FloorView.h"
 #include "views/TablePresenter.h"
 #include "views/TableView.h"
+#include "staff/FloorStaff.h"
 
 #include <fstream>
 #include <iostream>
@@ -111,6 +113,11 @@ int main() {
 
     ResourceManager<sf::Texture, FloorView::SpriteType> tableSprites;
     tableSprites.load(FloorView::SingleTable, "assets/textures/table.png");
+
+    FloorStaff* staff = new Waiter();
+
+    Customer customer("Bob", 4);
+    customer.interact(*staff);
 
     ResourceManager<sf::Texture> textures;
     textures.load(0, "assets/hunny.png");
