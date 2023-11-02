@@ -18,7 +18,8 @@ void KitchenStaff::prepareMeal(Meal* meal) {
     if (next != nullptr) {
         next->prepareMeal(meal);
     } else {
-        std::cout << "No more staff members to handle order!" << std::endl;
+        kitchen->handleMeal(meal);
+        std::cout << "end of chain of chefs!" << std::endl;
     }
 }
 

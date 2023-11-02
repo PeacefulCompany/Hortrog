@@ -21,6 +21,14 @@ bool Meal::isReady() {
     return false;
 }
 
+std::string Meal::toString() {
+    std::string str = "Meal: \n";
+    for (auto& item : items_) {
+        str += item->toString() + "\n";
+    }
+    return str;
+}
+
 void Meal::addItem(MealItem* item) { items_.push_back(item); }
 
 std::string Meal::getJSON() { return order_->toJson(); }

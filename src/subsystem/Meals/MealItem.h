@@ -12,6 +12,7 @@ public:
     inline float getQuality() const { return quality_; }
     inline bool isReady() const { return ready_; }
     inline void setReady(bool rStatus_) { ready_ = rStatus_; }
+    inline std::string toString() const { return "{"+food_ +","+customer_ +","+to_string(quality_) +","+"}"; }
 
 private:
     std::string food_;

@@ -26,6 +26,7 @@ public:
     bool isReady();
     std::string getJSON();
     std::string getCustomer();
+    std::string toString();
     std::vector<MealItem*>* getItems();
     inline bool getReady() { return ready_; }
     inline void setReady(bool rStatus_) { ready_ = rStatus_; }

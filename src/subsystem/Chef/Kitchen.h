@@ -4,13 +4,32 @@
 #define KITCHEN_H
 
 #include "KitchenStaff.h"
+#include "Meal.h"	
+#include "HeadChef.h"
+#include "NormalChef.h"
+#include "../OrderTemplate/Order.h"
+
+#include <queue>
+#include <vector>
+#include <iostream>
+#include <string>
+
 
 class Kitchen {
 private:
-    /* data */
+    std::unique_ptr<KitchenStaff> headChef;
+    std::queue<Meal*> incomingMeals;
+    std::vector<Meal*> outGoingMeals;
 public:
-    Kitchen(/* args */);
+    Kitchen();
+    void handleOrder(Order* order);
+    void clearQueue();
+    void handleMeal(Meal* meal);
+    void printReadyMeals();
+
+
     ~Kitchen();
+
     void notify();
 };
 
