@@ -11,7 +11,7 @@
 #include "resource/ResourceManager.h"
 
 #include "core/Timer.h"
-#include "subsystem/MealItem.h"
+#include "subsystem/Meals/Meal.h"
 
 #include <fstream>
 #include <iostream>

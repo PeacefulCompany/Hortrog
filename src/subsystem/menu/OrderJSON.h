@@ -14,7 +14,7 @@ private:
 
 public:
     OrderJSON(std::string order);
-    ~OrderJSON();
+    ~OrderJSON(){};
 
     std::vector<Item*> getItems();
 };
