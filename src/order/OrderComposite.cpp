@@ -6,12 +6,15 @@ void OrderComposite::add(std::unique_ptr<Order> order) {
 
 std::string OrderComposite::toJson() {
     std::string ret = "{\n";
-    for (auto& order: orders) {
-        ret += order->toJson();
-        ret += "\n";
-    }
-    ret += "}\n";
-    return ret;
+    ret += "\"order\": [\n";
+	for (auto& order : orders) {
+		ret += order->toJson() + ",\n";
+	}
+	//Remove trailing comma
+	ret.pop_back();
+	ret += "]\n";
+	ret += "}";
+	return ret;
 }
 
 double OrderComposite::total() {

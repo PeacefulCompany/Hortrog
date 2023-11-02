@@ -1,8 +1,8 @@
 #include "OrderItem.h"
 
 std::string OrderItem::toJson() {
-    std::string ret =  "\"name\": \"" + id +"\",";
-	ret += "\"price\": " + std::to_string(price);
+    std::string ret =  "{\"name\": \"" + id + "\",";
+	ret += "\"price\": " + std::to_string(price)+"}";
     return ret;
 }
 
