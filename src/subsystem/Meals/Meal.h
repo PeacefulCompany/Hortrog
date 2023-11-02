@@ -24,8 +24,9 @@ public:
     std::vector<MealItem> takeMeal();
     void addItem(MealItem);
     bool isReady();
-    std::string getJSONOrder();
+    std::string getJSON();
     std::string getCustomer();
+    std::vector<MealItem>* getItems();
 };
 
 #endif

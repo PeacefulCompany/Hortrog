@@ -3,18 +3,16 @@
 #ifndef HEADCHEF_H
 #define HEADCHEF_H
 
-#include "Meal.h"
+#include "../Meals/Meal.h"
 #include <string>
 
-#include "Item.h"
+#include "../OrderTemplate/Order.h"
+#include "../menu/Item.h"
+#include "../menu/OrderJSON.h"
 #include "KitchenStaff.h"
-#include "MealItem.h"
-#include "OrderJSON.h"
-#include "OrderTemplate/Order.h"
 #include <queue>
 #include <string>
 #include <vector>
-
 
 class HeadChef : public KitchenStaff {
 public:
@@ -37,6 +35,5 @@ public:
 private:
     std::vector<Meal*> mealsToPrepare;
 };
-
 
 #endif // HEADCHEF_H

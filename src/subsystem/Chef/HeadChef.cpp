@@ -44,14 +44,14 @@ bool HeadChef::canPrepare(std::string items)
 
 void HeadChef::handlePreperation(Meal* meal)
 {
-    OrderJSON order = OrderJSON(meal->getJson());
+    OrderJSON order = OrderJSON(meal->getJSON());
     std::vector<Item*> items = order.getItems();
 
-    std::vector<MealItem*> mealItems = meal->getItems();
+    std::vector<MealItem>* mealItems_ = meal->getItems();
 
     for (int i = 0; i < items.size(); i++) {
-        for (int j = 0; j < mealItems.size(); j++) {
-            if (items[i]->getName() != mealItems[j]->getFood()) {
+        for (int j = 0; j < mealItems_->size(); j++) {
+            if (items[i]->getName() != mealItems_->at(j).getFood()) {
                 meal->setReady(false);
             }
         }
@@ -63,7 +63,7 @@ void HeadChef::handlePreperation(Meal* meal)
 std::vector<Meal*> HeadChef::getPrepareMeals() {
     std::vector<Meal*> readyMeals;
     for (auto it = mealsToPrepare.begin(); it != mealsToPrepare.end(); ) {
-        if ((*it)->getReady()) {
+        if ((*it)->isReady()) {
             readyMeals.push_back(*it);
             it = mealsToPrepare.erase(it);
         } else {

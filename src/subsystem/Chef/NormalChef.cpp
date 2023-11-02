@@ -59,7 +59,7 @@ void NormalChef::removePreparableItem(std::string itemName) {
 // }
 
 void NormalChef::handlePreperation(Meal* meal) {
-    OrderJSON order = OrderJSON(meal->getJson());
+    OrderJSON order = OrderJSON(meal->getJSON());
     std::vector<Item*> items = order.getItems();
 
     for (int i = 0; i < items.size(); i++) {
@@ -70,7 +70,7 @@ void NormalChef::handlePreperation(Meal* meal) {
             for (int j = 0; j < mealItems.size(); j++) {
                 if (mealItems[j]->getFood() == items[i]->getName()) {
                     found = true;
-                    meal->addItem(mealItems[j]);
+                    meal->addItem(*mealItems[j]);
                     mealItems.erase(mealItems.begin() + j);
                     break;
                 }
@@ -88,7 +88,8 @@ void NormalChef::handlePreperation(Meal* meal) {
 }
 
 void NormalChef::wait() {
-    std::chrono::system_clock::time_point current_time = std::chrono::system_clock::now();
+    std::chrono::system_clock::time_point current_time =
+        std::chrono::system_clock::now();
     std::chrono::system_clock::time_point end_time =
         current_time + std::chrono::seconds(5);
 

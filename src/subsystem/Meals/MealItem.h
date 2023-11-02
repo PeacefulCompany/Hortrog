@@ -10,14 +10,14 @@ public:
     inline std::string getFood() const { return food_; }
     inline std::string getCustomer() const { return customer_; }
     inline float getQuality() const { return quality_; }
-    inline bool isPrepared() const { return prepared_; }
-    inline void prepare() { prepared_ = true; }
+    inline bool isReady() const { return ready_; }
+    inline void setReady(bool rStatus_) { ready_ = rStatus_; }
 
 private:
     std::string food_;
     std::string customer_;
     float quality_;
-    bool prepared_ = false;
+    bool ready_ = false;
 };
 
 #endif // SUBSYSTEM_MEAL_ITEM_H
