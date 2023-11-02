@@ -70,7 +70,7 @@ void NormalChef::handlePreperation(Meal* meal) {
             for (int j = 0; j < mealItems.size(); j++) {
                 if (mealItems[j]->getFood() == items[i]->getName()) {
                     found = true;
-                    meal->addItem(*mealItems[j]);
+                    meal->addItem(mealItems[j]);
                     mealItems.erase(mealItems.begin() + j);
                     break;
                 }

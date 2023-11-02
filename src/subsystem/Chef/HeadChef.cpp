@@ -1,25 +1,20 @@
 #include "HeadChef.h"
 
-HeadChef::HeadChef(/* args */)
-{
-}
+HeadChef::HeadChef(/* args */) {}
 
-HeadChef::HeadChef(std::string name, std::string role, int level, Kitchen* kitchen)
-{
+HeadChef::HeadChef(
+    std::string name, std::string role, int level, Kitchen* kitchen) {
     this->name = name;
     this->role = role;
     this->level = level;
     this->next = nullptr;
 }
 
-HeadChef::~HeadChef()
-{
-}
+HeadChef::~HeadChef() {}
 
-//functions
+// functions
 
-void HeadChef::prepareMeal(Meal* meal)
-{
+void HeadChef::prepareMeal(Meal* meal) {
     handlePreperation(meal);
     KitchenStaff::prepareMeal(meal);
 }
@@ -37,21 +32,17 @@ void HeadChef::addMeal(Meal* meal) {
     }
 }
 
-bool HeadChef::canPrepare(std::string items)
-{
-    return false;
-}
+bool HeadChef::canPrepare(std::string items) { return false; }
 
-void HeadChef::handlePreperation(Meal* meal)
-{
+void HeadChef::handlePreperation(Meal* meal) {
     OrderJSON order = OrderJSON(meal->getJSON());
     std::vector<Item*> items = order.getItems();
 
-    std::vector<MealItem>* mealItems_ = meal->getItems();
+    std::vector<MealItem*>* mealItems_ = meal->getItems();
 
     for (int i = 0; i < items.size(); i++) {
         for (int j = 0; j < mealItems_->size(); j++) {
-            if (items[i]->getName() != mealItems_->at(j).getFood()) {
+            if (items[i]->getName() != mealItems_->at(j)->getFood()) {
                 meal->setReady(false);
             }
         }
@@ -59,10 +50,9 @@ void HeadChef::handlePreperation(Meal* meal)
     meal->setReady(true);
 }
 
-
 std::vector<Meal*> HeadChef::getPrepareMeals() {
     std::vector<Meal*> readyMeals;
-    for (auto it = mealsToPrepare.begin(); it != mealsToPrepare.end(); ) {
+    for (auto it = mealsToPrepare.begin(); it != mealsToPrepare.end();) {
         if ((*it)->isReady()) {
             readyMeals.push_back(*it);
             it = mealsToPrepare.erase(it);

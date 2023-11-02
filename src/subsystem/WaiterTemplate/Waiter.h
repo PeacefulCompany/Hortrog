@@ -5,9 +5,7 @@
 class Waiter {
 
 private:
-
 public:
-
 };
 
 #endif // SUBSYSTEM_WAITER_H

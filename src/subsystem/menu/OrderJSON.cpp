@@ -1,17 +1,11 @@
 #include "OrderJSON.h"
 #include "json.hpp"
-using json = nlohmann::json ;
+using json = nlohmann::json;
 
-OrderJSON::OrderJSON(std::string order)
-{
-    this->order = order;
+OrderJSON::OrderJSON(std::string order) { this->order = order; }
 
-}
-
-std::vector<Item*> OrderJSON::getItems()
-{
+std::vector<Item*> OrderJSON::getItems() {
     json data = json::parse(order);
-
 
     for (auto& item : data["order"]) {
         // std::cout << "[DEBUG] Iterating through items..." << std::endl;
@@ -20,13 +14,10 @@ std::vector<Item*> OrderJSON::getItems()
 
         Item* newItem;
 
-        if(item.contains("diet"))
-        {
+        if (item.contains("diet")) {
             std::string restrictions = item["diet"].get<std::string>();
             newItem = new Item(name, price, restrictions);
-        }
-        else 
-        {
+        } else {
             newItem = new Item(name, price, "none");
         }
 

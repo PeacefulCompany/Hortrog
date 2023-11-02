@@ -14,19 +14,21 @@ class Meal {
 
 private:
     std::unique_ptr<Order> order_ = std::make_unique<Order>();
-    std::vector<MealItem> items_;
+    std::vector<MealItem*> items_;
     bool ready_ = false;
 
 public:
     inline Meal(Order* order) : order_(order) {}
     float getQuality();
     Order* getOrder();
-    std::vector<MealItem> takeMeal();
-    void addItem(MealItem);
+    std::vector<MealItem*>* takeMeal();
+    void addItem(MealItem*);
     bool isReady();
     std::string getJSON();
     std::string getCustomer();
-    std::vector<MealItem>* getItems();
+    std::vector<MealItem*>* getItems();
+    inline bool getReady() { return ready_; }
+    inline void setReady(bool rStatus_) { ready_ = rStatus_; }
 };
 
 #endif

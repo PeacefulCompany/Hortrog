@@ -6,7 +6,7 @@
 class MealItem {
 
 public:
-    MealItem(std::string, std::string, float);
+    MealItem(std::string, float, std::string);
     inline std::string getFood() const { return food_; }
     inline std::string getCustomer() const { return customer_; }
     inline float getQuality() const { return quality_; }

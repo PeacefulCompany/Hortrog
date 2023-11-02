@@ -5,8 +5,7 @@
 
 #include "KitchenStaff.h"
 
-class Kitchen
-{
+class Kitchen {
 private:
     /* data */
 public:
@@ -14,6 +13,5 @@ public:
     ~Kitchen();
     void notify();
 };
-
 
 #endif

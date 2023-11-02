@@ -19,9 +19,9 @@ public:
     };
     ~Item();
 
-    std::string getName() const{return name;};
-    double getCost() const{return cost;};
-    std::string getDiet() const{return diet;};
+    std::string getName() const { return name; };
+    double getCost() const { return cost; };
+    std::string getDiet() const { return diet; };
 };
 
 #endif // ITEM_H

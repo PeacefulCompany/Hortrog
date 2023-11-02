@@ -1,14 +1,7 @@
 #include "Kitchen.h"
 
-Kitchen::Kitchen(/* args */)
-{
-}
+Kitchen::Kitchen(/* args */) {}
 
-Kitchen::~Kitchen()
-{
-}
+Kitchen::~Kitchen() {}
 
-void Kitchen::notify()
-{
-    std::cout << "Kitchen notified" << std::endl;
-}
+void Kitchen::notify() { std::cout << "Kitchen notified" << std::endl; }
