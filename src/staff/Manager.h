@@ -2,7 +2,6 @@
 #include "FloorStaff.h"
 #include "customer/CustomerState.h"
 #include <iostream>
-using namespace std;
 /**
  * @class Manager
  * @brief This class represents a manager.

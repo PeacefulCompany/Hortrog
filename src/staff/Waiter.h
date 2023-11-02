@@ -7,7 +7,6 @@
 #include <iostream>
 #include <memory>
 
-using namespace std;
 /**
  * @class Waiter
  * @brief This class represents a waiter.
