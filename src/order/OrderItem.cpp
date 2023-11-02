@@ -18,3 +18,5 @@ void OrderItem::setPrice(double price) {
     this->price = price;
 }
 double OrderItem::getPrice() { return this->price;}
+
+std::string OrderItem::getId() { return this->id;}
