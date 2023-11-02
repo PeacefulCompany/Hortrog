@@ -3,7 +3,6 @@
 #include "customer/CustomerState.h"
 #include <iostream>
 using namespace std;
-
 /**
  * @class Manager
  * @brief This class represents a manager.
@@ -14,21 +13,9 @@ using namespace std;
 class Manager : public FloorStaff {
 public:
     /**
-     * @brief Checks the kitchen.
-     *
-     * This function is used to check the kitchen.
+     * @brief Default constructor for Manager.
      */
-    void checkKitcken();
-
-    /**
-     * @brief Gets the order builder.
-     *
-     * This function is used to get the order builder.
-     *
-     * @return A pointer to the order builder.
-     */
-    OrderBuilder* getOrderBuilder();
-
+    Manager();
     /**
      * @brief Accepts a customer state.
      *
@@ -37,6 +24,23 @@ public:
      * @param state The customer state to accept.
      */
     void accept(CustomerState& state) override;
+    /**
+     * @brief Lodges a customer complaint.
+     *
+     * This function is used to lodge a customer complaint.
+     *
+     * @param complaint The customer's complaint.
+     */
+    void lodgeComplaint(const std::string& complaint);
+
+    /**
+     * @brief Gives a rating.
+     *
+     * This function is used to give a rating.
+     *
+     * @param rating The rating to give.
+     */
+    void giveRating(int rating);
 
 private:
     // std::vector<Tables*> tables_;

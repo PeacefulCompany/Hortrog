@@ -27,7 +27,7 @@ public:
      *
      * This function is used to check the kitchen for orders.
      */
-    void checkKitcken();
+    void checkKitchen();
 
     /**
      * @brief Gets the order builder.

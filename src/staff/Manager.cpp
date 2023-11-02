@@ -1,7 +1,12 @@
 #include "Manager.h"
-void Manager::checkKitcken() { cout << "kitchen check..." << endl; }
-OrderBuilder* Manager::getOrderBuilder() {
-    cout << "Get Generated Order..." << endl;
-    return NULL;
+Manager::Manager() {}
+void Manager::lodgeComplaint(const std::string& complaint) {
+    std::cout << "Customer complaint: " << complaint << std::endl;
+    // Handle the complaint...
+}
+
+void Manager::giveRating(int rating) {
+    std::cout << "Customer rating: " << rating << std::endl;
+    // Handle the rating...
 }
 void Manager::accept(CustomerState& state) { state.visit(*this); }
