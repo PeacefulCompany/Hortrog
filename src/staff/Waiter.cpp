@@ -1,6 +1,7 @@
 #include "Waiter.h"
+#include "staff/FloorStaff.h"
 #include "staff/Waiter.h"
-Waiter::Waiter() {}
+Waiter::Waiter() : FloorStaff() {}
 void Waiter::checkKitchen() {
     std::cout << "kitchen check for orders..." << std::endl;
     // kitchen_->checkForOrders();

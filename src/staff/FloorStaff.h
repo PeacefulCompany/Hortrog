@@ -13,7 +13,7 @@ public:
     /**
      * @brief Default constructor for FloorStaff.
      */
-    FloorStaff(){};
+    FloorStaff() { currentTableId_ = -1; };
     /**
      * @brief Pure virtual function for accepting a customer state.
      *
@@ -23,6 +23,7 @@ public:
      * @param state The customer state to accept.
      */
     virtual void accept(CustomerState& state) = 0;
+    int currentTableId_;
 
 private:
 };
