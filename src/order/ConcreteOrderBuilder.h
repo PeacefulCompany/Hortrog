@@ -1,7 +1,9 @@
 #pragma once
 #include "order/OrderBuilder.h"
-#include "order_test/Order.h"
-#include "order_test/OrderComposite.h"
+#include "order/Order.h"
+#include "order/OrderComposite.h"
+#include "order/Modifier.h"
+#include "order/OrderItem.h"
 
 class ConcreteOrderBuilder : public OrderBuilder {
 	public:
