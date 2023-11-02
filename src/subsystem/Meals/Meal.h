@@ -4,7 +4,6 @@
 
 // file includes
 #include "MealItem.h";
-#include "OrderTemplate/Order.h"
 #include "subsystem/OrderTemplate/Order.h"
 
 // library includes

@@ -3,36 +3,34 @@
 #ifndef ORDER_H
 #define ORDER_H
 
-#include <string>
 #include <iostream>
+#include <string>
+#include <vector>
 
-class Order
-{
-    public:
-
-    //constructors and destructors
+class Order {
+public:
+    // constructors and destructors
 
     Order(std::string customer);
     Order();
     ~Order();
- 
-    //functions
+
+    // functions
     void add(Order* order);
     std::string toJson();
     double total();
 
-    //getters and setters
+    // getters and setters
     std::string getCustomer() const;
+    inline std::vector<Order*> getOrders() const { return orders_; }
     void setCustomer(std::string customer);
 
-    private:
-    
-    //attributes
-    std::string customer;   
+private:
+    // attributes
+    std::vector<Order*> orders_;
+    std::string customer;
 
-    //functions
-
+    // functions
 };
-
 
 #endif // ORDER_H
