@@ -13,6 +13,10 @@ protected:
     void gameLoop() override;
     void cleanup() override {}
 
+    void update();
+
+    void printOptions(const std::vector<std::string>& options);
+
 private:
     bool running_ = true;
     std::vector<Table*> tables_;

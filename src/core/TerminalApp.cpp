@@ -24,8 +24,25 @@ void TerminalApp::init() {
 
 void TerminalApp::gameLoop() {
     int opt = 0;
-    std::cout << "Enter an option: ";
+    printOptions({"Pass some time"});
+    std::cout << "Enter an option (-1 to quit): ";
     std::cin >> opt;
+
+    switch (opt) {
+    case -1: {
+        running_ = false;
+        break;
+    }
+    case 1: {
+        update();
+        break;
+    }
+    default: {
+        std::cout << "Invalid Option" << std::endl;
+        break;
+    }
+    }
+
     std::cout << "Option chosen: " << opt << std::endl;
     if (opt == -1) running_ = false;
 
@@ -46,5 +63,21 @@ void TerminalApp::gameLoop() {
     while (!iterator->isDone()) {
         std::cout << iterator->get()->getName() << std::endl;
         iterator->next();
+    }
+}
+
+void TerminalApp::update() {
+    float dt = 0;
+    std::cout << "How long do we wait? ";
+    std::cin >> dt;
+    if (std::cin.fail()) {
+        std::cout << "Invalid time. Ignoring..." << std::endl;
+        return;
+    }
+    std::cout << "The time has passed: " << dt << " seconds" << std::endl;
+}
+void TerminalApp::printOptions(const std::vector<std::string>& options) {
+    for (size_t i = 0; i < options.size(); i++) {
+        std::cout << (i + 1) << ") " << options[i] << std::endl;
     }
 }
