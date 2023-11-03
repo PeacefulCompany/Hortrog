@@ -14,7 +14,7 @@ public:
     /**
      * @brief Default constructor for Manager.
      */
-    Manager() : FloorStaff() {}
+    Manager();
     /**
      * @brief Accepts a customer state.
      *

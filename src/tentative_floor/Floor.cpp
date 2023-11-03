@@ -41,6 +41,7 @@ void Floor::addCustomerToTable(std::vector<Customer*> customers) {
         std::cout << "Table does not exist." << std::endl;
     }
 }
+
 void Floor::customerEnter(std::vector<Customer*> customers) {
     for (int i = 0; i < static_cast<int>(customers.size()); i++) {
         floorCustomers_.push_back(customers[i]);
@@ -49,8 +50,10 @@ void Floor::customerEnter(std::vector<Customer*> customers) {
 void Floor::customerEnter(Customer* customer) {
     floorCustomers_.push_back(customer);
 }
+S
 
-void Floor::removeCustomerFromTable(Customer* customer, int tableId) {
+    void
+    Floor::removeCustomerFromTable(Customer* customer, int tableId) {
     if (tableId < static_cast<int>(tables_.size())) {
         for (int i = 0;
              i < static_cast<int>(tables_[tableId]->customersAtTable_.size());
@@ -106,16 +109,16 @@ void Floor::checkTable(int tableId) {
         std::cout << "Table does not exist." << std::endl;
     }
     // change tables sates to ready to order
-    for (int i = 0;
-         i < static_cast<int>(tables_[tableId]->customersAtTable_.size());
-         i++) {
-        if (tables_[i]->customersAtTable_.size() > 0) {
-            tables_[i]->customersAtTable_[0]->changeState(
-                new WaitingState(tables_[i]->customersAtTable_[tableId]));
-            tables_[i]->customersAtTable_[1]->changeState(
-                new EatingState(tables_[i]->customersAtTable_[tableId]));
-            tables_[i]->customersAtTable_[2]->changeState(
-                new PayingState(tables_[i]->customersAtTable_[tableId]));
-        }
-    }
+    // for (int i = 0;
+    //      i < static_cast<int>(tables_[tableId]->customersAtTable_.size());
+    //      i++) {
+    //     if (tables_[i]->customersAtTable_.size() > 0) {
+    //         tables_[i]->customersAtTable_[0]->changeState(
+    //             new WaitingState(tables_[i]->customersAtTable_[tableId]));
+    //         tables_[i]->customersAtTable_[1]->changeState(
+    //             new EatingState(tables_[i]->customersAtTable_[tableId]));
+    //         tables_[i]->customersAtTable_[2]->changeState(
+    //             new PayingState(tables_[i]->customersAtTable_[tableId]));
+    //     }
+    // }
 }

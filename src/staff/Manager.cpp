@@ -1,5 +1,5 @@
 #include "Manager.h"
-Manager::Manager() {}
+Manager::Manager() : FloorStaff(){};
 void Manager::lodgeComplaint(const std::string& complaint) {
     std::cout << "Customer complaint: " << complaint << std::endl;
     // Handle the complaint...

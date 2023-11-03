@@ -12,6 +12,7 @@ void EatingState::visit(Manager& m) {
 
 void EatingState::visit(Waiter& w) {
     std::cout << "[Eating]: Visited by waiter" << std::endl;
+    update(1);
 }
 
 void EatingState::update(float dt) {

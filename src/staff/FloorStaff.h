@@ -27,3 +27,19 @@ public:
 
 private:
 };
+// void floor() {
+//     std::cout << "Floor" << std::endl;
+//     Floor* floor = new Floor();
+//     std::vector<Customer*> customers;
+//     customers.push_back(new Customer("Neo", 0.5));
+//     customers.push_back(new Customer("Trinity", 0.5));
+//     customers.push_back(new Customer("Morpheus", 0.5));
+//     floor->customerEnter(customers);
+
+//     floor->addStaff(new Waiter());
+//     floor->createTables(5, 4);
+//     floor->addCustomerToTable(customers);
+
+//     floor->checkTable(0);
+//     floor->checkTable(0);
+// }

@@ -12,6 +12,7 @@ Customer::Customer(const std::string& name, float happiness)
 
 void Customer::buildOrder(OrderBuilder& builder) {
     std::cout << "Wot ze fock" << std::endl;
+    std::cout << "fot ez zock" << std::endl;
 }
 
 void Customer::interact(FloorStaff& staff) {

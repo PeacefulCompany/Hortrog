@@ -4,7 +4,11 @@
 Waiter::Waiter() : FloorStaff() {}
 void Waiter::checkKitchen() {
     std::cout << "kitchen check for orders..." << std::endl;
-    // kitchen_->checkForOrders();
+    // currentmealObjectPointerArray_ = kitchen_->checkForOrders();
+    //  add meals
+    currentmealObjectPointerArray_.push_back(new std::string("fish"));
+    currentmealObjectPointerArray_.push_back(new std::string("chips"));
+    currentmealObjectPointerArray_.push_back(new std::string("peas"));
 }
 OrderBuilder* Waiter::getOrderBuilder() {
     std::cout << "Get Generated Order..." << std::endl;

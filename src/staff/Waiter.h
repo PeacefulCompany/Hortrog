@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <memory>
+#include <vector>
 
 /**
  * @class Waiter
@@ -45,12 +46,12 @@ public:
      * @param state The customer state to accept.
      */
     void accept(CustomerState& state) override;
+    std::vector<std::string*> currentmealObjectPointerArray_;
 
 private:
-    // Kitchen* kitchen_;
+    // Kitchen* kitchen_; dont think waiter should hold the kitchen
     // PointOfSales* pointOfSales_;
     // std::vector<Tables*> tables_;
-
     /**
      * @brief A unique pointer to the order builder.
      */

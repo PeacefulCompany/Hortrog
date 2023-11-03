@@ -2,7 +2,8 @@
 
 #include "CustomerState.h"
 #include "customer/Customer.h"
-
+#include "staff/Manager.h"
+#include "staff/Waiter.h"
 class WaitingState : public CustomerState {
 public:
     WaitingState(Customer* c) : CustomerState(c) {}

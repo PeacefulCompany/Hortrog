@@ -126,6 +126,7 @@ protected:
         void addCustomer(Customer* customer) {
             if (static_cast<int>(customersAtTable_.size()) < seats_) {
                 customersAtTable_.push_back(customer);
+                customer->update(10);
             } else {
                 std::cout << "Table is full. Cannot add more customers."
                           << std::endl;
