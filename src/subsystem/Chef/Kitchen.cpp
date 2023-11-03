@@ -66,7 +66,7 @@
 
 Kitchen::Kitchen(/* args */)
 {
-    this->headChef = new HeadChef(5, 5, this, 5);
+    this->headChef = std::unique_ptr<KitchenStaff>(new HeadChef(5, 5, this, 5));
 
     KitchenStaff *chef1 = new NormalChef(3, 3, this, 5);
     ((NormalChef *)chef1)->addCanPrepareItem("Grilled Salmon");
@@ -136,6 +136,7 @@ void Kitchen::updateTime(int time){
 
 Kitchen::~Kitchen()
 {
+    
 }
 
 

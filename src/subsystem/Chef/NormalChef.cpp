@@ -1,3 +1,13 @@
+/**
+ * @file NormalChef.cpp
+ * @brief Implementation of the NormalChef class
+ * 
+ * This file contains the implementation of the NormalChef class, which is a subclass of KitchenStaff.
+ * NormalChef objects are responsible for preparing meals by checking if they can prepare the items in the meal's order,
+ * and either adding the item to a meal if it has already been prepared or preparing the item if it has not yet been prepared.
+ * NormalChef objects have a rating, capacity, and speed, and can prepare a list of items.
+ * 
+ */
 #include "NormalChef.h"
 #include <iostream>
 
@@ -8,6 +18,7 @@ NormalChef::NormalChef()
     kitchen = nullptr;
     nextStaff_ = nullptr;
 }
+
 
 NormalChef::NormalChef(int rating, int capacity, Kitchen *kitchen, int speed)
 {

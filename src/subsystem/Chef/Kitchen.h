@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #ifndef KITCHEN_H
 #define KITCHEN_H
 
@@ -16,7 +17,7 @@
 
 class Kitchen {
 private:
-    KitchenStaff* headChef;
+    std::unique_ptr< KitchenStaff> headChef;
     std::queue<Meal*> incomingMeals;
     std::vector<Meal*> outgoingMeals;
 

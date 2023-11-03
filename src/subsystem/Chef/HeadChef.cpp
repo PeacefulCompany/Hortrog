@@ -1,3 +1,4 @@
+
 #include "HeadChef.h"
 
 HeadChef::HeadChef(int rating, int capacity, Kitchen* kitchen, int speed) {
@@ -9,6 +10,11 @@ HeadChef::HeadChef(int rating, int capacity, Kitchen* kitchen, int speed) {
 
 HeadChef::~HeadChef() {}
 
+/**
+ * @brief Prepares a meal by checking if all the items in the order are present and sets the meal as ready if so.
+ * 
+ * @param meal A pointer to the Meal object to be prepared.
+ */
 void HeadChef::prepareMeal(Meal* meal) {
     std::cout << "Head Chef is preparing the meal" << std::endl;
     OrderJSON* orderJSON = new OrderJSON(meal->getOrder()->toJson());
