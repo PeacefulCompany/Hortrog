@@ -1,4 +1,5 @@
 #include "KarenState.h"
+#include "customer/Customer.h"
 #include <iostream>
 
 void KarenState::visit(Manager& m) {

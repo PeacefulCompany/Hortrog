@@ -5,7 +5,8 @@ class OrderBuilder;
 #include <memory>
 #include <string>
 
-class CustomerState;
+#include "CustomerState.h"
+
 class FloorStaff;
 
 class Customer {

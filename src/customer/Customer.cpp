@@ -1,7 +1,9 @@
 #include "Customer.h"
 
+#include "customer/CustomerState.h"
 #include "customer/OrderingState.h"
 #include "staff/FloorStaff.h"
+
 
 #include <iostream>
 

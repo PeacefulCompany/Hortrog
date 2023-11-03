@@ -7,7 +7,7 @@
 void TableComponent::buildOrder(OrderBuilder& builder) {
     for (Customer* c : customers_) {
         builder.newOrder();
-        builder.addItem(c->name + "_burger");
+        builder.addItem(c->getName() + "_burger");
         if (rand() % 2 == 0) {
             builder.addModifier("bingus");
         } else if (rand() % 3 == 0) {
@@ -30,7 +30,7 @@ std::string TableComponent::toString() const {
     std::stringstream s;
     s << "Table(id=" << id_ << ", size=" << capacity_ << ") =";
     for (auto& c : customers_) {
-        s << " " << c->name;
+        s << " " << c->getName();
     }
     return s.str();
 }
