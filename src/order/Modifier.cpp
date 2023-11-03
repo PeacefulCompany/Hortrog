@@ -21,4 +21,5 @@ std::vector<std::pair<std::string, double>>
 Modifier::generateReceiptOrderList() {
     std::vector<std::pair<std::string, double>> returnVec;
     returnVec.emplace_back(key_, price_);
+    return returnVec;
 }

@@ -20,4 +20,5 @@ std::vector<std::pair<std::string, double>>
 OrderItem::generateReceiptOrderList() {
     std::vector<std::pair<std::string, double>> returnVec;
     returnVec.emplace_back(id_, price_);
+    return returnVec;
 }

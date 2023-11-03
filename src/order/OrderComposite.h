@@ -15,5 +15,7 @@ public:
     void add(std::unique_ptr<Order> order) override;
     std::string toJson() override;
     double total() override;
-    std::string getId() override{};
+    std::string getId() override { return ""; };
+    void setPrice(double){};
+    double getPrice() { return 0; };
 };
