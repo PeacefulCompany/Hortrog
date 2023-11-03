@@ -12,16 +12,12 @@ private:
     std::string diet;
 
 public:
-    Item(std::string, double cost, std::string diet) {
-        this->name = name;
-        this->cost = cost;
-        this->diet = diet;
-    };
+    Item(std::string, double cost, std::string diet);
     ~Item();
 
-    std::string getName() const { return name; };
-    double getCost() const { return cost; };
-    std::string getDiet() const { return diet; };
+    std::string getName();
+    double getCost();
+    std::string getDiet();
 };
 
 #endif // ITEM_H
