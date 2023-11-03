@@ -1,4 +1,5 @@
 #include "NormalChef.h"
+#include <iostream>
 
 NormalChef::NormalChef()
 {
@@ -23,13 +24,20 @@ NormalChef::~NormalChef()
 
 void NormalChef::prepareMeal(Meal *meal)
 {
+    std::cout<<"Printing 1"<<std::endl;
     OrderJSON *orderJSON = new OrderJSON(meal->getOrder()->toJson());
     std::vector<Item *> items = orderJSON->getItems();
-
+    std::cout<<"State of can prepare array"<<std::endl;
+    for (int i = 0; i < canPrepareItems_.size(); i++)
+    {
+        std::cout<<canPrepareItems_[i]<<std::endl;
+    }
     for (int i = 0; i < items.size(); i++)
     {
+        std::cout<<"Printing 2"<<std::endl;
         if (canPrepareItem(items[i]->getName()))
         {
+            std::cout<<"Printing 3"<<std::endl;
             if (mealItemAlreadyPrepared(items[i], meal))
             {
                 std::cout << "Normal Chef is adding the item to a meal: " << items[i]->getName() << std::endl;
@@ -41,6 +49,11 @@ void NormalChef::prepareMeal(Meal *meal)
                 MealItem *mealItem = new MealItem(meal->getCustomer(), this->rating, items[i]->getName());
                 // wait();
                 itemsBeingPrepared.push_back(mealItem);
+                std::cout << "Items being prepared by Normal Chef: " << std::endl;
+                for (int i = 0; i < itemsBeingPrepared.size(); i++)
+                {
+                    std::cout << "Item " << i+1 << ": " << itemsBeingPrepared[i]->getFood() << std::endl;
+                }
                 // notify();
             }
         }
@@ -87,13 +100,17 @@ bool NormalChef::mealItemAlreadyBeingPrepared(Item *item, Meal* meal)
 
 bool NormalChef::canPrepareItem(std::string item)
 {
+    std::cout<<"Printing 4"<<std::endl;
     for (int i = 0; i < canPrepareItems_.size(); i++)
     {
+        std::cout<<"CPI: "<<canPrepareItems_[i]<<std::endl;
+        std::cout<<"IT: "<<item<<std::endl;
         if (canPrepareItems_[i] == item)
         {
             return true;
         }
     }
+    std::cout<<"Returning false"<<std::endl;
     return false;
 }
 
@@ -115,9 +132,12 @@ void NormalChef::removeCanPrepareItem(std::string item)
 
 void NormalChef::update(){
     // lastTime = 0;
-
+    std::cout<<"Update Called"<<std::endl;
+    std::cout<<"Value of itemsBeingPrepared: "<<itemsBeingPrepared.empty()<<std::endl;
+    std::cout<<"Value of lastTime: "<<lastTime<<", Value of speed: "<<speed<<std::endl;
     if(!itemsBeingPrepared.empty() && lastTime >= speed)
     {
+        std::cout<<"Condition met for update"<<std::endl;
         preparedItems.push_back(itemsBeingPrepared.front());
         itemsBeingPrepared.erase(itemsBeingPrepared.begin());
         print();

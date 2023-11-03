@@ -12,7 +12,7 @@ float Meal::getQuality() {
 
 Order* Meal::getOrder() { return order_.get(); }
 
-std::vector<MealItem*>* Meal::takeMeal() { return &(items_); }
+std::vector<MealItem*>& Meal::takeMeal() { return items_; }
 
 bool Meal::isReady() {
     // if (items_.size() == order_->getOrders().size()) {
@@ -35,4 +35,4 @@ std::string Meal::getJSON() { return order_->toJson(); }
 
 std::string Meal::getCustomer() { return order_->getCustomer(); }
 
-std::vector<MealItem*>* Meal::getItems() { return &(items_); }
+std::vector<MealItem*>& Meal::getItems() { return items_; }
