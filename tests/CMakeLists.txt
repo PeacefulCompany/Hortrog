@@ -9,19 +9,17 @@ FetchContent_MakeAvailable(googletest)
 add_library(GTest::GTest INTERFACE IMPORTED)
 target_link_libraries(GTest::GTest INTERFACE gtest_main)
 
-# Function that automatically adds and links a test
-function(add_unit_test name)
-    add_executable(${name} ${ARGN})
-    target_link_libraries(${name}
-    PRIVATE
-    GTest::GTest
-    ${LIBRARY})
+file(GLOB SOURCES_TESTS *.cpp)
 
-    add_test(${name} ${name})
-endfunction()
+foreach(item ${SOURCES_TESTS})
+  get_filename_component(TEST_NAME ${item} NAME_WE)
+  message(STATUS "${TEST_NAME}")
 
-# Specify all tests here
-add_unit_test(multiply_test multiply_test.cpp)
-add_unit_test(subsystem_test subsystem_test.cpp)
-add_unit_test(timer_test timer_test.cpp)
-add_unit_test(menu_test menu_test.cpp)
+  add_executable(${TEST_NAME} ${item})
+  target_link_libraries(${TEST_NAME}
+  PRIVATE
+  GTest::GTest
+  ${LIBRARY})
+
+  add_test(${TEST_NAME} ${TEST_NAME})
+endforeach(item)
