@@ -24,12 +24,15 @@ protected:
     int lastTime_ = 0;
     virtual void update();
 
+    std::string role_;
+
 public:
     KitchenStaff(/* args */);
     ~KitchenStaff();
 
     void updateTime(int delta);
     virtual void prepareMeal(Meal* meal);
+    void print();
     void notify();
 
     void setNextStaff(KitchenStaff* next);

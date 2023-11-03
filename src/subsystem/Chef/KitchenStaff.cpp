@@ -11,7 +11,11 @@
  */
 KitchenStaff::KitchenStaff(/* args */)
 {
-    
+    this->rating_ = 1;
+    this->capacity_ = 1;
+    this->kitchen_ = nullptr;
+    nextStaff_ = nullptr;
+
 }
 
 /**
@@ -35,7 +39,7 @@ void KitchenStaff::prepareMeal(Meal *meal)
     }
     else
     {
-        std::cout << "KitchenStaff: end of chain" << std::endl;
+        // std::cout << "KitchenStaff: end of chain" << std::endl;
     }
 }
 
@@ -45,8 +49,8 @@ void KitchenStaff::prepareMeal(Meal *meal)
  */
 void KitchenStaff::notify()
 {
-    std::cout << "KitchenStaff: Notified" << std::endl;
-    kitchen->notifyItemReady();
+    std::cout << "KitchenStaff: Notififying kitchen" << std::endl;
+    kitchen_->notifyItemReady();
 }
 
 /**
@@ -54,7 +58,7 @@ void KitchenStaff::notify()
  * 
  */
 void KitchenStaff::update(){
-    lastTime = 0;
+    lastTime_ = 0;
 }
 
 /**
@@ -63,12 +67,12 @@ void KitchenStaff::update(){
  * @param delta The time difference
  */
 void KitchenStaff::updateTime(int delta){
-    lastTime += delta;
+    lastTime_ += delta;
 
-    if(lastTime>= speed)
+    if(lastTime_>= speed_)
     {
         update();
-        lastTime = 0;
+        lastTime_ = 0;
     }
 
     if(nextStaff_ != nullptr)

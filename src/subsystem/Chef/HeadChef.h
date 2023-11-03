@@ -12,6 +12,7 @@ private:
     
 public:
     HeadChef(int rating, int capacity, Kitchen* kitchen, int speed);
+    void print();
     ~HeadChef();
 
     void prepareMeal(Meal* meal);
