@@ -17,6 +17,7 @@ public:
     void update(float dt);
 
     void changeState(CustomerState* state);
+    inline const std::string& getName() const { return name_; }
 
 private:
     std::unique_ptr<CustomerState> state_;

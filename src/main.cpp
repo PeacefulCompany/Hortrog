@@ -4,6 +4,7 @@
 #include "SFML/Window.hpp"
 
 #include "SFML/Window/WindowStyle.hpp"
+#include "core/TerminalApp.h"
 #include "customer/Customer.h"
 #include "event/ActionMap.h"
 #include "event/ActionTarget.h"
@@ -16,11 +17,11 @@
 #include "order/NullOrderBuilder.h"
 #include "order/OrderBuilder.h"
 #include "resource/ResourceManager.h"
+#include "staff/FloorStaff.h"
+#include "staff/Waiter.h"
 #include "views/FloorView.h"
 #include "views/TablePresenter.h"
 #include "views/TableView.h"
-#include "staff/FloorStaff.h"
-#include "staff/Waiter.h"
 
 #include <fstream>
 #include <iostream>
@@ -80,37 +81,9 @@ void readAssetFile(const std::string& path) {
 }
 
 int main() {
-    std::vector<Table*> tables;
-    tables.push_back(new TableComponent(0, 2));
-
-    TableGroup* g = new TableGroup();
-    g->merge(new TableComponent(1, 1));
-    g->merge(new TableComponent(2, 2));
-    g->merge(new TableComponent(3, 1));
-    g->seatCustomer(new Customer("John"));
-    g->seatCustomer(new Customer("Bob"));
-    g->seatCustomer(new Customer("Alice"));
-    g->seatCustomer(new Customer("Bingus"));
-    tables.push_back(g);
-
-    for (Table* table : tables) {
-        NullOrderBuilder builder;
-        table->buildOrder(builder);
-
-        std::vector<json> order = builder.getResult();
-        if (order.size() == 0) {
-            std::cout << table->id() << " no order" << std::endl;
-            continue;
-        }
-        for (json o : order) {
-            std::cout << o << std::endl;
-        }
-    }
-    CustomerIterator* iterator = g->createIterator();
-    while (!iterator->isDone()) {
-        std::cout << iterator->get()->name << std::endl;
-        iterator->next();
-    }
+    TerminalApp app;
+    app.run();
+    return 0;
 
     ResourceManager<sf::Texture, FloorView::SpriteType> tableSprites;
     tableSprites.load(FloorView::SingleTable, "assets/textures/table.png");

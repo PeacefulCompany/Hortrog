@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Customer.h"
+#include "customer/Customer.h"
 
 #include "Table.h"
 #include <vector>

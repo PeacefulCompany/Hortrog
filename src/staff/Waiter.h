@@ -2,11 +2,10 @@
 #include "FloorStaff.h"
 #include "customer/Customer.h"
 #include "customer/CustomerState.h"
+#include "order/OrderBuilder.h"
+
 #include <iostream>
 #include <memory>
-
-// TODO: Replace this with a real include once we integrate order builders
-struct OrderBuilder {};
 
 /**
  * @class Waiter
