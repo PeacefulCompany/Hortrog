@@ -11,6 +11,10 @@
             "hidden": true,
             "inherits": "base",
             "generator": "Ninja",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "clang.exe",
+                "CMAKE_CXX_COMPILER": "clang++.exe"
+            },
             "condition": {
                 "type": "equals",
                 "lhs": "${hostSystemName}",
