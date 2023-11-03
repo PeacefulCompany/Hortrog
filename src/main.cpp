@@ -73,10 +73,32 @@ void readAssetFile(const std::string& path) {
     std::cout << data["age"].get<int>() << std::endl;
 }
 
+void askTimePassed(Kitchen* Kitchen) {
+    int timePassed;
+    while (true) {
+        std::cout << "Enter time passed (sec): ";
+        std::cin >> timePassed;
+
+        Kitchen->updateTime(timePassed);
+        Meal* meal = Kitchen->getOutgoingMeal();
+        while (meal != nullptr)
+        {
+            std::cout << "Meal ready!" << std::endl;
+            std::cout << meal->toString() << std::endl;
+            meal = Kitchen->getOutgoingMeal();
+        }
+        
+        // Do something with timePassed
+    }
+}
+
 void test() {
     Kitchen* kitchen = new Kitchen();
-    Order* order = new Order();
-    kitchen->handleOrder(order);
+    Order* o = new Order("bob");
+    Order* b = new Order("alice");
+    kitchen->handleOrder(o);
+    kitchen->handleOrder(b);
+    askTimePassed(kitchen);
 }
 
 int main() {
