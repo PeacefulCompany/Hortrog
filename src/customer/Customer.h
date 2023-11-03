@@ -1,10 +1,9 @@
 #pragma once
 
-#include "order/OrderBuilder.h"
+class OrderBuilder;
 
 #include <memory>
 #include <string>
-
 
 class CustomerState;
 class FloorStaff;
