@@ -6,7 +6,7 @@
 
 void TableComponent::buildOrder(OrderBuilder& builder) {
     for (Customer* c : customers_) {
-        builder.newOrder();
+        builder.begin();
         builder.addItem(c->getName() + "_burger");
         if (rand() % 2 == 0) {
             builder.addModifier("bingus");

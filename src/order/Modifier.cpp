@@ -1,22 +1,19 @@
 #include "Modifier.h"
-
-void Modifier::add(std::unique_ptr<OrderItem> order) {
-    component = std::move(order);
-}
+#include <sstream>
 
 double Modifier::total() {
     double ret = 0;
     ret += component->total();
     ret += price;
-    return ret;//test
+    return ret; // test
 }
 
 std::string Modifier::toJson() {
-    std::string ret =  "{\"name\": \"" + component->getId() + "\",";
-	ret += "\"price\": " + std::to_string(component->getPrice()+price);
-	ret += ",\"mod\": \"" + key + "\"}";
-    return ret;
+    std::stringstream s;
+    s << "{\"component\": " << component->toJson();
+    s << ", \"modifier\": " << key << "}";
+    return s.str();
 }
-Modifier::Modifier(std::unique_ptr<OrderItem> component) {
+Modifier::Modifier(std::unique_ptr<Order> component) {
     this->component = std::move(component);
 }
