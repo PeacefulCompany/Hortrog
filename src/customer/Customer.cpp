@@ -4,7 +4,6 @@
 #include "customer/OrderingState.h"
 #include "staff/FloorStaff.h"
 
-
 #include <iostream>
 
 Customer::Customer(const std::string& name, float happiness)
