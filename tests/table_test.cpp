@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <floor/Customer.h>
+#include <customer/Customer.h>
 #include <floor/TableComponent.h>
 
 TEST(TableTests, TestTableComponent_Getters) {
@@ -11,9 +11,9 @@ TEST(TableTests, TestTableComponent_Getters) {
 }
 
 TEST(TableTests, TestTableComponent_AddCustomer) {
-    Customer c1("alice");
-    Customer c2("bob");
-    Customer c3("charlie");
+    Customer c1("alice", 1);
+    Customer c2("bob", 1);
+    Customer c3("charlie", 1);
 
     TableComponent table(1, 2);
 
@@ -23,7 +23,7 @@ TEST(TableTests, TestTableComponent_AddCustomer) {
 }
 
 TEST(TableTests, TestTableComponent_RemoveCustomer) {
-    Customer c1("alice");
+    Customer c1("alice", 1);
 
     TableComponent table(1, 2);
 

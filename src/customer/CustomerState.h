@@ -1,10 +1,8 @@
 #pragma once
 
-#include "Customer.h"
-#include "customer/Customer.h"
-
 class Manager;
 class Waiter;
+class Customer;
 
 class CustomerState {
 public:

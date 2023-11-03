@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "Customer.h"
+#include "customer/Customer.h"
 #include "order/OrderBuilder.h"
 
 class TableComponent;

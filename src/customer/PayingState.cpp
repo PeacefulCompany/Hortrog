@@ -1,4 +1,6 @@
 #include "PayingState.h"
+#include "customer/Customer.h"
+
 #include <iostream>
 
 void PayingState::visit(Manager& m) {

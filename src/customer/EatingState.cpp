@@ -1,8 +1,10 @@
 #include "EatingState.h"
+#include "customer/Customer.h"
 #include "customer/OrderingState.h"
 #include "customer/PayingState.h"
 #include <iostream>
 #include <stdlib.h>
+
 
 void EatingState::visit(Manager& m) {
     std::cout << "[Eating]: Visited by manager" << std::endl;

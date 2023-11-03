@@ -1,12 +1,12 @@
 #pragma once
 
-#include "order/OrderBuilder.h"
+class OrderBuilder;
 
 #include <memory>
 #include <string>
 
+#include "CustomerState.h"
 
-class CustomerState;
 class FloorStaff;
 
 class Customer {
@@ -18,6 +18,7 @@ public:
     void update(float dt);
 
     void changeState(CustomerState* state);
+    inline const std::string& getName() const { return name_; }
 
 private:
     std::unique_ptr<CustomerState> state_;

@@ -2,8 +2,8 @@
 #include "FloorStaff.h"
 #include "customer/Customer.h"
 #include "customer/CustomerState.h"
-#include "order/NullOrderBuilder.h"
 #include "order/OrderBuilder.h"
+
 #include <iostream>
 #include <memory>
 
@@ -54,5 +54,5 @@ private:
     /**
      * @brief A unique pointer to the order builder.
      */
-    std::unique_ptr<NullOrderBuilder> orderBuilder_;
+    std::unique_ptr<OrderBuilder> orderBuilder_;
 };
