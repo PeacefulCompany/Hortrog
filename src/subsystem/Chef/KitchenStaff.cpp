@@ -45,3 +45,9 @@ void KitchenStaff::updateTime(int delta){
         nextStaff_->updateTime(delta);
     }
 }
+
+void KitchenStaff::setNextStaff(KitchenStaff *next)
+{
+    // nextStaff = next;
+    nextStaff_ = std::unique_ptr<KitchenStaff>(next);
+}

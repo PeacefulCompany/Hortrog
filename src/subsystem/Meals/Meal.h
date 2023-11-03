@@ -4,7 +4,7 @@
 #define SUBSYSTEM_MEAL_H
 
 // file includes
-#include "MealItem.h";
+#include "MealItem.h"
 #include "subsystem/OrderTemplate/Order.h"
 
 // library includes

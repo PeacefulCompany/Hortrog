@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #ifndef KITCHENSTAFF_H
 #define KITCHENSTAFF_H
 
@@ -15,7 +16,8 @@ class Kitchen;
 class KitchenStaff
 {
 protected:
-    KitchenStaff* nextStaff_;
+    // KitchenStaff* nextStaff;
+    std::unique_ptr<KitchenStaff> nextStaff_;
     int rating;
     int capacity;
     int speed;
@@ -31,7 +33,7 @@ public:
     virtual void prepareMeal(Meal* meal);
     void notify();
 
-    inline void setNextStaff(KitchenStaff* next){ this->nextStaff_ = next; };
+    void setNextStaff(KitchenStaff* next);
 };
 
 #include "Kitchen.h"
