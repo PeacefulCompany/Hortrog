@@ -5,9 +5,9 @@
 
 class Modifier : public Order {
 protected:
-    std::unique_ptr<Order> component;
-    std::string key;
-    double price;
+    std::unique_ptr<OrderItem> component_;
+    std::string key_;
+    double price_;
 
 public:
     void add(std::unique_ptr<Order>) override {}
