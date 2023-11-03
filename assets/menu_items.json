@@ -1,0 +1,55 @@
+{
+	"menu": [
+	  {
+		"name": "Avocado Toast",
+		"price": 8.99,
+		"diet": "Vegan"
+	  },
+	  {
+		"name": "Grilled Salmon",
+		"price": 14.99,
+		"diet": "Pescatarian"
+	  },
+	  {
+		"name": "Margherita Pizza",
+		"price": 12.99,
+		"diet": "Vegetarian"
+	  },
+	  {
+		"name": "Chicken Caesar Salad",
+		"price": 10.99,
+		"diet": "None"
+	  },
+	  {
+		"name": "Vegetable Stir-Fry",
+		"price": 9.99,
+		"diet": "Vegan"
+	  },
+	  {
+		"name": "Spinach and Feta Stuffed Chicken",
+		"price": 13.99,
+		"diet": "None"
+	  },
+	  {
+		"name": "Black Bean Burger",
+		"price": 11.99,
+		"diet": "Vegan"
+	  },
+	  {
+		"name": "Beef Tacos",
+		"price": 9.99,
+		"diet": "None"
+	  },
+	  {
+		"name": "Lemonade",
+		"price": 2.99,
+		"diet": "None"
+	  },
+	  {
+		"name": "Coconut Water",
+		"price": 3.49,
+		"diet": "Vegan"
+	  }
+	]
+  }
+  
