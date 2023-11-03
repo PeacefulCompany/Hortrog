@@ -1,10 +1,23 @@
+/**
+ * @file OrderJSON.cpp
+ * @brief Implementation of the OrderJSON class
+ */
+
 #include "OrderJSON.h"
 #include "json.hpp"
 #include <iostream>
 using json = nlohmann::json;
 
+/**
+ * @brief Constructs an OrderJSON object with the given order string
+ * @param order The order string in JSON format
+ */
 OrderJSON::OrderJSON(std::string order) { this->order = order; }
 
+/**
+ * @brief Parses the order string and returns a vector of Item pointers
+ * @return A vector of Item pointers
+ */
 std::vector<Item*> OrderJSON::getItems() {
     json data = json::parse(order);
 

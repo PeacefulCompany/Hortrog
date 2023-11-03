@@ -11,6 +11,10 @@
 #include "NormalChef.h"
 #include <iostream>
 
+/**
+ * @brief Default constructor for NormalChef class
+ * 
+ */
 NormalChef::NormalChef()
 {
     rating = 1;
@@ -19,7 +23,14 @@ NormalChef::NormalChef()
     nextStaff_ = nullptr;
 }
 
-
+/**
+ * @brief Constructor for NormalChef class
+ * 
+ * @param rating The rating of the chef
+ * @param capacity The capacity of the chef
+ * @param kitchen The kitchen the chef is in
+ * @param speed The speed of the chef
+ */
 NormalChef::NormalChef(int rating, int capacity, Kitchen *kitchen, int speed)
 {
     this->rating = rating;
@@ -29,10 +40,19 @@ NormalChef::NormalChef(int rating, int capacity, Kitchen *kitchen, int speed)
     this->speed = speed;
 }
 
+/**
+ * @brief Destructor for NormalChef class
+ * 
+ */
 NormalChef::~NormalChef()
 {
 }
 
+/**
+ * @brief Prepares a meal by checking if the items in the meal's order can be prepared
+ * 
+ * @param meal The meal to be prepared
+ */
 void NormalChef::prepareMeal(Meal *meal)
 {
     std::cout<<"Printing 1"<<std::endl;
@@ -73,6 +93,12 @@ void NormalChef::prepareMeal(Meal *meal)
     KitchenStaff::prepareMeal(meal);
 }
 
+/**
+ * @brief Gets an item from the list of prepared items and adds it to the meal
+ * 
+ * @param item The item to be added to the meal
+ * @param meal The meal to add the item to
+ */
 void NormalChef::getItemFromPrepared(Item *item, Meal* meal)
 {
     for (int i = 0; i < preparedItems.size(); i++)
@@ -85,6 +111,13 @@ void NormalChef::getItemFromPrepared(Item *item, Meal* meal)
     }
 }
 
+/**
+ * @brief Checks if an item in a meal's order has already been prepared
+ * 
+ * @param item The item to check
+ * @param meal The meal to check
+ * @return true if the item has already been prepared, false otherwise
+ */
 bool NormalChef::mealItemAlreadyPrepared(Item *item, Meal* meal)
 {
     for (int i = 0; i < preparedItems.size(); i++)
@@ -97,6 +130,13 @@ bool NormalChef::mealItemAlreadyPrepared(Item *item, Meal* meal)
     return false;
 }
 
+/**
+ * @brief Checks if an item in a meal's order is already being prepared
+ * 
+ * @param item The item to check
+ * @param meal The meal to check
+ * @return true if the item is already being prepared, false otherwise
+ */
 bool NormalChef::mealItemAlreadyBeingPrepared(Item *item, Meal* meal)
 {
     for (int i = 0; i < itemsBeingPrepared.size(); i++)
@@ -109,6 +149,12 @@ bool NormalChef::mealItemAlreadyBeingPrepared(Item *item, Meal* meal)
     return false;
 }
 
+/**
+ * @brief Checks if the chef can prepare a certain item
+ * 
+ * @param item The item to check
+ * @return true if the chef can prepare the item, false otherwise
+ */
 bool NormalChef::canPrepareItem(std::string item)
 {
     std::cout<<"Printing 4"<<std::endl;
@@ -125,11 +171,21 @@ bool NormalChef::canPrepareItem(std::string item)
     return false;
 }
 
+/**
+ * @brief Adds an item to the list of items the chef can prepare
+ * 
+ * @param item The item to add
+ */
 void NormalChef::addCanPrepareItem(std::string item)
 {
     canPrepareItems_.push_back(item);
 }
 
+/**
+ * @brief Removes an item from the list of items the chef can prepare
+ * 
+ * @param item The item to remove
+ */
 void NormalChef::removeCanPrepareItem(std::string item)
 {
     for (int i = 0; i < canPrepareItems_.size(); i++)
@@ -141,6 +197,10 @@ void NormalChef::removeCanPrepareItem(std::string item)
     }
 }
 
+/**
+ * @brief Updates the chef's list of prepared items
+ * 
+ */
 void NormalChef::update(){
     // lastTime = 0;
     std::cout<<"Update Called"<<std::endl;
@@ -157,6 +217,10 @@ void NormalChef::update(){
 
 }
 
+/**
+ * @brief Prints the chef's information
+ * 
+ */
 void NormalChef::print(){
     std::cout << "Normal Chef: " << std::endl;
     std::cout << "    Rating: " << rating << std::endl;
@@ -179,7 +243,10 @@ void NormalChef::print(){
     }
 }
 
-
+/**
+ * @brief Causes the chef to wait for a certain amount of time
+ * 
+ */
 void NormalChef::wait()
 {
     std::chrono::system_clock::time_point current_time =

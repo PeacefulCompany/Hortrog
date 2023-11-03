@@ -8,6 +8,7 @@ HeadChef::HeadChef(int rating, int capacity, Kitchen* kitchen, int speed) {
     this->speed = speed;
 }
 
+
 HeadChef::~HeadChef() {}
 
 /**

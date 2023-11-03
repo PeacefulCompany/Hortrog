@@ -1,14 +1,32 @@
+/**
+ * @file KitchenStaff.cpp
+ * @brief Implementation of the KitchenStaff class
+ */
+
 #include "KitchenStaff.h"
 
+/**
+ * @brief Construct a new Kitchen Staff object
+ * 
+ */
 KitchenStaff::KitchenStaff(/* args */)
 {
     
 }
 
+/**
+ * @brief Destroy the Kitchen Staff object
+ * 
+ */
 KitchenStaff::~KitchenStaff()
 {
 }
 
+/**
+ * @brief Prepare a meal by passing it down the chain of kitchen staff
+ * 
+ * @param meal The meal to be prepared
+ */
 void KitchenStaff::prepareMeal(Meal *meal)
 {
     if (nextStaff_ != nullptr)
@@ -21,16 +39,29 @@ void KitchenStaff::prepareMeal(Meal *meal)
     }
 }
 
+/**
+ * @brief Notify the kitchen that an item is ready
+ * 
+ */
 void KitchenStaff::notify()
 {
     std::cout << "KitchenStaff: Notified" << std::endl;
     kitchen->notifyItemReady();
 }
 
+/**
+ * @brief Update the kitchen staff
+ * 
+ */
 void KitchenStaff::update(){
     lastTime = 0;
 }
 
+/**
+ * @brief Update the time for the kitchen staff
+ * 
+ * @param delta The time difference
+ */
 void KitchenStaff::updateTime(int delta){
     lastTime += delta;
 
@@ -46,6 +77,11 @@ void KitchenStaff::updateTime(int delta){
     }
 }
 
+/**
+ * @brief Set the next kitchen staff in the chain
+ * 
+ * @param next The next kitchen staff
+ */
 void KitchenStaff::setNextStaff(KitchenStaff *next)
 {
     // nextStaff = next;
