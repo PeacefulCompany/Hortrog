@@ -16,8 +16,8 @@ class NormalChef : public KitchenStaff
 {
 private:
     std::vector<std::string> canPrepareItems_;
-    std::vector<MealItem *> preparedItems;
-    std::vector<MealItem *> itemsBeingPrepared;
+    std::vector<MealItem *> preparedItems_;
+    std::vector<MealItem *> itemsBeingPrepared_;
     virtual void update();
 
 public:

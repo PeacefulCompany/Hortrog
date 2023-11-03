@@ -9,8 +9,8 @@
 
 class OrderJSON {
 private:
-    std::string order;
-    std::vector<Item*> items;
+    std::string order_;
+    std::vector<Item*> items_;
 
 public:
     OrderJSON(std::string order);

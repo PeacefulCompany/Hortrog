@@ -7,10 +7,10 @@
 
 class Item {
 private:
-    std::string name;
-    double cost;
-    std::string diet;
-    std::string mod;
+    std::string name_;
+    double cost_;
+    std::string diet_;
+    std::string mod_;
 
 public:
     Item(std::string, double cost, std::string diet, std::string mod);

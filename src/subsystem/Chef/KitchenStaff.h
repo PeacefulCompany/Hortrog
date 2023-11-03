@@ -13,16 +13,15 @@
 
 class Kitchen;
 
-class KitchenStaff
-{
+class KitchenStaff {
 protected:
     // KitchenStaff* nextStaff;
     std::unique_ptr<KitchenStaff> nextStaff_;
-    int rating;
-    int capacity;
-    int speed;
-    Kitchen* kitchen;
-    int lastTime = 0;
+    int rating_;
+    int capacity_;
+    int speed_;
+    Kitchen* kitchen_;
+    int lastTime_ = 0;
     virtual void update();
 
 public:
