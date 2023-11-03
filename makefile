@@ -1,25 +1,21 @@
 CC = g++
-CFLAGS = -Wall -Wextra -pedantic -std=c++11
+CFLAGS = -Wall -std=c++11
+LDFLAGS = -lm
 
-all: main
+SOURCES = main.cpp PointOfSales.cpp SubBill.cpp Leaf.cpp Payment.cpp
+OBJECTS = $(SOURCES:.cpp=.o)
+EXECUTABLE = main
 
-main: main.o Bill.o Payment.o SubBill.o
-	$(CC) $(CFLAGS) -o main main.o Bill.o Payment.o SubBill.o
+all: $(SOURCES) $(EXECUTABLE)
 
-main.o: main.cpp Bill.h Payment.h SubBill.h
-	$(CC) $(CFLAGS) -c main.cpp
+$(EXECUTABLE): $(OBJECTS)
+	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
 
-Bill.o: Bill.h
-	$(CC) $(CFLAGS) -c Bill.cpp
+.cpp.o:
+	$(CC) $(CFLAGS) -c $< -o $@
 
-Payment.o: Payment.h Bill.h
-	$(CC) $(CFLAGS) -c Payment.cpp
-
-SubBill.o: SubBill.h Bill.h
-	$(CC) $(CFLAGS) -c SubBill.cpp
-
-run: main
-	./main
+run: $(EXECUTABLE)
+	./$(EXECUTABLE)
 
 clean:
-	rm -f main main.o Bill.o Payment.o SubBill.o
+	rm -f $(OBJECTS) $(EXECUTABLE)
