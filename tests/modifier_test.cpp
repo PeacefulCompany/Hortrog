@@ -5,7 +5,8 @@
 
 TEST(Modifier, TOTAL) {
     auto component = std::unique_ptr<Order>(new OrderItem("ABC", 2.1));
-    auto modifier = std::unique_ptr<Order>(new Modifier(std::move(component)));
+    auto modifier =
+        std::unique_ptr<Order>(new Modifier(std::move(component), "VEGAN"));
 }
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
