@@ -1,15 +1,11 @@
-#ifndef BILL_H
-#define BILL_H
-#include <vector>
+#pragma once
+#include <string>
 
 class Bill {
 public:
-    virtual double calculateTotal() = 0;
-    virtual void makePayment(double amount) = 0;
-    virtual void addChild(Bill* bill);
-    virtual void removeChild(Bill* bill);
-    virtual std::vector<Bill*> getChildren();
-    virtual Bill* getChild(int index);
+    virtual const std::string& getName() const = 0; // Include the getName function as a virtual function
+    virtual double getPrice() const = 0;
+    virtual void add(Bill* bill) = 0;
+    virtual const std::vector<Bill*>& getChildren() const = 0;
+    virtual void operation() = 0;
 };
-
-#endif

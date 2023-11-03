@@ -1,8 +1,23 @@
-#include "Bill.h"
+#include "bill.h"
 
-void Bill::addChild(Bill* bill) {}
-void Bill::removeChild(Bill* bill) {}
-std::vector<Bill*> Bill::getChildren() { 
-    return std::vector<Bill*>(); 
+const std::string& Bill::getName() const {
+    static std::string empty;
+    return empty;
 }
-Bill* Bill::getChild(int index) { return nullptr; }
+
+double Bill::getPrice() const {
+    return 0.0;
+}
+
+void Bill::add(Bill* bill) {
+    // Do nothing
+}
+
+const std::vector<Bill*>& Bill::getChildren() const {
+    static std::vector<Bill*> empty;
+    return empty;
+}
+
+void Bill::operation() {
+    // Do nothing
+}
