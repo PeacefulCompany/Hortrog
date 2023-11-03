@@ -4,11 +4,23 @@
 #include "SFML/Window.hpp"
 
 #include "SFML/Window/WindowStyle.hpp"
+#include "customer/Customer.h"
 #include "event/ActionMap.h"
 #include "event/ActionTarget.h"
+#include "floor/CustomerIterator.h"
+#include "floor/Table.h"
+#include "floor/TableComponent.h"
+#include "floor/TableGroup.h"
 #include "multiply/multiply.h"
 #include "nlohmann/json.hpp"
+#include "order/NullOrderBuilder.h"
+#include "order/OrderBuilder.h"
 #include "resource/ResourceManager.h"
+#include "views/FloorView.h"
+#include "views/TablePresenter.h"
+#include "views/TableView.h"
+#include "staff/FloorStaff.h"
+#include "staff/Waiter.h"
 
 #include <fstream>
 #include <iostream>
@@ -68,6 +80,45 @@ void readAssetFile(const std::string& path) {
 }
 
 int main() {
+    std::vector<Table*> tables;
+    tables.push_back(new TableComponent(0, 2));
+
+    TableGroup* g = new TableGroup();
+    g->merge(new TableComponent(1, 1));
+    g->merge(new TableComponent(2, 2));
+    g->merge(new TableComponent(3, 1));
+    g->seatCustomer(new Customer("John"));
+    g->seatCustomer(new Customer("Bob"));
+    g->seatCustomer(new Customer("Alice"));
+    g->seatCustomer(new Customer("Bingus"));
+    tables.push_back(g);
+
+    for (Table* table : tables) {
+        NullOrderBuilder builder;
+        table->buildOrder(builder);
+
+        std::vector<json> order = builder.getResult();
+        if (order.size() == 0) {
+            std::cout << table->id() << " no order" << std::endl;
+            continue;
+        }
+        for (json o : order) {
+            std::cout << o << std::endl;
+        }
+    }
+    CustomerIterator* iterator = g->createIterator();
+    while (!iterator->isDone()) {
+        std::cout << iterator->get()->name << std::endl;
+        iterator->next();
+    }
+
+    ResourceManager<sf::Texture, FloorView::SpriteType> tableSprites;
+    tableSprites.load(FloorView::SingleTable, "assets/textures/table.png");
+
+    FloorStaff* staff = new Waiter();
+    Customer customer("Bob", 4);
+    customer.interact(*staff);
+
     ResourceManager<sf::Texture> textures;
     textures.load(0, "assets/hunny.png");
 
@@ -93,28 +144,48 @@ int main() {
     sf::RectangleShape r({300, 200});
     sf::Sprite sprite(*textures.get(0));
 
+    // TableView table(tableSprites);
+    // TablePresenter presenter(table, w);
+    // table.position({100, 100});
+
     r.setPosition({10, 10});
     r.setFillColor(sf::Color(255, 0, 0));
     sf::Clock clock;
     float lastTime = clock.getElapsedTime().asSeconds();
+
+    FloorView view(12, 7, tableSprites);
+    view.position({10, 10});
+    view.placeTable(1, 1);
+    view.placeTable(2, 1);
+    view.placeTable(3, 1);
+
     while (w.isOpen()) {
+        // Handle Events
         sf::Event e;
         while (w.pollEvent(e)) {
+            // table.onEvent(e);
             target.processEvent(e);
             if (e.type == sf::Event::EventType::Closed) {
                 w.close();
             }
         }
-        w.clear();
+        target.processEvents();
+
+        // Time-based update
         float dt = clock.getElapsedTime().asSeconds() - lastTime;
         lastTime += dt;
 
-        target.processEvents();
         player.update(dt);
+        // presenter.update(dt);
+
+        // Render window
+        w.clear();
 
         w.draw(sprite);
-
         player.draw(w);
+        // table.draw(w);
+        view.draw(w);
+
         w.display();
         // rect.draw(w);
     }

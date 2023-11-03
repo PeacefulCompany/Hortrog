@@ -27,6 +27,14 @@ set(DIR_ASSETS "assets")
 
 enable_testing()
 
+# --- COPY ASSETS ---
+add_custom_target(assets ALL
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/${DIR_ASSETS}
+    ${CMAKE_CURRENT_BINARY_DIR}/src/assets
+    COMMENT "Copying assets to build directory"
+)
+
 add_subdirectory(src)
 add_subdirectory(tests)
 
@@ -48,11 +56,3 @@ add_custom_target( doc_doxygen ALL
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Generating API documentation with Doxygen"
     VERBATIM )
-
-# --- COPY ASSETS ---
-add_custom_target(assets ALL
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-    ${CMAKE_SOURCE_DIR}/${DIR_ASSETS}
-    ${CMAKE_CURRENT_BINARY_DIR}/src/assets
-    COMMENT "Copying assets to build directory"
-)
