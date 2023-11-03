@@ -24,11 +24,12 @@ double OrderComposite::total() {
     }
     return total;
 }
-std::vector<std::string> OrderComposite::generateReceiptOrderList() {
-    std::vector<std::string> returnVec;
+std::vector<std::pair<std::string, double>>
+OrderComposite::generateReceiptOrderList() {
+    std::vector<std::pair<std::string, double>> returnVec;
     for (auto& order : orders) {
         auto subTreeVec = order->generateReceiptOrderList();
-        for (const std::string& itemStr : subTreeVec) {
+        for (const std::pair<std::string, double>& itemStr : subTreeVec) {
             returnVec.push_back(itemStr);
         }
     }

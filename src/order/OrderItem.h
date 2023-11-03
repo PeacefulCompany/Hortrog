@@ -4,7 +4,8 @@
 
 class OrderItem : public Order {
 protected:
-    std::vector<std::string> generateReceiptOrderList() override;
+    std::vector<std::pair<std::string, double>>
+    generateReceiptOrderList() override;
 
 private:
     std::string id;
@@ -16,6 +17,6 @@ public:
     void add(std::unique_ptr<Order>) override;
     OrderItem(std::string id, double price);
     void setPrice(double price);
-    double getPrice();
+    double getPrice() const;
     std::string getId();
 };

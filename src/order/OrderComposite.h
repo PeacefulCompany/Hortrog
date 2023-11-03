@@ -5,7 +5,8 @@
 
 class OrderComposite : public Order {
 protected:
-    std::vector<std::string> generateReceiptOrderList() override;
+    std::vector<std::pair<std::string, double>>
+    generateReceiptOrderList() override;
 
 private:
     std::vector<std::unique_ptr<Order>> orders;

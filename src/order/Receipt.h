@@ -4,9 +4,9 @@
 #include <vector>
 class Receipt {
 private:
-    std::vector<std::string> orderList;
+    std::vector<std::pair<std::string, double>> orderList;
 
 public:
-    std::vector<std::string> getOrders();
+    std::vector<std::pair<std::string, double>> getOrders();
     void generateOrders(Order* order);
 };

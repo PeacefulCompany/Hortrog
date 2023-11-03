@@ -13,10 +13,11 @@ OrderItem::OrderItem(std::string id, double price) {
     this->price = price;
 }
 void OrderItem::setPrice(double price) { this->price = price; }
-double OrderItem::getPrice() { return this->price; }
+double OrderItem::getPrice() const { return this->price; }
 
 std::string OrderItem::getId() { return this->id; }
-std::vector<std::string> OrderItem::generateReceiptOrderList() {
-    std::vector<std::string> returnVec;
-    returnVec.push_back(id);
+std::vector<std::pair<std::string, double>>
+OrderItem::generateReceiptOrderList() {
+    std::vector<std::pair<std::string, double>> returnVec;
+    returnVec.emplace_back(id, price);
 }
