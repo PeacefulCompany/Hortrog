@@ -8,6 +8,8 @@ protected:
     std::unique_ptr<OrderItem> component_;
     std::string key_;
     double price_;
+    std::vector<std::pair<std::string, double>>
+    generateReceiptOrderList() override;
 
 public:
     void add(std::unique_ptr<Order>) override {}
