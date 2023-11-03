@@ -1,3 +1,11 @@
+/**
+ * @file Kitchen.cpp
+ * @brief Implementation of the Kitchen class.
+ * 
+ * This file contains the implementation of the Kitchen class, which is responsible for handling orders and preparing meals.
+ * It contains functions for handling orders, meals, and clearing the queue. It also contains functions for notifying when an item is ready and for flushing the queue.
+ * Additionally, it contains functions for getting outgoing meals and updating the time.
+ */
 #include "Kitchen.h"
 #include <iostream>
 
@@ -72,7 +80,10 @@ Kitchen::Kitchen(/* args */) {
     chef1->setNextStaff(chef2);
 }
 
-void Kitchen::handleOrder(Order* order) {
+
+
+void Kitchen::handleOrder(Order *order)
+{
     std::cout << "Kitchen: Handling order" << std::endl;
     Meal* meal = new Meal(order);
     incomingMeals.push(meal);

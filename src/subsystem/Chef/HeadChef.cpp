@@ -2,17 +2,18 @@
 #include "HeadChef.h"
 
 HeadChef::HeadChef(int rating, int capacity, Kitchen* kitchen, int speed) {
-    this->rating = rating;
-    this->capacity = capacity;
-    this->kitchen = kitchen;
-    this->speed = speed;
+    this->rating_ = rating;
+    this->capacity_ = capacity;
+    this->kitchen_ = kitchen;
+    this->speed_ = speed;
 }
 
 HeadChef::~HeadChef() {}
 
 /**
- * @brief Prepares a meal by checking if all the items in the order are present and sets the meal as ready if so.
- * 
+ * @brief Prepares a meal by checking if all the items in the order are present
+ * and sets the meal as ready if so.
+ *
  * @param meal A pointer to the Meal object to be prepared.
  */
 void HeadChef::prepareMeal(Meal* meal) {
