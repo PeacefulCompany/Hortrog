@@ -15,7 +15,7 @@ void PointOfSales::addBill(int tableNumber, const std::string& itemName, double 
     }
 
     // Add the bill to the sub-bill
-    Bill* bill = new Leaf(price);
+    Bill* bill = new Payment(price);
     subBill->add(bill);
 }
 
