@@ -1,11 +1,15 @@
 #pragma once
 
-#include <vector>
 #include "Order.h"
+#include <vector>
 
-class OrderComposite : public Order{
+class OrderComposite : public Order {
+protected:
+    std::vector<std::string> generateReceiptOrderList() override;
+
 private:
     std::vector<std::unique_ptr<Order>> orders;
+
 public:
     void add(std::unique_ptr<Order> order) override;
     std::string toJson() override;
