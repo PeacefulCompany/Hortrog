@@ -20,12 +20,17 @@ TEST(OrderComposite, TOTAL) {
 TEST(OrderComposite, JSON){
     Order * orderComp = new OrderComposite();
     auto orderComp2 = std::unique_ptr<Order>(new OrderComposite());
-    std::vector<std::shared_ptr<Order>> orderItemArr;
+    std::vector<std::unique_ptr<Order>> orderItemArr;
     std::string ids [] = {"hortdog", "burger", "pie"};
     double prices [] = {0.5, 5, 1};
     for (int i = 0; i < 3; i++) {
-        orderItemArr.push_back(std::shared_ptr<Order>(new OrderItem(ids[i], prices[i])));
+        orderItemArr.push_back(std::unique_ptr<Order>(new OrderItem(ids[i], prices[i])));
     }
+    orderComp2->add(std::move(orderItemArr.at(0)));
+    orderComp2->add(std::move(orderItemArr.at(1)));
+    orderComp->add(std::move(orderComp2));
+    orderComp->add(std::move(orderItemArr.at(2)));
+    std::cout << orderComp->toJson();
 }
 //int main(int argc, char** argv) {
 //    ::testing::InitGoogleTest(&argc, argv);
