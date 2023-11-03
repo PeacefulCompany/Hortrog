@@ -1,42 +1,43 @@
 #include "SubBill.h"
+#include <iostream>
 
-SubBill::SubBill(const std::string& description) : description(description) {}
+SubBill::SubBill(int tableNumber, const std::string& itemName, double price)
+    : tableNumber(tableNumber), itemName(itemName), price(price), balance(price) {}
 
-double SubBill::calculateTotal() {
-    double total = 0;
-    for (auto subBill : subBills) {
-        total += subBill->calculateTotal();
-    }
-    return total;
+void SubBill::add(Bill* bill) {
+    children.push_back(bill);
 }
 
-void SubBill::makePayment(double amount) {
-    // Update the payment amount for all child bills
-    for (auto subBill : subBills) {
-        subBill->makePayment(amount);
-    }
+const std::vector<Bill*>& SubBill::getChildren() const {
+    return children;
 }
 
-void SubBill::addChild(Bill* bill) {
-    subBills.push_back(bill);
-}
-
-void SubBill::removeChild(Bill* bill) {
-    for (auto it = subBills.begin(); it != subBills.end(); ++it) {
-        if (*it == bill) {
-            subBills.erase(it);
-            break;
-        }
+void SubBill::operation() {
+    std::cout << "SubBill operation" << std::endl;
+    for (auto child : children) {
+        child->operation();
     }
 }
 
-std::vector<Bill*> SubBill::getChildren() {
-    return subBills;
+const std::string& SubBill::getName() const {
+    return itemName;
 }
 
-Bill* SubBill::getChild(int index) {
-    if (index < 0 || index >= subBills.size()) {
-        return nullptr;
+double SubBill::getPrice() const {
+    return price;
+}
+
+int SubBill::getTableNumber() const {
+    return tableNumber;
+}
+
+void SubBill::makePayment(const Payment& payment) {
+    balance -= payment.getAmountOfPayment();
+    if (balance < 0) {
+        balance = 0;
     }
-    return subBills[index];
+}
+
+double SubBill::getBalance() const {
+    return balance;
 }

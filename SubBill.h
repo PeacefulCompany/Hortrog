@@ -1,22 +1,24 @@
-#ifndef SUBBILL_H
-#define SUBBILL_H
-
+#pragma once
 #include <vector>
 #include <string>
 #include "Bill.h"
+#include "Payment.h"
 
 class SubBill : public Bill {
-private:
-    std::string description;
-    std::vector<Bill*> subBills;
 public:
-    SubBill(const std::string& description);
-    double calculateTotal() override;
-    void makePayment(double amount) override;
-    void addChild(Bill* bill) override;
-    void removeChild(Bill* bill) override;
-    std::vector<Bill*> getChildren() override;
-    Bill* getChild(int index) override;
+    SubBill(int tableNumber, const std::string& itemName, double price);
+    void add(Bill* bill) override;
+    const std::vector<Bill*>& getChildren() const override;
+    void operation() override;
+    const std::string& getName() const override;
+    double getPrice() const override;
+    int getTableNumber() const;
+    void makePayment(const Payment& payment);
+    double getBalance() const;
+private:
+    int tableNumber;
+    std::string itemName;
+    double price;
+    std::vector<Bill*> children;
+    double balance;
 };
-
-#endif
