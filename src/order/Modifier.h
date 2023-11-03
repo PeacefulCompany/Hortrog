@@ -5,7 +5,7 @@
 
 class Modifier : public Order {
 protected:
-    std::unique_ptr<OrderItem> component_;
+    std::unique_ptr<Order> component_;
     std::string key_;
     double price_;
     std::vector<std::pair<std::string, double>>

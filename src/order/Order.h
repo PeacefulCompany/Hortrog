@@ -16,4 +16,5 @@ public:
     virtual double getPrice() = 0;
     virtual std::vector<std::pair<std::string, double>>
     generateReceiptOrderList() = 0;
+    virtual std::string getId() = 0;
 };

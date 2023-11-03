@@ -1,9 +1,5 @@
 #include "Modifier.h"
 
-void Modifier::add(std::unique_ptr<OrderItem> order) {
-    component_ = std::move(order);
-}
-
 double Modifier::total() {
     double ret = 0;
     ret += component_->total();
@@ -17,7 +13,7 @@ std::string Modifier::toJson() {
     ret += ",\"mod\": \"" + key_ + "\"}";
     return ret;
 }
-Modifier::Modifier(std::unique_ptr<OrderItem> component) {
+Modifier::Modifier(std::unique_ptr<Order> component) {
     this->component_ = std::move(component);
     this->price_ = 0;
 }
