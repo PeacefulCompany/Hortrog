@@ -15,10 +15,10 @@ Order* Meal::getOrder() { return order_.get(); }
 std::vector<MealItem*>* Meal::takeMeal() { return &(items_); }
 
 bool Meal::isReady() {
-    if (items_.size() == order_->getOrders().size()) {
-        return true;
-    }
-    return false;
+    // if (items_.size() == order_->getOrders().size()) {
+    //     return true;
+    // }
+    return ready_;
 }
 
 std::string Meal::toString() {

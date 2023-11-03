@@ -20,6 +20,7 @@ NormalChef::~NormalChef() {}
 void NormalChef::prepareMeal(Meal* meal) {
     handlePreperation(meal);
     KitchenStaff::prepareMeal(meal);
+    return;
 }
 
 bool NormalChef::canPrepare(std::string item) {

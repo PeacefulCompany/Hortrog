@@ -19,6 +19,9 @@
 #include <string>
 #include <vector>
 
+#include "subsystem/Chef/Kitchen.h"
+#include "subsystem/OrderTemplate/Order.h"
+
 using json = nlohmann::json;
 
 enum class PlayerInput { Up, Left, Right, Down, Click };
@@ -70,23 +73,29 @@ void readAssetFile(const std::string& path) {
     std::cout << data["age"].get<int>() << std::endl;
 }
 
+void test() {
+    Kitchen* kitchen = new Kitchen();
+    Order* order = new Order();
+    kitchen->handleOrder(order);
+}
+
 int main() {
+    test();
+    // std::chrono::system_clock::time_point current_time =
+    //     std::chrono::system_clock::now();
+    // std::chrono::system_clock::time_point end_time =
+    //     current_time + std::chrono::seconds(5);
 
-    std::chrono::system_clock::time_point current_time =
-        std::chrono::system_clock::now();
-    std::chrono::system_clock::time_point end_time =
-        current_time + std::chrono::seconds(5);
+    // while (current_time < end_time) {
+    //     current_time = std::chrono::system_clock::now();
+    //     std::cout << "Time left: "
+    //               << std::chrono::duration_cast<std::chrono::seconds>(
+    //                      end_time - current_time)
+    //                      .count()
+    //               << std::endl;
+    // }
 
-    while (current_time < end_time) {
-        current_time = std::chrono::system_clock::now();
-        std::cout << "Time left: "
-                  << std::chrono::duration_cast<std::chrono::seconds>(
-                         end_time - current_time)
-                         .count()
-                  << std::endl;
-    }
-
-    std::cout << "Finally displaying" << std::endl;
+    // std::cout << "Finally displaying" << std::endl;
     // ResourceManager<sf::Texture> textures;
     // textures.load(0, "assets/hunny.png");
 

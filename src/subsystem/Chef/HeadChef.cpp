@@ -1,4 +1,5 @@
 #include "HeadChef.h"
+#include <iostream>
 
 HeadChef::HeadChef(/* args */) {}
 
@@ -15,8 +16,12 @@ HeadChef::~HeadChef() {}
 // functions
 
 void HeadChef::prepareMeal(Meal* meal) {
+    std::cout << "Head Chef preparing meal" << std::endl;
     handlePreperation(meal);
     KitchenStaff::prepareMeal(meal);
+    std::cout << "Head Chef preparing meal" << std::endl;
+    return;
+
 }
 
 void HeadChef::addMeal(Meal* meal) {

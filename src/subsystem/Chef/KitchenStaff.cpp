@@ -15,12 +15,18 @@ KitchenStaff::~KitchenStaff() {}
 bool KitchenStaff::canPrepare(std::string items) { return false; }
 
 void KitchenStaff::prepareMeal(Meal* meal) {
+    std::cout << "default kitchenStaff prepareMeal!" << std::endl;
+    std::cout << meal->toString() << std::endl;
+
     if (next != nullptr) {
         next->prepareMeal(meal);
     } else {
         kitchen->handleMeal(meal);
         std::cout << "end of chain of chefs!" << std::endl;
     }
+
+    std::cout << meal->toString() << std::endl;
+    return;
 }
 
 void KitchenStaff::handlePreperation(Meal* meal) {

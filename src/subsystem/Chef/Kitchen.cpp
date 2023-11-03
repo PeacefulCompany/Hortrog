@@ -1,4 +1,5 @@
 #include "Kitchen.h"
+#include <iostream>
 
 Kitchen::Kitchen() {
     headChef = std::make_unique<HeadChef>(HeadChef("Head Chef", "Head Chef", 1, this));
@@ -13,14 +14,25 @@ Kitchen::~Kitchen() {}
 
 
 void Kitchen::handleOrder(Order* order) {
+
     std::cout << "Kitchen handling order" << std::endl;
     std::cout << order->toJson() << std::endl;
-    std::cout << "Kitchen handled order" << std::endl;
     Meal* meal = new Meal(order);
-    handleMeal(meal);
+    // handleMeal(meal);
+    while(meal->isReady() == false){
+    std::cout << "readyness" << meal->isReady() << std::endl;
+
+        std::cout << "meal is not ready" << std::endl;
+        headChef->prepareMeal(meal);
+        std::cout << meal->toString() << std::endl;
+    std::cout << "Kitchen handled order" << std::endl;
+
+    }
+    std::cout << "Kitchen handled order" << std::endl;
 }
 
 void Kitchen::handleMeal(Meal* meal) {
+    std::cout << "Kitchen checking meal" << std::endl;
     if(meal->isReady()) {
         outGoingMeals.push_back(meal);
         printReadyMeals();
@@ -31,11 +43,14 @@ void Kitchen::handleMeal(Meal* meal) {
         incomingMeals.push(meal);
     }
     clearQueue();
+    std::cout << "Kitchen checked meal" << std::endl;
+
 }
 
 void Kitchen::clearQueue() {
     std::cout << "Kitchen clearing queue" << std::endl;
     while (!incomingMeals.empty()) {
+        std::cout << "Kitchen preparing meal" << std::endl;
         headChef->prepareMeal(incomingMeals.front());
         incomingMeals.pop();
     }
