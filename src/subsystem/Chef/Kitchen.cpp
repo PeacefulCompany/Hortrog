@@ -7,7 +7,6 @@
 
 // Kitchen::~Kitchen() {}
 
-
 // void Kitchen::handleOrder(Order* order) {
 
 //     std::cout << "Kitchen handling order" << std::endl;
@@ -52,8 +51,6 @@
 //     std::cout << "Kitchen cleared queue" << std::endl;
 // }
 
-
-
 // void Kitchen::printReadyMeals() {
 //     std::cout << "Kitchen printing ready meals" << std::endl;
 //     for (auto& meal : outGoingMeals) {
@@ -62,56 +59,46 @@
 //     std::cout << "Kitchen printed ready meals" << std::endl;
 // }
 
-
-
-Kitchen::Kitchen(/* args */)
-{
+Kitchen::Kitchen(/* args */) {
     this->headChef = std::unique_ptr<KitchenStaff>(new HeadChef(5, 5, this, 5));
 
-    KitchenStaff *chef1 = new NormalChef(3, 3, this, 5);
-    ((NormalChef *)chef1)->addCanPrepareItem("Grilled Salmon");
+    KitchenStaff* chef1 = new NormalChef(3, 3, this, 5);
+    ((NormalChef*)chef1)->addCanPrepareItem("Grilled Salmon");
 
-    KitchenStaff *chef2 = new NormalChef(3, 3, this, 5);
-    ((NormalChef *)chef2)->addCanPrepareItem("Avocado Toast");
+    KitchenStaff* chef2 = new NormalChef(3, 3, this, 5);
+    ((NormalChef*)chef2)->addCanPrepareItem("Avocado Toast");
 
     headChef->setNextStaff(chef1);
     chef1->setNextStaff(chef2);
 }
 
-void Kitchen::handleOrder(Order *order)
-{
+void Kitchen::handleOrder(Order* order) {
     std::cout << "Kitchen: Handling order" << std::endl;
-    Meal *meal = new Meal(order);
+    Meal* meal = new Meal(order);
     incomingMeals.push(meal);
     flush();
 }
 
-void Kitchen::notifyItemReady()
-{
+void Kitchen::notifyItemReady() {
     std::cout << "Kitchen: Notified" << std::endl;
     flush();
 }
 
-void Kitchen::flush()
-{
+void Kitchen::flush() {
     std::cout << "Kitchen: Flushing" << std::endl;
-    for (int i = 0; i < incomingMeals.size(); i++)
-    {
+    for (int i = 0; i < incomingMeals.size(); i++) {
         // Pop an element from the incomingMeals queue.
-        Meal *meal = incomingMeals.front();
+        Meal* meal = incomingMeals.front();
         incomingMeals.pop();
 
         // Get the headChef to prepare the meal.
         headChef->prepareMeal(meal);
 
         // Check if the meal is done.
-        if (meal->getReady())
-        {
+        if (meal->getReady()) {
             // If the meal is done, add it to the outgoingMeals vector.
             outgoingMeals.push_back(meal);
-        }
-        else
-        {
+        } else {
             // If the meal is not done, re-add it to the incomingMeals queue.
             incomingMeals.push(meal);
         }
@@ -120,8 +107,8 @@ void Kitchen::flush()
     std::cout << "Kitchen: Done flushing" << std::endl;
 }
 
-Meal* Kitchen::getOutgoingMeal(){
-    if(outgoingMeals.empty()){
+Meal* Kitchen::getOutgoingMeal() {
+    if (outgoingMeals.empty()) {
         return nullptr;
     }
     Meal* meal = outgoingMeals.front();
@@ -129,17 +116,22 @@ Meal* Kitchen::getOutgoingMeal(){
     return meal;
 }
 
+void Kitchen::updateTime(int time) { headChef->updateTime(time); }
 
-void Kitchen::updateTime(int time){
-    headChef->updateTime(time);
+Kitchen::~Kitchen() {}
+
+void Kitchen::subscribe(Waiter* waiter) { waiters_.push_back(waiter); }
+
+void Kitchen::unsubscribe(Waiter* waiter) {
+    waiters_.erase(
+        std::remove(waiters_.begin(), waiters_.end(), waiter), waiters_.end());
 }
 
-Kitchen::~Kitchen()
-{
-    
+std::vector<Meal*> Kitchen::collectOrders() {
+    std::cout << "Kitchen has collected orders from the waiters" << std::endl;
+    return outgoingMeals;
 }
 
-
-void Kitchen::notify() { std::cout << "Kitchen notified" << std::endl; }
-
-
+void Kitchen::notify() {
+    std::cout << "Waiters have been notified" << std::endl;
+}
