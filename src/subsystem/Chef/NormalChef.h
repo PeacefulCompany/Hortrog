@@ -3,47 +3,37 @@
 #ifndef NORMALCHEF_H
 #define NORMALCHEF_H
 
-#include "../Meals/Meal.h"
-#include "../OrderTemplate/Order.h"
-#include <queue>
-#include <string>
 #include <vector>
-
-#include "../../core/Timer.h"
-#include "../menu/Item.h"
-#include "../menu/OrderJSON.h"
-#include "HeadChef.h"
-#include "KitchenStaff.h"
+#include <string>
 #include <chrono>
 
-class NormalChef : public KitchenStaff {
+#include "KitchenStaff.h"
+#include "../Meals/Meal.h"
+#include "../Meals/MealItem.h"
+#include "../menu/OrderJSON.h"
+
+class NormalChef : public KitchenStaff
+{
+private:
+    std::vector<std::string> canPrepareItems_;
+    std::vector<MealItem *> preparedItems;
+    std::vector<MealItem *> itemsBeingPrepared;
+    virtual void update();
+
 public:
-    // constructors and destructors
-    NormalChef(/* args */);
-    NormalChef(std::string name,
-        std::string role,
-        int level,
-        int timeToPrepare,
-        Kitchen* kitchen);
+    NormalChef();
+    void print();
+    NormalChef(int rating, int capacity, Kitchen *kitchen, int speed);
+    void prepareMeal(Meal *meal);
+    void getItemFromPrepared(Item *item, Meal* meal);
+    bool canPrepareItem(std::string item);
+    void addCanPrepareItem(std::string item);
+    void removeCanPrepareItem(std::string item);
+    bool mealItemAlreadyPrepared(Item *item, Meal* meal);
+    bool mealItemAlreadyBeingPrepared(Item *item, Meal* meal);
+    void wait();
+
     ~NormalChef();
-
-    // functions
-    virtual void prepareMeal(Meal* meal);
-    virtual bool canPrepare(std::string items);
-    virtual void handlePreperation(Meal* meal);
-    virtual void wait();
-    // virtual void notify();
-
-    // getters and setters
-    void addPreparableItem(std::string itemName);
-    void removePreparableItem(std::string itemName);
-    // MealItem* getPreparedItem();
-
-protected:
-    // attributes
-    std::vector<MealItem*> mealItems;
-    std::vector<std::string> preparableItems;
-    int timeToPrepare;
 };
 
-#endif // NORMALCHEF_H
+#endif

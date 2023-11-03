@@ -1,6 +1,11 @@
 #include "Order.h"
 
-Order::Order(std::string customer) { this->customer = customer; }
+Order::Order(std::string customer) { 
+    this->customer = customer; 
+
+    // orders_.push_back(new Order("Avocado Toast"));
+    // orders_.push_back(new Order("Grilled Salmon"));
+}
 
 Order::Order() { this->customer = ""; }
 
@@ -9,8 +14,8 @@ Order::~Order() {}
 void Order::add(Order* order) { std::cout << "adding Order" << std::endl; }
 
 std::string Order::toJson() {
-    return "{order:[{name:Avocado Toast,price:8.99,diet:Vegan},{name:Grilled "
-           "Salmon,price:14.99}]}";
+    return "{\"order\":[{\"name\":\"Avocado Toast\",\"price\":8.99,\"diet\":\"Vegan\"},{\"name\":\"Grilled "
+           "Salmon\",\"price\":14.99}]}";
 }
 
 double Order::total() { return 0.0; }

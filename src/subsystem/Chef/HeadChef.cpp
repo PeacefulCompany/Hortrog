@@ -1,69 +1,35 @@
 #include "HeadChef.h"
-#include <iostream>
 
-HeadChef::HeadChef(/* args */) {}
-
-HeadChef::HeadChef(
-    std::string name, std::string role, int level, Kitchen* kitchen) {
-    this->name = name;
-    this->role = role;
-    this->level = level;
-    this->next = nullptr;
+HeadChef::HeadChef(int rating, int capacity, Kitchen* kitchen, int speed)
+{
+    this->rating = rating;
+    this->capacity = capacity;
+    this->kitchen = kitchen;
+    this->speed = speed;
 }
 
-HeadChef::~HeadChef() {}
-
-// functions
-
-void HeadChef::prepareMeal(Meal* meal) {
-    std::cout << "Head Chef preparing meal" << std::endl;
-    handlePreperation(meal);
-    KitchenStaff::prepareMeal(meal);
-    std::cout << "Head Chef preparing meal" << std::endl;
-    return;
-
+HeadChef::~HeadChef()
+{
 }
 
-void HeadChef::addMeal(Meal* meal) {
-    bool found = false;
-    for (int i = 0; i < mealsToPrepare.size(); i++) {
-        if (mealsToPrepare[i] == meal) {
-            found = true;
-            break;
-        }
+void HeadChef::prepareMeal(Meal* meal)
+{
+    std::cout << "Head Chef is preparing the meal" << std::endl;
+    OrderJSON* orderJSON = new OrderJSON(meal->getOrder()->toJson());
+    std::vector<Item*> items = orderJSON->getItems();
+
+    if(items.size() == meal->getItems().size())
+    {
+        std::cout << "meal is ready" << std::endl;
+        meal->setReady(true);
+        return;
     }
-    if (!found) {
-        mealsToPrepare.push_back(meal);
+    else
+    {
+        meal->setReady(false);
+        KitchenStaff::prepareMeal(meal);
     }
-}
 
-bool HeadChef::canPrepare(std::string items) { return false; }
+    std::cout << "Head Chef is done preparing the meal" << std::endl;
 
-void HeadChef::handlePreperation(Meal* meal) {
-    OrderJSON order = OrderJSON(meal->getJSON());
-    std::vector<Item*> items = order.getItems();
-
-    std::vector<MealItem*>* mealItems_ = meal->getItems();
-
-    for (int i = 0; i < items.size(); i++) {
-        for (int j = 0; j < mealItems_->size(); j++) {
-            if (items[i]->getName() != mealItems_->at(j)->getFood()) {
-                meal->setReady(false);
-            }
-        }
-    }
-    meal->setReady(true);
-}
-
-std::vector<Meal*> HeadChef::getPrepareMeals() {
-    std::vector<Meal*> readyMeals;
-    for (auto it = mealsToPrepare.begin(); it != mealsToPrepare.end();) {
-        if ((*it)->isReady()) {
-            readyMeals.push_back(*it);
-            it = mealsToPrepare.erase(it);
-        } else {
-            ++it;
-        }
-    }
-    return readyMeals;
 }

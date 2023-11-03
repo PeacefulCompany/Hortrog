@@ -16,17 +16,17 @@
 
 class Kitchen {
 private:
-    std::unique_ptr<KitchenStaff> headChef;
+    KitchenStaff* headChef;
     std::queue<Meal*> incomingMeals;
-    std::vector<Meal*> outGoingMeals;
+    std::vector<Meal*> outgoingMeals;
 
 public:
     Kitchen();
+    void notifyItemReady();
+    void flush();
     void handleOrder(Order* order);
-    void clearQueue();
-    void handleMeal(Meal* meal);
-    void printReadyMeals();
-
+    void updateTime(int time);
+    Meal* getOutgoingMeal();
     ~Kitchen();
 
     void notify();

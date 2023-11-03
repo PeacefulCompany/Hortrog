@@ -1,105 +1,163 @@
 #include "NormalChef.h"
 
-using namespace std;
-
-NormalChef::NormalChef(/* args */) {}
-
-NormalChef::NormalChef(std::string name,
-    std::string role,
-    int level,
-    int timeToPrepare,
-    Kitchen* kitchen)
-    : KitchenStaff(name, role, level, kitchen) {
-    this->timeToPrepare = timeToPrepare;
+NormalChef::NormalChef()
+{
+    rating = 1;
+    capacity = 1;
+    kitchen = nullptr;
+    nextStaff_ = nullptr;
 }
 
-NormalChef::~NormalChef() {}
+NormalChef::NormalChef(int rating, int capacity, Kitchen *kitchen, int speed)
+{
+    this->rating = rating;
+    this->capacity = capacity;
+    this->kitchen = kitchen;
+    nextStaff_ = nullptr;
+    this->speed = speed;
+}
 
-// functions
+NormalChef::~NormalChef()
+{
+}
 
-void NormalChef::prepareMeal(Meal* meal) {
-    handlePreperation(meal);
+void NormalChef::prepareMeal(Meal *meal)
+{
+    OrderJSON *orderJSON = new OrderJSON(meal->getOrder()->toJson());
+    std::vector<Item *> items = orderJSON->getItems();
+
+    for (int i = 0; i < items.size(); i++)
+    {
+        if (canPrepareItem(items[i]->getName()))
+        {
+            if (mealItemAlreadyPrepared(items[i], meal))
+            {
+                std::cout << "Normal Chef is adding the item to a meal: " << items[i]->getName() << std::endl;
+                getItemFromPrepared(items[i], meal);
+            }
+            else if( itemsBeingPrepared.size() < capacity && !mealItemAlreadyBeingPrepared(items[i], meal))
+            {
+                std::cout << "Normal Chef is preparing the item: " << items[i]->getName() << std::endl;
+                MealItem *mealItem = new MealItem(meal->getCustomer(), this->rating, items[i]->getName());
+                // wait();
+                itemsBeingPrepared.push_back(mealItem);
+                // notify();
+            }
+        }
+    }
+    std::cout << "Normal Chef is done preparing the meal" << std::endl;
     KitchenStaff::prepareMeal(meal);
-    return;
 }
 
-bool NormalChef::canPrepare(std::string item) {
-    for (int j = 0; j < preparableItems.size(); j++) {
-        if (item == preparableItems[j]) {
+void NormalChef::getItemFromPrepared(Item *item, Meal* meal)
+{
+    for (int i = 0; i < preparedItems.size(); i++)
+    {
+        if (preparedItems[i]->getFood() == item->getName() && preparedItems[i]->getCustomer() == meal->getCustomer())
+        {
+            meal->addItem(preparedItems[i]);
+            preparedItems.erase(preparedItems.begin() + i);
+        }
+    }
+}
+
+bool NormalChef::mealItemAlreadyPrepared(Item *item, Meal* meal)
+{
+    for (int i = 0; i < preparedItems.size(); i++)
+    {
+        if (preparedItems[i]->getFood() == item->getName() && preparedItems[i]->getCustomer() == meal->getCustomer())
+        {
             return true;
         }
     }
     return false;
 }
 
-void NormalChef::addPreparableItem(std::string itemName) {
-    preparableItems.push_back(itemName);
+bool NormalChef::mealItemAlreadyBeingPrepared(Item *item, Meal* meal)
+{
+    for (int i = 0; i < itemsBeingPrepared.size(); i++)
+    {
+        if (itemsBeingPrepared[i]->getFood() == item->getName() && itemsBeingPrepared[i]->getCustomer() == meal->getCustomer())
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
-void NormalChef::removePreparableItem(std::string itemName) {
-    for (int i = 0; i < preparableItems.size(); i++) {
-        if (preparableItems[i] == itemName) {
-            preparableItems.erase(preparableItems.begin() + i);
+bool NormalChef::canPrepareItem(std::string item)
+{
+    for (int i = 0; i < canPrepareItems_.size(); i++)
+    {
+        if (canPrepareItems_[i] == item)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+void NormalChef::addCanPrepareItem(std::string item)
+{
+    canPrepareItems_.push_back(item);
+}
+
+void NormalChef::removeCanPrepareItem(std::string item)
+{
+    for (int i = 0; i < canPrepareItems_.size(); i++)
+    {
+        if (canPrepareItems_[i] == item)
+        {
+            canPrepareItems_.erase(canPrepareItems_.begin() + i);
         }
     }
 }
 
-// MealItem* NormalChef::getPreparedItem()
-// {
-//     if(mealItems.size() > 0)
-//     {
-//         MealItem* item = mealItems.back();
-//         mealItems.pop_back();
-//         return item;
-//     }
-//     else
-//     {
-//         return nullptr;
-//     }
+void NormalChef::update(){
+    // lastTime = 0;
 
-// }
-
-void NormalChef::handlePreperation(Meal* meal) {
-    OrderJSON order = OrderJSON(meal->getJSON());
-    std::vector<Item*> items = order.getItems();
-
-    for (int i = 0; i < items.size(); i++) {
-
-        std::string itemName = items[i]->getName();
-        if (canPrepare(itemName)) {
-            bool found = false;
-            for (int j = 0; j < mealItems.size(); j++) {
-                if (mealItems[j]->getFood() == items[i]->getName()) {
-                    found = true;
-                    meal->addItem(mealItems[j]);
-                    mealItems.erase(mealItems.begin() + j);
-                    break;
-                }
-            }
-            if (!found) {
-                MealItem* mealItem = new MealItem(
-                    meal->getCustomer(), this->level, items[i]->getName());
-                mealItems.push_back(mealItem);
-                wait();
-                // meal->addMealItem(mealItem);
-            }
-        }
+    if(!itemsBeingPrepared.empty() && lastTime >= speed)
+    {
+        preparedItems.push_back(itemsBeingPrepared.front());
+        itemsBeingPrepared.erase(itemsBeingPrepared.begin());
+        print();
     }
-    // headChef->notify();
+    notify();
+
 }
 
-void NormalChef::wait() {
+void NormalChef::print(){
+    std::cout << "Normal Chef: " << std::endl;
+    std::cout << "    Rating: " << rating << std::endl;
+    std::cout << "    Capacity: " << capacity << std::endl;
+    std::cout << "    Speed: " << speed << std::endl;
+    std::cout << "    Can prepare: " << std::endl;
+    for (int i = 0; i < canPrepareItems_.size(); i++)
+    {
+        std::cout << "        " << canPrepareItems_[i] << std::endl;
+    }
+    std::cout << "    Prepared Items: " << std::endl;
+    for (int i = 0; i < preparedItems.size(); i++)
+    {
+        std::cout << "        " << preparedItems[i]->getFood() << " for " << preparedItems[i]->getCustomer() << std::endl;
+    }
+    std::cout << "    Items Being Prepared: " << std::endl;
+    for (int i = 0; i < itemsBeingPrepared.size(); i++)
+    {
+        std::cout << "        " << itemsBeingPrepared[i]->getFood() << " for " << itemsBeingPrepared[i]->getCustomer() << std::endl;
+    }
+}
+
+
+void NormalChef::wait()
+{
     std::chrono::system_clock::time_point current_time =
         std::chrono::system_clock::now();
     std::chrono::system_clock::time_point end_time =
-        current_time + std::chrono::seconds(5);
+        current_time + std::chrono::seconds(capacity);
 
-    while (current_time < end_time) {
+    while (current_time < end_time)
+    {
         current_time = std::chrono::system_clock::now();
     }
 }
-
-// void NormalChef::notify()
-// {
-//     headChef->notify();
-// }

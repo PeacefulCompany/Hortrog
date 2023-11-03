@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 
+
 class Order {
 public:
     // constructors and destructors
@@ -22,7 +23,7 @@ public:
 
     // getters and setters
     std::string getCustomer() const;
-    inline std::vector<Order*> getOrders() const { return orders_; }
+    inline std::vector<Order*> &getOrders() { return orders_; }
     void setCustomer(std::string customer);
 
 private:

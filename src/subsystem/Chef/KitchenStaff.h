@@ -3,52 +3,37 @@
 #ifndef KITCHENSTAFF_H
 #define KITCHENSTAFF_H
 
+// #include "OrderJSON.h"
 #include "../Meals/Meal.h"
+#include "../Meals/MealItem.h"
 #include "../OrderTemplate/Order.h"
-#include "../menu/Item.h"
 #include "../menu/OrderJSON.h"
-#include <string>
-#include <vector>
+#include <iostream>
 
 class Kitchen;
 
-class KitchenStaff {
-public:
-    // constructors and destructors
+class KitchenStaff
+{
+protected:
+    KitchenStaff* nextStaff_;
+    int rating;
+    int capacity;
+    int speed;
+    Kitchen* kitchen;
+    int lastTime = 0;
+    virtual void update();
 
-    KitchenStaff(
-        std::string name, std::string role, int level, Kitchen* kitchen);
-    KitchenStaff();
+public:
+    KitchenStaff(/* args */);
     ~KitchenStaff();
 
-    // functions
+    void updateTime(int delta);
     virtual void prepareMeal(Meal* meal);
-    virtual bool canPrepare(std::string items);
-    virtual void handlePreperation(Meal* meal);
-    virtual void notify();
+    void notify();
 
-    // getters and setters
-
-    std::string getName() const;
-    std::string getRole() const;
-    int getLevel() const;
-    KitchenStaff* getNext() const;
-
-    void setName(std::string name);
-    void setRole(std::string role);
-    void setLevel(int level);
-    void setNext(KitchenStaff* next);
-
-protected:
-    // attributes
-    std::string name;
-    std::string role;
-    int level;
-    KitchenStaff* next;
-    Kitchen* kitchen;
-    // functions
+    inline void setNextStaff(KitchenStaff* next){ this->nextStaff_ = next; };
 };
 
 #include "Kitchen.h"
 
-#endif // KITCHENSTAFF_H
+#endif // !KITCHENSTAFF_H

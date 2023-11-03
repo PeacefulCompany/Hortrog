@@ -1,54 +1,47 @@
 #include "KitchenStaff.h"
 
-KitchenStaff::KitchenStaff(
-    std::string name, std::string role, int leve, Kitchen* kitchen) {
-    this->name = name;
-    this->role = role;
-    this->level = level;
-    this->next = nullptr;
+KitchenStaff::KitchenStaff(/* args */)
+{
+    
 }
 
-KitchenStaff::KitchenStaff() {}
+KitchenStaff::~KitchenStaff()
+{
+}
 
-KitchenStaff::~KitchenStaff() {}
+void KitchenStaff::prepareMeal(Meal *meal)
+{
+    if (nextStaff_ != nullptr)
+    {
+        nextStaff_->prepareMeal(meal);
+    }
+    else
+    {
+        std::cout << "KitchenStaff: end of chain" << std::endl;
+    }
+}
 
-bool KitchenStaff::canPrepare(std::string items) { return false; }
+void KitchenStaff::notify()
+{
+    std::cout << "KitchenStaff: Notified" << std::endl;
+    kitchen->notifyItemReady();
+}
 
-void KitchenStaff::prepareMeal(Meal* meal) {
-    std::cout << "default kitchenStaff prepareMeal!" << std::endl;
-    std::cout << meal->toString() << std::endl;
+void KitchenStaff::update(){
+    lastTime = 0;
+}
 
-    if (next != nullptr) {
-        next->prepareMeal(meal);
-    } else {
-        kitchen->handleMeal(meal);
-        std::cout << "end of chain of chefs!" << std::endl;
+void KitchenStaff::updateTime(int delta){
+    lastTime += delta;
+
+    if(lastTime>= speed)
+    {
+        update();
+        lastTime = 0;
     }
 
-    std::cout << meal->toString() << std::endl;
-    return;
+    if(nextStaff_ != nullptr)
+    {
+        nextStaff_->updateTime(delta);
+    }
 }
-
-void KitchenStaff::handlePreperation(Meal* meal) {
-    std::cout << "default kitchenStaff handlePreperation!" << std::endl;
-}
-
-void KitchenStaff::notify() {
-    std::cout << "default kitchenStaff notify!" << std::endl;
-}
-
-std::string KitchenStaff::getName() const { return name; }
-
-std::string KitchenStaff::getRole() const { return role; }
-
-int KitchenStaff::getLevel() const { return level; }
-
-KitchenStaff* KitchenStaff::getNext() const { return next; }
-
-void KitchenStaff::setName(std::string name) { this->name = name; }
-
-void KitchenStaff::setRole(std::string role) { this->role = role; }
-
-void KitchenStaff::setLevel(int level) { this->level = level; }
-
-void KitchenStaff::setNext(KitchenStaff* next) { this->next = next; }
