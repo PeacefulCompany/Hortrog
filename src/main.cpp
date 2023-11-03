@@ -2,8 +2,8 @@
 #include "SFML/Graphics/View.hpp"
 #include "SFML/System.hpp"
 #include "SFML/Window.hpp"
-
 #include "SFML/Window/WindowStyle.hpp"
+
 #include "core/TerminalApp.h"
 #include "customer/Customer.h"
 #include "event/ActionMap.h"
