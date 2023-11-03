@@ -8,8 +8,8 @@ protected:
     generateReceiptOrderList() override;
 
 private:
-    std::string id;
-    double price;
+    std::string id_;
+    double price_;
 
 public:
     std::string toJson() override;
