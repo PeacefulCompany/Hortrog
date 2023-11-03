@@ -19,6 +19,7 @@ std::string Modifier::toJson() {
 }
 Modifier::Modifier(std::unique_ptr<OrderItem> component) {
     this->component_ = std::move(component);
+    this->price_ = 0;
 }
 std::vector<std::pair<std::string, double>>
 Modifier::generateReceiptOrderList() {

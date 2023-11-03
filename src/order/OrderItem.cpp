@@ -13,7 +13,7 @@ OrderItem::OrderItem(std::string id, double price) {
     this->price_ = price;
 }
 void OrderItem::setPrice(double price) { this->price_ = price; }
-double OrderItem::getPrice() const { return this->price_; }
+double OrderItem::getPrice() { return this->price_; }
 
 std::string OrderItem::getId() { return this->id_; }
 std::vector<std::pair<std::string, double>>

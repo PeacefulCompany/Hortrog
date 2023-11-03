@@ -16,7 +16,7 @@ public:
     double total() override;
     void add(std::unique_ptr<Order>) override;
     OrderItem(std::string id, double price);
-    void setPrice(double price);
-    [[nodiscard]] double getPrice() const;
+    void setPrice(double price) override;
+    double getPrice();
     std::string getId();
 };
