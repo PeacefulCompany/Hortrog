@@ -8,25 +8,36 @@ OrderJSON::OrderJSON(std::string order) { this->order = order; }
 std::vector<Item*> OrderJSON::getItems() {
     json data = json::parse(order);
 
-    for (auto& item : data["order"]) {
+    for (auto &item : data["order"])
+    {
         // std::cout << "[DEBUG] Iterating through items..." << std::endl;
         std::string name = item["name"].get<std::string>();
         double price = item["price"].get<double>();
-        std::cout << "[DEBUG] name: " << name << std::endl;
-        Item* newItem;
 
-        if (item.contains("diet")) {
-            std::string restrictions = item["diet"].get<std::string>();
-            newItem = new Item(name, price, restrictions);
-        } else {
-            newItem = new Item(name, price, "none");
+        std::string diet;
+
+        if (item.contains("diet"))
+        {
+            diet = item["diet"].get<std::string>();
+        }
+        else
+        {
+            diet = "none";
         }
 
+        std::string mod;
+
+        if (item.contains("mod"))
+        {
+            mod = item["mod"].get<std::string>();
+        }
+        else
+        {
+            mod = "none";
+        }
+
+        Item *newItem = new Item(name, price, diet, mod);
         items.push_back(newItem);
-    }
-    std::cout<<"Printing items"<<std::endl;
-    for(int i = 0; i < items.size(); i++) {
-        std::cout << "[DEBUG] Item " << i << ": " << items[i]->getName() << std::endl;
     }
 
     return items;

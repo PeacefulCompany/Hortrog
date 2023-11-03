@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #ifndef SUBSYSTEM_MEAL_H
 #define SUBSYSTEM_MEAL_H
 

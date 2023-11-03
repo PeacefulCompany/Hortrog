@@ -46,7 +46,7 @@ void NormalChef::prepareMeal(Meal *meal)
             else if( itemsBeingPrepared.size() < capacity && !mealItemAlreadyBeingPrepared(items[i], meal))
             {
                 std::cout << "Normal Chef is preparing the item: " << items[i]->getName() << std::endl;
-                MealItem *mealItem = new MealItem(meal->getCustomer(), this->rating, items[i]->getName());
+                MealItem *mealItem = new MealItem(meal->getCustomer(), this->rating, items[i]->getName(), items[i]->getDiet(), items[i]->getMod());
                 // wait();
                 itemsBeingPrepared.push_back(mealItem);
                 std::cout << "Items being prepared by Normal Chef: " << std::endl;
