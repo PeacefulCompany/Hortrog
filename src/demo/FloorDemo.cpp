@@ -86,8 +86,14 @@ void FloorDemo::splitTable() {
     // Find the table
     int toSplit = util::input("Enter table ID to split: ");
     auto it = findTable(toSplit);
-    if (it == tables_.end()) return;
-    if ((*it)->split().size() == 1) return;
+    if (it == tables_.end()) {
+        error("Table not found");
+        return;
+    }
+    if (!(*it)->isEmpty() || (*it)->split().size() == 1) {
+        error("Table cannot be split");
+        return;
+    }
 
     // Split table up
     std::vector<TableComponent*> split = (*it)->split();
