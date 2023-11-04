@@ -2,11 +2,13 @@
 #include "core/util.h"
 
 #include "customer/Customer.h"
+#include "floor/CustomerIterator.h"
 #include "floor/Table.h"
 #include "floor/TableComponent.h"
 #include "floor/TableGroup.h"
 
 #include <algorithm>
+#include <errno.h>
 #include <iostream>
 #include <iterator>
 #include <memory>
@@ -148,6 +150,32 @@ void FloorDemo::addCustomer() {
 
 void FloorDemo::removeCustomer() {
     std::cout << "--- REMOVE CUSTOMER ---" << std::endl;
+
+    // Find the table
+    int id = util::input("Enter table ID: ");
+    auto it = findTable(id);
+    if (it == tables_.end()) {
+        error("Table not found");
+        return;
+    }
+
+    int customerNumber = util::input("Customer number: ");
+    CustomerIterator* customers = (*it)->createIterator();
+    for (int i = 0; i < customerNumber; i++) {
+        if (customers->isDone()) {
+            error("Customer not found");
+            delete customers;
+            return;
+        }
+        customers->next();
+    }
+
+    // Create customer
+    if (!(*it)->removeCustomer(customers->get())) {
+        error("Customer not found");
+        delete customers;
+        return;
+    }
 }
 
 std::vector<std::unique_ptr<Table>>::iterator FloorDemo::findTable(int id) {
