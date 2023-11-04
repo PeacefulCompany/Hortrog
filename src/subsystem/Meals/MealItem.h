@@ -13,9 +13,10 @@ public:
     inline void setReady(bool rStatus_) { ready_ = rStatus_; }
     inline std::string getFood() const { return food_; }
     inline std::string toString() const {
-        return "{" + food_ + "," + customer_ + "," + std::to_string(quality_) +
-               "," + diet_ + "," + mod_ + "}";
+        return "{item: " + food_ + ", quality: " + std::to_string(quality_) +
+               ", diet: " + diet_ + ", modifier: " + mod_ + "}";
     }
+    bool isEqual(MealItem* other);
 
 private:
     std::string food_;

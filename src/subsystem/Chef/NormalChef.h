@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <chrono>
+#include <sstream>
 
 #include "KitchenStaff.h"
 #include "../Meals/Meal.h"
@@ -22,7 +23,7 @@ private:
 
 public:
     NormalChef();
-    void print();
+    std::string toString();
     NormalChef(int rating, int capacity, Kitchen *kitchen, int speed);
     void prepareMeal(Meal *meal);
     void getItemFromPrepared(Item *item, Meal* meal);

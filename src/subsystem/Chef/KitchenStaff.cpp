@@ -4,6 +4,7 @@
  */
 
 #include "KitchenStaff.h"
+#include <string>
 
 /**
  * @brief Construct a new Kitchen Staff object
@@ -81,6 +82,16 @@ void KitchenStaff::updateTime(int delta){
     }
 }
 
+std::string KitchenStaff::toString()
+{
+    std::string str = "Kitchen Staff: \n";
+    str += "Rating: " + std::to_string(rating_) + "\n";
+    str += "Capacity: " + std::to_string(capacity_) + "\n";
+    str += "Speed: " + std::to_string(speed_) + "\n";
+    return str;
+}
+
+
 /**
  * @brief Set the next kitchen staff in the chain
  * 
@@ -90,4 +101,14 @@ void KitchenStaff::setNextStaff(KitchenStaff *next)
 {
     // nextStaff = next;
     nextStaff_ = std::unique_ptr<KitchenStaff>(next);
+}
+
+/**
+ * @brief Get the next kitchen staff in the chain
+ * 
+ * @return KitchenStaff* The next kitchen staff
+ */
+KitchenStaff *KitchenStaff::getNextStaff(){
+    // return nextStaff;
+    return nextStaff_.get();
 }

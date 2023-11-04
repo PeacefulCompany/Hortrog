@@ -61,14 +61,12 @@ void NormalChef::prepareMeal(Meal* meal) {
         if (canPrepareItem(items[i]->getName())) {
 
             if (mealItemAlreadyPrepared(items[i], meal)) {
-                std::cout << "Normal Chef is adding the item to a meal: "
+                std::cout << "Normal Chef: adding prepared item to a meal "
                           << items[i]->getName() << std::endl;
                 getItemFromPrepared(items[i], meal);
 
             } else if (itemsBeingPrepared_.size() < capacity_ &&
                        !mealItemAlreadyBeingPrepared(items[i], meal)) {
-                std::cout << "Normal Chef is preparing the item: "
-                          << items[i]->getName() << std::endl;
 
                 MealItem* mealItem = new MealItem(meal->getCustomer(),
                     this->rating_,
@@ -76,7 +74,12 @@ void NormalChef::prepareMeal(Meal* meal) {
                     items[i]->getDiet(),
                     items[i]->getMod());
 
-                itemsBeingPrepared_.push_back(mealItem);
+                if (!meal->containsMealItem(mealItem)) {
+                    std::cout
+                        << "Normal Chef: preparing an item required by a meal "
+                        << items[i]->getName() << std::endl;
+                    itemsBeingPrepared_.push_back(mealItem);
+                }
             }
         }
     }
@@ -180,7 +183,7 @@ void NormalChef::update() {
     if (!itemsBeingPrepared_.empty() && lastTime_ >= speed_) {
         preparedItems_.push_back(itemsBeingPrepared_.front());
         itemsBeingPrepared_.erase(itemsBeingPrepared_.begin());
-        print();
+        // print();
     }
     notify();
 }
@@ -189,25 +192,27 @@ void NormalChef::update() {
  * @brief Prints the chef's information
  *
  */
-void NormalChef::print() {
-    std::cout << "Normal Chef: " << std::endl;
-    std::cout << "    Rating: " << rating_ << std::endl;
-    std::cout << "    Capacity: " << capacity_ << std::endl;
-    std::cout << "    Speed: " << speed_ << std::endl;
-    std::cout << "    Can prepare: " << std::endl;
+std::string NormalChef::toString() {
+    std::stringstream ss;
+    ss << "Normal Chef: " << std::endl;
+    ss << "    Rating: " << rating_ << std::endl;
+    ss << "    Capacity: " << capacity_ << std::endl;
+    ss << "    Speed: " << speed_ << std::endl;
+    ss << "    Can prepare: " << std::endl;
     for (int i = 0; i < canPrepareItems_.size(); i++) {
-        std::cout << "        " << canPrepareItems_[i] << std::endl;
+        ss << "        " << canPrepareItems_[i] << std::endl;
     }
-    std::cout << "    Prepared Items: " << std::endl;
+    ss << "    Prepared Items: " << std::endl;
     for (int i = 0; i < preparedItems_.size(); i++) {
-        std::cout << "        " << preparedItems_[i]->getFood() << " for "
-                  << preparedItems_[i]->getCustomer() << std::endl;
+        ss << "        " << preparedItems_[i]->getFood() << " for "
+           << preparedItems_[i]->getCustomer() << std::endl;
     }
-    std::cout << "    Items Being Prepared: " << std::endl;
+    ss << "    Items Being Prepared: " << std::endl;
     for (int i = 0; i < itemsBeingPrepared_.size(); i++) {
-        std::cout << "        " << itemsBeingPrepared_[i]->getFood() << " for "
-                  << itemsBeingPrepared_[i]->getCustomer() << std::endl;
+        ss << "        " << itemsBeingPrepared_[i]->getFood() << " for "
+           << itemsBeingPrepared_[i]->getCustomer() << std::endl;
     }
+    return ss.str();
 }
 
 /**

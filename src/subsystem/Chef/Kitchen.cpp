@@ -1,12 +1,16 @@
 /**
  * @file Kitchen.cpp
  * @brief Implementation of the Kitchen class.
- * 
- * This file contains the implementation of the Kitchen class, which is responsible for handling orders and preparing meals.
- * It contains functions for handling orders, meals, and clearing the queue. It also contains functions for notifying when an item is ready and for flushing the queue.
- * Additionally, it contains functions for getting outgoing meals and updating the time.
+ *
+ * This file contains the implementation of the Kitchen class, which is
+ * responsible for handling orders and preparing meals. It contains functions
+ * for handling orders, meals, and clearing the queue. It also contains
+ * functions for notifying when an item is ready and for flushing the queue.
+ * Additionally, it contains functions for getting outgoing meals and updating
+ * the time.
  */
 #include "Kitchen.h"
+#include "subsystem/Chef/KitchenStaff.h"
 #include <iostream>
 
 // Kitchen::Kitchen() {
@@ -80,23 +84,21 @@ Kitchen::Kitchen(/* args */) {
     chef1->setNextStaff(chef2);
 }
 
-
-
-void Kitchen::handleOrder(Order *order)
-{
-    std::cout << "Kitchen: Handling order" << std::endl;
+void Kitchen::handleOrder(Order* order) {
+    std::cout << "Kitchen: recieved Order" << std::endl;
     Meal* meal = new Meal(order);
     incomingMeals.push(meal);
     flush();
 }
 
 void Kitchen::notifyItemReady() {
-    std::cout << "Kitchen: Notified" << std::endl;
+    std::cout << "Kitchen: Notified of a ready item" << std::endl;
     flush();
 }
 
 void Kitchen::flush() {
-    std::cout << "Kitchen: Flushing" << std::endl;
+    std::cout << "Kitchen: Flushing unhandled orders through the system"
+              << std::endl;
     for (int i = 0; i < incomingMeals.size(); i++) {
         // Pop an element from the incomingMeals queue.
         Meal* meal = incomingMeals.front();
@@ -115,7 +117,8 @@ void Kitchen::flush() {
         }
     }
 
-    std::cout << "Kitchen: Done flushing" << std::endl;
+    std::cout << "Kitchen: completed flushing orders through the system"
+              << std::endl;
 }
 
 Meal* Kitchen::getOutgoingMeal() {
@@ -127,7 +130,11 @@ Meal* Kitchen::getOutgoingMeal() {
     return meal;
 }
 
-void Kitchen::updateTime(int time) { headChef->updateTime(time); }
+void Kitchen::updateTime(int time) {
+    std::cout << "Kitchen:" << time << " seconds hava passed" << std::endl;
+    headChef->updateTime(time);
+    // std::cout << toString() << std::endl;
+}
 
 Kitchen::~Kitchen() {}
 
@@ -139,10 +146,41 @@ void Kitchen::unsubscribe(Waiter* waiter) {
 }
 
 std::vector<Meal*> Kitchen::collectOrders() {
-    std::cout << "Kitchen has collected orders from the waiters" << std::endl;
+    std::cout << "Kitchen: retrieving orders for waiter request" << std::endl;
     return outgoingMeals;
 }
 
 void Kitchen::notify() {
-    std::cout << "Waiters have been notified" << std::endl;
+    std::cout << "Kitchen: notifying Waiters" << std::endl;
+}
+
+std::string Kitchen::toString() {
+    std::string str = "=========================\n";
+    str += "Kitchen: \n";
+    str += "+~~~~~~~~~~~~~~~~~~~~~~~+\n";
+    str += "Incoming Meals: \n";
+    str += "+~~~~~~~~~~~~~~~~~~~~~~~+\n";
+    for (int i = 0; i < incomingMeals.size(); i++) {
+        str += incomingMeals.front()->toString() + "\n";
+        incomingMeals.push(incomingMeals.front());
+        incomingMeals.pop();
+    }
+    str += "+~~~~~~~~~~~~~~~~~~~~~~~+\n";
+    str += "Outgoing Meals: \n";
+    str += "+~~~~~~~~~~~~~~~~~~~~~~~+\n";
+    for (int i = 0; i < outgoingMeals.size(); i++) {
+        str += outgoingMeals[i]->toString() + "\n";
+    }
+    str += "+~~~~~~~~~~~~~~~~~~~~~~~+\n";
+    str += "Kitchen Staff: \n";
+    str += "+~~~~~~~~~~~~~~~~~~~~~~~+\n";
+    KitchenStaff* current = headChef.get();
+    while (current != nullptr) {
+        str += "-------------------------\n";
+        str += current->toString() + "\n";
+        current = current->getNextStaff();
+        str += "-------------------------\n";
+    }
+    str += "=========================\n";
+    return str;
 }

@@ -73,19 +73,20 @@ void readAssetFile(const std::string& path) {
     std::cout << data["age"].get<int>() << std::endl;
 }
 
-void askTimePassed(Kitchen* Kitchen) {
+void askTimePassed(Kitchen* kitchen) {
     int timePassed;
     while (true) {
         std::cout << "Enter time passed (sec): ";
         std::cin >> timePassed;
 
-        Kitchen->updateTime(timePassed);
-        Meal* meal = Kitchen->getOutgoingMeal();
+        kitchen->updateTime(timePassed);
+        std::cout<< kitchen->toString() << std::endl;
+        Meal* meal = kitchen->getOutgoingMeal();
         while (meal != nullptr)
         {
             std::cout << "Meal ready!" << std::endl;
             std::cout << meal->toString() << std::endl;
-            meal = Kitchen->getOutgoingMeal();
+            meal = kitchen->getOutgoingMeal();
         }
         
         // Do something with timePassed

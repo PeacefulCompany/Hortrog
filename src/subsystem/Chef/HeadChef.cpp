@@ -18,12 +18,12 @@ HeadChef::~HeadChef() {}
  * @param meal A pointer to the Meal object to be prepared.
  */
 void HeadChef::prepareMeal(Meal* meal) {
-    std::cout << "Head Chef is assembling the meal" << std::endl;
+    std::cout << "Head Chef: is checking a meal" << std::endl;
     OrderJSON* orderJSON = new OrderJSON(meal->getOrder()->toJson());
     std::vector<Item*> items = orderJSON->getItems();
 
     if (items.size() == meal->getItems().size()) {
-        std::cout << "meal is ready" << std::endl;
+        std::cout << "Head Chef: meal is ready" << std::endl;
         meal->setReady(true);
         return;
     } else {
@@ -38,9 +38,10 @@ void HeadChef::prepareMeal(Meal* meal) {
  * @brief Prints the Head Chef's information.
  *
  */
-void HeadChef::print() {
-    std::cout << "Head Chef: " << std::endl;
-    std::cout << "Rating: " << rating_ << std::endl;
-    std::cout << "Capacity: " << capacity_ << std::endl;
-    std::cout << "Speed: " << speed_ << std::endl;
+std::string HeadChef::toString() {
+    std::string output = "Head Chef:\n";
+    output += "Rating: " + std::to_string(rating_) + "\n";
+    output += "Capacity: " + std::to_string(capacity_) + "\n";
+    output += "Speed: " + std::to_string(speed_) + "\n";
+    return output;
 }

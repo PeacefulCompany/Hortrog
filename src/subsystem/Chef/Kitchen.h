@@ -37,6 +37,7 @@ public:
     void unsubscribe(Waiter*);
     Order* getOrder();
 
+    std::string toString();
     ~Kitchen();
 };
 

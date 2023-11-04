@@ -32,10 +32,11 @@ public:
 
     void updateTime(int delta);
     virtual void prepareMeal(Meal* meal);
-    void print();
+    virtual std::string toString();
     void notify();
 
     void setNextStaff(KitchenStaff* next);
+    KitchenStaff* getNextStaff();
 };
 
 #include "Kitchen.h"

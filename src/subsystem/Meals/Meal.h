@@ -29,6 +29,7 @@ public:
     std::string getCustomer();
     std::string toString();
     std::vector<MealItem*>& getItems();
+    bool containsMealItem(MealItem* item);
     inline bool getReady() { return ready_; }
     inline void setReady(bool rStatus_) { ready_ = rStatus_; }
 };

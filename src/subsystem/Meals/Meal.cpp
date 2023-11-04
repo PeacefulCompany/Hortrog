@@ -22,9 +22,9 @@ bool Meal::isReady() {
 }
 
 std::string Meal::toString() {
-    std::string str = "Meal: \n";
+    std::string str = "Meal for: "+ this->getCustomer()+"\n";
     for (auto& item : items_) {
-        str += item->toString() + "\n";
+        str += "\t" + item->toString() + "\n";
     }
     return str;
 }
@@ -36,3 +36,12 @@ std::string Meal::getJSON() { return order_->toJson(); }
 std::string Meal::getCustomer() { return order_->getCustomer(); }
 
 std::vector<MealItem*>& Meal::getItems() { return items_; }
+
+bool Meal::containsMealItem(MealItem* item) { 
+    for (auto& i : items_) {
+        if (i->isEqual(item)) {
+            return true;
+        }
+    }
+    return false;
+ }

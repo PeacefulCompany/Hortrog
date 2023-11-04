@@ -12,7 +12,7 @@ private:
     
 public:
     HeadChef(int rating, int capacity, Kitchen* kitchen, int speed);
-    void print();
+    std::string toString();
     ~HeadChef();
 
     void prepareMeal(Meal* meal);
