@@ -1,5 +1,6 @@
 #pragma once
 
+#include "subsystem/Meals/Meal.h"
 #include <memory>
 #ifndef KITCHEN_H
 #define KITCHEN_H
@@ -35,7 +36,7 @@ public:
     std::vector<Meal*> collectOrders();
     void subscribe(Waiter*);
     void unsubscribe(Waiter*);
-    Order* getOrder();
+    Meal* getOrder(uint32_t);
 
     std::string toString();
     ~Kitchen();

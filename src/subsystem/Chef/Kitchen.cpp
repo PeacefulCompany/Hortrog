@@ -12,68 +12,12 @@
 #include "Kitchen.h"
 #include "subsystem/Chef/KitchenStaff.h"
 #include "subsystem/Chef/NormalChef.h"
+#include "subsystem/WaiterTemplate/Waiter.h"
 #include <iostream>
 
-// Kitchen::Kitchen() {
-
-// }
-
-// Kitchen::~Kitchen() {}
-
-// void Kitchen::handleOrder(Order* order) {
-
-//     std::cout << "Kitchen handling order" << std::endl;
-//     std::cout << order->toJson() << std::endl;
-//     Meal* meal = new Meal(order);
-//     // handleMeal(meal);
-//     while(meal->isReady() == false){
-//     std::cout << "readyness" << meal->isReady() << std::endl;
-
-//         std::cout << "meal is not ready" << std::endl;
-//         headChef->prepareMeal(meal);
-//         std::cout << meal->toString() << std::endl;
-//     std::cout << "Kitchen handled order" << std::endl;
-
-//     }
-//     std::cout << "Kitchen handled order" << std::endl;
-// }
-
-// void Kitchen::handleMeal(Meal* meal) {
-//     std::cout << "Kitchen checking meal" << std::endl;
-//     if(meal->isReady()) {
-//         outGoingMeals.push_back(meal);
-//         printReadyMeals();
-//         return;
-//     }
-//     else
-//     {
-//         incomingMeals.push(meal);
-//     }
-//     clearQueue();
-//     std::cout << "Kitchen checked meal" << std::endl;
-
-// }
-
-// void Kitchen::clearQueue() {
-//     std::cout << "Kitchen clearing queue" << std::endl;
-//     while (!incomingMeals.empty()) {
-//         std::cout << "Kitchen preparing meal" << std::endl;
-//         headChef->prepareMeal(incomingMeals.front());
-//         incomingMeals.pop();
-//     }
-//     std::cout << "Kitchen cleared queue" << std::endl;
-// }
-
-// void Kitchen::printReadyMeals() {
-//     std::cout << "Kitchen printing ready meals" << std::endl;
-//     for (auto& meal : outGoingMeals) {
-//         std::cout << meal->toString() << std::endl;
-//     }
-//     std::cout << "Kitchen printed ready meals" << std::endl;
-// }
-
 Kitchen::Kitchen(/* args */) {
-    this->headChef = std::unique_ptr<KitchenStaff>(new HeadChef(5, 5, this, 1, "head chef"));
+    this->headChef =
+        std::unique_ptr<KitchenStaff>(new HeadChef(5, 5, this, 1, "head chef"));
 
     KitchenStaff* chef1 = new NormalChef(4, 5, this, 2, "fast chef 1");
     ((NormalChef*)chef1)->addCanPrepareItem("Grilled Salmon");
@@ -129,6 +73,7 @@ void Kitchen::flush() {
         if (meal->getReady()) {
             // If the meal is done, add it to the outgoingMeals vector.
             outgoingMeals.push_back(meal);
+            notify();
         } else {
             // If the meal is not done, re-add it to the incomingMeals queue.
             incomingMeals.push(meal);
@@ -170,7 +115,9 @@ std::vector<Meal*> Kitchen::collectOrders() {
 }
 
 void Kitchen::notify() {
-    std::cout << "Kitchen: notifying Waiters" << std::endl;
+    for (Waiter* w : waiters_) {
+        w->checkKitchen();
+    }
 }
 
 std::string Kitchen::toString() {
@@ -202,4 +149,13 @@ std::string Kitchen::toString() {
     }
     str += "=========================\n";
     return str;
+}
+
+Meal* Kitchen::getOrder(uint32_t tblId) {
+    for (auto& meal : outgoingMeals) {
+        if (meal->getOrder()->getTblId() == tblId) {
+            return meal;
+        }
+    }
+    return nullptr;
 }

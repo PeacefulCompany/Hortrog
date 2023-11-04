@@ -24,4 +24,5 @@ std::string Order::getCustomer() const { return customer; }
 
 void Order::setCustomer(std::string customer) { this->customer = customer; }
 
+
 // Path: src/subsystem/OrderTemplate/Order.cpp
