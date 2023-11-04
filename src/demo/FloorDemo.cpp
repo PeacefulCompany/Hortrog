@@ -3,12 +3,18 @@
 
 #include "floor/Table.h"
 #include "floor/TableComponent.h"
+#include "floor/TableGroup.h"
 
+#include <algorithm>
 #include <iostream>
+#include <iterator>
+#include <memory>
+#include <set>
+#include <vector>
 
 void FloorDemo::gameLoop() {
     // Draw tables
-    std::cout << util::CLEAR_SCREEN << util::HOME << std::endl;
+    // std::cout << util::CLEAR_SCREEN << util::HOME << std::endl;
     std::cout << "--- THE FLOOR ---" << std::endl;
 
     for (auto& table : tables_) {
@@ -77,6 +83,25 @@ void FloorDemo::splitTable() {
 
 void FloorDemo::mergeTable() {
     std::cout << "--- TABLE MERGE ---" << std::endl;
+    int numToMerge = util::input("Number of tables to merge: ");
+    std::set<int> merged;
+    for (int i = 0; i < numToMerge; i++) {
+        merged.insert(util::input("Table ID: "));
+    }
+
+    std::vector<Table*> toMerge;
+    for (auto& t : tables_) {
+        if (merged.contains(t->id())) {
+            toMerge.push_back(t.release());
+        }
+    }
+    std::erase(tables_, nullptr);
+
+    std::unique_ptr<TableGroup> group(new TableGroup());
+    for (Table* x : toMerge) {
+        group->merge(x);
+    }
+    tables_.emplace_back(std::move(group));
 }
 
 void FloorDemo::addCustomer() {

@@ -56,12 +56,7 @@ std::string TableGroup::toString() const {
     std::stringstream s;
     s << "TableGroup: id=" << id() << ", capacity=" << capacity();
     for (TableComponent* table : tables_) {
-        std::stringstream s(table->toString());
-        std::string line;
-        while (!s.eof()) {
-            std::getline(s, line);
-            s << "\n - " << line;
-        }
+        s << "\n - " << table->toString();
     }
     return s.str();
 }

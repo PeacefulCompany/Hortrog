@@ -6,6 +6,7 @@
 
 #include "core/TerminalApp.h"
 #include "customer/Customer.h"
+#include "demo/FloorDemo.h"
 #include "event/ActionMap.h"
 #include "event/ActionTarget.h"
 #include "floor/CustomerIterator.h"
@@ -23,12 +24,13 @@
 #include "views/TablePresenter.h"
 #include "views/TableView.h"
 
+#include "nlohmann/json.hpp"
 #include <fstream>
 #include <iostream>
 #include <memory>
 #include <string>
 #include <vector>
-#include "nlohmann/json.hpp"
+
 
 using json = nlohmann::json;
 
@@ -82,7 +84,7 @@ void readAssetFile(const std::string& path) {
 }
 
 int main() {
-    TerminalApp app;
+    FloorDemo app;
     app.run();
     return 0;
 
