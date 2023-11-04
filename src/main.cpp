@@ -7,6 +7,7 @@
 
 #include "core/TerminalApp.h"
 #include "customer/Customer.h"
+#include "demo/FloorDemo.h"
 #include "event/ActionMap.h"
 #include "event/ActionTarget.h"
 #include "floor/CustomerIterator.h"
@@ -120,6 +121,7 @@ void menuTest() {
 }
 
 int main() {
+
 
     menuTest();
     TerminalApp app;
