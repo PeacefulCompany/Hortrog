@@ -57,6 +57,14 @@ public:
         }
     }
 
+	std::vector<Item> &getAllItems(){
+		std::vector<Item> *items = new std::vector<Item>();
+		for (auto& item : menuItems_) {
+			items->push_back(item.second);
+		}
+		return *items;
+	}
+
 	std::string toString() {
 		std::stringstream ss;
 		for (auto& item : menuItems_) {
