@@ -35,7 +35,7 @@ bool ConcreteOrderBuilder::addModifier(const std::string& key) {
 std::string ConcreteOrderBuilder::getResult() {
     // return empty string if the vector is empty
     if (this->tempOrder.empty()) {
-        return "{}";
+        return "{}\n";
     }
 
     // Create a new OrderComposite

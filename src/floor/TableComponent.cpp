@@ -41,3 +41,7 @@ std::vector<TableComponent*> TableComponent::split() { return {this}; }
 bool TableComponent::isEmpty() const { return customers_.empty(); }
 int TableComponent::capacity() const { return capacity_; }
 uint32_t TableComponent::id() const { return id_; }
+
+std::vector<Customer*> TableComponent::getCustomers() const {
+    return customers_;
+}

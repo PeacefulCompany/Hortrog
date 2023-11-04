@@ -7,14 +7,14 @@ void OrderComposite::add(std::unique_ptr<Order> order) {
 std::string OrderComposite::toJson() {
     std::string ret = "{\n";
     ret += "\"order\": [\n";
-	for (auto& order : orders) {
-		ret += order->toJson() + ",\n";
-	}
-	//Remove trailing comma
-	ret.pop_back();
-	ret += "]\n";
-	ret += "}";
-	return ret;
+    for (auto& order : orders) {
+        ret += order->toJson() + ",\n";
+    }
+    // Remove trailing comma
+    ret.pop_back();
+    ret.pop_back();
+    ret += "\n]}\n";
+    return ret;
 }
 
 double OrderComposite::total() {
