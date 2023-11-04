@@ -1,3 +1,4 @@
+#include "Menu/Menu.h"
 #include "SFML/Graphics.hpp"
 #include "SFML/Graphics/View.hpp"
 #include "SFML/System.hpp"
@@ -83,8 +84,25 @@ void readAssetFile(const std::string& path) {
     std::cout << data["age"].get<int>() << std::endl;
 }
 
+void menuTest() {
+    Menu* menu = new Menu();
+    menu->initMenu();
+
+    std::vector<Item> items = menu->getAllItems();
+    for (auto& item : items) {
+        std::cout << "[DEBUG] Item OUT: ";
+        std::cout << item.getName() << std::endl;
+        std::cout << item.getPrice() << std::endl;
+        std::cout << item.getRestrictions() << std::endl;
+    }
+}
+
 int main() {
-    FloorDemo app;
+
+
+    menuTest();
+
+    TerminalApp app;
     app.run();
     return 0;
 
