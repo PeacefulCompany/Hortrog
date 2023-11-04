@@ -1,5 +1,6 @@
 #pragma once
 #include "customer/CustomerState.h"
+#include <string>
 /**
  * @class FloorStaff
  * @brief This class represents a staff member on the floor.
@@ -23,6 +24,7 @@ public:
      * @param state The customer state to accept.
      */
     virtual void accept(CustomerState& state) = 0;
+    virtual std::string getStaffType() = 0;
     int currentTableId_;
 
 private:

@@ -10,3 +10,4 @@ void Manager::giveRating(int rating) {
     // Handle the rating...
 }
 void Manager::accept(CustomerState& state) { state.visit(*this); }
+std::string Manager::getStaffType() { return "Manager"; }
