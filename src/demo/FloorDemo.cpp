@@ -79,6 +79,18 @@ void FloorDemo::addTable() {
 
 void FloorDemo::splitTable() {
     std::cout << "--- TABLE SPLIT ---" << std::endl;
+    int toSplit = util::input("Enter table ID to split: ");
+    for (auto& t : tables_) {
+        if (t->id() != toSplit) continue;
+        if (t->split().size() == 1) continue;
+        std::vector<TableComponent*> split = t->split();
+        t.reset();
+        std::transform(split.begin(),
+            split.end(),
+            std::back_inserter(tables_),
+            [](TableComponent* t) { return std::unique_ptr<Table>(t); });
+    }
+    std::erase(tables_, nullptr);
 }
 
 void FloorDemo::mergeTable() {
