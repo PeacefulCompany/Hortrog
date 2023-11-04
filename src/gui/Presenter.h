@@ -5,12 +5,12 @@ namespace gui {
 
 class Presenter {
 public:
-    virtual bool onEvent(const sf::Event& e) { return false;}
+    virtual bool onEvent(const sf::Event& e) { return false; }
     virtual void update(float dt) {}
 
 protected:
     // Prevent contruction
-    Presenter() = delete;
+    Presenter() = default;
 };
 
 } // namespace gui

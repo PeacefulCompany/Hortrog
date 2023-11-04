@@ -1,17 +1,36 @@
+#include "Menu/Menu.h"
 #include "SFML/Graphics.hpp"
 #include "SFML/Graphics/View.hpp"
 #include "SFML/System.hpp"
 #include "SFML/Window.hpp"
-
 #include "SFML/Window/WindowStyle.hpp"
+
+#include "core/TerminalApp.h"
+#include "customer/Customer.h"
+#include "demo/FloorDemo.h"
 #include "event/ActionMap.h"
 #include "event/ActionTarget.h"
+#include "floor/CustomerIterator.h"
+#include "floor/Table.h"
+#include "floor/TableComponent.h"
+#include "floor/TableGroup.h"
 #include "multiply/multiply.h"
 #include "nlohmann/json.hpp"
+#include "order/NullOrderBuilder.h"
+#include "order/OrderBuilder.h"
 #include "resource/ResourceManager.h"
+#include "staff/FloorStaff.h"
+#include "staff/Waiter.h"
+#include "views/FloorView.h"
+#include "views/TablePresenter.h"
+#include "views/TableView.h"
+
 
 #include "core/Timer.h"
 #include "subsystem/Meals/Meal.h"
+
+
+#include "nlohmann/json.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -19,8 +38,10 @@
 #include <string>
 #include <vector>
 
+
 #include "subsystem/Chef/Kitchen.h"
-#include "subsystem/OrderTemplate/Order.h"
+
+
 
 using json = nlohmann::json;
 
@@ -72,6 +93,43 @@ void readAssetFile(const std::string& path) {
     std::cout << data["name"].get<std::string>() << std::endl;
     std::cout << data["age"].get<int>() << std::endl;
 }
+void floor() {
+    std::cout << "Floor" << std::endl;
+    Floor* floor = new Floor();
+    std::vector<Customer*> customers;
+    customers.push_back(new Customer("Neo", 0.5));
+    customers.push_back(new Customer("Trinity", 0.5));
+    customers.push_back(new Customer("Morpheus", 0.5));
+    floor->customerEnter(customers);
+    floor->addStaff(new Waiter());
+    floor->createTables(5, 4);
+    floor->checkTable(0, 0);
+    floor->checkTable(0, 0);
+}
+// out:
+//  Floor
+//  Table 0 has 3 customers.
+//  Not ready to order
+//  Not ready to order
+//  Not ready to order
+//  Table 0 has 3 customers.
+//  [Waiting]: Where's the food at???
+//  [Eating]: Visited by waiter
+//  [Paying]: Give payment to waiter
+//  COS 214 - Final Project
+void menuTest() {
+    Menu* menu = new Menu();
+    menu->initMenu();
+
+    std::vector<Item> items = menu->getAllItems();
+    for (auto& item : items) {
+        std::cout << "[DEBUG] Item OUT: ";
+        std::cout << item.getName() << std::endl;
+        std::cout << item.getPrice() << std::endl;
+        std::cout << item.getRestrictions() << std::endl;
+    }
+}
+
 
 void askTimePassed(Kitchen* kitchen) {
     int timePassed;
@@ -102,23 +160,27 @@ void test() {
     askTimePassed(kitchen);
 }
 
+
 int main() {
-    test();
-    // std::chrono::system_clock::time_point current_time =
-    //     std::chrono::system_clock::now();
-    // std::chrono::system_clock::time_point end_time =
-    //     current_time + std::chrono::seconds(5);
 
-    // while (current_time < end_time) {
-    //     current_time = std::chrono::system_clock::now();
-    //     std::cout << "Time left: "
-    //               << std::chrono::duration_cast<std::chrono::seconds>(
-    //                      end_time - current_time)
-    //                      .count()
-    //               << std::endl;
-    // }
 
-    // std::cout << "Finally displaying" << std::endl;
+    menuTest();
+    TerminalApp app;
+    app.run();
+    return 0;
+    floor();
+    // TerminalApp app;
+    // app.run();
+    // return 0;
+
+    // ResourceManager<sf::Texture, FloorView::SpriteType> tableSprites;
+    // tableSprites.load(FloorView::SingleTable, "assets/textures/table.png");
+
+    // FloorStaff* staff = new Waiter();
+    // Customer customer("Bob", 4);
+    // customer.interact(*staff);
+
+
     // ResourceManager<sf::Texture> textures;
     // textures.load(0, "assets/hunny.png");
 
@@ -144,18 +206,36 @@ int main() {
     // sf::RectangleShape r({300, 200});
     // sf::Sprite sprite(*textures.get(0));
 
+
+    // // TableView table(tableSprites);
+    // // TablePresenter presenter(table, w);
+    // // table.position({100, 100});
+
+
     // r.setPosition({10, 10});
     // r.setFillColor(sf::Color(255, 0, 0));
     // sf::Clock clock;
     // float lastTime = clock.getElapsedTime().asSeconds();
+
+
+    // FloorView view(12, 7, tableSprites);
+    // view.position({10, 10});
+    // view.placeTable(1, 1);
+    // view.placeTable(2, 1);
+    // view.placeTable(3, 1);
+
     // while (w.isOpen()) {
+    //     // Handle Events
     //     sf::Event e;
     //     while (w.pollEvent(e)) {
+    //         // table.onEvent(e);
+
     //         target.processEvent(e);
     //         if (e.type == sf::Event::EventType::Closed) {
     //             w.close();
     //         }
     //     }
+
     //     w.clear();
     //     float dt = clock.getElapsedTime().asSeconds() - lastTime;
     //     lastTime += dt;
@@ -166,6 +246,25 @@ int main() {
     //     w.draw(sprite);
 
     //     player.draw(w);
+
+    //     target.processEvents();
+
+    //     // Time-based update
+    //     float dt = clock.getElapsedTime().asSeconds() - lastTime;
+    //     lastTime += dt;
+
+    //     player.update(dt);
+    //     // presenter.update(dt);
+
+    //     // Render window
+    //     w.clear();
+
+    //     w.draw(sprite);
+    //     player.draw(w);
+    //     // table.draw(w);
+    //     view.draw(w);
+
+
     //     w.display();
     //     // rect.draw(w);
     // }
