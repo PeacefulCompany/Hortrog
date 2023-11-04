@@ -106,6 +106,7 @@ public:
      * @param tableId The id of the table to check.
      */
     void checkTable(int tableId, int waiterId);
+    void checkAllTables();
 
 private:
     std::vector<Table*> tables_;            // The tables on the floor

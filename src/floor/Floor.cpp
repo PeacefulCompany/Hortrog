@@ -6,6 +6,8 @@
 #include "customer/EatingState.h"
 #include "customer/PayingState.h"
 #include "customer/WaitingState.h"
+#include "floor/CustomerIterator.h"
+#include "staff/Waiter.h"
 
 #include <iostream>
 #include <utility>
@@ -36,7 +38,7 @@ void Floor::addCustomerToTable(std::vector<Customer*> customers) {
     }
     if (tableId < static_cast<int>(tables_.size())) {
         for (int i = 0; i < static_cast<int>(customers.size()); i++) {
-            tables_[tableId]->seatCustomer(std::move(customers[i]));
+            tables_[tableId]->seatCustomer(customers[i]);
         }
     } else {
         std::cout << "Table does not exist." << std::endl;
@@ -70,30 +72,43 @@ void Floor::removeStaff(FloorStaff* staff) {
     }
     std::cout << "Staff not found." << std::endl;
 }
-
-void Floor::checkTable(int tableId, int waiterId) {
-    if (tableId < static_cast<int>(tables_.size())) {
-        std::vector<Customer*> customers_ =
-            dynamic_cast<TableComponent*>(tables_[tableId])->getCustomers();
-        std::cout << "Table " << tableId << customers_.size() << " has "
-                  << tables_[tableId]->capacity() << " Seats." << std::endl;
-        for (int i = 0; i < static_cast<int>(customers_.size()); i++) {
-            customers_[i]->interact(*staff_[waiterId]);
+void Floor::checkAllTables() {
+    for (int i = 0; i < tables_.size(); i++) {
+        if (tables_[i]->isEmpty()) continue;
+        int waiterId = 0;
+        for (int j = 0; j < staff_.size(); j++) {
+            if (staff_[j]->getStaffType() == "Waiter") {
+                Waiter* waiter = dynamic_cast<Waiter*>(staff_[j]);
+                for (int k = 0; k < waiter->getTables().size(); k++) {
+                    std::vector<Table*> table = waiter->getTables();
+                    if (table[k]->id() == tables_[i]->id()) {
+                        waiterId = j;
+                        break;
+                    }
+                }
+            }
+            checkTable(i, waiterId);
         }
-    } else {
-        std::cout << "Table does not exist." << std::endl;
     }
-    // change tables sates to ready to order
-    // for (int i = 0;
-    //      i < static_cast<int>(tables_[tableId]->customersAtTable_.size());
-    //      i++) {
-    //     if (tables_[i]->customersAtTable_.size() > 0) {
-    //         tables_[i]->customersAtTable_[0]->changeState(
-    //             new WaitingState(tables_[i]->customersAtTable_[tableId]));
-    //         tables_[i]->customersAtTable_[1]->changeState(
-    //             new EatingState(tables_[i]->customersAtTable_[tableId]));
-    //         tables_[i]->customersAtTable_[2]->changeState(
-    //             new PayingState(tables_[i]->customersAtTable_[tableId]));
-    //     }
-    // }
 }
+void Floor::checkTable(int tableId, int waiterId) {
+    CustomerIterator* iterator = new CustomerIterator(tables_[tableId]);
+    while (!iterator->isDone()) {
+        iterator->get()->interact(*staff_[waiterId]);
+        iterator->next();
+    }
+    delete iterator;
+}
+// change tables sates to ready to order
+// for (int i = 0;
+//      i < static_cast<int>(tables_[tableId]->customersAtTable_.size());
+//      i++) {
+//     if (tables_[i]->customersAtTable_.size() > 0) {
+//         tables_[i]->customersAtTable_[0]->changeState(
+//             new WaitingState(tables_[i]->customersAtTable_[tableId]));
+//         tables_[i]->customersAtTable_[1]->changeState(
+//             new EatingState(tables_[i]->customersAtTable_[tableId]));
+//         tables_[i]->customersAtTable_[2]->changeState(
+//             new PayingState(tables_[i]->customersAtTable_[tableId]));
+//     }
+// }
