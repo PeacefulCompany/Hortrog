@@ -1,6 +1,7 @@
 #include "FloorDemo.h"
 #include "core/util.h"
 
+#include "customer/Customer.h"
 #include "floor/Table.h"
 #include "floor/TableComponent.h"
 #include "floor/TableGroup.h"
@@ -79,17 +80,22 @@ void FloorDemo::addTable() {
 
 void FloorDemo::splitTable() {
     std::cout << "--- TABLE SPLIT ---" << std::endl;
+
+    // Find the table
     int toSplit = util::input("Enter table ID to split: ");
-    for (auto& t : tables_) {
-        if (t->id() != toSplit) continue;
-        if (t->split().size() == 1) continue;
-        std::vector<TableComponent*> split = t->split();
-        t.reset();
-        std::transform(split.begin(),
-            split.end(),
-            std::back_inserter(tables_),
-            [](TableComponent* t) { return std::unique_ptr<Table>(t); });
-    }
+    auto it = findTable(toSplit);
+    if (it == tables_.end()) return;
+    if ((*it)->split().size() == 1) return;
+
+    // Split table up
+    std::vector<TableComponent*> split = (*it)->split();
+    std::transform(split.begin(),
+        split.end(),
+        std::back_inserter(tables_),
+        [](TableComponent* t) { return std::unique_ptr<Table>(t); });
+
+    // Remove group from array
+    it->reset();
     std::erase(tables_, nullptr);
 }
 
@@ -118,8 +124,40 @@ void FloorDemo::mergeTable() {
 
 void FloorDemo::addCustomer() {
     std::cout << "--- ADD CUSTOMER ---" << std::endl;
+
+    // Find the table
+    int id = util::input("Enter table ID: ");
+    auto it = findTable(id);
+    if (it == tables_.end()) {
+        error("Table not found");
+        return;
+    }
+
+    // Create customer
+    std::cout << "Enter customer name: ";
+    std::string name;
+    std::getline(std::cin, name);
+    Customer* customer = new Customer(name, 10);
+
+    // Add customer to table
+    if (!(*it)->seatCustomer(customer)) {
+        error("Table is at capacity");
+        delete customer;
+    }
 }
 
 void FloorDemo::removeCustomer() {
     std::cout << "--- REMOVE CUSTOMER ---" << std::endl;
+}
+
+std::vector<std::unique_ptr<Table>>::iterator FloorDemo::findTable(int id) {
+    for (auto it = tables_.begin(); it != tables_.end(); it++) {
+        if ((*it)->id() == id) return it;
+    }
+    return tables_.end();
+}
+
+void FloorDemo::error(const std::string& message) {
+    std::cout << message << std::endl;
+    std::cin.get();
 }
