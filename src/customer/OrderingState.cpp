@@ -22,14 +22,18 @@ void OrderingState::visit(Waiter& w) {
     Menu* menu = TableOrder->getMenu();
     std::vector<Item>& allItems = menu->getAllItems();
     int randomNumber = std::rand() % allItems.size();
-    std::cout << randomNumber << std::endl;
-
     if (readyTimer_.expired()) {
         std::string keyName = allItems[randomNumber].getName();
         TableOrder->addItem(keyName);
+        int randomNumber = std::rand() % 100;
+        if (std::rand() % 4 == 0) {
+            std::string modifierName = "Wubba lubba dub dub!";
+            // allItems[randomNumber].getModifiers()[0].getName();
+            TableOrder->addModifier(modifierName);
+        }
         customer_->changeState(new WaitingState(customer_));
     } else {
-        readyTimer_.update(1);
+        readyTimer_.update(1); // to be removed
         std::cout << "Not ready to order" << std::endl;
     }
 }

@@ -114,22 +114,8 @@ void Floor::checkTable(int tableId, int waiterId) {
         iterator->get()->interact(*staff_[waiterId]);
         iterator->next();
     }
-    ConcreteOrderBuilder* orderBuilder =
-        dynamic_cast<ConcreteOrderBuilder*>(tableWaiter->getOrderBuilder());
-    std::cout << orderBuilder->getResult();
-
+    // ConcreteOrderBuilder* orderBuilder =
+    //     dynamic_cast<ConcreteOrderBuilder*>(tableWaiter->getOrderBuilder());
+    // std::cout << orderBuilder->getResult(); // DEBUG
     delete iterator;
 }
-// change tables sates to ready to order
-// for (int i = 0;
-//      i < static_cast<int>(tables_[tableId]->customersAtTable_.size());
-//      i++) {
-//     if (tables_[i]->customersAtTable_.size() > 0) {
-//         tables_[i]->customersAtTable_[0]->changeState(
-//             new WaitingState(tables_[i]->customersAtTable_[tableId]));
-//         tables_[i]->customersAtTable_[1]->changeState(
-//             new EatingState(tables_[i]->customersAtTable_[tableId]));
-//         tables_[i]->customersAtTable_[2]->changeState(
-//             new PayingState(tables_[i]->customersAtTable_[tableId]));
-//     }
-// }

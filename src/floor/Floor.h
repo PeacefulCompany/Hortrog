@@ -16,6 +16,58 @@
  * The Floor class is a concrete class that contains methods for managing
  * customers and staff.
  */
+// std::cout << "Floor" << std::endl;
+// Floor* floor = new Floor();
+// std::vector<Customer*> customers;
+// customers.push_back(new Customer("Neo", 0.5));
+// customers.push_back(new Customer("Trinity", 0.5));
+// customers.push_back(new Customer("Morpheus", 0.5));
+// floor->customerEnter(customers);
+// floor->addStaff(new Waiter());
+// floor->createTables(5, 4);
+// floor->addCustomerToTable(customers);
+// floor->checkAllTables();
+
+// floor->checkAllTables();
+// floor->checkAllTables();
+// floor->checkAllTables();
+// floor->checkAllTables();
+// floor->checkAllTables();
+
+// JSON ORDER ->{
+// "order": [
+// {"name": "Vegetable Stir-Fry","price": 9.990000},
+// {"component": {"name": "Vegetable Stir-Fry","price": 9.990000}, "modifier":
+// },
+// {"name": "Grilled Salmon","price": 14.990000}
+// ]}
+
+// OUT:
+// Floor
+// Not ready to order
+// Not ready to order
+// Not ready to order
+// kitchen check for orders...
+// [Waiting]: Thanks for the food!!
+// kitchen check for orders...
+// [Waiting]: Thanks for the food!!
+// kitchen check for orders...
+// [Waiting]: Thanks for the food!!
+// [Eating]: Visited by waiter
+// Still eating: 1
+// [Eating]: Visited by waiter
+// Still eating: 1
+// [Eating]: Visited by waiter
+// Still eating: 1
+// [Eating]: Visited by waiter
+// [Eating] Done eating, let me pay
+// [Eating]: Visited by waiter
+// [Eating] Done eating, but I want more
+// [Eating]: Visited by waiter
+// [Eating] Done eating, but I want more
+// [Paying]: Give payment to waiter
+// Not ready to order
+// Not ready to order
 class Floor {
 public:
     Table* requestSeating(int n);
@@ -106,8 +158,25 @@ public:
      * @param tableId The id of the table to check.
      */
     void checkTable(int tableId, int waiterId);
+    /**
+     * @brief Checks all tables.
+     *
+     * This function is used to check all tables.
+     */
     void checkAllTables();
+    /**
+     * @brief Calls the kitchen.
+     *
+     * This function is used to call the kitchen.
+     */
     void kitchenCall();
+    /**
+     * @brief Checks the kitchen.
+     *
+     * This function is used to check the kitchen.
+     *
+     * @param waiter The waiter to check the kitchen.
+     */
     void checkKitchen(Waiter* waiter);
 
 private:

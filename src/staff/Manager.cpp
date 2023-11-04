@@ -1,8 +1,7 @@
 #include "Manager.h"
 Manager::Manager() : FloorStaff(){};
 void Manager::lodgeComplaint(const std::string& complaint) {
-    std::cout << "Customer complaint: " << complaint << std::endl;
-    // Handle the complaint...
+    this->complaintArray_.push_back(new std::string(complaint));
 }
 
 void Manager::giveRating(int rating) {

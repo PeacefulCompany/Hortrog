@@ -5,16 +5,14 @@
 #include <iostream>
 #include <stdlib.h>
 
-
 void EatingState::visit(Manager& m) {
     std::cout << "[Eating]: Visited by manager" << std::endl;
 }
 
 void EatingState::visit(Waiter& w) {
     std::cout << "[Eating]: Visited by waiter" << std::endl;
-    update(1);
+    update(1); // to be removed
 }
-
 void EatingState::update(float dt) {
     eatTime_.update(dt);
     if (eatTime_.expired()) {
