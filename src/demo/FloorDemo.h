@@ -11,5 +11,9 @@ protected:
     void cleanup() override;
 
 private:
+    void splitTable();
+    void mergeTable();
+    void addCustomer();
+    void removeCustomer();
     bool running_ = true;
 };
