@@ -12,8 +12,8 @@ std::string OrderComposite::toJson() {
     }
     // Remove trailing comma
     ret.pop_back();
-    ret += "]\n";
-    ret += "}";
+    ret.pop_back();
+    ret += "\n]}\n";
     return ret;
 }
 

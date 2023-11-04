@@ -17,4 +17,7 @@ public:
     virtual std::vector<std::pair<std::string, double>>
     generateReceiptOrderList() = 0;
     virtual std::string getId() { return ""; };
+    virtual void setTblId(int id){this->tblId = id;};
+    virtual int getTblId(){return tblId;};
+
 };

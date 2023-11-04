@@ -2,10 +2,11 @@
 #include "FloorStaff.h"
 #include "customer/Customer.h"
 #include "customer/CustomerState.h"
+#include "floor/Table.h"
 #include "order/OrderBuilder.h"
-
 #include <iostream>
 #include <memory>
+#include <vector>
 
 /**
  * @class Waiter
@@ -26,8 +27,8 @@ public:
      *
      * This function is used to check the kitchen for orders.
      */
+    std::string getStaffType() override;
     void checkKitchen();
-
     /**
      * @brief Gets the order builder.
      *
@@ -36,7 +37,6 @@ public:
      * @return A pointer to the order builder.
      */
     OrderBuilder* getOrderBuilder();
-
     /**
      * @brief Accepts a customer state.
      *
@@ -45,12 +45,13 @@ public:
      * @param state The customer state to accept.
      */
     void accept(CustomerState& state) override;
+    std::vector<Table*> getTables() { return tables_; }
+    std::vector<std::string*> currentmealObjectPointerArray_;
 
 private:
-    // Kitchen* kitchen_;
+    // Kitchen* kitchen_; dont think waiter should hold the kitchen
     // PointOfSales* pointOfSales_;
-    // std::vector<Tables*> tables_;
-
+    std::vector<Table*> tables_;
     /**
      * @brief A unique pointer to the order builder.
      */

@@ -2,6 +2,7 @@
 #include "FloorStaff.h"
 #include "customer/CustomerState.h"
 #include <iostream>
+#include <vector>
 /**
  * @class Manager
  * @brief This class represents a manager.
@@ -22,6 +23,7 @@ public:
      *
      * @param state The customer state to accept.
      */
+    std::string getStaffType() override;
     void accept(CustomerState& state) override;
     /**
      * @brief Lodges a customer complaint.
@@ -42,5 +44,5 @@ public:
     void giveRating(int rating);
 
 private:
-    // std::vector<Tables*> tables_;
+    std::vector<std::string*> complaintArray_;
 };

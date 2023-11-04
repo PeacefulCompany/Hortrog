@@ -13,7 +13,6 @@ class Customer {
 public:
     Customer(const std::string& name, float happiness);
 
-    void buildOrder(OrderBuilder& builder);
     void interact(FloorStaff& staff);
     void update(float dt);
 
