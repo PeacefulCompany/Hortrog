@@ -1,6 +1,10 @@
 #pragma once
 
 #include "core/Application.h"
+#include "floor/Table.h"
+
+#include <memory>
+#include <vector>
 
 class FloorDemo : public Application {
 protected:
@@ -11,9 +15,13 @@ protected:
     void cleanup() override;
 
 private:
+    void addTable();
     void splitTable();
     void mergeTable();
     void addCustomer();
     void removeCustomer();
+
+    std::vector<std::unique_ptr<Table>> tables_;
     bool running_ = true;
+    int tableCount_ = 0;
 };

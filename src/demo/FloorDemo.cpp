@@ -1,13 +1,24 @@
 #include "FloorDemo.h"
 #include "core/util.h"
 
+#include "floor/Table.h"
+#include "floor/TableComponent.h"
+
 #include <iostream>
 
 void FloorDemo::gameLoop() {
     // Draw tables
+    std::cout << util::CLEAR_SCREEN << util::HOME << std::endl;
+    std::cout << "--- THE FLOOR ---" << std::endl;
+
+    for (auto& table : tables_) {
+        std::cout << table->toString() << std::endl;
+    }
+    std::cout << "---------------------------" << std::endl;
 
     // Chose next action
-    std::cout << util::options({"Merge table",
+    std::cout << util::options({"Add Table",
+                     "Merge table",
                      "Split table",
                      "Add customer",
                      "Remove customer"})
@@ -20,18 +31,22 @@ void FloorDemo::gameLoop() {
         break;
     }
     case 1: {
-        mergeTable();
+        addTable();
         break;
     }
     case 2: {
-        splitTable();
+        mergeTable();
         break;
     }
     case 3: {
-        addCustomer();
+        splitTable();
         break;
     }
     case 4: {
+        addCustomer();
+        break;
+    }
+    case 5: {
         removeCustomer();
         break;
     }
@@ -42,12 +57,19 @@ void FloorDemo::gameLoop() {
     }
 }
 
-void FloorDemo::init() {
-    std::cout << "--- FLOOR DEMO ---" << std::endl;
-    return;
-}
+void FloorDemo::init() { return; }
 
 void FloorDemo::cleanup() {}
+
+void FloorDemo::addTable() {
+    std::cout << "--- TABLE ADD ---" << std::endl;
+
+    int id = tableCount_++;
+    std::cout << "Creating table with id " << id << std::endl;
+
+    int capacity = util::input("Number of seats: ");
+    tables_.emplace_back(std::make_unique<TableComponent>(id, capacity));
+}
 
 void FloorDemo::splitTable() {
     std::cout << "--- TABLE SPLIT ---" << std::endl;

@@ -28,9 +28,9 @@ bool TableComponent::removeCustomer(Customer* customer) {
 
 std::string TableComponent::toString() const {
     std::stringstream s;
-    s << "Table(id=" << id_ << ", size=" << capacity_ << ") =";
+    s << "TableComponent: id=" << id_ << ", capacity=" << capacity_;
     for (auto& c : customers_) {
-        s << " " << c->getName();
+        s << "\n- " << c->getName();
     }
     return s.str();
 }

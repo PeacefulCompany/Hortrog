@@ -4,6 +4,13 @@
 #include <vector>
 
 namespace util {
+namespace {
+const std::string ESC = "\x1b";
+}
+
+const std::string CLEAR_SCREEN = ESC + "[2J";
+const std::string HOME = ESC + "[H";
+
 /**
  * @brief Removes any trailing whitespace from the start and end of a string
  *
