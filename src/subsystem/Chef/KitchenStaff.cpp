@@ -70,10 +70,10 @@ void KitchenStaff::update(){
 void KitchenStaff::updateTime(int delta){
     lastTime_ += delta;
 
-    if(lastTime_>= speed_)
+    if(lastTime_ >= speed_)
     {
         update();
-        lastTime_ = 0;
+        // lastTime_ = 0;
     }
 
     if(nextStaff_ != nullptr)

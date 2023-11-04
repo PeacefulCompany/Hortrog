@@ -1,12 +1,12 @@
 
 #include "HeadChef.h"
 
-HeadChef::HeadChef(int rating, int capacity, Kitchen* kitchen, int speed) {
+HeadChef::HeadChef(int rating, int capacity, Kitchen* kitchen, int speed, std::string role) {
     this->rating_ = rating;
     this->capacity_ = capacity;
     this->kitchen_ = kitchen;
     this->speed_ = speed;
-    this->role_ = "Head Chef";
+    this->role_ = role;
 }
 
 HeadChef::~HeadChef() {}
@@ -18,6 +18,7 @@ HeadChef::~HeadChef() {}
  * @param meal A pointer to the Meal object to be prepared.
  */
 void HeadChef::prepareMeal(Meal* meal) {
+    lastTime_ = 0;
     std::cout << "Head Chef: is checking a meal" << std::endl;
     OrderJSON* orderJSON = new OrderJSON(meal->getOrder()->toJson());
     std::vector<Item*> items = orderJSON->getItems();
@@ -30,7 +31,7 @@ void HeadChef::prepareMeal(Meal* meal) {
         meal->setReady(false);
         KitchenStaff::prepareMeal(meal);
     }
-
+    
     // std::cout << "Head Chef is done preparing the meal" << std::endl;
 }
 
@@ -39,7 +40,7 @@ void HeadChef::prepareMeal(Meal* meal) {
  *
  */
 std::string HeadChef::toString() {
-    std::string output = "Head Chef:\n";
+    std::string output = this->role_+":\n";
     output += "Rating: " + std::to_string(rating_) + "\n";
     output += "Capacity: " + std::to_string(capacity_) + "\n";
     output += "Speed: " + std::to_string(speed_) + "\n";

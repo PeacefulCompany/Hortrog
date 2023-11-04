@@ -32,13 +32,14 @@ NormalChef::NormalChef() {
  * @param kitchen The kitchen the chef is in
  * @param speed The speed of the chef
  */
-NormalChef::NormalChef(int rating, int capacity, Kitchen* kitchen, int speed) {
+NormalChef::NormalChef(
+    int rating, int capacity, Kitchen* kitchen, int speed, std::string role) {
     this->rating_ = rating;
     this->capacity_ = capacity;
     this->kitchen_ = kitchen;
     nextStaff_ = nullptr;
     this->speed_ = speed;
-    this->role_ = "Normal Chef";
+    this->role_ = role;
 }
 
 /**
@@ -54,6 +55,8 @@ NormalChef::~NormalChef() {}
  * @param meal The meal to be prepared
  */
 void NormalChef::prepareMeal(Meal* meal) {
+    std::cout << "Normal Chef: is checking a meal" << std::endl;
+
     OrderJSON* orderJSON = new OrderJSON(meal->getOrder()->toJson());
     std::vector<Item*> items = orderJSON->getItems();
 
@@ -183,7 +186,7 @@ void NormalChef::update() {
     if (!itemsBeingPrepared_.empty() && lastTime_ >= speed_) {
         preparedItems_.push_back(itemsBeingPrepared_.front());
         itemsBeingPrepared_.erase(itemsBeingPrepared_.begin());
-        // print();
+        lastTime_ = 0;
     }
     notify();
 }
@@ -194,7 +197,7 @@ void NormalChef::update() {
  */
 std::string NormalChef::toString() {
     std::stringstream ss;
-    ss << "Normal Chef: " << std::endl;
+    ss << this->role_ << ": " << std::endl;
     ss << "    Rating: " << rating_ << std::endl;
     ss << "    Capacity: " << capacity_ << std::endl;
     ss << "    Speed: " << speed_ << std::endl;

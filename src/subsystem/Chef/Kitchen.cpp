@@ -11,6 +11,7 @@
  */
 #include "Kitchen.h"
 #include "subsystem/Chef/KitchenStaff.h"
+#include "subsystem/Chef/NormalChef.h"
 #include <iostream>
 
 // Kitchen::Kitchen() {
@@ -72,23 +73,40 @@
 // }
 
 Kitchen::Kitchen(/* args */) {
-    this->headChef = std::unique_ptr<KitchenStaff>(new HeadChef(5, 5, this, 5));
+    this->headChef = std::unique_ptr<KitchenStaff>(new HeadChef(5, 5, this, 1, "head chef"));
 
-    KitchenStaff* chef1 = new NormalChef(3, 3, this, 5);
+    KitchenStaff* chef1 = new NormalChef(4, 5, this, 2, "fast chef 1");
     ((NormalChef*)chef1)->addCanPrepareItem("Grilled Salmon");
+    ((NormalChef*)chef1)->addCanPrepareItem("Margherita Pizza");
 
-    KitchenStaff* chef2 = new NormalChef(3, 3, this, 5);
+    KitchenStaff* chef2 = new NormalChef(2, 5, this, 3, "medium chef 1");
     ((NormalChef*)chef2)->addCanPrepareItem("Avocado Toast");
+    ((NormalChef*)chef2)->addCanPrepareItem("Chicken Caesar Salad");
+
+    KitchenStaff* chef3 = new NormalChef(5, 5, this, 4, "slow chef 2");
+    ((NormalChef*)chef3)->addCanPrepareItem("Vegetable Stir-Fry");
+    ((NormalChef*)chef3)->addCanPrepareItem("Spinach and Feta Stuffed Chicken");
+
+    KitchenStaff* chef4 = new NormalChef(4, 5, this, 3, "slow chef 2");
+    ((NormalChef*)chef4)->addCanPrepareItem("Black Bean Burger");
+    ((NormalChef*)chef4)->addCanPrepareItem("Beef Tacos");
+
+    KitchenStaff* chef5 = new NormalChef(3, 5, this, 1, "barrista");
+    ((NormalChef*)chef5)->addCanPrepareItem("Lemonade");
+    ((NormalChef*)chef5)->addCanPrepareItem("Coconut Water");
 
     headChef->setNextStaff(chef1);
     chef1->setNextStaff(chef2);
+    // chef2->setNextStaff(chef3);
+    // chef3->setNextStaff(chef4);
+    // chef4->setNextStaff(chef5);
 }
 
 void Kitchen::handleOrder(Order* order) {
     std::cout << "Kitchen: recieved Order" << std::endl;
     Meal* meal = new Meal(order);
     incomingMeals.push(meal);
-    flush();
+    // flush();
 }
 
 void Kitchen::notifyItemReady() {
@@ -133,6 +151,7 @@ Meal* Kitchen::getOutgoingMeal() {
 void Kitchen::updateTime(int time) {
     std::cout << "Kitchen:" << time << " seconds hava passed" << std::endl;
     headChef->updateTime(time);
+    flush();
     // std::cout << toString() << std::endl;
 }
 

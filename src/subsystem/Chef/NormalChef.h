@@ -24,7 +24,7 @@ private:
 public:
     NormalChef();
     std::string toString();
-    NormalChef(int rating, int capacity, Kitchen *kitchen, int speed);
+    NormalChef(int rating, int capacity, Kitchen *kitchen, int speed, std::string role);
     void prepareMeal(Meal *meal);
     void getItemFromPrepared(Item *item, Meal* meal);
     bool canPrepareItem(std::string item);

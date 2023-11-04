@@ -11,7 +11,7 @@ class HeadChef :public KitchenStaff
 private:
     
 public:
-    HeadChef(int rating, int capacity, Kitchen* kitchen, int speed);
+    HeadChef(int rating, int capacity, Kitchen* kitchen, int speed, std::string role);
     std::string toString();
     ~HeadChef();
 
