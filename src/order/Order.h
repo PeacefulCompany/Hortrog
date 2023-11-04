@@ -1,9 +1,10 @@
 #pragma once
 
-#include <string>
 #include <memory>
+#include <string>
 
-class Order{
+
+class Order {
 private:
     std::string customer;
     int tblId;

@@ -28,9 +28,9 @@ bool TableComponent::removeCustomer(Customer* customer) {
 
 std::string TableComponent::toString() const {
     std::stringstream s;
-    s << "Table(id=" << id_ << ", size=" << capacity_ << ") =";
+    s << "TableComponent: id=" << id_ << ", capacity=" << capacity_;
     for (auto& c : customers_) {
-        s << " " << c->getName();
+        s << "\n- " << c->getName();
     }
     return s.str();
 }
@@ -41,3 +41,7 @@ std::vector<TableComponent*> TableComponent::split() { return {this}; }
 bool TableComponent::isEmpty() const { return customers_.empty(); }
 int TableComponent::capacity() const { return capacity_; }
 uint32_t TableComponent::id() const { return id_; }
+
+std::vector<Customer*> TableComponent::getCustomers() const {
+    return customers_;
+}

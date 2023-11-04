@@ -5,6 +5,7 @@
 #include "floor/TableComponent.h"
 #include "floor/TableGroup.h"
 #include <sstream>
+#include <string>
 
 void TableGroup::buildOrder(OrderBuilder& builder) {
     for (TableComponent* table : tables_) {
@@ -53,7 +54,7 @@ uint32_t TableGroup::id() const { return tables_[0]->id(); }
 
 std::string TableGroup::toString() const {
     std::stringstream s;
-    s << "TableGroup(id=" << id() << ", size=" << capacity() << ")";
+    s << "TableGroup: id=" << id() << ", capacity=" << capacity();
     for (TableComponent* table : tables_) {
         s << "\n - " << table->toString();
     }

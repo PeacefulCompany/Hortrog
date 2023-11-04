@@ -18,6 +18,7 @@ public:
     bool isEmpty() const override;
     int capacity() const override;
     uint32_t id() const override;
+    std::vector<Customer*> getCustomers() const;
 
     std::string toString() const override;
 
