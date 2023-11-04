@@ -97,9 +97,9 @@ Kitchen::Kitchen(/* args */) {
 
     headChef->setNextStaff(chef1);
     chef1->setNextStaff(chef2);
-    // chef2->setNextStaff(chef3);
-    // chef3->setNextStaff(chef4);
-    // chef4->setNextStaff(chef5);
+    chef2->setNextStaff(chef3);
+    chef3->setNextStaff(chef4);
+    chef4->setNextStaff(chef5);
 }
 
 void Kitchen::handleOrder(Order* order) {
