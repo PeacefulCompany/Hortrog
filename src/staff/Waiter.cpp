@@ -20,9 +20,6 @@ void Waiter::checkKitchen() {
     currentmealObjectPointerArray_.push_back(new std::string("chips"));
     currentmealObjectPointerArray_.push_back(new std::string("peas"));
 }
-OrderBuilder* Waiter::getOrderBuilder() {
-    this->orderBuilder_->begin();
-    return orderBuilder_.get();
-}
+OrderBuilder* Waiter::getOrderBuilder() { return orderBuilder_.get(); }
 void Waiter::accept(CustomerState& state) { state.visit(*this); }
 std::string Waiter::getStaffType() { return "Waiter"; }

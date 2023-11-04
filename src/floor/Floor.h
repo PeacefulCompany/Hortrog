@@ -107,6 +107,8 @@ public:
      */
     void checkTable(int tableId, int waiterId);
     void checkAllTables();
+    void kitchenCall();
+    void checkKitchen(Waiter* waiter);
 
 private:
     std::vector<Table*> tables_;            // The tables on the floor

@@ -9,6 +9,10 @@
 #include "floor/CustomerIterator.h"
 #include "staff/Waiter.h"
 
+#include "order/ConcreteOrderBuilder.h"
+#include "order/OrderBuilder.h"
+#include "order/OrderComposite.h"
+
 #include <iostream>
 #include <utility>
 #include <vector>
@@ -91,12 +95,29 @@ void Floor::checkAllTables() {
         }
     }
 }
+
+void Floor::kitchenCall() {
+    for (int i = 0; i < staff_.size(); i++) {
+        if (staff_[i]->getStaffType() == "Waiter") {
+            Waiter* waiter = dynamic_cast<Waiter*>(staff_[i]);
+            checkKitchen(waiter);
+        }
+    }
+}
+void Floor::checkKitchen(Waiter* waiter) { waiter->checkKitchen(); }
 void Floor::checkTable(int tableId, int waiterId) {
+    Waiter* tableWaiter = dynamic_cast<Waiter*>(staff_[waiterId]);
     CustomerIterator* iterator = new CustomerIterator(tables_[tableId]);
+    std::srand(std::time(nullptr));
+    tableWaiter->getOrderBuilder()->begin();
     while (!iterator->isDone()) {
         iterator->get()->interact(*staff_[waiterId]);
         iterator->next();
     }
+    ConcreteOrderBuilder* orderBuilder =
+        dynamic_cast<ConcreteOrderBuilder*>(tableWaiter->getOrderBuilder());
+    std::cout << orderBuilder->getResult();
+
     delete iterator;
 }
 // change tables sates to ready to order

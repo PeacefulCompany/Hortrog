@@ -10,7 +10,6 @@ void WaitingState::visit(Manager& m) {
 
 void WaitingState::visit(Waiter& w) {
     // TODO: replace this with actual order pinging
-    w.checkKitchen();
     if (w.currentmealObjectPointerArray_.size() > 0) {
         std::cout << "[Waiting]: Thanks for the food!!" << std::endl;
         customer_->changeState(new EatingState(customer_));
