@@ -39,13 +39,11 @@
 KitchenDemo::KitchenDemo() {
     kitchen_ = new Kitchen();
     orderBuilder_ = new ConcreteOrderBuilder();
-    menu_ = new Menu();
 }
 
 KitchenDemo::~KitchenDemo() {
     delete kitchen_;
     delete orderBuilder_;
-    delete menu_;
 }
 
 // getters and setters
@@ -59,10 +57,6 @@ ConcreteOrderBuilder* KitchenDemo::getOrderBuilder() { return orderBuilder_; }
 void KitchenDemo::setOrderBuilder(ConcreteOrderBuilder* orderBuilder) {
     orderBuilder_ = orderBuilder;
 }
-
-Menu* KitchenDemo::getMenu() { return menu_; }
-
-void KitchenDemo::setMenu(Menu* menu) { menu_ = menu; }
 
 // other functions
 
@@ -121,7 +115,7 @@ void KitchenDemo::displayKitchenSnapshot() {
     std::cout << kitchen_->toString() << std::endl;
 }
 
-void KitchenDemo::displayMenu() { std::cout << menu_->toString() << std::endl; }
+void KitchenDemo::displayMenu() { std::cout << orderBuilder_->getMenu()->toString() << std::endl; }
 
 void KitchenDemo::menuHandler() {
     int choice;
@@ -141,22 +135,51 @@ void KitchenDemo::menuHandler() {
 
 void KitchenDemo::displayOrderBuilderMenu() {
     int choice;
+    orderBuilder_->begin(1);
     while (true) {
         std::cout << "Welcome to the Order Builder!" << std::endl;
         std::cout << "Please select an option:" << std::endl;
+        std::cout << "0. Add Modifier" << std::endl;
         std::cout << "1. Add item to order" << std::endl;
-        std::cout << "2. Remove item from order" << std::endl;
-        std::cout << "3. Display order" << std::endl;
-        std::cout << "4. Submit order" << std::endl;
-        std::cout << "5. Exit" << std::endl;
+        std::cout << "2. Display order" << std::endl;
+        std::cout << "3. Submit order" << std::endl;
+        std::cout << "4. Exit" << std::endl;
         std::cin >> choice;
         switch (choice) {
-        // case 1: orderBuilder_.; break;
-        // case 2: removeOrderBuilderItem(); break;
-        // case 3: displayOrderBuilderOrder(); break;
-        // case 4: submitOrderBuilderOrder(); break;
-        case 5: return;
+        case 0: addOrderBuilderModifier(); break;
+        case 1: addOrderBuilderItem(); break;
+        case 2: std::cout << orderBuilder_->getOrder()->toJson() << std::endl; break;
+        case 3: kitchen_->handleOrder(orderBuilder_->getOrder()); break;
+        case 4: return;
         default: std::cout << "Invalid input" << std::endl; break;
         }
+    }
+}
+
+
+void KitchenDemo::addOrderBuilderItem() {
+    displayMenu();
+    std::string key;
+    std::string customerName;
+    std::cout << "Enter item key: ";
+    std::cin >> key;
+    std::cout << "Enter customer name: ";
+    std::cin >> customerName;
+    if (orderBuilder_->addItem(key, customerName)) {
+        std::cout << "Item added" << std::endl;
+    } else {
+        std::cout << "Item not added" << std::endl;
+    }
+}
+
+void KitchenDemo::addOrderBuilderModifier() {
+    displayMenu();
+    std::string key;
+    std::cout << "Enter modifier key: ";
+    std::cin >> key;
+    if (orderBuilder_->addModifier(key)) {
+        std::cout << "Modifier added" << std::endl;
+    } else {
+        std::cout << "Modifier not added" << std::endl;
     }
 }
