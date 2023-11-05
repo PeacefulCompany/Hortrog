@@ -21,7 +21,7 @@ class Kitchen {
 private:
     std::vector<Waiter*> waiters_;
     std::unique_ptr<KitchenStaff> headChef;
-    std::queue<Meal*, std::vector<Meal*>> incomingMeals;
+    std::queue<Meal*> incomingMeals;
     std::vector<Meal*> outgoingMeals;
 
 public:
