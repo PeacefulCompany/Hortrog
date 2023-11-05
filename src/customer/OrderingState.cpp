@@ -8,12 +8,27 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <string>
 
 void OrderingState::visit(Manager& m) {
     if (readyTimer_.expired()) {
-        std::cout << "Ordering: Manager" << std::endl;
+        std::vector<std::string> complaints = {
+            "We have been waiting for a long time",
+            "Slow service im starving",
+            "Dirty utensils and where is the food",
+            "Noisy atmosphere cant even get a drink",
+            "can you please call a waiter so we can order",
+            "I have been waiting for a long time",
+            "Can i Get any Hungrier???  ",
+        };
+        srand(time(0));
+        int randomIndex = rand() % complaints.size();
+        m.lodgeComplaint(complaints[randomIndex]);
+        this->customer_->setHappiness(this->customer_->getHappiness() - 5);
+        //request a waiter
     } else {
-        std::cout << "Manager visited" << std::endl;
+        std::cout << "Manager talked to a cutomer" << std::endl;
+        this->customer_->setHappiness(this->customer_->getHappiness() + 5);
     }
 }
 void OrderingState::visit(Waiter& w) {
@@ -30,6 +45,7 @@ void OrderingState::visit(Waiter& w) {
             // allItems[randomNumber].getModifiers()[0].getName();
             TableOrder->addModifier(modifierName);
         }
+        this->customer_->setHappiness(this->customer_->getHappiness() + 5);
         customer_->changeState(new WaitingState(customer_));
     } else {
         readyTimer_.update(1); // to be removed

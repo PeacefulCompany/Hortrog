@@ -4,8 +4,13 @@
 #include <iostream>
 #include <stdlib.h>
 void WaitingState::visit(Manager& m) {
-    std::cout << "[Waiting]: We're waiting for food, but it's chill"
-              << std::endl;
+    if (this->isReady_ == false) {
+        return customer_->changeState(new KarenState(customer_));
+    } else {
+        std::cout << "[Waiting]: We're waiting for food, but it's chill"
+                  << std::endl;
+        this->customer_->setHappiness(this->customer_->getHappiness() + 0.5);
+    }
 }
 void WaitingState::visit(Waiter& w) {
     if (w.getReadyMeals().size() > 0) {

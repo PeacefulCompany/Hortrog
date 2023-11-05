@@ -7,7 +7,8 @@
 
 void KarenState::visit(Manager& m) {
     std::cout << "[Karen]: COMPLAIN" << std::endl;
-    m.lodgeComplaint("Karen is complaining");
+    m.lodgeComplaint("Karen comaplained about something again");
+    m.giveRating(0);
     customer_->changeState(nullptr);
 }
 void KarenState::visit(Waiter& w) {
