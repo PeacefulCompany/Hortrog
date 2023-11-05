@@ -121,11 +121,7 @@ void KitchenDemo::displayKitchenSnapshot() {
     std::cout << kitchen_->toString() << std::endl;
 }
 
-void KitchenDemo::displayMenu() {
-    Menu* menu = orderBuilder_->getMenu();
-    menu->initMenu();
-    std::cout << menu->toString() << std::endl;
-}
+void KitchenDemo::displayMenu() { std::cout << menu_->toString() << std::endl; }
 
 void KitchenDemo::displayModifiers() {
     // Modi
@@ -181,7 +177,7 @@ void KitchenDemo::addOrderBuilderItem() {
     std::getline(std::cin, key);
     std::cout << "Enter customer name: ";
     std::getline(std::cin, customerName);
-    std::cout<<"Customer Name: "<<customerName<<std::endl;
+    std::cout << "Customer Name: " << customerName << std::endl;
     if (orderBuilder_->addItem(key, customerName)) {
         std::cout << "Item added" << std::endl;
         std::cout << "Do you want to add a modifier? (y/n)" << std::endl;
