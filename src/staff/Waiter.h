@@ -24,6 +24,8 @@ public:
      */
     Waiter();
 
+    Meal* getCustomerMeal(const Customer* c) const;
+
     /**
      * @brief Checks the kitchen.
      *

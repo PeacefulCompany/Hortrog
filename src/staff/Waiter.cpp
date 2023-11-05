@@ -13,6 +13,8 @@ Waiter::Waiter() : FloorStaff() {
     menu->initMenu();
     this->orderBuilder_->setMenu(menu);
 }
+
+Meal* Waiter::getCustomerMeal(const Customer* c) const { return nullptr; }
 void Waiter::checkKitchen() {
     // std::cout << "kitchen check for orders..." << std::endl;
     // // currentmealObjectPointerArray_ = kitchen_->checkForOrders();
