@@ -55,7 +55,7 @@ void Waiter::giveFoodToCustomer(Customer& customer) {
         for (auto& meal : readyMeals) {
             if (meal->getCustomer() == customerName) {
                 Meal* CustomerMeal = meal;
-                // customer.receiveMeal(meal);
+                customer.receiveMeal(meal);
             }
         }
     }

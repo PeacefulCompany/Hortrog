@@ -71,13 +71,24 @@ public:
      * @return A vector of tables.
      */
     std::vector<Table*> getTables() { return tables_; }
+    /**
+     * @brief Gives the order to the kitchen.
+     *
+     * This function is used to give the order to the kitchen.
+     */
     void Givetokitchen();
+    /**
+     * @brief Gives the food to the customer.
+     *
+     * This function is used to give the food to the customer.
+     *
+     * @param Customer The customer to give the food to.
+     */
     void giveFoodToCustomer(Customer& Customer);
 
 private:
     const Menu* menu_;
     Kitchen* kitchen_; // dont think waiter should hold the kitchen
-
     /**
      * @brief A vector of meals that are ready.
      */
