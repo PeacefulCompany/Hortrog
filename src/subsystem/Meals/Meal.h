@@ -6,9 +6,8 @@
 #define SUBSYSTEM_MEAL_H
 
 // file includes
-#include "../../order/Order.h"
 #include "MealItem.h"
-
+#include "order/Order.h"
 
 // library includes
 #include <memory>
