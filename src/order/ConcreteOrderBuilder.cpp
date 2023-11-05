@@ -1,30 +1,31 @@
 #include "order/ConcreteOrderBuilder.h"
+#include <iostream>
 #include <memory>
 #include <string>
 
-
-
-
-
 void ConcreteOrderBuilder::begin(uint32_t tblId) {
     this->tempOrder = std::vector<std::unique_ptr<Order>>();
-	this->tblId_ = tblId;
+    this->tblId_ = tblId;
 }
 
-bool ConcreteOrderBuilder::addItem(const std::string& key, const std::string& customerName) {
+bool ConcreteOrderBuilder::addItem(
+    const std::string& key, const std::string& customerName) {
     if (this->menu->getItem(key).getName() == "") {
+        std::cout << "Input for order is empty string, therefore error"
+                  << std::endl;
         return false;
     }
-	// this->customerNames_.emplace_back(customerName);
+    // this->customerNames_.emplace_back(customerName);
     this->tempOrder.emplace_back(
         std::make_unique<OrderItem>(this->menu->getItem(key).getName(),
             this->menu->getItem(key).getPrice()));
-	this->tempOrder.back()->setCustomer(customerName);
-	this->tempOrder.back()->setTblId(this->tblId_);
+    std::cout << "Customer name is 1.0 : " << customerName << std::endl;
+    this->tempOrder.back()->setCustomer(customerName);
+    std::cout << "Customer name is: " << this->tempOrder.back()->getCustomer()
+              << std::endl;
+    this->tempOrder.back()->setTblId(this->tblId_);
     return true;
 }
-
-
 
 bool ConcreteOrderBuilder::addModifier(const std::string& key) {
     // Return false if the vector is empty
@@ -55,7 +56,7 @@ std::string ConcreteOrderBuilder::getResult() {
         this->order->add(std::move(order));
     }
     // Return the OrderComposite as a JSON string
-	this->order->setTblId(this->tblId_);
+    this->order->setTblId(this->tblId_);
     return this->order->toJson();
 }
 
