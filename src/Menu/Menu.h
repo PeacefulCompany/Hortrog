@@ -1,8 +1,6 @@
 #pragma once
-#include "nlohmann/json.hpp"
-#include <fstream>
-#include <iostream>
-#include <sstream>
+
+#include <memory>
 #include <string>
 #include <unordered_map>
 
@@ -10,16 +8,18 @@ class MenuItem {
 public:
     MenuItem(
         const std::string& name, double price, const std::string& restrictions)
-        : name(name), price(price), restrictions(restrictions) {}
+        : name_(name), price_(price), restrictions_(restrictions) {}
 
-    const std::string& getName() const { return name; }
-    double getPrice() const { return price; }
-    const std::string& getRestrictions() const { return restrictions; }
+    const std::string& getName() const { return name_; }
+    double getPrice() const { return price_; }
+    const std::string& getRestrictions() const { return restrictions_; }
+
+    std::string toString() const;
 
 private:
-    std::string name;
-    double price;
-    std::string restrictions;
+    std::string name_;
+    double price_;
+    std::string restrictions_;
 };
 
 class Menu {

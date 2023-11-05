@@ -1,4 +1,9 @@
 #include "menu/Menu.h"
+
+#include <fstream>
+#include <sstream>
+
+#include "nlohmann/json.hpp"
 using json = nlohmann::json;
 
 bool Menu::loadFromFile(const std::string& path) {
@@ -28,10 +33,15 @@ std::vector<std::string> Menu::getAllMenuKeys() const {
 }
 
 std::string Menu::toString() const {
-    std::stringstream ss;
+    std::stringstream ss("Menu");
     for (const auto& item : menuItems_) {
-        ss << item.second->getName() << " " << item.second->getPrice() << " "
-           << item.second->getRestrictions() << std::endl;
+        ss << "\n- " << item.second->toString();
     }
+    return ss.str();
+}
+
+std::string MenuItem::toString() const {
+    std::stringstream ss;
+    ss << "R" << price_ << "\t" << name_ << " (" << restrictions_ << ")";
     return ss.str();
 }
