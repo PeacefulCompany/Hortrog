@@ -6,8 +6,9 @@
 #define SUBSYSTEM_MEAL_H
 
 // file includes
+#include "../../order/Order.h"
 #include "MealItem.h"
-#include "subsystem/OrderTemplate/Order.h"
+
 
 // library includes
 #include <memory>
@@ -19,12 +20,10 @@ private:
     std::unique_ptr<Order> order_ = std::make_unique<Order>();
     std::vector<MealItem*> items_;
     bool ready_ = false;
-    uint32_t tableId_ ;
+    uint32_t tableId_;
 
 public:
-    inline Meal(Order* order) : order_(order) {
-        tableId_ = order->getTblId();
-    }
+    inline Meal(Order* order) : order_(order) { tableId_ = order->getTblId(); }
     float getQuality();
     Order* getOrder();
     std::vector<MealItem*>& takeMeal();
