@@ -21,4 +21,5 @@ public:
     inline virtual std::string getId() { return ""; };
     inline virtual void setTblId(uint32_t id) { tblId_ = id; };
     inline virtual uint32_t getTblId() { return tblId_; };
+    inline std::string getCustomer() { return customer_; };
 };

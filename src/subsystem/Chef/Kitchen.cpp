@@ -10,9 +10,6 @@
  * the time.
  */
 #include "Kitchen.h"
-#include "subsystem/Chef/KitchenStaff.h"
-#include "subsystem/Chef/NormalChef.h"
-#include "subsystem/WaiterTemplate/Waiter.h"
 #include <iostream>
 
 Kitchen::Kitchen(/* args */) {
