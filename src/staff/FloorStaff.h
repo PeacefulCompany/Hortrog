@@ -1,6 +1,6 @@
 #pragma once
+#include "customer/Customer.h"
 #include "customer/CustomerState.h"
-#include "subsystem/Chef/Kitchen.h"
 #include "subsystem/Meals/Meal.h"
 #include <string>
 /**
@@ -11,6 +11,8 @@
  * different types of floor staff aswell as a being the element in the visitor
  * pattern.
  */
+
+class Kitchen;
 class FloorStaff {
 public:
     /**
@@ -37,7 +39,6 @@ public:
         }
     }
     static Kitchen* getKitchen() { return kitchen_; }
-
 private:
     /**
      * @brief all children know about one kitchen
@@ -45,11 +46,3 @@ private:
      */
     static Kitchen* kitchen_;
 };
-/**
- * @brief Initialize the static member kitchen_ with nullptr.
- *
- * This ensures that all instances of FloorStaff share the same Kitchen
- * instance. Before using this, make sure to set the Kitchen instance using
- * FloorStaff::setKitchen(new Kitchen());.
- */
-Kitchen* FloorStaff::kitchen_ = nullptr;

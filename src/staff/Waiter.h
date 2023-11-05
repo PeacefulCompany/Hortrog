@@ -1,14 +1,13 @@
 #pragma once
-#include "FloorStaff.h"
 #include "customer/Customer.h"
 #include "customer/CustomerState.h"
 #include "floor/Table.h"
+#include "order/ConcreteOrderBuilder.h"
 #include "order/OrderBuilder.h"
-#include "subsystem/Chef/Kitchen.h"
+#include "staff/FloorStaff.h"
 #include "subsystem/Meals/Meal.h"
 #include <memory>
 #include <vector>
-class Kitchen;
 
 /**
  * @class Waiter
@@ -62,6 +61,8 @@ public:
      * @return A vector of meals that are ready.
      */
     std::vector<Meal*> getReadyMeals() { return readyMeals; }
+
+    void FetchMeals();
     /**
      * @brief Gets the tables.
      *
@@ -70,14 +71,8 @@ public:
      * @return A vector of tables.
      */
     std::vector<Table*> getTables() { return tables_; }
-    /**
-     * @brief
-     *
-     * This function is used to set the Kitcken.
-     *
-     * @param Kitchen* the new kitchen to be set for the static member kitchen_.
-     */
-    static void setKitchen(Kitchen* kitchen);
+
+    void Givetokitchen();
 
 private:
     /**
@@ -87,7 +82,7 @@ private:
     /**
      * @brief A static member kitchen_.
      */
-    static Kitchen* kitchen_;
+    //  static Kitchen* kitchen_;
 
     // PointOfSales* pointOfSales_;
 
@@ -100,11 +95,3 @@ private:
      */
     std::unique_ptr<OrderBuilder> orderBuilder_;
 };
-/**
- * @brief Initialize the static member kitchen_ with nullptr.
- *
- * This ensures that all instances of FloorStaff share the same Kitchen
- * instance. Before using this, make sure to set the Kitchen instance using->
- * FloorStaff::setKitchen(new Kitchen());
- */
-Kitchen* FloorStaff::kitchen_ = nullptr;

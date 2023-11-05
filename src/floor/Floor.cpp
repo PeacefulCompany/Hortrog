@@ -16,7 +16,15 @@
 #include <iostream>
 #include <utility>
 #include <vector>
-Table* Floor::requestSeating(int n) { return nullptr; }
+
+Table* Floor::requestSeating(int n) {
+    // std::cout << "requestSeating" << std::endl;
+    // this fucntion should take in a group of names and then check in the floor
+    // if there is a table that can seat them all if there is a table that can
+    // seat them all then it should return that table if there is not a table
+    // that can seat them all then it should return nullptrreturn null;
+    return nullptr;
+}
 
 Floor::Floor() {}
 Floor::~Floor() {}
@@ -114,8 +122,11 @@ void Floor::checkTable(int tableId, int waiterId) {
         iterator->get()->interact(*staff_[waiterId]);
         iterator->next();
     }
-    // ConcreteOrderBuilder* orderBuilder =
-    //     dynamic_cast<ConcreteOrderBuilder*>(tableWaiter->getOrderBuilder());
-    // std::cout << orderBuilder->getResult(); // DEBUG
+    tableWaiter->Givetokitchen();
     delete iterator;
+}
+
+void Floor::seatTheFloor() {
+    // i want a distrebution rate of 5:3:2 for customer grouping (5:3:2 is the
+    // ratio of 1:2:3)
 }

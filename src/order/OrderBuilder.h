@@ -16,4 +16,5 @@ public:
     virtual bool addModifier(const std::string& key) = 0;
     virtual Menu* getMenu() = 0;
     virtual void setMenu(Menu* menu) = 0;
+    virtual OrderComposite* getOrder() = 0;
 };
