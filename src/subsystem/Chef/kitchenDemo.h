@@ -32,19 +32,18 @@ public:
     ConcreteOrderBuilder* getOrderBuilder();
     void setOrderBuilder(ConcreteOrderBuilder* orderBuilder);
 
+    Menu* getMenu();
+    void setMenu(Menu* menu);
 
     // other functions
     void test();
     void askTimePassed(Kitchen* kitchen);
-    void addOrderBuilderItem();
-    void addOrderBuilderModifier();
     void menuHandler();
 
     void displayMainMenu();
     void simulateTimePassed();
     void displayKitchenSnapshot();
     void displayMenu();
-    void displayModifiers();
 
     void displayOrderBuilderMenu();
 };
