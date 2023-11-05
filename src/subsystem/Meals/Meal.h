@@ -20,7 +20,6 @@ private:
     std::vector<MealItem*> items_;
     bool ready_ = false;
     uint32_t tableId_;
-
 public:
     inline Meal(Order* order) : order_(order) { tableId_ = order->getTblId(); }
     float getQuality();

@@ -21,15 +21,8 @@ Waiter::Waiter(const Menu* menu) : FloorStaff(), menu_(menu) {
 void Waiter::checkKitchen() {
     // ckeck if the waiter is currenlty holdy any ready meals
     if (getReadyMeals().size() > 0) {
-        // if so then deliver them
-        for (auto& meal : readyMeals) {
-            // std::cout << "Delivering meal to table " << meal->tableId()
-            //    << std::endl;
-            // tables_[meal->tableId()]->deliverMeal(meal);
-        }
-        readyMeals.clear();
-    } else // if not then check the kitchen for any ready meals
-    {
+        // visit the meals table and give order to the customers
+    } else {
         FetchMeals();
     }
 }
@@ -45,6 +38,13 @@ void Waiter::FetchMeals() {
 }
 void Waiter::Givetokitchen() {
     FloorStaff::getKitchen()->handleOrder(orderBuilder_->getOrder());
+}
+void Waiter::giveMeal(std::sting customerName, Meal* meal) {
+    for (auto& table : tables_) {
+        if (table->getCustomerName() == customerName) {
+            table->serveMeal(meal);
+        }
+    }
 }
 void Waiter::accept(CustomerState& state) { state.visit(*this); }
 std::string Waiter::getStaffType() { return "Waiter"; }
