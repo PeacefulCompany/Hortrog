@@ -75,6 +75,7 @@ public:
     virtual int capacity() const = 0;
     virtual uint32_t id() const = 0;
     virtual std::string toString() const = 0;
+    virtual ~Table() = default;
 
 private:
 };
