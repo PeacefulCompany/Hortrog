@@ -124,6 +124,10 @@ void KitchenDemo::displayMenu() {
     std::cout << menu->toString() << std::endl;
 }
 
+void KitchenDemo::displayModifiers() {
+    // Modi
+}
+
 void KitchenDemo::menuHandler() {
     int choice;
     while (true) {
