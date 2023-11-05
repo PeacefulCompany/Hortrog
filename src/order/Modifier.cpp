@@ -9,7 +9,7 @@ double Modifier::total() {
 
 std::string Modifier::toJson() {
     std::string ret = "{\"name\": \"" + component_->getId() + "\",";
-    ret += "\"price\": " + std::to_string(component_->getPrice() + price_);
+    ret += "\"price\": " + std::to_string(component_->total() + price_);
     ret += ",\"mod\": \"" + key_ + "\"}";
     return ret;
 }

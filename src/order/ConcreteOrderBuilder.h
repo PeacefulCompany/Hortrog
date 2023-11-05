@@ -8,19 +8,22 @@
 
 class ConcreteOrderBuilder : public OrderBuilder {
 public:
+    ConcreteOrderBuilder(const Menu* menu);
+
     std::string getResult();
-    void begin(){};
-    void begin(uint32_t tblId);
-    bool addItem(const std::string& key) { return false; };
-    bool addItem(const std::string& key, const std::string& customerName);
-    bool addModifier(const std::string& key);
-    Menu* getMenu();
-    void setMenu(Menu* menu);
+    void begin(uint32_t tblId) override;
+    bool addItem(
+        const std::string& key, const std::string& customerName) override;
+    bool addModifier(const std::string& key) override;
+    void setMenu(const Menu* menu) override { menu_ = menu; }
+    const Menu* getMenu() const override { return menu_; }
+
     OrderComposite* getOrder() { return this->order; };
 
 private:
     uint32_t tblId_;
-    Menu* menu;
+    const Menu* menu_;
+
     std::vector<std::unique_ptr<Order>> tempOrder;
     OrderComposite* order;
 };

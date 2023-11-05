@@ -1,4 +1,7 @@
 #pragma once
+
+#include "FloorStaff.h"
+#include "Menu/Menu.h"
 #include "customer/Customer.h"
 #include "customer/CustomerState.h"
 #include "floor/Table.h"
@@ -18,10 +21,7 @@
  */
 class Waiter : public FloorStaff {
 public:
-    /**
-     * @brief Default constructor for Waiter.
-     */
-    Waiter();
+    Waiter(const Menu* menu);
 
     /**
      * @brief Accepts a customer state.
@@ -75,6 +75,10 @@ public:
     void Givetokitchen();
 
 private:
+
+    const Menu* menu_;
+    Kitchen* kitchen_; // dont think waiter should hold the kitchen
+
     /**
      * @brief A vector of meals that are ready.
      */
@@ -83,6 +87,7 @@ private:
      * @brief A static member kitchen_.
      */
     //  static Kitchen* kitchen_;
+
 
     // PointOfSales* pointOfSales_;
 

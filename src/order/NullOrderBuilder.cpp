@@ -1,8 +1,11 @@
 #include "NullOrderBuilder.h"
 #include <vector>
 
-void NullOrderBuilder::begin() { orders_.emplace_back(std::vector<json>()); }
-bool NullOrderBuilder::addItem(const std::string& key) {
+void NullOrderBuilder::begin(uint32_t table) {
+    orders_.emplace_back(std::vector<json>());
+}
+bool NullOrderBuilder::addItem(
+    const std::string& key, const std::string& customer) {
     json item = {
         {"key", key},
         {"modifiers", std::vector<std::string>()},

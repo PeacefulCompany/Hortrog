@@ -15,12 +15,13 @@
  */
 Kitchen* FloorStaff::kitchen_ = nullptr;
 
-Waiter::Waiter() : FloorStaff() {
+
+Waiter::Waiter(const Menu* menu) : FloorStaff(), menu_(menu) {
     FloorStaff::setKitchen(new Kitchen());
-    this->orderBuilder_ = std::make_unique<ConcreteOrderBuilder>();
+    this->orderBuilder_ = std::make_unique<ConcreteOrderBuilder>(menu);
     Menu* menu = new Menu();
     menu->initMenu();
-    this->orderBuilder_->setMenu(menu);
+
 }
 void Waiter::checkKitchen() {
     // ckeck if the waiter is currenlty holdy any ready meals

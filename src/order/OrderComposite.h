@@ -17,6 +17,4 @@ public:
     std::string toJson() override;
     double total() override;
     std::string getId() override { return ""; };
-    void setPrice(double) override{};
-    double getPrice() override { return 0; };
 };
