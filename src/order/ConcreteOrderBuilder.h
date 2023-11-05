@@ -19,7 +19,7 @@ public:
 
 private:
 	uint32_t tblId_;
-    Menu* menu;
+    Menu* menu = new Menu();
     std::vector<std::unique_ptr<Order>> tempOrder;
     OrderComposite* order;
 };
