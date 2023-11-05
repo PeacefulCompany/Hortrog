@@ -25,12 +25,22 @@
 #include "views/TablePresenter.h"
 #include "views/TableView.h"
 
+
+#include "core/Timer.h"
+#include "subsystem/Meals/Meal.h"
+
+
 #include "nlohmann/json.hpp"
+
 #include <fstream>
 #include <iostream>
 #include <memory>
 #include <string>
 #include <vector>
+
+
+#include "subsystem/Chef/Kitchen.h"
+
 
 
 using json = nlohmann::json;
@@ -120,6 +130,37 @@ void menuTest() {
     }
 }
 
+
+void askTimePassed(Kitchen* kitchen) {
+    int timePassed;
+    while (true) {
+        std::cout << "Enter time passed (sec): ";
+        std::cin >> timePassed;
+
+        kitchen->updateTime(timePassed);
+        std::cout<< kitchen->toString() << std::endl;
+        Meal* meal = kitchen->getOutgoingMeal();
+        while (meal != nullptr)
+        {
+            std::cout << "Meal ready!" << std::endl;
+            std::cout << meal->toString() << std::endl;
+            meal = kitchen->getOutgoingMeal();
+        }
+        
+        // Do something with timePassed
+    }
+}
+
+void test() {
+    Kitchen* kitchen = new Kitchen();
+    Order* o = new Order("bob");
+    Order* b = new Order("alice");
+    kitchen->handleOrder(o);
+    kitchen->handleOrder(b);
+    askTimePassed(kitchen);
+}
+
+
 int main() {
 
 
@@ -138,6 +179,7 @@ int main() {
     // FloorStaff* staff = new Waiter();
     // Customer customer("Bob", 4);
     // customer.interact(*staff);
+
 
     // ResourceManager<sf::Texture> textures;
     // textures.load(0, "assets/hunny.png");
@@ -164,14 +206,17 @@ int main() {
     // sf::RectangleShape r({300, 200});
     // sf::Sprite sprite(*textures.get(0));
 
+
     // // TableView table(tableSprites);
     // // TablePresenter presenter(table, w);
     // // table.position({100, 100});
+
 
     // r.setPosition({10, 10});
     // r.setFillColor(sf::Color(255, 0, 0));
     // sf::Clock clock;
     // float lastTime = clock.getElapsedTime().asSeconds();
+
 
     // FloorView view(12, 7, tableSprites);
     // view.position({10, 10});
@@ -184,11 +229,24 @@ int main() {
     //     sf::Event e;
     //     while (w.pollEvent(e)) {
     //         // table.onEvent(e);
+
     //         target.processEvent(e);
     //         if (e.type == sf::Event::EventType::Closed) {
     //             w.close();
     //         }
     //     }
+
+    //     w.clear();
+    //     float dt = clock.getElapsedTime().asSeconds() - lastTime;
+    //     lastTime += dt;
+
+    //     target.processEvents();
+    //     player.update(dt);
+
+    //     w.draw(sprite);
+
+    //     player.draw(w);
+
     //     target.processEvents();
 
     //     // Time-based update
@@ -205,6 +263,7 @@ int main() {
     //     player.draw(w);
     //     // table.draw(w);
     //     view.draw(w);
+
 
     //     w.display();
     //     // rect.draw(w);
