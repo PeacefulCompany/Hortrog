@@ -7,6 +7,11 @@ Payment::Payment(int tableId,float amount) : amountOfPayment(amount) {
     this->tableId=tableId;
 }
 
+Payment::Payment(Payment* payment){
+    tableId=payment->gettableId();
+    amountOfPayment=payment->getAmountOfPayment();
+}
+
 float Payment::getAmountOfPayment() const {
     return amountOfPayment;
 }
