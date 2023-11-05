@@ -12,6 +12,7 @@ protected:
     generateReceiptOrderList() override;
 
 public:
+    Modifier(std::unique_ptr<Order> component);
     void add(std::unique_ptr<Order>) override {}
     double total() override;
     std::string toJson() override;

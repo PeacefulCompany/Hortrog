@@ -3,7 +3,7 @@
  * @brief Implementation of the Item class
  */
 
-#include "Item.h"
+#include "ItemJSON.h"
 
 /**
  * @brief Construct a new Item object
@@ -13,7 +13,7 @@
  * @param diet The dietary information of the item
  * @param mod The modification information of the item
  */
-Item::Item(std::string name, double cost, std::string diet, std::string mod) {
+ItemJSON::ItemJSON(std::string name, double cost, std::string diet, std::string mod) {
     this->name_ = name;
     this->cost_ = cost;
     this->diet_ = diet;
@@ -24,32 +24,32 @@ Item::Item(std::string name, double cost, std::string diet, std::string mod) {
  * @brief Destroy the Item object
  *
  */
-Item::~Item() {}
+ItemJSON::~ItemJSON() {}
 
 /**
  * @brief Get the name of the item
  *
  * @return std::string The name of the item
  */
-std::string Item::getName() { return name_; }
+std::string ItemJSON::getName() { return name_; }
 
 /**
  * @brief Get the cost of the item
  *
  * @return double The cost of the item
  */
-double Item::getCost() { return cost_; }
+double ItemJSON::getCost() { return cost_; }
 
 /**
  * @brief Get the dietary information of the item
  *
  * @return std::string The dietary information of the item
  */
-std::string Item::getDiet() { return diet_; }
+std::string ItemJSON::getDiet() { return diet_; }
 
 /**
  * @brief Get the modification information of the item
  *
  * @return std::string The modification information of the item
  */
-std::string Item::getMod() { return mod_; }
+std::string ItemJSON::getMod() { return mod_; }

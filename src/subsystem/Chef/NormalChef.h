@@ -26,12 +26,12 @@ public:
     std::string toString();
     NormalChef(int rating, int capacity, Kitchen *kitchen, int speed, std::string role);
     void prepareMeal(Meal *meal);
-    void getItemFromPrepared(Item *item, Meal* meal);
+    void getItemFromPrepared(ItemJSON *item, Meal* meal);
     bool canPrepareItem(std::string item);
     void addCanPrepareItem(std::string item);
     void removeCanPrepareItem(std::string item);
-    bool mealItemAlreadyPrepared(Item *item, Meal* meal);
-    bool mealItemAlreadyBeingPrepared(Item *item, Meal* meal);
+    bool mealItemAlreadyPrepared(ItemJSON *item, Meal* meal);
+    bool mealItemAlreadyBeingPrepared(ItemJSON *item, Meal* meal);
     void wait();
 
     ~NormalChef();

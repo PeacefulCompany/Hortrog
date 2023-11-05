@@ -5,7 +5,7 @@
 
 #include <string>
 
-class Item {
+class ItemJSON {
 private:
     std::string name_;
     double cost_;
@@ -13,8 +13,8 @@ private:
     std::string mod_;
 
 public:
-    Item(std::string, double cost, std::string diet, std::string mod);
-    ~Item();
+    ItemJSON(std::string, double cost, std::string diet, std::string mod);
+    ~ItemJSON();
 
     std::string getName();
     double getCost();
