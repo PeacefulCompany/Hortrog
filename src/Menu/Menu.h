@@ -6,20 +6,28 @@
 
 class MenuItem {
 public:
-    MenuItem(
-        const std::string& name, double price, const std::string& restrictions)
-        : name_(name), price_(price), restrictions_(restrictions) {}
+    MenuItem(const std::string& name,
+        double price,
+        const std::string& prepMethod,
+        const std::vector<std::string>& modifiers)
+        : name_(name), price_(price), preparationMethod_(prepMethod),
+          supportedModifiers_(modifiers) {}
 
     const std::string& getName() const { return name_; }
     double getPrice() const { return price_; }
-    const std::string& getRestrictions() const { return restrictions_; }
+
+    const std::vector<std::string> supportedModifiers() const {
+        return supportedModifiers_;
+    }
+    const std::string& preparationMethod() const { return preparationMethod_; }
 
     std::string toString() const;
 
 private:
     std::string name_;
     double price_;
-    std::string restrictions_;
+    std::string preparationMethod_;
+    std::vector<std::string> supportedModifiers_;
 };
 
 class Menu {

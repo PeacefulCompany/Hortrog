@@ -16,12 +16,16 @@ bool Menu::loadFromFile(const std::string& path) {
     json data = json::parse(file);
     // std::cout << "[DEBUG] Parsed menu_items.json" << std::endl;
     for (auto& item : data["menu"]) {
-        // std::cout << "[DEBUG] Iterating through items..." << std::endl;
         std::string name = item["name"].get<std::string>();
+        std::string prepMethod = item["prep_method"].get<std::string>();
+        std::vector<std::string> modifiers = {};
+        if (item.contains("supported_modifiers")) {
+            item["supported_modifiers"].get<std::vector<std::string>>();
+        }
         double price = item["price"].get<double>();
-        std::string restrictions = item["diet"].get<std::string>();
-        addMenuItem(
-            name, std::make_unique<MenuItem>(name, price, restrictions));
+
+        addMenuItem(name,
+            std::make_unique<MenuItem>(name, price, prepMethod, modifiers));
     }
     return true;
 }
@@ -45,6 +49,6 @@ std::string Menu::toString() const {
 std::string MenuItem::toString() const {
     std::stringstream ss;
     ss << "R" << std::left << std::setw(8) << price_;
-    ss << name_ << " (" << restrictions_ << ")";
+    ss << name_ << " (" << preparationMethod_ << ")";
     return ss.str();
 }
