@@ -9,7 +9,6 @@
 #include <ctime>
 #include <iostream>
 
-
 void OrderingState::visit(Manager& m) {
     if (readyTimer_.expired()) {
         std::cout << "Ordering: Manager" << std::endl;
@@ -18,24 +17,23 @@ void OrderingState::visit(Manager& m) {
     }
 }
 void OrderingState::visit(Waiter& w) {
-    ConcreteOrderBuilder* TableOrder =
-        static_cast<ConcreteOrderBuilder*>(w.getOrderBuilder());
-    Menu* menu = TableOrder->getMenu();
-    std::vector<Item>& allItems = menu->getAllItems();
-    int randomNumber = std::rand() % allItems.size();
     if (readyTimer_.expired()) {
-        std::string keyName = allItems[randomNumber].getName();
-        TableOrder->addItem(keyName);
-        int randomNumber = std::rand() % 100;
-        if (std::rand() % 4 == 0) {
-            std::string modifierName = "Wubba lubba dub dub!";
-            // allItems[randomNumber].getModifiers()[0].getName();
-            TableOrder->addModifier(modifierName);
-        }
-        customer_->changeState(new WaitingState(customer_));
-    } else {
-        readyTimer_.update(1); // to be removed
-        std::cout << "Not ready to order" << std::endl;
+        std::cout << "[OrderingState/visit] Not ready to order yet."
+                  << std::endl;
+        return;
     }
+
+    OrderBuilder* builder = w.getOrderBuilder();
+    builder->begin();
+
+    const std::vector<Item>& items = builder->getMenu()->getAllItems();
+    int numItems = std::rand() % 5 + 1;
+
+    for (int i = 0; i < numItems; i++) {
+        int item = std::rand() % items.size();
+        builder->addItem(items[item].getName());
+    }
+
+    customer_->changeState(new WaitingState(customer_));
 }
 void OrderingState::update(float dt) { readyTimer_.update(dt); }
