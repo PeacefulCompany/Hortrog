@@ -2,13 +2,11 @@
 
 class OrderBuilder;
 
+#include "CustomerState.h"
+#include "subsystem/Meals/Meal.h"
 #include <memory>
 #include <string>
-
-#include "CustomerState.h"
-
 class FloorStaff;
-
 class Customer {
 public:
     Customer(const std::string& name, float happiness);
@@ -23,4 +21,5 @@ private:
     std::unique_ptr<CustomerState> state_;
     std::string name_;
     float happiness_;
+    Meal* receivedMeal;
 };

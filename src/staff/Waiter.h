@@ -12,7 +12,6 @@
 #include <memory>
 #include <vector>
 
-
 /**
  * @class Waiter
  * @brief This class represents a waiter.
@@ -61,7 +60,7 @@ public:
      *
      * @return A vector of meals that are ready.
      */
-    std::vector<Meal*> getReadyMeals() { return readyMeals; }
+    std::vector<Meal*> getReadyMeals();
 
     void FetchMeals();
     /**
@@ -72,8 +71,8 @@ public:
      * @return A vector of tables.
      */
     std::vector<Table*> getTables() { return tables_; }
-
     void Givetokitchen();
+    void giveFoodToCustomer(Customer& Customer);
 
 private:
     const Menu* menu_;

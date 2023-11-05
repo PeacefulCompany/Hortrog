@@ -1,10 +1,12 @@
 #include "Waiter.h"
+#include "customer/Customer.h"
 #include "order/ConcreteOrderBuilder.h"
 #include "order/OrderBuilder.h"
 #include "order/OrderComposite.h"
 #include "staff/FloorStaff.h"
 #include "staff/Waiter.h"
 #include "subsystem/Chef/Kitchen.h"
+#include <vector>
 /**
  * @brief Initialize the static member kitchen_ with nullptr.
  *
@@ -33,6 +35,7 @@ void Waiter::checkKitchen() {
         FetchMeals();
     }
 }
+std::vector<Meal*> Waiter::getReadyMeals() { return this->readyMeals; }
 void Waiter::FetchMeals() {
     Meal* currentMeal;
     int x = 0;
@@ -45,6 +48,17 @@ void Waiter::FetchMeals() {
 }
 void Waiter::Givetokitchen() {
     FloorStaff::getKitchen()->handleOrder(orderBuilder_->getOrder());
+}
+void Waiter::giveFoodToCustomer(Customer& customer) {
+    std::string customerName = customer.getName();
+    if (!this->readyMeals.empty()) {
+        for (auto& meal : readyMeals) {
+            if (meal->getCustomer() == customerName) {
+                Meal* CustomerMeal = meal;
+                // customer.receiveMeal(meal);
+            }
+        }
+    }
 }
 void Waiter::accept(CustomerState& state) { state.visit(*this); }
 std::string Waiter::getStaffType() { return "Waiter"; }
