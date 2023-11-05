@@ -36,6 +36,7 @@ void FloorDemo::init() {
     mainOptions_.addCommand("Add Table", [this]() { addTable(); });
     mainOptions_.addCommand("Add Customers", [this]() { addCustomers(); });
     mainOptions_.addCommand("Add Staff", [this]() { addStaff(); });
+    mainOptions_.addCommand("Update Time", [this]() { update(); });
     mainOptions_.setPrompt("Choose an option (-1 to quit): ");
     mainOptions_.setExitCode(-1);
 }
@@ -51,14 +52,15 @@ void FloorDemo::addTable() {
     std::cout << "Table ID: " << floor_.addTable(capacity);
 }
 void FloorDemo::addCustomers() {
+    // Request table from floor
     int numCustomers = util::input("Number of customers: ");
     Table* table = floor_.requestSeating(numCustomers);
     if (!table) {
         util::error("Cannot accomadate that many customers");
         return;
     }
-    std::cout << table->toString() << std::endl;
 
+    // Add customers to table
     std::string line;
     for (int i = 0; i < numCustomers; i++) {
         std::cout << "Customer name: ";
@@ -66,6 +68,18 @@ void FloorDemo::addCustomers() {
         Customer* c = new Customer(line, 100);
         table->seatCustomer(c);
     }
+
+    // Assign waiter to table
+    Waiter* waiter = nullptr;
+    int opt = -1;
+    do {
+        int opt = util::input("Enter Waiter Number: ");
+        waiter = floor_.getWaiter(opt);
+        if (!waiter) {
+            std::cout << "Waiter not found" << std::endl;
+        }
+    } while (!waiter && opt != -1);
+    waiter->assignTable(table);
 }
 
 void FloorDemo::addStaff() {
@@ -77,4 +91,11 @@ void FloorDemo::addStaff() {
     menu.setPrompt("Enter staff type: ");
 
     menu.execute();
+}
+
+void FloorDemo::update() {
+    float dt;
+    std::cout << "How much time has passed (seconds): ";
+    std::cin >> dt;
+    floor_.update(dt);
 }

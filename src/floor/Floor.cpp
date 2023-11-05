@@ -187,3 +187,16 @@ std::string Floor::toString() const {
     }
     return ss.str();
 }
+
+Waiter* Floor::getWaiter(int waiterId) const {
+    if (waiterId < 0) return nullptr;
+    if (waiterId >= staff_.size()) return nullptr;
+
+    return dynamic_cast<Waiter*>(staff_[waiterId]);
+}
+
+void Floor::update(float dt) {
+    for (Table* t : tables_) {
+        t->update(dt);
+    }
+}

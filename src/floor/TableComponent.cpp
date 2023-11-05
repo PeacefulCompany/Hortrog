@@ -35,6 +35,12 @@ std::string TableComponent::toString() const {
     return s.str();
 }
 
+void TableComponent::update(float dt) {
+    for (Customer* c : customers_) {
+        c->update(dt);
+    }
+}
+
 bool TableComponent::merge(Table* table) { return false; }
 std::vector<TableComponent*> TableComponent::split() { return {this}; }
 

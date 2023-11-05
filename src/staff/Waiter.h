@@ -88,6 +88,8 @@ public:
 
     std::string toString() const override;
 
+    void assignTable(Table* table);
+
 private:
     const Menu* menu_;
     Kitchen* kitchen_; // dont think waiter should hold the kitchen

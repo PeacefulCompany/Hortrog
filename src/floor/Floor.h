@@ -189,6 +189,10 @@ public:
 
     std::string toString() const;
 
+    Waiter* getWaiter(int waiterId) const;
+
+    void update(float dt);
+
 private:
     uint32_t tableCount_ = 0;
     std::vector<Table*> tables_;            // The tables on the floor

@@ -48,5 +48,6 @@ void Waiter::giveMeal(std::string customerName, Meal* meal) {
     }
 }
 std::string Waiter::toString() const { return "Waiter"; }
+void Waiter::assignTable(Table* table) { tables_.push_back(table); }
 void Waiter::accept(CustomerState& state) { state.visit(*this); }
 std::string Waiter::getStaffType() { return "Waiter"; }
