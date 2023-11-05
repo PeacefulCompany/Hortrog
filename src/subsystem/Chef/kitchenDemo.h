@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Menu/Menu.h"
 #ifndef KITCHEN_DEMO_H
 #define KITCHEN_DEMO_H
 
@@ -16,6 +17,7 @@ class KitchenDemo {
 private:
     Kitchen* kitchen_;
     ConcreteOrderBuilder* orderBuilder_;
+    Menu* menu_;
     // Menu* menu_;
 
 public:
