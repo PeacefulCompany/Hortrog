@@ -25,6 +25,8 @@
 #include "views/TablePresenter.h"
 #include "views/TableView.h"
 
+#include "subsystem/Chef/KitchenDemo.h"
+
 #include "core/Timer.h"
 #include "subsystem/Meals/Meal.h"
 
@@ -150,13 +152,22 @@ void test() {
     askTimePassed(kitchen);
 }
 
+
+void testImprovedKitchen(){
+    KitchenDemo* kitchen = new KitchenDemo();
+    kitchen->menuHandler();
+}
+
 int main() {
 
-    menuTest();
+    testImprovedKitchen();
     return 0;
-    TerminalApp app;
-    app.run();
-    floor();
+
+    // menuTest();
+    // TerminalApp app;
+    // app.run();
+    // return 0;
+    // floor();
     // TerminalApp app;
     // app.run();
     // return 0;
