@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Order.h"
+#include <string>
 #include <vector>
 
 class OrderComposite : public Order {
