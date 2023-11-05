@@ -1,4 +1,6 @@
 #include "PointOfSales.h"
+#include "billing/CashPayment.h"
+#include "billing/CardPayment.h"
 #include "order/Receipt.h"
 #include <iostream>
 
@@ -41,4 +43,52 @@ bool PointOfSales::isPaymentSettled(int tblId){
     }
     return true;
 }
+
+bool PointOfSales::makeCashPayment(int tblId, float amount){
+    for (const auto& payment : payments) {
+        if(payment->gettableId()==tblId){
+            CashPayment* cPayment= new CashPayment(payment,amount);
+            cPayment->paymentDetails();
+            payment->setAmountOfPayment(payment->getAmountOfPayment()-amount);
+            if(isPaymentSettled(tblId)){
+                std::cout<<"The bill has been settled"<<std::endl;
+                return true;
+            }
+            else{
+                std::cout<<"The bill has not been settled"<<std::endl;
+                std::cout<<"an amount of "<<payment->getAmountOfPayment()<<" remains"<<std::endl;
+                return false;
+            }
+        }
+        std::cout<<"A bill does not exist for this table"<<std::endl;
+        return false;
+    }
+    std::cout<<"No bills exist"<<std::endl;
+        return false;
+}
+
+bool PointOfSales::makeCardPayment(int tblId, float amount, const std::string& nameOnCard, const std::string& expirationDate, const std::string& creditCardNumber){
+for (const auto& payment : payments) {
+        if(payment->gettableId()==tblId){
+            CardPayment* cPayment= new CardPayment(payment,amount,nameOnCard,expirationDate,creditCardNumber);
+            cPayment->paymentDetails();
+            payment->setAmountOfPayment(payment->getAmountOfPayment()-amount);
+            if(isPaymentSettled(tblId)){
+                std::cout<<"The bill has been settled"<<std::endl;
+                return true;
+            }
+            else{
+                std::cout<<"The bill has not been settled"<<std::endl;
+                std::cout<<"an amount of "<<payment->getAmountOfPayment()<<" remains"<<std::endl;
+                return false;
+            }
+        }
+        std::cout<<"A bill does not exist for this table"<<std::endl;
+        return false;
+    }
+    std::cout<<"No bills exist"<<std::endl;
+        return false;
+}
+
+
 

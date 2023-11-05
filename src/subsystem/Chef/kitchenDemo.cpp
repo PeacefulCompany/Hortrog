@@ -41,6 +41,7 @@
 KitchenDemo::KitchenDemo() {
     kitchen_ = new Kitchen();
     orderBuilder_ = new ConcreteOrderBuilder();
+
 }
 
 KitchenDemo::~KitchenDemo() {

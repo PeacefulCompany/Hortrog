@@ -9,6 +9,7 @@ void TableComponent::buildOrder(OrderBuilder& builder) {
 
         builder.begin(id());
 
+
         builder.addItem(c->getName() + "_burger", c->getName());
         if (rand() % 2 == 0) {
             builder.addModifier("bingus");
