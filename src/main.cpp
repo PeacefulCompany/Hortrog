@@ -156,7 +156,6 @@ void test() {
 
 void testImprovedKitchen(){
     KitchenDemo* kitchen = new KitchenDemo();
-    std::cout << "gets here" << std::endl;
     kitchen->menuHandler();
 }
 

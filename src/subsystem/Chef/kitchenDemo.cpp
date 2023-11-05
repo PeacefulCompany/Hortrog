@@ -121,7 +121,11 @@ void KitchenDemo::displayKitchenSnapshot() {
     std::cout << kitchen_->toString() << std::endl;
 }
 
-void KitchenDemo::displayMenu() { std::cout << orderBuilder_->getMenu()->toString() << std::endl; }
+void KitchenDemo::displayMenu() {
+    Menu* menu = orderBuilder_->getMenu();
+    menu->initMenu();
+    std::cout << menu->toString() << std::endl;
+}
 
 void KitchenDemo::menuHandler() {
     int choice;
@@ -154,7 +158,9 @@ void KitchenDemo::displayOrderBuilderMenu() {
         switch (choice) {
         // case 0: addOrderBuilderModifier(); break;
         case 1: addOrderBuilderItem(); break;
-        case 2: std::cout << orderBuilder_->getResult() << std::endl; break;
+        case 2:
+            std::cout << orderBuilder_->getOrder()->toJson() << std::endl;
+            break;
         case 3: kitchen_->handleOrder(orderBuilder_->getOrder()); break;
         case 4: return;
         default: std::cout << "Invalid input" << std::endl; break;
