@@ -118,7 +118,11 @@ void KitchenDemo::displayKitchenSnapshot() {
     std::cout << kitchen_->toString() << std::endl;
 }
 
-void KitchenDemo::displayMenu() { std::cout << orderBuilder_->getMenu()->toString() << std::endl; }
+void KitchenDemo::displayMenu() {
+    Menu* menu = orderBuilder_->getMenu();
+    menu->initMenu();
+    std::cout << menu->toString() << std::endl;
+}
 
 void KitchenDemo::menuHandler() {
     int choice;
