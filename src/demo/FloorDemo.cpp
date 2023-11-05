@@ -2,6 +2,7 @@
 #include "core/util.h"
 
 #include "customer/Customer.h"
+#include "customer/CustomerState.h"
 #include "floor/CustomerIterator.h"
 #include "floor/Table.h"
 #include "floor/TableComponent.h"
@@ -24,30 +25,20 @@ void FloorDemo::gameLoop() {
     std::cout << "---------------------------" << std::endl;
 
     // Chose next action
-    std::cout << util::options({"Add Table", "Add Customers"}) << std::endl;
-    int opt = util::input("Choose an option (-1 to quit): ");
-
-    switch (opt) {
-    case -1: {
+    if (mainOptions_.execute()) {
         running_ = false;
-        break;
-    }
-    case 1: {
-        addTable();
-        break;
-    }
-    case 2: {
-        addCustomers();
-        break;
-    }
-    default: {
-        std::cout << "Not an option. Try again." << std::endl;
-        break;
-    }
     }
 }
 
-void FloorDemo::init() { return; }
+void FloorDemo::init() {
+    menu_.loadFromFile("menu_items.json");
+
+    mainOptions_.addCommand("Add Table", [this]() { addTable(); });
+    mainOptions_.addCommand("Add Customers", [this]() { addCustomers(); });
+    mainOptions_.addCommand("Add Staff", [this]() { addStaff(); });
+    mainOptions_.setPrompt("Choose an option (-1 to quit): ");
+    mainOptions_.setExitCode(-1);
+}
 
 void FloorDemo::cleanup() {}
 
@@ -75,4 +66,15 @@ void FloorDemo::addCustomers() {
         Customer* c = new Customer(line, 100);
         table->seatCustomer(c);
     }
+}
+
+void FloorDemo::addStaff() {
+    CommandMenu menu;
+    menu.addCommand(
+        "Waiter", [this]() { floor_.addStaff(new Waiter(&menu_)); });
+    menu.addCommand("Manager", [this]() { floor_.addStaff(new Manager()); });
+    menu.setError("Invalid staff type.");
+    menu.setPrompt("Enter staff type: ");
+
+    menu.execute();
 }
