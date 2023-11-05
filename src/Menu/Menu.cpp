@@ -1,23 +1,12 @@
 #include "menu/Menu.h"
 using json = nlohmann::json;
 
-Menu::Menu() {
-    // print all items as debug
-    //  for (auto& item : menuItems_) {
-    //  	std::cout << "[DEBUG] Item OUT: ";
-    //  	std::cout << item.second.getName() << std::endl;
-    //  	std::cout << item.second.getPrice() << std::endl;
-    //  	std::cout << item.second.getRestrictions() << std::endl;
-    //  }
-}
-
-void Menu::initMenu() {
-    std::string path = "menu_items.json";
+bool Menu::loadFromFile(const std::string& path) {
     std::ifstream file("assets/" + path);
     if (!file.is_open()) {
-        std::cout << "Cannot open asset" << std::endl;
-        return;
+        return false;
     }
+
     json data = json::parse(file);
     // std::cout << "[DEBUG] Parsed menu_items.json" << std::endl;
     for (auto& item : data["menu"]) {
@@ -25,6 +14,24 @@ void Menu::initMenu() {
         std::string name = item["name"].get<std::string>();
         double price = item["price"].get<double>();
         std::string restrictions = item["diet"].get<std::string>();
-        addItem(name, Item(name, price, restrictions));
+        addMenuItem(
+            name, std::make_unique<MenuItem>(name, price, restrictions));
     }
+    return true;
+}
+std::vector<std::string> Menu::getAllMenuKeys() const {
+    std::vector<std::string> keys;
+    for (auto& item : menuItems_) {
+        keys.push_back(item.first);
+    }
+    return keys;
+}
+
+std::string Menu::toString() const {
+    std::stringstream ss;
+    for (const auto& item : menuItems_) {
+        ss << item.second->getName() << " " << item.second->getPrice() << " "
+           << item.second->getRestrictions() << std::endl;
+    }
+    return ss.str();
 }

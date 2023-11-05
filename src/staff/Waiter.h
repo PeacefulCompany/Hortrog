@@ -22,7 +22,7 @@ public:
     /**
      * @brief Default constructor for Waiter.
      */
-    Waiter();
+    Waiter(Menu* menu);
 
     /**
      * @brief Checks the kitchen.

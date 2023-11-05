@@ -11,8 +11,9 @@
 class OrderBuilder {
 public:
     virtual ~OrderBuilder(){};
-    virtual void begin() = 0;
-    virtual bool addItem(const std::string& key) = 0;
+    virtual void begin(uint32_t tableId) = 0;
+    virtual bool addItem(
+        const std::string& key, const std::string& customer) = 0;
     virtual bool addModifier(const std::string& key) = 0;
     virtual Menu* getMenu() = 0;
     virtual void setMenu(Menu* menu) = 0;
