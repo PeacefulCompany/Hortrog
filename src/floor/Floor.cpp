@@ -117,7 +117,7 @@ void Floor::checkTable(int tableId, int waiterId) {
     Waiter* tableWaiter = dynamic_cast<Waiter*>(staff_[waiterId]);
     CustomerIterator* iterator = new CustomerIterator(tables_[tableId]);
     std::srand(std::time(nullptr));
-    tableWaiter->getOrderBuilder()->begin();
+    tableWaiter->getOrderBuilder()->begin(tableId);
     while (!iterator->isDone()) {
         iterator->get()->interact(*staff_[waiterId]);
         iterator->next();
