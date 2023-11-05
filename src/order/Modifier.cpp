@@ -13,6 +13,10 @@ std::string Modifier::toJson() {
     ret += ",\"mod\": \"" + key_ + "\"}";
     return ret;
 }
+Modifier::Modifier(std::unique_ptr<Order> component) {
+    this->component_ = std::move(component);
+    this->price_ = 0;
+}
 Modifier::Modifier(std::unique_ptr<Order> component, std::string key) {
     this->component_ = std::move(component);
     this->price_ = 0;
