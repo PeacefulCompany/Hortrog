@@ -8,12 +8,10 @@
 
 class ConcreteOrderBuilder : public OrderBuilder {
 public:
-    void begin() {};
-    bool addItem(const std::string& key) { return false; };
     std::string getResult();
     void begin(){};
     void begin(uint32_t tblId);
-    bool addItem(const std::string& key){return false;};
+    bool addItem(const std::string& key) { return false; };
     bool addItem(const std::string& key, const std::string& customerName);
     bool addModifier(const std::string& key);
     Menu* getMenu();
