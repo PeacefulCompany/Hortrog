@@ -1,24 +1,21 @@
 #include "OrderItem.h"
+#include "menu/Menu.h"
+
+OrderItem::OrderItem(MenuItem* item) : item_(item) {}
 
 std::string OrderItem::toJson() {
-    std::string ret = "{\"name\": \"" + id_ + "\",";
-    ret += "\"price\": " + std::to_string(price_) + "}";
+    std::string ret = "{\"name\": \"" + item_->getName() + "\",";
+    ret += "\"price\": " + std::to_string(item_->getPrice()) + "}";
     return ret;
 }
 
-double OrderItem::total() { return price_; }
+double OrderItem::total() { return item_->getPrice(); }
 void OrderItem::add(std::unique_ptr<Order>) {}
-OrderItem::OrderItem(std::string id, double price) {
-    this->id_ = id;
-    this->price_ = price;
-}
-void OrderItem::setPrice(double price) { this->price_ = price; }
-double OrderItem::getPrice() { return this->price_; }
 
-std::string OrderItem::getId() { return this->id_; }
+std::string OrderItem::getId() { return item_->getName(); }
 std::vector<std::pair<std::string, double>>
 OrderItem::generateReceiptOrderList() {
     std::vector<std::pair<std::string, double>> returnVec;
-    returnVec.emplace_back(id_, price_);
+    returnVec.emplace_back(item_->getName(), item_->getPrice());
     return returnVec;
 }
