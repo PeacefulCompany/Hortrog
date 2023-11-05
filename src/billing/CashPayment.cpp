@@ -1,9 +1,10 @@
 #include "CashPayment.h"
+#include "billing/Payment.h"
 #include <iostream>
 
 CashPayment::CashPayment() : Payment(), cashPaid(0.0) {}
 
-CashPayment::CashPayment(int tblId, float amount, float cashPaid) : Payment(tblId, amount), cashPaid(cashPaid) {}
+CashPayment::CashPayment(Payment* payment, float cashPaid) : Payment(payment), cashPaid(cashPaid) {}
 
 float CashPayment::getCashPaid() const {
     return cashPaid;

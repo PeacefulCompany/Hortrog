@@ -1,4 +1,5 @@
 #include "PointOfSales.h"
+#include "billing/CashPayment.h"
 #include "order/Receipt.h"
 #include <iostream>
 
@@ -40,5 +41,25 @@ bool PointOfSales::isPaymentSettled(int tblId){
         }
     }
     return true;
+}
+
+bool PointOfSales::makeCashPayment(int tblId, float amount){
+    for (const auto& payment : payments) {
+        if(payment->gettableId()==tblId){
+            CashPayment* cPayment= new CashPayment(payment,amount);
+            cPayment->paymentDetails();
+            payment->setAmountOfPayment(payment->getAmountOfPayment()-amount);
+            if(isPaymentSettled(tblId)){
+                std::cout<<"The bill has been settled"<<std::endl;
+            }
+            else{
+                std::cout<<"The bill has not been settled"<<std::endl;
+                std::cout<<"an amount of "<<payment->getAmountOfPayment()<<" remains"<<std::endl;
+            }
+        }
+    }
+}
+bool PointOfSales::makeCardPayment(int tblId, float amount){
+
 }
 
