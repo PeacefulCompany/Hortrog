@@ -4,6 +4,7 @@
 #include "floor/Floor.h"
 #include "floor/TableGroup.h"
 
+#include <memory>
 #include <vector>
 
 class TerminalApp : public Application {
@@ -18,6 +19,7 @@ protected:
     void printOptions(const std::vector<std::string>& options);
 
 private:
+    Menu menu_;
     bool running_ = true;
     std::vector<Table*> tables_;
     TableGroup* group_;

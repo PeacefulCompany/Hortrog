@@ -6,8 +6,8 @@
 
 void TableComponent::buildOrder(OrderBuilder& builder) {
     for (Customer* c : customers_) {
-        builder.begin();
-        builder.addItem(c->getName() + "_burger");
+        builder.begin(id_);
+        builder.addItem(c->getName() + "_burger", c->getName());
         if (rand() % 2 == 0) {
             builder.addModifier("bingus");
         } else if (rand() % 3 == 0) {

@@ -27,10 +27,10 @@ void FloorDemo::gameLoop() {
 
     // Chose next action
     std::cout << util::options({"Add Table",
-                     "Merge table",
-                     "Split table",
-                     "Add customer",
-                     "Remove customer"})
+                    "Merge table",
+                    "Split table",
+                    "Add customer",
+                    "Remove customer"})
               << std::endl;
     int opt = util::input("Choose an option (-1 to quit): ");
 
