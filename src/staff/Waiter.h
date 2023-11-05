@@ -25,11 +25,26 @@ public:
     Waiter();
 
     /**
+     * @brief Accepts a customer state.
+     *
+     * This function is used to accept a customer state.
+     *
+     * @param state The customer state to accept.
+     */
+    void accept(CustomerState& state) override;
+    /**
+     * @brief Gets the staff type.
+     *
+     * This function is used to get the staff type.
+     *
+     * @return The staff type.
+     */
+    std::string getStaffType() override;
+    /**
      * @brief Checks the kitchen.
      *
      * This function is used to check the kitchen for orders.
      */
-    std::string getStaffType() override;
     void checkKitchen();
     /**
      * @brief Gets the order builder.
@@ -38,25 +53,58 @@ public:
      *
      * @return A pointer to the order builder.
      */
-    OrderBuilder* getOrderBuilder();
+    OrderBuilder* getOrderBuilder() { return orderBuilder_.get(); }
     /**
-     * @brief Accepts a customer state.
+     * @brief Gets the ready meals.
      *
-     * This function is used to accept a customer state.
+     * This function is used to get the ready meals.
      *
-     * @param state The customer state to accept.
+     * @return A vector of meals that are ready.
      */
-    void accept(CustomerState& state) override;
+    std::vector<Meal*> getReadyMeals() { return readyMeals; }
+    /**
+     * @brief Gets the tables.
+     *
+     * This function is used to get the tables.
+     *
+     * @return A vector of tables.
+     */
     std::vector<Table*> getTables() { return tables_; }
-    std::vector<Meal*> readyMeals;
-    void setKitchen(Kitchen*);
+    /**
+     * @brief
+     *
+     * This function is used to set the Kitcken.
+     *
+     * @param Kitchen* the new kitchen to be set for the static member kitchen_.
+     */
+    static void setKitchen(Kitchen* kitchen);
 
 private:
-    Kitchen* kitchen_; // dont think waiter should hold the kitchen
+    /**
+     * @brief A vector of meals that are ready.
+     */
+    std::vector<Meal*> readyMeals;
+    /**
+     * @brief A static member kitchen_.
+     */
+    static Kitchen* kitchen_;
+
     // PointOfSales* pointOfSales_;
+
+    /**
+     * @brief A vector of tables.
+     */
     std::vector<Table*> tables_;
     /**
      * @brief A unique pointer to the order builder.
      */
     std::unique_ptr<OrderBuilder> orderBuilder_;
 };
+/**
+ * @brief Initialize the static member kitchen_ with nullptr.
+ *
+ * This ensures that all instances of FloorStaff share the same Kitchen
+ * instance. Before using this, make sure to set the Kitchen instance using->
+ * FloorStaff::setKitchen(new Kitchen());
+ */
+Kitchen* FloorStaff::kitchen_ = nullptr;

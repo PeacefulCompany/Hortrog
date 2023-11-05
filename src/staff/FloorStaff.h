@@ -1,5 +1,7 @@
 #pragma once
 #include "customer/CustomerState.h"
+#include "subsystem/Chef/Kitchen.h"
+#include "subsystem/Meals/Meal.h"
 #include <string>
 /**
  * @class FloorStaff
@@ -27,5 +29,27 @@ public:
     virtual std::string getStaffType() = 0;
     int currentTableId_;
 
+    static void setKitchen(Kitchen* kitchen) {
+        if (kitchen_ == nullptr) {
+            kitchen_ = kitchen;
+        } else {
+            //  std::cout << "Kitchen already set" << std::endl;
+        }
+    }
+    static Kitchen* getKitchen() { return kitchen_; }
+
 private:
+    /**
+     * @brief all children know about one kitchen
+     *
+     */
+    static Kitchen* kitchen_;
 };
+/**
+ * @brief Initialize the static member kitchen_ with nullptr.
+ *
+ * This ensures that all instances of FloorStaff share the same Kitchen
+ * instance. Before using this, make sure to set the Kitchen instance using
+ * FloorStaff::setKitchen(new Kitchen());.
+ */
+Kitchen* FloorStaff::kitchen_ = nullptr;

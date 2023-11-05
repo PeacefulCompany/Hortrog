@@ -8,6 +8,7 @@
 #include "subsystem/Chef/Kitchen.h"
 
 Waiter::Waiter() : FloorStaff() {
+    FloorStaff::setKitchen(new Kitchen());
     this->orderBuilder_ = std::make_unique<ConcreteOrderBuilder>();
     Menu* menu = new Menu();
     menu->initMenu();
@@ -29,7 +30,14 @@ void Waiter::checkKitchen() {
     if (x == tables_.size()) return;
     if (currentMeal != nullptr) readyMeals.push_back(currentMeal);
 }
-OrderBuilder* Waiter::getOrderBuilder() { return orderBuilder_.get(); }
+
+void Waiter::setKitchen(Kitchen* kitchen) {
+    if (kitchen_ == nullptr) {
+        kitchen_ = kitchen;
+    } else {
+        // std::cout << "Kitchen already set" << std::endl;
+    }
+}
 void Waiter::accept(CustomerState& state) { state.visit(*this); }
 std::string Waiter::getStaffType() { return "Waiter"; }
 
