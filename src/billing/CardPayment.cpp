@@ -1,17 +1,20 @@
 #include "CardPayment.h"
 #include <iostream>
 
-CardPayment::CardPayment() : Payment(), nameOnCard(""), expirationDate(""), creditCardNumber("") {}
+CardPayment::CardPayment()
+    : Payment(), nameOnCard(""), expirationDate(""), creditCardNumber("") {}
 
-CardPayment::CardPayment(int tblId, float amount, const string& nameOnCard, const std::string& expirationDate, const std::string& creditCardNumber) : Payment(tblId, amount), nameOnCard(nameOnCard), expirationDate(expirationDate), creditCardNumber(creditCardNumber) {}
+CardPayment::CardPayment(int tblId,
+    float amount,
+    const string& nameOnCard,
+    const std::string& expirationDate,
+    const std::string& creditCardNumber)
+    : Payment(tblId, amount), nameOnCard(nameOnCard),
+      expirationDate(expirationDate), creditCardNumber(creditCardNumber) {}
 
-const string& CardPayment::getNameOnCard() const {
-    return nameOnCard;
-}
+const string& CardPayment::getNameOnCard() const { return nameOnCard; }
 
-const string& CardPayment::getExpirationDate() const {
-    return expirationDate;
-}
+const string& CardPayment::getExpirationDate() const { return expirationDate; }
 
 const string& CardPayment::getCreditCardNumber() const {
     return creditCardNumber;

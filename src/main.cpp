@@ -95,7 +95,7 @@ void floor() {
     customers.push_back(new Customer("Trinity", 0.5));
     customers.push_back(new Customer("Morpheus", 0.5));
     floor->customerEnter(customers);
-    floor->addStaff(new Waiter());
+    // floor->addStaff(new Waiter());
     floor->createTables(5, 4);
     floor->checkTable(0, 0);
     floor->checkTable(0, 0);
@@ -113,15 +113,9 @@ void floor() {
 //  COS 214 - Final Project
 void menuTest() {
     Menu* menu = new Menu();
-    menu->initMenu();
+    menu->loadFromFile("menu_items.json");
 
-    std::vector<Item> items = menu->getAllItems();
-    for (auto& item : items) {
-        std::cout << "[DEBUG] Item OUT: ";
-        std::cout << item.getName() << std::endl;
-        std::cout << item.getPrice() << std::endl;
-        std::cout << item.getRestrictions() << std::endl;
-    }
+    std::cout << menu->toString() << std::endl;
 }
 
 void askTimePassed(Kitchen* kitchen) {
@@ -155,9 +149,9 @@ void test() {
 int main() {
 
     menuTest();
+    return 0;
     TerminalApp app;
     app.run();
-    return 0;
     floor();
     // TerminalApp app;
     // app.run();

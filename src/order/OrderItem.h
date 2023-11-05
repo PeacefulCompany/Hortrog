@@ -6,7 +6,7 @@
 class OrderItem : public Order {
 
 public:
-    OrderItem(MenuItem* item);
+    OrderItem(const MenuItem* item);
 
     std::string toJson() override;
     double total() override;
@@ -18,5 +18,5 @@ protected:
     generateReceiptOrderList() override;
 
 private:
-    MenuItem* item_;
+    const MenuItem* item_;
 };

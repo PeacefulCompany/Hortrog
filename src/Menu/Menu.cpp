@@ -1,6 +1,7 @@
 #include "menu/Menu.h"
 
 #include <fstream>
+#include <iomanip>
 #include <sstream>
 
 #include "nlohmann/json.hpp"
@@ -24,7 +25,7 @@ bool Menu::loadFromFile(const std::string& path) {
     }
     return true;
 }
-std::vector<std::string> Menu::getAllMenuKeys() const {
+std::vector<std::string> Menu::getAllKeys() const {
     std::vector<std::string> keys;
     for (auto& item : menuItems_) {
         keys.push_back(item.first);
@@ -33,7 +34,8 @@ std::vector<std::string> Menu::getAllMenuKeys() const {
 }
 
 std::string Menu::toString() const {
-    std::stringstream ss("Menu");
+    std::stringstream ss;
+    ss << "Menu";
     for (const auto& item : menuItems_) {
         ss << "\n- " << item.second->toString();
     }
@@ -42,6 +44,7 @@ std::string Menu::toString() const {
 
 std::string MenuItem::toString() const {
     std::stringstream ss;
-    ss << "R" << price_ << "\t" << name_ << " (" << restrictions_ << ")";
+    ss << "R" << std::left << std::setw(8) << price_;
+    ss << name_ << " (" << restrictions_ << ")";
     return ss.str();
 }

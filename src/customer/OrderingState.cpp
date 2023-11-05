@@ -9,7 +9,6 @@
 #include <ctime>
 #include <iostream>
 
-
 void OrderingState::visit(Manager& m) {
     if (readyTimer_.expired()) {
         std::cout << "Ordering: Manager" << std::endl;
@@ -21,11 +20,10 @@ void OrderingState::visit(Waiter& w) {
     ConcreteOrderBuilder* TableOrder =
         static_cast<ConcreteOrderBuilder*>(w.getOrderBuilder());
     Menu* menu = TableOrder->getMenu();
-    std::vector<Item>& allItems = menu->getAllItems();
+    std::vector<std::string> allItems = menu->getAllKeys();
     int randomNumber = std::rand() % allItems.size();
     if (readyTimer_.expired()) {
-        std::string keyName = allItems[randomNumber].getName();
-        TableOrder->addItem(keyName);
+        TableOrder->addItem(allItems[randomNumber], customer_->getName());
         int randomNumber = std::rand() % 100;
         if (std::rand() % 4 == 0) {
             std::string modifierName = "Wubba lubba dub dub!";

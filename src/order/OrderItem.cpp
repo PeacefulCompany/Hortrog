@@ -1,7 +1,7 @@
 #include "OrderItem.h"
 #include "menu/Menu.h"
 
-OrderItem::OrderItem(MenuItem* item) : item_(item) {}
+OrderItem::OrderItem(const MenuItem* item) : item_(item) {}
 
 std::string OrderItem::toJson() {
     std::string ret = "{\"name\": \"" + item_->getName() + "\",";

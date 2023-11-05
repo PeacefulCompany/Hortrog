@@ -44,8 +44,10 @@ public:
      *
      * @return void
      */
-    void addMenuItem(const std::string& name, std::unique_ptr<MenuItem> item) {
-        menuItems_.emplace(name, item);
+    bool addMenuItem(const std::string& name, std::unique_ptr<MenuItem> item) {
+        if (menuItems_.contains(name)) return false;
+        menuItems_[name] = std::move(item);
+        return true;
     }
 
     /**
@@ -55,17 +57,21 @@ public:
      * @return const MenuItem* The menu item with the given key, or `nullptr`
      * otherwise
      */
-    const MenuItem* getMenuItem(const std::string& key);
+    const MenuItem* getMenuItem(const std::string& key) {
+        auto it = menuItems_.find(key);
+        if (it != menuItems_.end()) return nullptr;
+        return it->second.get();
+    }
 
     /**
      * @brief Retrieves the keys for all menu items in the menu
      *
      * @return The keys for all menu items in the menu
      */
-    std::vector<std::string> getAllMenuKeys() const;
+    std::vector<std::string> getAllKeys() const;
 
     std::string toString() const;
 
 private:
-    std::unordered_map<std::string, std::unique_ptr<MenuItem>> menuItems_;
+    std::unordered_map<std::string, std::unique_ptr<const MenuItem>> menuItems_;
 };
