@@ -1,16 +1,17 @@
 #pragma once
 
 #include "FloorStaff.h"
-#include "Menu/Menu.h"
 #include "customer/Customer.h"
 #include "customer/CustomerState.h"
 #include "floor/Table.h"
+#include "menu/Menu.h"
 #include "order/ConcreteOrderBuilder.h"
 #include "order/OrderBuilder.h"
 #include "staff/FloorStaff.h"
 #include "subsystem/Meals/Meal.h"
 #include <memory>
 #include <vector>
+
 
 /**
  * @class Waiter
@@ -75,7 +76,6 @@ public:
     void Givetokitchen();
 
 private:
-
     const Menu* menu_;
     Kitchen* kitchen_; // dont think waiter should hold the kitchen
 
@@ -87,7 +87,6 @@ private:
      * @brief A static member kitchen_.
      */
     //  static Kitchen* kitchen_;
-
 
     // PointOfSales* pointOfSales_;
 

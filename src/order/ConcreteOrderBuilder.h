@@ -18,7 +18,7 @@ public:
     void setMenu(const Menu* menu) override { menu_ = menu; }
     const Menu* getMenu() const override { return menu_; }
 
-    OrderComposite* getOrder() { return this->order; };
+    OrderComposite* getOrder() override { return this->order; };
 
 private:
     uint32_t tblId_;

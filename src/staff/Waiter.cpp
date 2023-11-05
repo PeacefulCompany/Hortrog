@@ -1,5 +1,4 @@
 #include "Waiter.h"
-#include "Menu/Menu.h"
 #include "order/ConcreteOrderBuilder.h"
 #include "order/OrderBuilder.h"
 #include "order/OrderComposite.h"
@@ -15,13 +14,9 @@
  */
 Kitchen* FloorStaff::kitchen_ = nullptr;
 
-
 Waiter::Waiter(const Menu* menu) : FloorStaff(), menu_(menu) {
     FloorStaff::setKitchen(new Kitchen());
     this->orderBuilder_ = std::make_unique<ConcreteOrderBuilder>(menu);
-    Menu* menu = new Menu();
-    menu->initMenu();
-
 }
 void Waiter::checkKitchen() {
     // ckeck if the waiter is currenlty holdy any ready meals
