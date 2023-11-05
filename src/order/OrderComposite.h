@@ -11,12 +11,12 @@ protected:
 
 private:
     std::vector<std::unique_ptr<Order>> orders_;
-	std::string customerName_;
+
 public:
     void add(std::unique_ptr<Order> order) override;
     std::string toJson() override;
     double total() override;
     std::string getId() override { return ""; };
-    void setPrice(double){};
-    double getPrice() { return 0; };
+    void setPrice(double) override{};
+    double getPrice() override { return 0; };
 };

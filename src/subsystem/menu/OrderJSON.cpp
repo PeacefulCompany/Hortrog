@@ -4,8 +4,9 @@
  */
 
 #include "OrderJSON.h"
-#include "json.hpp"
 #include <iostream>
+
+#include "json.hpp"
 using json = nlohmann::json;
 
 /**
@@ -15,10 +16,10 @@ using json = nlohmann::json;
 OrderJSON::OrderJSON(std::string order) { this->order_ = order; }
 
 /**
- * @brief Parses the order string and returns a vector of Item pointers
- * @return A vector of Item pointers
+ * @brief Parses the order string and returns a vector of ItemJSON pointers
+ * @return A vector of ItemJSON pointers
  */
-std::vector<Item*> OrderJSON::getItems() {
+std::vector<ItemJSON*> OrderJSON::getItems() {
     json data = json::parse(order_);
 
     for (auto& item : data["order"]) {
@@ -42,8 +43,8 @@ std::vector<Item*> OrderJSON::getItems() {
             mod = "none";
         }
 
-        Item* newItem = new Item(name, price, diet, mod);
-        items_.push_back(newItem);
+        ItemJSON* newItemJSON = new ItemJSON(name, price, diet, mod);
+        items_.push_back(newItemJSON);
     }
 
     return items_;
