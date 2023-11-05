@@ -42,6 +42,7 @@ public:
     void simulateTimePassed();
     void displayKitchenSnapshot();
     void displayMenu();
+    void displayModifiers();
 
     void displayOrderBuilderMenu();
 };

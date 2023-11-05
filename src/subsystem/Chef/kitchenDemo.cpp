@@ -3,6 +3,7 @@
 #include "order/OrderBuilder.h"
 #include "subsystem/Chef/kitchenDemo.h"
 #include <iostream>
+#include <string>
 // #include "kitchenDemo.h"
 
 // void test() {
@@ -122,6 +123,10 @@ void KitchenDemo::displayMenu() {
     std::cout << menu->toString() << std::endl;
 }
 
+void KitchenDemo::displayModifiers() {
+    // Modi
+}
+
 void KitchenDemo::menuHandler() {
     int choice;
     while (true) {
@@ -144,18 +149,16 @@ void KitchenDemo::displayOrderBuilderMenu() {
     while (true) {
         std::cout << "Welcome to the Order Builder!" << std::endl;
         std::cout << "Please select an option:" << std::endl;
-        std::cout << "0. Add Modifier" << std::endl;
+        // std::cout << "0. Add Modifier" << std::endl;
         std::cout << "1. Add item to order" << std::endl;
         std::cout << "2. Display order" << std::endl;
         std::cout << "3. Submit order" << std::endl;
         std::cout << "4. Exit" << std::endl;
         std::cin >> choice;
         switch (choice) {
-        case 0: addOrderBuilderModifier(); break;
+        // case 0: addOrderBuilderModifier(); break;
         case 1: addOrderBuilderItem(); break;
-        case 2:
-            std::cout << orderBuilder_->getOrder()->toJson() << std::endl;
-            break;
+        case 2: std::cout << orderBuilder_->getResult() << std::endl; break;
         case 3: kitchen_->handleOrder(orderBuilder_->getOrder()); break;
         case 4: return;
         default: std::cout << "Invalid input" << std::endl; break;
@@ -167,12 +170,33 @@ void KitchenDemo::addOrderBuilderItem() {
     displayMenu();
     std::string key;
     std::string customerName;
+    std::string modifierQuery;
+    std::cin.ignore();
     std::cout << "Enter item key: \n";
+    // std::cin.ignore();
     std::getline(std::cin, key);
     std::cout << "Enter customer name: ";
-    std::cin >> customerName;
+    std::getline(std::cin, customerName);
+    std::cout<<"Customer Name: "<<customerName<<std::endl;
     if (orderBuilder_->addItem(key, customerName)) {
         std::cout << "Item added" << std::endl;
+        std::cout << "Do you want to add a modifier? (y/n)" << std::endl;
+        std::getline(std::cin, modifierQuery);
+        std::cout << modifierQuery << std::endl;
+        if (modifierQuery == "y" || modifierQuery == "n") {
+            while (modifierQuery != "y" && modifierQuery != "n") {
+                std::cout << "Invalid input" << std::endl;
+                std::cout << "Do you want to add a modifier? (y/n)"
+                          << std::endl;
+                std::getline(std::cin, modifierQuery);
+            }
+        }
+
+        if (modifierQuery == "y") {
+            addOrderBuilderModifier();
+        } else {
+            std::cout << "No modifier added" << std::endl;
+        }
     } else {
         std::cout << "Item not added" << std::endl;
     }
