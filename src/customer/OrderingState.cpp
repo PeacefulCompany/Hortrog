@@ -1,7 +1,7 @@
 #include "OrderingState.h"
-#include "Menu/Menu.h"
 #include "customer/WaitingState.h"
 #include "floor/Table.h"
+#include "menu/Menu.h"
 #include "order/ConcreteOrderBuilder.h"
 #include "order/OrderBuilder.h"
 #include "order/OrderComposite.h"
@@ -17,14 +17,14 @@ void OrderingState::visit(Manager& m) {
     }
 }
 void OrderingState::visit(Waiter& w) {
-    ConcreteOrderBuilder* TableOrder =
-        static_cast<ConcreteOrderBuilder*>(w.getOrderBuilder());
-    Menu* menu = TableOrder->getMenu();
-    std::vector<Item>& allItems = menu->getAllItems();
+    OrderBuilder* TableOrder = w.getOrderBuilder();
+    const Menu* menu = TableOrder->getMenu();
+    std::vector<std::string> allItems = menu->getAllKeys();
     int randomNumber = std::rand() % allItems.size();
     if (readyTimer_.expired()) {
         std::string keyName = allItems[randomNumber].getName();
         TableOrder->addItem(keyName, customer_->getName());
+
         int randomNumber = std::rand() % 100;
         if (std::rand() % 4 == 0) {
             std::string modifierName = "Wubba lubba dub dub!";

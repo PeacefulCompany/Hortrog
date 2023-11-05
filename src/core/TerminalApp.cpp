@@ -9,6 +9,7 @@
 
 void TerminalApp::init() {
     std::cout << "COS 214 - Final Project" << std::endl;
+    menu_.loadFromFile("menu_items.json");
 
     tables_.push_back(new TableComponent(0, 2));
     group_ = new TableGroup();

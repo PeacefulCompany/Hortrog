@@ -3,6 +3,7 @@
 
 void NullOrderBuilder::begin(uint32_t tblId) { orders_.emplace_back(std::vector<json>()); }
 bool NullOrderBuilder::addItem(const std::string& key, const std::string& customerName) {
+
     json item = {
         {"key", key},
         {"modifiers", std::vector<std::string>()},

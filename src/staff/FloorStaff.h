@@ -1,5 +1,7 @@
 #pragma once
+#include "customer/Customer.h"
 #include "customer/CustomerState.h"
+#include "subsystem/Meals/Meal.h"
 #include <string>
 /**
  * @class FloorStaff
@@ -9,6 +11,8 @@
  * different types of floor staff aswell as a being the element in the visitor
  * pattern.
  */
+
+class Kitchen;
 class FloorStaff {
 public:
     /**
@@ -27,5 +31,18 @@ public:
     virtual std::string getStaffType() = 0;
     int currentTableId_;
 
+    static void setKitchen(Kitchen* kitchen) {
+        if (kitchen_ == nullptr) {
+            kitchen_ = kitchen;
+        } else {
+            //  std::cout << "Kitchen already set" << std::endl;
+        }
+    }
+    static Kitchen* getKitchen() { return kitchen_; }
 private:
+    /**
+     * @brief all children know about one kitchen
+     *
+     */
+    static Kitchen* kitchen_;
 };
