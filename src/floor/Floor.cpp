@@ -7,13 +7,16 @@
 #include "customer/PayingState.h"
 #include "customer/WaitingState.h"
 #include "floor/CustomerIterator.h"
+#include "floor/TableGroup.h"
 #include "staff/Waiter.h"
 
 #include "order/ConcreteOrderBuilder.h"
 #include "order/OrderBuilder.h"
 #include "order/OrderComposite.h"
 
+#include <algorithm>
 #include <iostream>
+#include <numeric>
 #include <sstream>
 #include <utility>
 #include <vector>
@@ -25,12 +28,34 @@ uint32_t Floor::addTable(int capacity) {
 }
 
 Table* Floor::requestSeating(int n) {
-    // std::cout << "requestSeating" << std::endl;
-    // this fucntion should take in a group of names and then check in the floor
-    // if there is a table that can seat them all if there is a table that can
-    // seat them all then it should return that table if there is not a table
-    // that can seat them all then it should return nullptrreturn null;
-    return nullptr;
+    using namespace std;
+
+    // Find all empty tables
+    vector<Table*> emptyTables;
+    auto func = [](const Table* t) { return t->isEmpty(); };
+    copy_if(tables_.begin(), tables_.end(), back_inserter(emptyTables), func);
+
+    // Find combination of tables
+    int currentCapacity = 0;
+    auto it = emptyTables.begin();
+    for (; it != emptyTables.end(); it++) {
+        if (currentCapacity >= n) break;
+        currentCapacity += (*it)->capacity();
+    }
+    if (currentCapacity < n) return nullptr;
+    if (it != emptyTables.end()) {
+        emptyTables.erase(it);
+    }
+
+    // Group them together
+    TableGroup* group = new TableGroup();
+    for (Table* table : emptyTables) {
+        group->merge(table);
+        erase(tables_, table);
+    }
+    tables_.push_back(group);
+
+    return group;
 }
 
 void Floor::createTables(int numTables, int numSeats) {

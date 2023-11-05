@@ -13,6 +13,7 @@
 #include <iterator>
 #include <memory>
 #include <set>
+#include <string>
 #include <vector>
 
 void FloorDemo::gameLoop() {
@@ -23,7 +24,7 @@ void FloorDemo::gameLoop() {
     std::cout << "---------------------------" << std::endl;
 
     // Chose next action
-    std::cout << util::options({"Add Table"}) << std::endl;
+    std::cout << util::options({"Add Table", "Add Customers"}) << std::endl;
     int opt = util::input("Choose an option (-1 to quit): ");
 
     switch (opt) {
@@ -33,6 +34,10 @@ void FloorDemo::gameLoop() {
     }
     case 1: {
         addTable();
+        break;
+    }
+    case 2: {
+        addCustomers();
         break;
     }
     default: {
@@ -53,4 +58,21 @@ void FloorDemo::addTable() {
     } while (capacity < 1);
 
     std::cout << "Table ID: " << floor_.addTable(capacity);
+}
+void FloorDemo::addCustomers() {
+    int numCustomers = util::input("Number of customers: ");
+    Table* table = floor_.requestSeating(numCustomers);
+    if (!table) {
+        util::error("Cannot accomadate that many customers");
+        return;
+    }
+    std::cout << table->toString() << std::endl;
+
+    std::string line;
+    for (int i = 0; i < numCustomers; i++) {
+        std::cout << "Customer name: ";
+        std::getline(std::cin, line);
+        Customer* c = new Customer(line, 100);
+        table->seatCustomer(c);
+    }
 }

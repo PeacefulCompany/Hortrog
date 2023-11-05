@@ -17,6 +17,7 @@ protected:
 
 private:
     void addTable();
+    void addCustomers();
 
     Floor floor_;
     bool running_ = true;
