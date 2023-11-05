@@ -64,10 +64,6 @@ void KitchenDemo::setOrderBuilder(ConcreteOrderBuilder* orderBuilder) {
     orderBuilder_ = orderBuilder;
 }
 
-Menu* KitchenDemo::getMenu() { return menu_; }
-
-void KitchenDemo::setMenu(Menu* menu) { menu_ = menu; }
-
 // other functions
 
 void KitchenDemo::test() {
@@ -125,7 +121,7 @@ void KitchenDemo::displayKitchenSnapshot() {
     std::cout << kitchen_->toString() << std::endl;
 }
 
-void KitchenDemo::displayMenu() { std::cout << menu_->toString() << std::endl; }
+void KitchenDemo::displayMenu() { std::cout << orderBuilder_->getMenu()->toString() << std::endl; }
 
 void KitchenDemo::menuHandler() {
     int choice;
