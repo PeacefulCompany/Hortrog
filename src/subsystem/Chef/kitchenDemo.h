@@ -1,10 +1,50 @@
+#pragma once
+
 #ifndef KITCHEN_DEMO_H
 #define KITCHEN_DEMO_H
 
-#include "subsystem/Chef/Kitchen.h"
+#include "../../order/ConcreteOrderBuilder.h"
 #include "../../order/Order.h"
 
-void test();
-void askTimePassed(Kitchen* kitchen);
+
+#include "../../Menu/Menu.h"
+#include "order/ConcreteOrderBuilder.h"
+#include "subsystem/Chef/Kitchen.h"
+
+class KitchenDemo {
+
+private:
+    Kitchen* kitchen_;
+    ConcreteOrderBuilder* orderBuilder_;
+    Menu* menu_;
+
+public:
+    // constructor and destructor
+    KitchenDemo();
+    ~KitchenDemo();
+
+    // getters and setters
+    Kitchen* getKitchen();
+    void setKitchen(Kitchen* kitchen);
+
+    ConcreteOrderBuilder* getOrderBuilder();
+    void setOrderBuilder(ConcreteOrderBuilder* orderBuilder);
+
+    Menu* getMenu();
+    void setMenu(Menu* menu);
+
+    // other functions
+    void test();
+    void askTimePassed(Kitchen* kitchen);
+
+    void menuHandler();
+
+    void displayMainMenu();
+    void simulateTimePassed();
+    void displayKitchenSnapshot();
+    void displayMenu();
+
+    void displayOrderBuilderMenu();
+};
 
 #endif // KITCHEN_DEMO_H
