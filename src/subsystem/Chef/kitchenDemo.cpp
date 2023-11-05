@@ -50,6 +50,7 @@ KitchenDemo::KitchenDemo() {
 KitchenDemo::~KitchenDemo() {
     delete kitchen_;
     delete orderBuilder_;
+    delete menu_;
 }
 
 // getters and setters
@@ -63,6 +64,10 @@ ConcreteOrderBuilder* KitchenDemo::getOrderBuilder() { return orderBuilder_; }
 void KitchenDemo::setOrderBuilder(ConcreteOrderBuilder* orderBuilder) {
     orderBuilder_ = orderBuilder;
 }
+
+Menu* KitchenDemo::getMenu() { return menu_; }
+
+void KitchenDemo::setMenu(Menu* menu) { menu_ = menu; }
 
 // other functions
 
@@ -121,13 +126,7 @@ void KitchenDemo::displayKitchenSnapshot() {
     std::cout << kitchen_->toString() << std::endl;
 }
 
-void KitchenDemo::displayMenu() {
-    std::cout << menu_->toString() << std::endl;
-}
-
-void KitchenDemo::displayModifiers() {
-    // Modi
-}
+void KitchenDemo::displayMenu() { std::cout << menu_->toString() << std::endl; }
 
 void KitchenDemo::menuHandler() {
     int choice;
