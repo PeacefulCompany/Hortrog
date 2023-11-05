@@ -12,8 +12,7 @@ public:
     bool addItem(const std::string& key, const std::string& customer) override;
     bool addModifier(const std::string& key) override;
 
-    Menu* getMenu() override { return nullptr; }
-    void setMenu(Menu* menu) override {}
+    void setMenu(const Menu* menu) override {}
 
     inline const std::vector<json>& getResult() { return orders_; }
 

@@ -7,8 +7,8 @@
 #include "staff/Waiter.h"
 #include "subsystem/Chef/Kitchen.h"
 
-Waiter::Waiter(Menu* menu) : FloorStaff() {
-    this->orderBuilder_ = std::make_unique<ConcreteOrderBuilder>();
+Waiter::Waiter(const Menu* menu) : FloorStaff(), menu_(menu) {
+    this->orderBuilder_ = std::make_unique<ConcreteOrderBuilder>(menu);
     this->orderBuilder_->setMenu(menu);
 }
 void Waiter::checkKitchen() {

@@ -9,7 +9,7 @@ void ConcreteOrderBuilder::begin(uint32_t tblId) {
 
 bool ConcreteOrderBuilder::addItem(
     const std::string& key, const std::string& customerName) {
-    const MenuItem* item = menu->getMenuItem(key);
+    const MenuItem* item = menu_->getMenuItem(key);
     if (!item) {
         return false;
     }
@@ -36,6 +36,9 @@ bool ConcreteOrderBuilder::addModifier(const std::string& key) {
     return true;
 }
 
+ConcreteOrderBuilder::ConcreteOrderBuilder(const Menu* menu)
+    : OrderBuilder(), menu_(menu) {}
+
 std::string ConcreteOrderBuilder::getResult() {
     // return empty string if the vector is empty
     if (this->tempOrder.empty()) {
@@ -52,7 +55,3 @@ std::string ConcreteOrderBuilder::getResult() {
     this->order->setTblId(this->tblId_);
     return this->order->toJson();
 }
-
-void ConcreteOrderBuilder::setMenu(Menu* menu) { this->menu = menu; }
-
-Menu* ConcreteOrderBuilder::getMenu() { return this->menu; }

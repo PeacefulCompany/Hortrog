@@ -1,9 +1,10 @@
-#include "Menu/Menu.h"
 #include "SFML/Graphics.hpp"
 #include "SFML/Graphics/View.hpp"
 #include "SFML/System.hpp"
 #include "SFML/Window.hpp"
 #include "SFML/Window/WindowStyle.hpp"
+#include "menu/Menu.h"
+
 
 #include "core/TerminalApp.h"
 #include "customer/Customer.h"
@@ -88,6 +89,9 @@ void readAssetFile(const std::string& path) {
     std::cout << data["age"].get<int>() << std::endl;
 }
 void floor() {
+    Menu menu;
+    menu.loadFromFile("menu_items.json");
+
     std::cout << "Floor" << std::endl;
     Floor* floor = new Floor();
     std::vector<Customer*> customers;
@@ -95,7 +99,7 @@ void floor() {
     customers.push_back(new Customer("Trinity", 0.5));
     customers.push_back(new Customer("Morpheus", 0.5));
     floor->customerEnter(customers);
-    // floor->addStaff(new Waiter());
+    floor->addStaff(new Waiter(&menu));
     floor->createTables(5, 4);
     floor->checkTable(0, 0);
     floor->checkTable(0, 0);

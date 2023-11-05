@@ -1,5 +1,6 @@
 #pragma once
 #include "FloorStaff.h"
+#include "Menu/Menu.h"
 #include "customer/Customer.h"
 #include "customer/CustomerState.h"
 #include "floor/Table.h"
@@ -19,10 +20,7 @@ class Kitchen;
  */
 class Waiter : public FloorStaff {
 public:
-    /**
-     * @brief Default constructor for Waiter.
-     */
-    Waiter(Menu* menu);
+    Waiter(const Menu* menu);
 
     /**
      * @brief Checks the kitchen.
@@ -52,6 +50,7 @@ public:
     void setKitchen(Kitchen*);
 
 private:
+    const Menu* menu_;
     Kitchen* kitchen_; // dont think waiter should hold the kitchen
     // PointOfSales* pointOfSales_;
     std::vector<Table*> tables_;
