@@ -2,7 +2,7 @@
 #define KITCHEN_DEMO_H
 
 #include "subsystem/Chef/Kitchen.h"
-#include "subsystem/OrderTemplate/Order.h"
+#include "../../order/Order.h"
 
 void test();
 void askTimePassed(Kitchen* kitchen);
