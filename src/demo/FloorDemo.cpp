@@ -52,6 +52,11 @@ void FloorDemo::addTable() {
     std::cout << "Table ID: " << floor_.addTable(capacity);
 }
 void FloorDemo::addCustomers() {
+    if (floor_.getFloorStaffSize() < 1) {
+        util::error("No staff available to serve customers");
+        return;
+    }
+
     // Request table from floor
     int numCustomers = util::input("Number of customers: ");
     Table* table = floor_.requestSeating(numCustomers);

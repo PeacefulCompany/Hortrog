@@ -193,6 +193,8 @@ public:
 
     void update(float dt);
 
+    inline size_t getFloorStaffSize() const { return staff_.size(); }
+
 private:
     uint32_t tableCount_ = 0;
     std::vector<Table*> tables_;            // The tables on the floor
