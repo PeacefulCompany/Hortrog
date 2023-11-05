@@ -34,7 +34,4 @@ void Customer::receiveMeal(Meal* meal) {
     std::cout << "[Customer/receiveMeal] " << name_ << " received meal"
               << std::endl;
     receivedMeal = meal;
-    std::cout << "[Waiting]: Thanks for the food!! nomonomnomonomm..."
-              << std::endl;
-    changeState(new EatingState(this));
 }
