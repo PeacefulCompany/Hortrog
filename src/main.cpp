@@ -1,3 +1,4 @@
+#include "Menu/Menu.h"
 #include "SFML/Graphics.hpp"
 #include "SFML/Graphics/View.hpp"
 #include "SFML/System.hpp"
@@ -155,10 +156,13 @@ void test() {
 
 void testImprovedKitchen(){
     KitchenDemo* kitchen = new KitchenDemo();
+    std::cout << "gets here" << std::endl;
     kitchen->menuHandler();
 }
 
 int main() {
+
+    // Menu* menu = new Menu();
 
     testImprovedKitchen();
     return 0;

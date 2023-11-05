@@ -40,8 +40,11 @@
 
 KitchenDemo::KitchenDemo() {
     kitchen_ = new Kitchen();
+    std::cout << "gets here1" << std::endl;
     menu_->loadFromFile("menu_items.json");
+    std::cout << "gets here1" << std::endl;
     orderBuilder_ = new ConcreteOrderBuilder(menu_);
+    std::cout << "gets here1" << std::endl;
 }
 
 KitchenDemo::~KitchenDemo() {
@@ -119,9 +122,7 @@ void KitchenDemo::displayKitchenSnapshot() {
 }
 
 void KitchenDemo::displayMenu() {
-    Menu* menu = orderBuilder_->getMenu();
-    menu->initMenu();
-    std::cout << menu->toString() << std::endl;
+    std::cout << menu_->toString() << std::endl;
 }
 
 void KitchenDemo::displayModifiers() {

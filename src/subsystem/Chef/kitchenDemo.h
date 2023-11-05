@@ -17,7 +17,7 @@ class KitchenDemo {
 private:
     Kitchen* kitchen_;
     ConcreteOrderBuilder* orderBuilder_;
-    Menu* menu_;
+    Menu* menu_ = new Menu();
     // Menu* menu_;
 
 public:
