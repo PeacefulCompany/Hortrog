@@ -7,13 +7,10 @@
             "binaryDir": "${sourceDir}/build"
         },
         {
-            "name": "windows",
+            "name": "win32-base",
+            "hidden": true,
             "inherits": "base",
             "generator": "Ninja",
-            "cacheVariables": {
-                "CMAKE_C_COMPILER": "cl.exe",
-                "CMAKE_CXX_COMPILER": "cl.exe"
-            },
             "condition": {
                 "type": "equals",
                 "lhs": "${hostSystemName}",
@@ -21,7 +18,26 @@
             }
         },
         {
+            "name": "windows-clang",
+            "displayName": "Windows (Ninja + Clang)",
+            "inherits": "win32-base",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "clang.exe",
+                "CMAKE_CXX_COMPILER": "clang++.exe"
+            }
+        },
+        {
+            "name": "windows-msvc",
+            "displayName": "Windows (Ninja + MSVC)",
+            "inherits": "win32-base",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "cl.exe",
+                "CMAKE_CXX_COMPILER": "cl.exe"
+            }
+        },
+        {
             "name": "other",
+            "displayName": "Default",
             "inherits": "base",
             "condition": {
                 "type": "notEquals",
