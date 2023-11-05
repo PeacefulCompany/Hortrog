@@ -2,6 +2,10 @@
 #include <memory>
 #include <string>
 
+
+
+
+
 void ConcreteOrderBuilder::begin() {
     this->tempOrder = std::vector<std::unique_ptr<Order>>();
 }
@@ -15,6 +19,8 @@ bool ConcreteOrderBuilder::addItem(const std::string& key) {
             this->menu->getItem(key).getPrice()));
     return true;
 }
+
+
 
 bool ConcreteOrderBuilder::addModifier(const std::string& key) {
     // Return false if the vector is empty

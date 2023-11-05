@@ -58,7 +58,7 @@ void NormalChef::prepareMeal(Meal* meal) {
     std::cout << "Normal Chef: is checking a meal" << std::endl;
 
     OrderJSON* orderJSON = new OrderJSON(meal->getOrder()->toJson());
-    std::vector<Item*> items = orderJSON->getItems();
+    std::vector<ItemJSON*> items = orderJSON->getItems();
 
     for (int i = 0; i < items.size(); i++) {
         if (canPrepareItem(items[i]->getName())) {
@@ -96,7 +96,7 @@ void NormalChef::prepareMeal(Meal* meal) {
  * @param item The item to be added to the meal
  * @param meal The meal to add the item to
  */
-void NormalChef::getItemFromPrepared(Item* item, Meal* meal) {
+void NormalChef::getItemFromPrepared(ItemJSON* item, Meal* meal) {
     for (int i = 0; i < preparedItems_.size(); i++) {
         if (preparedItems_[i]->getFood() == item->getName() &&
             preparedItems_[i]->getCustomer() == meal->getCustomer()) {
@@ -113,7 +113,7 @@ void NormalChef::getItemFromPrepared(Item* item, Meal* meal) {
  * @param meal The meal to check
  * @return true if the item has already been prepared, false otherwise
  */
-bool NormalChef::mealItemAlreadyPrepared(Item* item, Meal* meal) {
+bool NormalChef::mealItemAlreadyPrepared(ItemJSON* item, Meal* meal) {
     for (int i = 0; i < preparedItems_.size(); i++) {
         if (preparedItems_[i]->getFood() == item->getName() &&
             preparedItems_[i]->getCustomer() == meal->getCustomer()) {
@@ -130,7 +130,7 @@ bool NormalChef::mealItemAlreadyPrepared(Item* item, Meal* meal) {
  * @param meal The meal to check
  * @return true if the item is already being prepared, false otherwise
  */
-bool NormalChef::mealItemAlreadyBeingPrepared(Item* item, Meal* meal) {
+bool NormalChef::mealItemAlreadyBeingPrepared(ItemJSON* item, Meal* meal) {
     for (int i = 0; i < itemsBeingPrepared_.size(); i++) {
         if (itemsBeingPrepared_[i]->getFood() == item->getName() &&
             itemsBeingPrepared_[i]->getCustomer() == meal->getCustomer()) {

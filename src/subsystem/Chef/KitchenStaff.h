@@ -5,11 +5,12 @@
 #define KITCHENSTAFF_H
 
 // #include "OrderJSON.h"
+#include "../../order/Order.h"
 #include "../Meals/Meal.h"
 #include "../Meals/MealItem.h"
-#include "../OrderTemplate/Order.h"
 #include "../menu/OrderJSON.h"
 #include <iostream>
+
 
 class Kitchen;
 

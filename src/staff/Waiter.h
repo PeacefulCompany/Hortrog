@@ -4,9 +4,11 @@
 #include "customer/CustomerState.h"
 #include "floor/Table.h"
 #include "order/OrderBuilder.h"
-#include <iostream>
+#include "subsystem/Chef/Kitchen.h"
+#include "subsystem/Meals/Meal.h"
 #include <memory>
 #include <vector>
+class Kitchen;
 
 /**
  * @class Waiter
@@ -46,10 +48,11 @@ public:
      */
     void accept(CustomerState& state) override;
     std::vector<Table*> getTables() { return tables_; }
-    std::vector<std::string*> currentmealObjectPointerArray_;
+    std::vector<Meal*> readyMeals;
+    void setKitchen(Kitchen*);
 
 private:
-    // Kitchen* kitchen_; dont think waiter should hold the kitchen
+    Kitchen* kitchen_; // dont think waiter should hold the kitchen
     // PointOfSales* pointOfSales_;
     std::vector<Table*> tables_;
     /**

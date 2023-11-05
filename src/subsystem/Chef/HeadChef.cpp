@@ -21,7 +21,7 @@ void HeadChef::prepareMeal(Meal* meal) {
     lastTime_ = 0;
     std::cout << "Head Chef: is checking a meal" << std::endl;
     OrderJSON* orderJSON = new OrderJSON(meal->getOrder()->toJson());
-    std::vector<Item*> items = orderJSON->getItems();
+    std::vector<ItemJSON*> items = orderJSON->getItems();
 
     if (items.size() == meal->getItems().size()) {
         std::cout << "Head Chef: meal is ready" << std::endl;

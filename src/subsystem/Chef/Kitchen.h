@@ -5,12 +5,12 @@
 #ifndef KITCHEN_H
 #define KITCHEN_H
 
+#include "../../order/Order.h"
+#include "../../staff/Waiter.h"
 #include "../Meals/Meal.h"
-#include "../OrderTemplate/Order.h"
 #include "HeadChef.h"
 #include "KitchenStaff.h"
 #include "NormalChef.h"
-#include "../WaiterTemplate/Waiter.h"
 #include <iostream>
 #include <queue>
 #include <string>
