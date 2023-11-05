@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "nlohmann/json.hpp"
+#include "order/Order.h"
 using json = nlohmann::json;
 
 class NullOrderBuilder : public OrderBuilder {
@@ -14,6 +15,7 @@ public:
 
     void setMenu(const Menu* menu) override {}
     const Menu* getMenu() const override { return nullptr; }
+    OrderComposite* getOrder() override { return nullptr; }
 
     inline const std::vector<json>& getResult() { return orders_; }
 

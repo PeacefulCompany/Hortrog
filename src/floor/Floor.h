@@ -70,6 +70,13 @@
 // Not ready to order
 class Floor {
 public:
+    /**
+     * @brief Gets the tables.
+     *
+     * This function is used to get the tables.
+     *
+     * @return The tables.
+     */
     Table* requestSeating(int n);
     /**
      * @brief Constructs a new Floor object.
@@ -178,6 +185,13 @@ public:
      * @param waiter The waiter to check the kitchen.
      */
     void checkKitchen(Waiter* waiter);
+    /**
+     * @brief Seats the floor.
+     *
+     * This function is used to to go through the floor and
+     *  group random people on the floorCustomer_ vector to tables.
+     */
+    void seatTheFloor();
 
 private:
     std::vector<Table*> tables_;            // The tables on the floor

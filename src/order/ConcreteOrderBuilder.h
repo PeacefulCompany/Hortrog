@@ -17,11 +17,13 @@ public:
     bool addModifier(const std::string& key) override;
     void setMenu(const Menu* menu) override { menu_ = menu; }
     const Menu* getMenu() const override { return menu_; }
+
     OrderComposite* getOrder() { return this->order; };
 
 private:
     uint32_t tblId_;
     const Menu* menu_;
+
     std::vector<std::unique_ptr<Order>> tempOrder;
     OrderComposite* order;
 };
