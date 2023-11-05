@@ -4,9 +4,12 @@
 #include "order/OrderBuilder.h"
 #include "order/OrderComposite.h"
 #include "staff/FloorStaff.h"
+#include "staff/Manager.h"
 #include "staff/Waiter.h"
 #include "subsystem/Chef/Kitchen.h"
+#include <iostream>
 #include <vector>
+
 /**
  * @brief Initialize the static member kitchen_ with nullptr.
  *
@@ -59,6 +62,13 @@ void Waiter::giveFoodToCustomer(Customer& customer) {
             }
         }
     }
+}
+void Waiter::callManager(CustomerState& state) {
+    std::cout << "Manager called" << std::endl;
+    Manager* manager = new Manager();
+    std::cout << "I am the manager!" << std::endl;
+    manager->accept(    state);
+    delete manager;
 }
 void Waiter::accept(CustomerState& state) { state.visit(*this); }
 std::string Waiter::getStaffType() { return "Waiter"; }

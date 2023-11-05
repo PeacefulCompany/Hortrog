@@ -1,6 +1,7 @@
 #pragma once
 
 #include "FloorStaff.h"
+#include "billing/PointOfSales.h"
 #include "customer/Customer.h"
 #include "customer/CustomerState.h"
 #include "floor/Table.h"
@@ -85,6 +86,8 @@ public:
      * @param Customer The customer to give the food to.
      */
     void giveFoodToCustomer(Customer& Customer);
+    void callManager(CustomerState& state);
+    PointOfSales* getPointOfSales() { return pointOfSales_; }
 
 private:
     const Menu* menu_;
@@ -97,8 +100,10 @@ private:
      * @brief A static member kitchen_.
      */
     //  static Kitchen* kitchen_;
-
-    // PointOfSales* pointOfSales_;
+    /**
+     * @brief A pointer to the point of sales.
+     */
+    PointOfSales* pointOfSales_;
 
     /**
      * @brief A vector of tables.
