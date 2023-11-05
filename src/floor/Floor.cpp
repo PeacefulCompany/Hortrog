@@ -18,6 +18,12 @@
 #include <utility>
 #include <vector>
 
+uint32_t Floor::addTable(int capacity) {
+    uint32_t id = tableCount_++;
+    tables_.push_back(new TableComponent(id, capacity));
+    return id;
+}
+
 Table* Floor::requestSeating(int n) {
     // std::cout << "requestSeating" << std::endl;
     // this fucntion should take in a group of names and then check in the floor
@@ -27,8 +33,6 @@ Table* Floor::requestSeating(int n) {
     return nullptr;
 }
 
-Floor::Floor() {}
-Floor::~Floor() {}
 void Floor::createTables(int numTables, int numSeats) {
     for (int i = 0; i < numTables; i++) {
         tables_.push_back(new TableComponent(i, numSeats));

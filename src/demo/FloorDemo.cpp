@@ -47,13 +47,10 @@ void FloorDemo::init() { return; }
 void FloorDemo::cleanup() {}
 
 void FloorDemo::addTable() {
-    std::cout << "--- TABLE ADD ---" << std::endl;
+    int capacity;
+    do {
+        capacity = util::input("Number of seats: ");
+    } while (capacity < 1);
 
-    /*
-    int id = tableCount_++;
-    std::cout << "Creating table with id " << id << std::endl;
-
-    int capacity = util::input("Number of seats: ");
-    tables_.emplace_back(std::make_unique<TableComponent>(id, capacity));
-    */
+    std::cout << "Table ID: " << floor_.addTable(capacity);
 }
