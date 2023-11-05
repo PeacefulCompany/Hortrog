@@ -9,8 +9,9 @@ using json = nlohmann::json;
 
 class NullOrderBuilder : public OrderBuilder {
 public:
-    void begin(uint32_t table) override;
-    bool addItem(const std::string& key, const std::string& customer) override;
+    void begin(uint32_t tblId) override;
+    bool addItem(const std::string& key, const std::string& customerName) override;
+
     bool addModifier(const std::string& key) override;
 
     void setMenu(const Menu* menu) override {}
