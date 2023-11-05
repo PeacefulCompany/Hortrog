@@ -67,7 +67,7 @@ public:
      */
     const MenuItem* getMenuItem(const std::string& key) const {
         auto it = menuItems_.find(key);
-        if (it != menuItems_.end()) return nullptr;
+        if (it == menuItems_.end()) return nullptr;
         return it->second.get();
     }
 

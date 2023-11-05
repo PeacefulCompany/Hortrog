@@ -22,7 +22,7 @@ void OrderingState::visit(Waiter& w) {
     std::vector<std::string> allItems = menu->getAllKeys();
     int randomNumber = std::rand() % allItems.size();
     if (readyTimer_.expired()) {
-        std::string keyName = allItems[randomNumber].getName();
+        std::string keyName = allItems[randomNumber];
         TableOrder->addItem(keyName, customer_->getName());
 
         int randomNumber = std::rand() % 100;

@@ -10,15 +10,16 @@ void ConcreteOrderBuilder::begin(uint32_t tblId) {
 
 bool ConcreteOrderBuilder::addItem(
     const std::string& key, const std::string& customerName) {
-    if (this->menu->getItem(key).getName() == "") {
+    std::cout << "testing addItem1" << std::endl;
+    if (this->menu_->getMenuItem(key) == nullptr) {
         std::cout << "Input for order is empty string, therefore error"
                   << std::endl;
         return false;
     }
+    std::cout << "testing addItem2" << std::endl;
     // this->customerNames_.emplace_back(customerName);
     this->tempOrder.emplace_back(
-        std::make_unique<OrderItem>(this->menu->getItem(key).getName(),
-            this->menu->getItem(key).getPrice()));
+        std::make_unique<OrderItem>(this->menu_->getMenuItem(key)));
     std::cout << "Customer name is 1.0 : " << customerName << std::endl;
     this->tempOrder.back()->setCustomer(customerName);
     std::cout << "Customer name is: " << this->tempOrder.back()->getCustomer()
