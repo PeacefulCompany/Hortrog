@@ -15,7 +15,7 @@ void CashPayment::setCashPaid(float cashPaid) {
 }
 
 void CashPayment::paymentDetails() const {
-    std::cout << "Payment amount: $" << getAmountOfPayment() << std::endl;
+    std::cout << "Bill amount: $" << getAmountOfPayment() << std::endl;
     std::cout << "Payment method: Cash" << std::endl;
-    std::cout << "Cash paid: $" << getCashPaid() << std::endl;
+    std::cout << "Amount paid: $" << getCashPaid() << std::endl;
 }
