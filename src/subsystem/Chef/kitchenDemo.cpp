@@ -151,10 +151,10 @@ void KitchenDemo::displayOrderBuilderMenu() {
         std::cout << "5. Exit" << std::endl;
         std::cin >> choice;
         switch (choice) {
-        case 1: orderBuilder_.; break;
-        case 2: removeOrderBuilderItem(); break;
-        case 3: displayOrderBuilderOrder(); break;
-        case 4: submitOrderBuilderOrder(); break;
+        // case 1: orderBuilder_.; break;
+        // case 2: removeOrderBuilderItem(); break;
+        // case 3: displayOrderBuilderOrder(); break;
+        // case 4: submitOrderBuilderOrder(); break;
         case 5: return;
         default: std::cout << "Invalid input" << std::endl; break;
         }
