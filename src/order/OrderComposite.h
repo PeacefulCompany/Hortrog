@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Order.h"
+#include <string>
 #include <vector>
 
 class OrderComposite : public Order {
@@ -10,6 +11,7 @@ protected:
 
 private:
     std::vector<std::unique_ptr<Order>> orders_;
+	std::string customerName_;
 public:
     void add(std::unique_ptr<Order> order) override;
     std::string toJson() override;
