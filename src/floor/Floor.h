@@ -193,6 +193,8 @@ public:
      */
     void seatTheFloor();
 
+    std::string toString() const;
+
 private:
     std::vector<Table*> tables_;            // The tables on the floor
     std::vector<Customer*> floorCustomers_; // The customers on the floor

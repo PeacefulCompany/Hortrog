@@ -12,7 +12,6 @@
 #include <memory>
 #include <vector>
 
-
 /**
  * @class Waiter
  * @brief This class represents a waiter.
@@ -85,7 +84,9 @@ public:
      *
      * @param meal The meal to give to the customer.
      */
-    void giveMeal(Meal* meal);
+    void giveMeal(std::string customerName, Meal* meal);
+
+    std::string toString() const override;
 
 private:
     const Menu* menu_;

@@ -39,12 +39,14 @@ void Waiter::FetchMeals() {
 void Waiter::Givetokitchen() {
     FloorStaff::getKitchen()->handleOrder(orderBuilder_->getOrder());
 }
-void Waiter::giveMeal(std::sting customerName, Meal* meal) {
+
+void Waiter::giveMeal(std::string customerName, Meal* meal) {
     for (auto& table : tables_) {
         if (table->getCustomerName() == customerName) {
             table->serveMeal(meal);
         }
     }
 }
+std::string Waiter::toString() const { return "Waiter"; }
 void Waiter::accept(CustomerState& state) { state.visit(*this); }
 std::string Waiter::getStaffType() { return "Waiter"; }

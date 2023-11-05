@@ -39,6 +39,9 @@ public:
         }
     }
     static Kitchen* getKitchen() { return kitchen_; }
+
+    virtual std::string toString() const = 0;
+
 private:
     /**
      * @brief all children know about one kitchen

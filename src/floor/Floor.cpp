@@ -14,6 +14,7 @@
 #include "order/OrderComposite.h"
 
 #include <iostream>
+#include <sstream>
 #include <utility>
 #include <vector>
 
@@ -129,4 +130,31 @@ void Floor::checkTable(int tableId, int waiterId) {
 void Floor::seatTheFloor() {
     // i want a distrebution rate of 5:3:2 for customer grouping (5:3:2 is the
     // ratio of 1:2:3)
+}
+
+std::string Floor::toString() const {
+    std::stringstream ss;
+    ss << "Tables:";
+    for (const auto& table : tables_) {
+        std::stringstream ts(table->toString());
+        std::string line;
+        std::getline(ts, line);
+        ss << "\n- " << line;
+        while (!ts.eof()) {
+            std::getline(ts, line);
+            ss << "\n  " << line;
+        }
+    }
+    ss << "\nStaff:";
+    for (const auto& staff : staff_) {
+        std::stringstream ts(staff->toString());
+        std::string line;
+        std::getline(ts, line);
+        ss << "\n- " << line;
+        while (!ts.eof()) {
+            std::getline(ts, line);
+            ss << "\n  " << line;
+        }
+    }
+    return ss.str();
 }

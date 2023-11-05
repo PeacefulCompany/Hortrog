@@ -8,5 +8,7 @@ void Manager::giveRating(int rating) {
     std::cout << "Customer rating: " << rating << std::endl;
     // Handle the rating...
 }
+std::string Manager::toString() const { return "Manager"; }
+
 void Manager::accept(CustomerState& state) { state.visit(*this); }
 std::string Manager::getStaffType() { return "Manager"; }

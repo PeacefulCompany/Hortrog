@@ -43,6 +43,8 @@ public:
      */
     void giveRating(int rating);
 
+    std::string toString() const override;
+
 private:
     std::vector<std::string*> complaintArray_;
 };
