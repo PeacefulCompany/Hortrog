@@ -16,6 +16,7 @@ public:
         const std::string& key, const std::string& customerName) override;
     bool addModifier(const std::string& key) override;
     void setMenu(const Menu* menu) override { menu_ = menu; }
+    const Menu* getMenu() const override { return menu_; }
     OrderComposite* getOrder() { return this->order; };
 
 private:

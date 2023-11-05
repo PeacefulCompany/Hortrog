@@ -17,9 +17,8 @@ void OrderingState::visit(Manager& m) {
     }
 }
 void OrderingState::visit(Waiter& w) {
-    ConcreteOrderBuilder* TableOrder =
-        static_cast<ConcreteOrderBuilder*>(w.getOrderBuilder());
-    Menu* menu = TableOrder->getMenu();
+    OrderBuilder* TableOrder = w.getOrderBuilder();
+    const Menu* menu = TableOrder->getMenu();
     std::vector<std::string> allItems = menu->getAllKeys();
     int randomNumber = std::rand() % allItems.size();
     if (readyTimer_.expired()) {
