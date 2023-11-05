@@ -1,5 +1,4 @@
 #include "PointOfSales.h"
-#include "Payment.h"
 #include "order/Receipt.h"
 #include <iostream>
 
@@ -26,8 +25,20 @@ void PointOfSales::printBill(int tblId) {
             }
         }
     }
-    Payment* payment=new Payment(total);
+    Payment* payment=new Payment(tblId,total);
+    payments.push_back(payment);
     std::cout << "Total: R" << total << std::endl;
     std::cout << "========================================" << std::endl;
+}
+
+bool PointOfSales::isPaymentSettled(int tblId){
+    for (const auto& payment : payments) {
+        if(payment->gettableId()==tblId){
+            if(payment->getAmountOfPayment()>0){
+                return false;
+            }
+        }
+    }
+    return true;
 }
 

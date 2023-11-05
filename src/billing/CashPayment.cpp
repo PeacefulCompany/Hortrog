@@ -3,7 +3,7 @@
 
 CashPayment::CashPayment() : Payment(), cashPaid(0.0) {}
 
-CashPayment::CashPayment(float amount, float cashPaid) : Payment(amount), cashPaid(cashPaid) {}
+CashPayment::CashPayment(int tblId, float amount, float cashPaid) : Payment(tblId, amount), cashPaid(cashPaid) {}
 
 float CashPayment::getCashPaid() const {
     return cashPaid;

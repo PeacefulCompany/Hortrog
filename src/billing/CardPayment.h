@@ -8,7 +8,7 @@ using namespace std;
 class CardPayment : public Payment {
 public:
     CardPayment();
-    CardPayment(float amount, const std::string& nameOnCard, const std::string& expirationDate, const std::string& creditCardNumber);
+    CardPayment(int tblId, float amount, const std::string& nameOnCard, const std::string& expirationDate, const std::string& creditCardNumber);
     const string& getNameOnCard() const;
     const string& getExpirationDate() const;
     const string& getCreditCardNumber() const;
