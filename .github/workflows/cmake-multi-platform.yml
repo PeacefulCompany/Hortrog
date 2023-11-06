@@ -14,9 +14,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: mattnotmitt/doxygen-action@v1.9.5
-        with:
-          doxyfile-path: "docs/Doxyfile.in"
+
+      - name: Install Linux Dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update && sudo apt-get install doxygen
 
       - name: Configure CMake
         # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
