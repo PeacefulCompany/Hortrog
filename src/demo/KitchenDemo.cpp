@@ -207,7 +207,7 @@ void KitchenDemo::init() {
 }
 
 void KitchenDemo::gameLoop() {
-    std::cout << "--- KITCHEN DEMO ---" << std::endl;
+    std::cout << "\n--- KITCHEN DEMO ---" << std::endl;
     if (commands_.execute() == -1) {
         running_ = false;
     }

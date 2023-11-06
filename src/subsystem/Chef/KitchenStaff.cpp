@@ -14,7 +14,6 @@
  */
 KitchenStaff::KitchenStaff(/* args */) {
     this->rating_ = 1;
-    this->capacity_ = 1;
     this->kitchen_ = nullptr;
     nextStaff_ = nullptr;
 }
@@ -73,7 +72,6 @@ void KitchenStaff::updateTime(int delta) {
 std::string KitchenStaff::toString() {
     std::string str = "Kitchen Staff: \n";
     str += "Rating: " + std::to_string(rating_) + "\n";
-    str += "Capacity: " + std::to_string(capacity_) + "\n";
     str += "Speed: " + std::to_string(timer_.duration()) + "\n";
     return str;
 }

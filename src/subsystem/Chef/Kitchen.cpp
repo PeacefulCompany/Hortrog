@@ -59,7 +59,7 @@ void Kitchen::handleOrder(Order* order) {
         return;
     }
     incomingMeals.push_back(meal);
-    // flush();
+    flush();
 }
 
 void Kitchen::AddChef(KitchenStaff* chef) {
@@ -73,8 +73,9 @@ void Kitchen::notifyItemReady() {
 }
 
 void Kitchen::flush() {
-    std::cout << "Kitchen: Flushing unhandled orders through the system"
+    std::cout << "-----------Kitchen flushing unhandled orders-----------"
               << std::endl;
+
     for (int i = 0; i < incomingMeals.size(); i++) {
         // Pop an element from the incomingMeals queue.
         Meal* meal = incomingMeals.front();
@@ -93,8 +94,7 @@ void Kitchen::flush() {
             incomingMeals.push_back(meal);
         }
     }
-
-    std::cout << "Kitchen: completed flushing orders through the system"
+    std::cout << "---------------Kitchen finished flushing---------------"
               << std::endl;
 }
 
@@ -109,7 +109,10 @@ Meal* Kitchen::getOutgoingMeal() {
 
 void Kitchen::updateTime(int time) {
     std::cout << "[Kitchen]:" << time << "s have passed" << std::endl;
-    staff_->updateTime(time);
+    for (int i = 0; i < time; i++) {
+        staff_->updateTime(1);
+    }
+
     // std::cout << toString() << std::endl;
 }
 

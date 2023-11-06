@@ -17,7 +17,7 @@ protected:
     // KitchenStaff* nextStaff;
     std::unique_ptr<KitchenStaff> nextStaff_;
     int rating_;
-    int capacity_;
+    // int capacity_;
     Kitchen* kitchen_;
 
     Timer timer_;
