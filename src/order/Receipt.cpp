@@ -5,3 +5,8 @@ std::vector<std::pair<std::string, double>> Receipt::getOrders() {
 void Receipt::generateOrders(Order* order) {
     orderList_ = order->generateReceiptOrderList();
 }
+void Receipt::appendReceipt(Receipt* receipt) {
+    for (auto pair : receipt->getOrders()) {
+        orderList_.push_back(pair);
+    }
+}
