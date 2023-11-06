@@ -9,4 +9,6 @@ private:
 public:
     std::vector<std::pair<std::string, double>> getOrders();
     void generateOrders(Order* order);
+    void addPair(std::pair<std::string, double> pair){orderList_.push_back(pair);};
+    void appendReceipt(Receipt * receipt);
 };
