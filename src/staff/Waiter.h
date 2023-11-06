@@ -35,7 +35,7 @@ public:
     /**
      * @brief Gets the staff type.
      *
-     * This function is used to get the staff type.
+     * This function is used to get the staff type to identify the staff member.
      *
      * @return The staff type.
      */
@@ -62,7 +62,12 @@ public:
      * @return A vector of meals that are ready.
      */
     std::vector<Meal*> getReadyMeals();
-
+    /**
+     * @brief Fetches the meals.
+     *
+     * This function is used to fetch the meals from the kitchen to the correct
+     * waiter
+     */
     void FetchMeals();
     /**
      * @brief Gets the tables.
@@ -86,7 +91,21 @@ public:
      * @param Customer The customer to give the food to.
      */
     void giveFoodToCustomer(Customer& Customer);
+    /**
+     * @brief Calls the manager.
+     *
+     * This function is used to call the manager.
+     *
+     * @param state The customer state.
+     */
     void callManager(CustomerState& state);
+    /**
+     * @brief Gets the point of sales.
+     *
+     * This function is used to get the point of sales.
+     *
+     * @return A pointer to the point of sales.
+     */
     PointOfSales* getPointOfSales() { return pointOfSales_; }
 
 private:
