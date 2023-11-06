@@ -14,14 +14,11 @@ protected:
     ConcreteOrderBuilder& orderBuilder_;
     Menu& menu_;
     CommandMenu commands_;
-    bool running_ = true;
 
     // Menu* menu_;
 
 public:
     KitchenDemo(Kitchen& kitchen, ConcreteOrderBuilder& builder, Menu& menu);
-
-    inline bool shouldQuit() const override { return !running_; }
 
     void gameLoop() override;
     void init() override;

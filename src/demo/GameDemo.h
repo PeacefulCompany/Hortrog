@@ -11,9 +11,9 @@ class GameDemo : public Application {
 protected:
     KitchenDemo* kitchenDemo_;
     FloorDemo* floorDemo_;
+    Application* current_ = nullptr;
 
     CommandMenu commands_;
-    bool running_ = true;
 
     // --- Game resources ---
 
@@ -23,7 +23,6 @@ protected:
     ConcreteOrderBuilder* orderBuilder_;
 
 public:
-    inline bool shouldQuit() const override { return !running_; }
     virtual void gameLoop() override;
 
     virtual void init() override;

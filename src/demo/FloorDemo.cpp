@@ -29,7 +29,7 @@ void FloorDemo::gameLoop() {
 
     // Chose next action
     if (mainOptions_.execute()) {
-        running_ = false;
+        setRunning(false);
     }
 }
 

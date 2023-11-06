@@ -4,12 +4,24 @@
 #include "subsystem/Chef/Kitchen.h"
 
 void GameDemo::cleanup() {
+    kitchenDemo_->cleanup();
+    floorDemo_->cleanup();
     delete kitchenDemo_;
     delete floorDemo_;
 }
 
 void GameDemo::gameLoop() {
-    if (commands_.execute() == -1) running_ = false;
+    if (!current_) {
+        if (commands_.execute() == -1) {
+            setRunning(false);
+        }
+    } else {
+        current_->gameLoop();
+        if (!current_->isRunning()) {
+            current_->setRunning(true);
+            current_ = nullptr;
+        }
+    }
 }
 
 void GameDemo::init() {
@@ -21,9 +33,9 @@ void GameDemo::init() {
     kitchenDemo_->init();
     floorDemo_->init();
 
-    commands_.addCommand("Kitchen", [this]() { kitchenDemo_->gameLoop(); });
-    commands_.addCommand("Floor", [this]() { floorDemo_->gameLoop(); });
+    commands_.addCommand("Kitchen", [this]() { current_ = kitchenDemo_; });
+    commands_.addCommand("Floor", [this]() { current_ = floorDemo_; });
     commands_.setExitCode(-1);
-    commands_.setPrompt("Enter your choice: ");
+    commands_.setPrompt("Enter your choice (-1 to quit): ");
     commands_.setError("Invalid input");
 }
