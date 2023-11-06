@@ -34,7 +34,6 @@ void OrderingState::visit(Waiter& w) {
         }
         customer_->changeState(new WaitingState(customer_));
     } else {
-        readyTimer_.update(1); // to be removed
         std::cout << "Not ready to order" << std::endl;
     }
 }

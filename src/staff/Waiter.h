@@ -90,6 +90,8 @@ public:
 
     void assignTable(Table* table);
 
+    void visitTables() override;
+
 private:
     const Menu* menu_;
     Kitchen* kitchen_; // dont think waiter should hold the kitchen

@@ -1,10 +1,15 @@
 #include "Waiter.h"
+#include "floor/Table.h"
 #include "order/ConcreteOrderBuilder.h"
 #include "order/OrderBuilder.h"
 #include "order/OrderComposite.h"
 #include "staff/FloorStaff.h"
 #include "staff/Waiter.h"
 #include "subsystem/Chef/Kitchen.h"
+
+#include "floor/CustomerIterator.h"
+#include <sstream>
+
 /**
  * @brief Initialize the static member kitchen_ with nullptr.
  *
@@ -47,7 +52,28 @@ void Waiter::giveMeal(std::string customerName, Meal* meal) {
         }
     }
 }
-std::string Waiter::toString() const { return "Waiter"; }
+std::string Waiter::toString() const {
+    std::stringstream ss;
+    ss << "Waiter (";
+    for (int i = 0; i < tables_.size(); i++) {
+        if (i != 0) ss << ", ";
+        ss << tables_[i]->id();
+    }
+    if (tables_.size() == 0) {
+        ss << "no tables";
+    }
+    ss << ")";
+    return ss.str();
+}
 void Waiter::assignTable(Table* table) { tables_.push_back(table); }
+void Waiter::visitTables() {
+    for (Table* table : tables_) {
+        CustomerIterator* it = table->createIterator();
+        while (!it->isDone()) {
+            it->get()->interact(*this);
+            it->next();
+        }
+    }
+}
 void Waiter::accept(CustomerState& state) { state.visit(*this); }
 std::string Waiter::getStaffType() { return "Waiter"; }
