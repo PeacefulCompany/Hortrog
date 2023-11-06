@@ -1,9 +1,9 @@
 #include "PayingState.h"
 #include "customer/Customer.h"
 #include "order/Receipt.h"
-
 #include <cstdlib>
 #include <iostream>
+#include <random>
 #include <vector>
 
 void PayingState::visit(Manager& m) {
@@ -26,9 +26,10 @@ void PayingState::visit(Waiter& w) {
     // w.getPointOfSales()->isPaymentSettled(int tblId);
     // w.getPointOfSales()->payBill(int tblId);
     // w.tip(Exta Payment);
+
     std::cout << "Test" << std::endl;
     std::vector<Receipt> receipt =
-        w.synthesizeBill((int)(rand() % 3), customer_->getTableId());
+        w.synthesizeBill(Customer::paymentSelection, customer_->getTableId());
     for (auto& r : receipt) {
         std::cout << r.toString() << std::endl;
     }

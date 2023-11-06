@@ -1,9 +1,9 @@
 #pragma once
 
 class OrderBuilder;
-
 #include "CustomerState.h"
 #include "subsystem/Meals/Meal.h"
+#include <random>
 
 #include <memory>
 #include <string>
@@ -70,9 +70,9 @@ public:
     void receiveMeal(Meal* meal);
 
     std::string toString() const;
-
     void setTableID(uint32_t id) { tableID = id; }
     uint32_t getTableId() { return tableID; }
+    static int paymentSelection;
 
 private:
     /**
@@ -92,4 +92,20 @@ private:
      */
     Meal* receivedMeal;
     uint32_t tableID;
+
+protected:
+    inline static void initializePaymentSelection() {
+        static bool initialized = false;
+        if (!initialized) {
+            std::random_device
+                rd; // Create a random device to seed the generator.
+            std::mt19937 gen(rd()); // Create a Mersenne Twister pseudo-random
+                                    // number generator.
+
+            std::uniform_int_distribution<int> dist(
+                0, 2); // Create a uniform distribution between 0 and 2.
+            paymentSelection = dist(gen);
+            initialized = true;
+        }
+    }
 };
