@@ -1,15 +1,19 @@
 #include "billing/Payment.h"
+#include "billing/CashPayment.h"
+#include "billing/CardPayment.h"
 #include <gtest/gtest.h>
 
 
 TEST(Payment, getAmt) {
-    Payment payment(1,85.0);
-    ASSERT_EQ(payment.getAmountOfPayment(), 85.0);
+    Payment* payment=new Payment(1,85.0);
+    ASSERT_EQ(payment->getAmountOfPayment(), 85.0);
+    delete payment;
 }
 
 TEST(Payment, getTbl) {
-    Payment payment(1,85.0);
-    ASSERT_EQ(payment.gettableId(), 1);
+    Payment* payment=new Payment(1,85.0);
+    ASSERT_EQ(payment->gettableId(), 1);
+    delete payment;
 }
 
 TEST(Payment, copyConstructor) {
@@ -21,28 +25,46 @@ TEST(Payment, copyConstructor) {
     delete payment;
 }
 
-/*TEST(Payment, ADD) {
-    MenuItem item("bonger", 2, "", {});
-    auto orderComp = std::unique_ptr<Order>(new OrderComposite());
-    auto orderItem = std::unique_ptr<Order>(new OrderItem(&item));
-    auto orderComp2 = std::unique_ptr<Order>(new OrderComposite());
-    orderComp->add(std::move(orderItem));
-    orderComp->add(std::move(orderComp2));
-    SUCCEED();
+TEST(Payment, getCashPaid) {
+    Payment* payment=new Payment(1,85.0);
+    CashPayment* cPayment=new CashPayment(payment,50.0);
+    ASSERT_EQ(cPayment->getCashPaid(), 50.0);
+    delete cPayment;
+    delete payment;
 }
-TEST(Payment, TOTAL) {
-    MenuItem item("bonger", 2, "", {});
-    MenuItem item2("sausgae", 4.12, "", {});
 
-    auto orderComp = std::unique_ptr<Order>(new OrderComposite());
-    auto orderItem = std::unique_ptr<Order>(new OrderItem(&item));
-    auto orderComp2 = std::unique_ptr<Order>(new OrderComposite());
-    auto orderItem2 = std::unique_ptr<Order>(new OrderItem(&item2));
-    orderComp2->add(std::move(orderItem2));
-    orderComp->add(std::move(orderComp2));
-    orderComp->add(std::move(orderItem));
-    ASSERT_EQ(orderComp->total(), 6.12);
-}*/
+TEST(Payment, getCardPaid) {
+    Payment* payment=new Payment(1,85.0);
+    CardPayment* cPayment=new CardPayment(payment,50.0,"KGovender","04/08/03","1234");
+    ASSERT_EQ(cPayment->getCardPaid(), 50.0);
+    delete cPayment;
+    delete payment;
+}
+
+TEST(Payment, getNameOnCard) {
+    Payment* payment=new Payment(1,85.0);
+    CardPayment* cPayment=new CardPayment(payment,50.0,"KGovender","04/08/03","1234");
+    ASSERT_EQ(cPayment->getNameOnCard(), "KGovender");
+    delete cPayment;
+    delete payment;
+}
+
+TEST(Payment, getExpirationDate) {
+    Payment* payment=new Payment(1,85.0);
+    CardPayment* cPayment=new CardPayment(payment,50.0,"KGovender","04/08/03","1234");
+    ASSERT_EQ(cPayment->getExpirationDate(), "04/08/03");
+    delete cPayment;
+    delete payment;
+}
+
+TEST(Payment, getCreditCardNumber) {
+    Payment* payment=new Payment(1,85.0);
+    CardPayment* cPayment=new CardPayment(payment,50.0,"KGovender","04/08/03","1234");
+    ASSERT_EQ(cPayment->getCreditCardNumber(), "1234");
+    delete cPayment;
+    delete payment;
+}
+
 
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
