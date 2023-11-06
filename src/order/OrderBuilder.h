@@ -20,4 +20,5 @@ public:
 
     virtual OrderComposite* getOrder() = 0;
 
+    virtual std::string toString() const = 0;
 };

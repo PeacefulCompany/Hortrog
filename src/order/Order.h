@@ -1,4 +1,4 @@
-//ORDERH
+// ORDERH
 #pragma once
 
 #include "menu/Menu.h"
@@ -11,6 +11,7 @@
 class Order {
 protected:
     std::string customer_;
+
 private:
     uint32_t tblId_;
 
@@ -27,9 +28,12 @@ public:
         customer_ = std::move(customer);
     };
     virtual bool checkForCustomer(std::string customerName) = 0;
-    virtual bool checkForDupe(std::string customerName, std::vector<const MenuItem*> menuItems) = 0;
-    virtual std::vector<const MenuItem *> getAllMenuItems()=0;
+    virtual bool checkForDupe(
+        std::string customerName, std::vector<const MenuItem*> menuItems) = 0;
+    virtual std::vector<const MenuItem*> getAllMenuItems() = 0;
     inline std::string getCustomer() { return customer_; };
 
     virtual ~Order() = default;
+
+    virtual std::string toString() const = 0;
 };

@@ -1,5 +1,6 @@
-//MODPP
+// MODPP
 #include "Modifier.h"
+#include <sstream>
 
 double Modifier::total() {
     double ret = 0;
@@ -38,4 +39,10 @@ bool Modifier::checkForCustomer(std::string customerName) {
 }
 std::vector<const MenuItem*> Modifier::getAllMenuItems() {
     return component_->getAllMenuItems();
+}
+
+std::string Modifier::toString() const {
+    std::stringstream ss;
+    ss << key_ << " (" << component_->toString() << ")";
+    return ss.str();
 }

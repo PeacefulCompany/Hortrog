@@ -74,7 +74,7 @@ void KitchenDemo::displayOrderBuilderMenu() {
 
     orderMenu.addCommand("Add item", [this]() { addOrderBuilderItem(); });
     orderMenu.addCommand("Show order",
-        [this]() { std::cout << orderBuilder_->getResult() << std::endl; });
+        [this]() { std::cout << orderBuilder_->toString() << std::endl; });
     orderMenu.addCommand("Submit Order",
         [this]() { kitchen_->handleOrder(orderBuilder_->getOrder()); });
 

@@ -1,4 +1,4 @@
-//ORDERCOMPH
+// ORDERCOMPH
 #pragma once
 
 #include "Order.h"
@@ -19,6 +19,9 @@ public:
     double total() override;
     std::string getId() override { return ""; };
     bool checkForCustomer(std::string customerName) override;
-    bool checkForDupe(std::string customerName, std::vector<const MenuItem*> menuItems) override;
-    std::vector<const MenuItem *> getAllMenuItems() override;
+    bool checkForDupe(std::string customerName,
+        std::vector<const MenuItem*> menuItems) override;
+    std::vector<const MenuItem*> getAllMenuItems() override;
+
+    std::string toString() const override;
 };
