@@ -4,6 +4,13 @@
 #include "order/Receipt.h"
 #include <iostream>
 
+PointOfSales::PointOfSales(){
+    orders.clear();
+    payments.clear();
+}
+
+
+
 void PointOfSales::readyMeals(std::vector<Meal*> mealsWithOrdersIn){
     for (const auto& meal : mealsWithOrdersIn) {
          orders.push_back(meal->getOrder());
