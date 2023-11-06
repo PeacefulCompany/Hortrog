@@ -21,6 +21,7 @@ private:
     void addTable();
     void addCustomers();
     void addStaff();
+    void visitCustomers();
     void update();
 
     CommandMenu mainOptions_;

@@ -19,3 +19,5 @@ void WaitingState::visit(Waiter& w) {
         std::cout << "[Waiting]: Where's the food at???" << std::endl;
     }
 }
+
+std::string WaitingState::toString() const { return "[Waiting]"; }

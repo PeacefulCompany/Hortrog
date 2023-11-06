@@ -6,6 +6,7 @@
 #include "order/OrderBuilder.h"
 #include "staff/FloorStaff.h"
 #include <iostream>
+#include <sstream>
 
 Customer::Customer(const std::string& name, float happiness)
     : state_(new OrderingState(this)), name_(name), happiness_(happiness) {}
@@ -27,3 +28,14 @@ void Customer::update(float dt) {
 }
 
 void Customer::changeState(CustomerState* state) { state_.reset(state); }
+
+std::string Customer::toString() const {
+    std::stringstream ss;
+    ss << name_ << " (" << happiness_ << ") ";
+    if (state_) {
+        ss << state_->toString();
+    } else {
+        ss << "No state";
+    }
+    return ss.str();
+}

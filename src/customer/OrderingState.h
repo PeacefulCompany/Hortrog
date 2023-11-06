@@ -11,6 +11,8 @@ public:
 
     void update(float dt) override;
 
+    std::string toString() const override;
+
 private:
     Timer readyTimer_ = Timer(1);
 };

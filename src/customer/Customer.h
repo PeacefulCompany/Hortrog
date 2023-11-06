@@ -19,6 +19,8 @@ public:
     void changeState(CustomerState* state);
     inline const std::string& getName() const { return name_; }
 
+    std::string toString() const;
+
 private:
     std::unique_ptr<CustomerState> state_;
     std::string name_;

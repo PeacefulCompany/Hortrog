@@ -12,3 +12,5 @@ void PayingState::visit(Waiter& w) {
     std::cout << "[Paying]: Give payment to waiter" << std::endl;
     customer_->changeState(nullptr);
 }
+
+std::string PayingState::toString() const { return "[Paying]"; }

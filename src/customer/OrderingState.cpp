@@ -7,7 +7,9 @@
 #include "order/OrderComposite.h"
 #include <cstdlib>
 #include <ctime>
+#include <iomanip>
 #include <iostream>
+#include <string>
 
 void OrderingState::visit(Manager& m) {
     if (readyTimer_.expired()) {
@@ -37,3 +39,14 @@ void OrderingState::visit(Waiter& w) {
     }
 }
 void OrderingState::update(float dt) { readyTimer_.update(dt); }
+
+std::string OrderingState::toString() const {
+    std::stringstream ss;
+    ss << "[Ordering] ";
+    if (readyTimer_.expired()) {
+        ss << "Ready to order";
+    } else {
+        ss << std::setprecision(5) << readyTimer_.remaining();
+    }
+    return ss.str();
+}
