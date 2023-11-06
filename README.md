@@ -10,7 +10,6 @@
 - [Description](#description)
 - [Documentation](#documentation)
 - [Setup](#setup)
-- [Tests](#tests)
 - [Team](#team)
 
 # Description
@@ -50,7 +49,6 @@ shift+f5
     <tr>
       <td align="center">
 	  	Caelan Hill <br> u04643187 <br>
-		<img src="https://drive.google.com/file/d/1yEY0DJFzK2rkQAewMyytnKz1v5iGBk-l/view?usp=drive_link" alt="Logo" width="200" height="200">
 	  </td>
 	  <td>
 	  	Order the Beef Tacos
@@ -59,7 +57,6 @@ shift+f5
     <tr>
       <td align="center">
 	  	Vincent Feistel <br> u22563777 <br>
-        <img src="https://pbs.twimg.com/media/FPrkatnVkAUibUj.jpg" alt="Logo" width="200" height="200">
 	  </td>
 	  <td>
 	  	My sweat and tears went into preparing your meal
@@ -68,7 +65,6 @@ shift+f5
     <tr>
       <td align="center">
 	  	Kivashin Naidoo <br> u22551167 <br>
-        <img src="https://pbs.twimg.com/media/FPrkatnVkAUibUj.jpg" alt="Logo" width="200" height="200">
 	  </td>
 	  <td>
 		 I need sleep
@@ -77,7 +73,6 @@ shift+f5
     <tr>
       <td align="center">
 	  	Michael Horwitz <br> u22512323 <br>
-        <img src="https://pbs.twimg.com/media/FPrkatnVkAUibUj.jpg" alt="Logo" width="200" height="200">
 	  </td>
 	  <td>
 	  	Make Prof G a chef
@@ -86,7 +81,6 @@ shift+f5
     <tr>
       <td align="center">
 	  	Kezlyn Govender <br> u22567993 <br>
-        <img src="https://pbs.twimg.com/media/FPrkatnVkAUibUj.jpg" alt="Logo" width="200" height="200">
 	  </td>
 	  <td>
 	  	Raccoons are the best
@@ -95,7 +89,6 @@ shift+f5
     <tr>
       <td align="center">
 	  	Sebastian Guimaraens <br> u22494767 <br>
-        <img src="https://pbs.twimg.com/media/FPrkatnVkAUibUj.jpg" alt="Logo" width="200" height="200">
 	  </td>
 	  <td>
 	  	Vegan is the way to go
@@ -104,7 +97,6 @@ shift+f5
     <tr>
       <td align="center">
 	  	Rueben van der Westhuizen <br> u21434809 <br>
-        <img src="https://pbs.twimg.com/media/FPrkatnVkAUibUj.jpg" alt="Logo" width="200" height="200">
 	  </td>
 	  <td>
 	  	Bonus marks for good vibes?
