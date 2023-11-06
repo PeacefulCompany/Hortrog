@@ -1,24 +1,3 @@
-// #include "Customer/Customer.h"
-// #include "Customer/KarenState.h"
-// #include "Customer/OrderingState.h"
-// #include "staff/Waiter.h"
-// #include "subsystem\Meals\Meal.h"
-// #include "gtest/gtest.h"
-// class WaiterTest : public ::testing::Test {
-// protected:
-//     void SetUp() override {
-//         menu = new Menu();
-//         waiter = new Waiter(menu);
-//     }
-
-//     void TearDown() override {
-//         delete waiter;
-//         delete menu;
-//     }
-//     Menu* menu;
-//     Waiter* waiter;
-// };
-/*
 #include "Menu/Menu.h"
 #include "customer/Customer.h"
 #include "customer/CustomerState.h"
@@ -29,6 +8,7 @@
 #include "staff/Manager.h"
 #include "staff/Waiter.h"
 #include "gtest/gtest.h"
+#include <cmath>
 #include <cstddef>
 #include <sstream>
 
@@ -36,14 +16,15 @@ class StaffTest : public ::testing::Test {
 protected:
     void SetUp() override {
         menu = new Menu();
-        waiter = new Waiter(new Menu());
-        manager = new Manager();
+        floor = new Floor();
         customer = new Customer("John Doe", 100);
+        waiter = new Waiter(menu, floor);
+        manager = new Manager(floor);
     }
     Menu* menu;
+    Floor* floor;
     Waiter* waiter;
     Manager* manager;
-    CustomerState* customerState;
     Customer* customer;
 };
 // WAITER
@@ -57,6 +38,7 @@ TEST_F(StaffTest, Waiter_GetTablesReturnsEmptyVector) {
     EXPECT_EQ(waiter->getStaffType(), "Waiter");
     EXPECT_TRUE(waiter->getTables().empty());
 }
+
 // MANAGER
 // TESTS=================================================================
 // Tests for Manager
@@ -72,6 +54,7 @@ TEST_F(StaffTest, CustomerState_VisitManager) {
     EXPECT_EQ(manager->getStaffType(), "Manager");
     EXPECT_EQ(customer->getState(), true);
     customer->interact(*manager);
+    EXPECT_EQ(customer->getHappiness(), 105);
 }
 // Tests for Customer
 //=======================================================================
@@ -162,4 +145,3 @@ TEST_F(StaffTest, GiveRatingDoesNotThrow) {
     EXPECT_NO_THROW(manager->giveRating(5));
 }
 // end!
-*/
