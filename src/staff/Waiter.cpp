@@ -43,15 +43,16 @@ void Waiter::serveMeals() {
     }
 }
 void Waiter::checkKitchen() {
-    if (getReadyMeals().size() > 0) {   
+    if (getReadyMeals().size() > 0) {
         serveMeals();
         readyMeals.clear();
     } else {
-        FetchMeals();
+        fetchMeals();
     }
 }
+
 std::vector<Meal*> Waiter::getReadyMeals() { return this->readyMeals; }
-void Waiter::FetchMeals() {
+void Waiter::fetchMeals() {
     Meal* currentMeal;
     int x = 0;
     do {
@@ -67,7 +68,7 @@ void Waiter::FetchMeals() {
         }
     }
 }
-void Waiter::Givetokitchen() {
+void Waiter::giveTokitchen() {
     FloorStaff::getKitchen()->handleOrder(orderBuilder_->getOrder());
 }
 Meal* Waiter::getMeal(Customer& customer) {

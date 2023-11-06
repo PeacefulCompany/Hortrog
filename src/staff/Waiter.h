@@ -71,7 +71,7 @@ public:
      * waiter
      * This function is used to fetch the meals from the kitchen.
      */
-    void FetchMeals();
+    void fetchMeals();
     /**
      * @brief Gets the tables.
      *
@@ -85,7 +85,7 @@ public:
      *
      * This function is used to give the order to the kitchen.
      */
-    void Givetokitchen();
+    void giveTokitchen();
     /**
      * @brief Gives the food to the customer.
      *

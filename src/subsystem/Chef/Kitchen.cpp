@@ -55,7 +55,6 @@ void Kitchen::handleOrder(Order* order) {
         std::cout << "Kitchen: recieved empty order" << std::endl;
         return;
     }
-
     incomingMeals.push(meal);
     // flush();
 }
