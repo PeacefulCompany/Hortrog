@@ -34,4 +34,11 @@ std::string options(const std::vector<std::string>& opts);
  * @return int
  */
 int input(const std::string& prompt);
+
+/**
+ * @brief Displays an error and waits for user input
+ *
+ * @param error The error message to display
+ */
+void error(const std::string& error);
 } // namespace util

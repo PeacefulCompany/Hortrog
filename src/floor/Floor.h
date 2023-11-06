@@ -70,6 +70,11 @@
 // Not ready to order
 class Floor {
 public:
+    Floor() = default;
+    ~Floor() = default;
+
+    uint32_t addTable(int capacity);
+
     /**
      * @brief Gets the tables.
      *
@@ -78,18 +83,7 @@ public:
      * @return The tables.
      */
     Table* requestSeating(int n);
-    /**
-     * @brief Constructs a new Floor object.
-     *
-     * This constructor creates a new Floor object.
-     */
-    Floor();
-    /**
-     * @brief Destroys the Floor object.
-     *
-     * This destructor destroys the Floor object.
-     */
-    ~Floor();
+
     /**
      * @brief Adds multiple customers to the floor.
      *
@@ -193,7 +187,19 @@ public:
      */
     void seatTheFloor();
 
+    std::string toString() const;
+
+    Waiter* getWaiter(int waiterId) const;
+    FloorStaff* getFloorStaff(int waiterId) const;
+
+    void update(float dt);
+
+    inline size_t getFloorStaffSize() const { return staff_.size(); }
+
+    inline const std::vector<Table*>& getTables() const { return tables_; }
+
 private:
+    uint32_t tableCount_ = 0;
     std::vector<Table*> tables_;            // The tables on the floor
     std::vector<Customer*> floorCustomers_; // The customers on the floor
     std::vector<FloorStaff*> staff_;        // The staff on the floor

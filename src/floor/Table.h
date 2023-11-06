@@ -77,5 +77,7 @@ public:
     virtual std::string toString() const = 0;
     virtual ~Table() = default;
 
+    virtual void update(float dt) = 0;
+
 private:
 };

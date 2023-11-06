@@ -3,6 +3,7 @@
 #include "customer/OrderingState.h"
 #include "customer/PayingState.h"
 #include <iostream>
+#include <sstream>
 #include <stdlib.h>
 
 void EatingState::visit(Manager& m) {
@@ -68,4 +69,10 @@ void EatingState::update(float dt) {
         std::cout << "Still eating: "
                   << (eatTime_.duration() - eatTime_.current()) << std::endl;
     }
+}
+
+std::string EatingState::toString() const {
+    std::stringstream ss;
+    ss << "[Eating] " << eatTime_.remaining();
+    return ss.str();
 }

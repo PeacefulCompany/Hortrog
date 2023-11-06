@@ -22,6 +22,8 @@ public:
 
     std::string toString() const override;
 
+    void update(float dt) override;
+
 private:
     friend class CustomerIterator;
     int id_;

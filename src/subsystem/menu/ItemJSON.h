@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef ITEM_H
-#define ITEM_H
-
 #include <string>
 
 class ItemJSON {
@@ -14,7 +11,11 @@ private:
     std::string customer_;
 
 public:
-    ItemJSON(std::string, double cost, std::string diet, std::string mod, std::string customer);
+    ItemJSON(std::string,
+        double cost,
+        std::string diet,
+        std::string mod,
+        std::string customer);
     ~ItemJSON();
 
     std::string getName();
@@ -26,3 +27,4 @@ public:
 };
 
 #endif // ITEM_H
+

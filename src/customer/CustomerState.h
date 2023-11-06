@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 class Manager;
 class Waiter;
 class Customer;
@@ -12,6 +14,8 @@ public:
     virtual void visit(Waiter&) = 0;
 
     virtual void update(float dt) {}
+
+    virtual std::string toString() const = 0;
 
 protected:
     CustomerState(Customer* c) : customer_(c) {}

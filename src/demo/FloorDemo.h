@@ -1,8 +1,11 @@
 #pragma once
 
 #include "core/Application.h"
+#include "core/CommandMenu.h"
+#include "floor/Floor.h"
 #include "floor/Table.h"
 
+#include <functional>
 #include <memory>
 #include <vector>
 
@@ -16,15 +19,14 @@ protected:
 
 private:
     void addTable();
-    void splitTable();
-    void mergeTable();
-    void addCustomer();
-    void removeCustomer();
+    void addCustomers();
+    void addStaff();
+    void visitCustomers();
+    void update();
 
-    std::vector<std::unique_ptr<Table>>::iterator findTable(int id);
-    static void error(const std::string& message);
+    CommandMenu mainOptions_;
 
-    std::vector<std::unique_ptr<Table>> tables_;
+    Floor floor_;
+    Menu menu_;
     bool running_ = true;
-    int tableCount_ = 0;
 };

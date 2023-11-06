@@ -1,5 +1,5 @@
-#include "../src/order/OrderComposite.h"
-#include "../src/order/OrderItem.h"
+#include "order/OrderComposite.h"
+#include "order/OrderItem.h"
 #include <gtest/gtest.h>
 
 TEST(OrderItem, TO_JSON) {

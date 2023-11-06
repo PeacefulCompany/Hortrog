@@ -1,13 +1,9 @@
 #pragma once
 
-#include "Menu/Menu.h"
-#ifndef KITCHEN_DEMO_H
-#define KITCHEN_DEMO_H
-
-#include "../../order/ConcreteOrderBuilder.h"
-#include "../../order/Order.h"
+#include "menu/Menu.h"
 
 #include "../../Menu/Menu.h"
+
 #include "order/ConcreteOrderBuilder.h"
 #include "subsystem/Chef/Kitchen.h"
 
@@ -44,6 +40,7 @@ public:
      * @return ConcreteOrderBuilder*
      */
     ConcreteOrderBuilder* getOrderBuilder();
+
 
     /**
      * @brief Set the Order Builder object
@@ -119,8 +116,8 @@ public:
      */
     void displayOrderBuilderMenu();
 
-
     void displayAddChef();
 };
 
 #endif // KITCHEN_DEMO_H
+
