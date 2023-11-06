@@ -10,3 +10,12 @@ void Receipt::appendReceipt(Receipt* receipt) {
         orderList_.push_back(pair);
     }
 }
+std::string Receipt::toString() {
+    std::string returnString = "";
+    for (auto pair : orderList_) {
+        returnString += pair.first + " : ";
+        returnString += pair.second;
+        returnString += "\n";
+    }
+    return returnString;
+}
