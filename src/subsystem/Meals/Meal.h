@@ -1,5 +1,4 @@
 #pragma once
-#include "SFML/Config.hpp"
 #include <stdint.h>
 #include <string>
 #ifndef SUBSYSTEM_MEAL_H

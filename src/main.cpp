@@ -1,15 +1,8 @@
 #include "Menu/Menu.h"
-#include "SFML/Graphics.hpp"
-#include "SFML/Graphics/View.hpp"
-#include "SFML/System.hpp"
-#include "SFML/Window.hpp"
-#include "SFML/Window/WindowStyle.hpp"
 
 #include "core/TerminalApp.h"
 #include "customer/Customer.h"
 #include "demo/FloorDemo.h"
-#include "event/ActionMap.h"
-#include "event/ActionTarget.h"
 #include "floor/CustomerIterator.h"
 #include "floor/Table.h"
 #include "floor/TableComponent.h"
@@ -20,9 +13,6 @@
 #include "resource/ResourceManager.h"
 #include "staff/FloorStaff.h"
 #include "staff/Waiter.h"
-#include "views/FloorView.h"
-#include "views/TablePresenter.h"
-#include "views/TableView.h"
 
 #include "core/Timer.h"
 #include "subsystem/Meals/Meal.h"
@@ -38,43 +28,6 @@
 #include "subsystem/Chef/Kitchen.h"
 
 using json = nlohmann::json;
-
-enum class PlayerInput { Up, Left, Right, Down, Click };
-
-class Player {
-public:
-    Player(ActionTarget<PlayerInput>& actions) : actionTarget_(actions) {
-        shape_ = sf::RectangleShape({40, 40});
-        shape_.setFillColor(sf::Color::Blue);
-        shape_.setOrigin(16, 16);
-
-        actionTarget_.bind(
-            PlayerInput::Up, [this](const sf::Event&) { movement_.y -= 1; });
-        actionTarget_.bind(
-            PlayerInput::Left, [this](const sf::Event&) { movement_.x -= 1; });
-        actionTarget_.bind(
-            PlayerInput::Right, [this](const sf::Event&) { movement_.x += 1; });
-        actionTarget_.bind(
-            PlayerInput::Down, [this](const sf::Event&) { movement_.y += 1; });
-        actionTarget_.bind(PlayerInput::Click, [this](const sf::Event& e) {
-            sf::Vector2f pos = {float(e.mouseButton.x), float(e.mouseButton.y)};
-            if (!shape_.getGlobalBounds().contains(pos)) return;
-
-            shape_.setFillColor(sf::Color::Red);
-        });
-    }
-
-    void update(float dt) {
-        shape_.move(movement_ * 200.f * dt);
-        movement_ = sf::Vector2f();
-    }
-    void draw(sf::RenderTarget& target) { target.draw(shape_); }
-
-private:
-    ActionTarget<PlayerInput>& actionTarget_;
-    sf::RectangleShape shape_;
-    sf::Vector2f movement_;
-};
 
 void readAssetFile(const std::string& path) {
     std::ifstream file("assets/" + path);
