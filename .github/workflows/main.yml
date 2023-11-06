@@ -21,8 +21,8 @@ jobs:
 
       - name: Configure CMake
         run: >
-          cmake --preset other --target COS214_FinalProject
+          cmake --preset other
           -S ${{ github.workspace }}
 
       - name: Build using CMake
-        run: cmake --build ${{ github.workspace }}/build
+        run: cmake --build ${{ github.workspace }}/build --target COS214_FinalProject
