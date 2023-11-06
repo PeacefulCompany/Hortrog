@@ -1,7 +1,7 @@
 #include "OrderingState.h"
 #include "customer/WaitingState.h"
 #include "floor/Table.h"
-#include "menu/Menu.h"
+#include "Menu/Menu.h"
 #include "order/ConcreteOrderBuilder.h"
 #include "order/OrderBuilder.h"
 #include "order/OrderComposite.h"

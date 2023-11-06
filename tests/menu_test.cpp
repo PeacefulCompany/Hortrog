@@ -1,4 +1,4 @@
-#include "menu/Menu.h"
+#include "Menu/Menu.h"
 #include <gtest/gtest.h>
 
 TEST(MenuTests, TestGetItem_Lemonade) {
