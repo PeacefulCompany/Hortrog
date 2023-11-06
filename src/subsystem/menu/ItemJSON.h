@@ -25,6 +25,3 @@ public:
     std::string getCustomer();
     std::string toString();
 };
-
-#endif // ITEM_H
-

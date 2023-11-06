@@ -2,8 +2,6 @@
 
 #include "menu/Menu.h"
 
-#include "../../Menu/Menu.h"
-
 #include "order/ConcreteOrderBuilder.h"
 #include "subsystem/Chef/Kitchen.h"
 
@@ -41,7 +39,6 @@ public:
      */
     ConcreteOrderBuilder* getOrderBuilder();
 
-
     /**
      * @brief Set the Order Builder object
      *
@@ -69,7 +66,7 @@ public:
     void addOrderBuilderItem();
 
     /**
-     * @brief Add a modifier to the order 
+     * @brief Add a modifier to the order
      *
      */
     void addOrderBuilderModifier();
@@ -118,6 +115,3 @@ public:
 
     void displayAddChef();
 };
-
-#endif // KITCHEN_DEMO_H
-
