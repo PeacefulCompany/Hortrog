@@ -56,11 +56,13 @@ void OrderingState::visit(Waiter& w) {
                     this->customer_->getHappiness() + 5);
                 customer_->changeState(new WaitingState(customer_));
             }
+            w.giveTokitchen();
         } else {
             std::cout << customer_->toString() << ": I ordered " << item
                       << std::endl;
             this->customer_->setHappiness(this->customer_->getHappiness() + 5);
             customer_->changeState(new WaitingState(customer_));
+            w.giveTokitchen();
         }
     } else {
         std::cout << customer_->toString() << ": Not ready to order"
