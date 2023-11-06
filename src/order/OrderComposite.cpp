@@ -2,8 +2,10 @@
 #include <iostream>
 
 void OrderComposite::add(std::unique_ptr<Order> order) {
+    std::string newCustomer = order->getCustomer();
     orders_.push_back(std::move(order));
 }
+
 
 std::string OrderComposite::toJson() {
     std::cout << "Function call happening" << std::endl;
@@ -37,4 +39,13 @@ OrderComposite::generateReceiptOrderList() {
         }
     }
     return returnVec;
+}
+bool OrderComposite::checkForCustomer(std::string customerName) {
+    for (auto& order : orders_) {
+        Order* orderPtr = order.get();
+        if (orderPtr->checkForCustomer(customerName)){
+            return true;
+        }
+    }
+    return false;
 }

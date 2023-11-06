@@ -19,3 +19,6 @@ OrderItem::generateReceiptOrderList() {
     returnVec.emplace_back(item_->getName(), item_->getPrice());
     return returnVec;
 }
+bool OrderItem::checkForCustomer(std::string customerName) {
+    return customerName == customer_;
+}

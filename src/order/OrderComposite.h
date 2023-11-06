@@ -17,4 +17,5 @@ public:
     std::string toJson() override;
     double total() override;
     std::string getId() override { return ""; };
+    bool checkForCustomer(std::string customerName) override;
 };
