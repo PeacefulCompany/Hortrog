@@ -1,11 +1,13 @@
 #pragma once
 #include <vector>
 #include "order/Order.h"
+#include "subsystem/Meals/Meal.h"
 #include "Payment.h"
 
 class PointOfSales {
 public:
-    void registerOrder(Order* order);
+    void readyMeals(std::vector<Meal*> mealsWithOrdersIn);
+    bool foundOrder(Order* o);
     void printBill(int tblId);
     bool isPaymentSettled(int tblId);
     //the following 2 functions makes a payment and returns whether the bill is settled or not
