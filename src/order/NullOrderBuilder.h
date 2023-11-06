@@ -19,6 +19,8 @@ public:
 
     inline const std::vector<json>& getResult() { return orders_; }
 
+    std::string toString() const override;
+
 private:
     std::vector<json> orders_;
 };

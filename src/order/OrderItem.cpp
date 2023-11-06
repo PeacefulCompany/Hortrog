@@ -1,6 +1,8 @@
-//ORDERITEMPP
+// ORDERITEMPP
 #include "OrderItem.h"
 #include "menu/Menu.h"
+#include "order/OrderItem.h"
+#include <sstream>
 
 OrderItem::OrderItem(const MenuItem* item) : item_(item) {}
 
@@ -26,7 +28,7 @@ bool OrderItem::checkForCustomer(std::string customerName) {
 }
 bool OrderItem::checkForDupe(
     std::string customerName, std::vector<const MenuItem*> menuItems) {
-    if (customerName == customer_){
+    if (customerName == customer_) {
         for (auto& item : menuItems) {
             if (item->getName() == item_->getName()) {
                 return true;
@@ -39,4 +41,10 @@ std::vector<const MenuItem*> OrderItem::getAllMenuItems() {
     std::vector<const MenuItem*> returnVector;
     returnVector.push_back(item_);
     return returnVector;
+}
+
+std::string OrderItem::toString() const {
+    std::stringstream ss;
+    ss << item_->getName() << " R" << item_->getPrice();
+    return ss.str();
 }
