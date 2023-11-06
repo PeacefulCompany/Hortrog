@@ -10,3 +10,5 @@ void Receipt::appendReceipt(Receipt* receipt) {
         orderList_.push_back(pair);
     }
 }
+
+

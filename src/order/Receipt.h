@@ -11,4 +11,5 @@ public:
     void generateOrders(Order* order);
     void addPair(std::pair<std::string, double> pair){orderList_.push_back(pair);};
     void appendReceipt(Receipt * receipt);
+    std::string toString();
 };
