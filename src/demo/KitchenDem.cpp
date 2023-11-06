@@ -1,63 +1,12 @@
-#include "kitchenDemo.h"
+#include "KitchenDemo.h"
 #include "order/ConcreteOrderBuilder.h"
 #include "order/Order.h"
 #include "order/OrderBuilder.h"
 #include "subsystem/Chef/KitchenStaff.h"
-#include "subsystem/Chef/kitchenDemo.h"
 #include <iostream>
 #include <string>
-// #include "kitchenDemo.h"
 
-// void test() {
-//     Kitchen* kitchen = new Kitchen();
-//     Order* o = new Order("bob");
-//     Order* b = new Order("alice");
-//     kitchen->handleOrder(o);
-//     kitchen->handleOrder(b);
-//     askTimePassed(kitchen);
-// }
-
-// void askTimePassed(Kitchen* kitchen) {
-//     int timePassed;
-//     while (true) {
-//         std::cout << "Enter time passed (sec): ";
-//         std::cin >> timePassed;
-//         if (timePassed <= 0) {
-//             continue;
-//         }
-//         kitchen->updateTime(timePassed);
-//         std::cout << kitchen->toString() << std::endl;
-//         Meal* meal = kitchen->getOutgoingMeal();
-//         while (meal != nullptr) {
-//             std::cout << "Meal ready!" << std::endl;
-//             std::cout << meal->toString() << std::endl;
-//             meal = kitchen->getOutgoingMeal();
-//         }
-
-//         // Do something with timePassed
-//     }
-// }
-
-// constructor and destructor
-
-KitchenDemo::KitchenDemo() {
-    kitchen_ = new Kitchen();
-    menu_->loadFromFile("menu_items.json");
-    orderBuilder_ = new ConcreteOrderBuilder(menu_);
-
-    commands_.addCommand("Pass some time", [this]() { simulateTimePassed(); });
-    commands_.addCommand(
-        "Display Kitchen snapshot", [this]() { displayKitchenSnapshot(); });
-    commands_.addCommand("Display menu", [this]() { displayMenu(); });
-    commands_.addCommand(
-        "Display Order Builder", [this]() { displayOrderBuilderMenu(); });
-    commands_.addCommand("Add chef", [this]() { displayAddChef(); });
-
-    commands_.setPrompt("Choose an option (-1 to exit): ");
-    commands_.setExitCode(-1);
-}
-
-KitchenDemo::~KitchenDemo() {
+void KitchenDemo::cleanup() {
     delete kitchen_;
     delete orderBuilder_;
 }
@@ -128,13 +77,6 @@ void KitchenDemo::displayMenu() { std::cout << menu_->toString() << std::endl; }
 
 void KitchenDemo::displayModifiers() {
     // Modi
-}
-
-void KitchenDemo::menuHandler() {
-    while (true) {
-        std::cout << "Welcome to the Kitchen Demo!" << std::endl;
-        if (commands_.execute() == -1) break;
-    }
 }
 
 void KitchenDemo::displayOrderBuilderMenu() {
@@ -270,4 +212,27 @@ void KitchenDemo::displayAddChef() {
 
     kitchen_->AddChef(newChef);
     std::cout << "=============================" << std::endl;
+}
+void KitchenDemo::init() {
+    kitchen_ = new Kitchen();
+    menu_->loadFromFile("menu_items.json");
+    orderBuilder_ = new ConcreteOrderBuilder(menu_);
+
+    commands_.addCommand("Pass some time", [this]() { simulateTimePassed(); });
+    commands_.addCommand(
+        "Display Kitchen snapshot", [this]() { displayKitchenSnapshot(); });
+    commands_.addCommand("Display menu", [this]() { displayMenu(); });
+    commands_.addCommand(
+        "Display Order Builder", [this]() { displayOrderBuilderMenu(); });
+    commands_.addCommand("Add chef", [this]() { displayAddChef(); });
+
+    commands_.setPrompt("Choose an option (-1 to exit): ");
+    commands_.setExitCode(-1);
+}
+
+void KitchenDemo::gameLoop() {
+    std::cout << "--- KITCHEN DEMO ---" << std::endl;
+    if (commands_.execute() == -1) {
+        running_ = false;
+    }
 }
