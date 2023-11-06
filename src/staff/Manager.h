@@ -42,7 +42,9 @@ public:
      * @param rating The rating to give.
      */
     void giveRating(int rating);
-
+    
 private:
     std::vector<std::string*> complaintArray_;
+    int numberOfRatings_ = 0;
+    int totalRating_ = 0;
 };

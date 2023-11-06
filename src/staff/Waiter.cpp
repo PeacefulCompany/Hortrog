@@ -1,10 +1,15 @@
 #include "Waiter.h"
+#include "customer/Customer.h"
 #include "order/ConcreteOrderBuilder.h"
 #include "order/OrderBuilder.h"
 #include "order/OrderComposite.h"
 #include "staff/FloorStaff.h"
+#include "staff/Manager.h"
 #include "staff/Waiter.h"
 #include "subsystem/Chef/Kitchen.h"
+#include <iostream>
+#include <vector>
+
 /**
  * @brief Initialize the static member kitchen_ with nullptr.
  *
@@ -21,11 +26,19 @@ Waiter::Waiter(const Menu* menu) : FloorStaff(), menu_(menu) {
 void Waiter::checkKitchen() {
     // ckeck if the waiter is currenlty holdy any ready meals
     if (getReadyMeals().size() > 0) {
-        // visit the meals table and give order to the customers
-    } else {
+        // if so then deliver them
+        for (auto& meal : readyMeals) {
+            // std::cout << "Delivering meal to table " << meal->tableId()
+            //    << std::endl;
+            // tables_[meal->tableId()]->deliverMeal(meal);
+        }
+        readyMeals.clear();
+    } else // if not then check the kitchen for any ready meals
+    {
         FetchMeals();
     }
 }
+std::vector<Meal*> Waiter::getReadyMeals() { return this->readyMeals; }
 void Waiter::FetchMeals() {
     Meal* currentMeal;
     int x = 0;
@@ -39,12 +52,23 @@ void Waiter::FetchMeals() {
 void Waiter::Givetokitchen() {
     FloorStaff::getKitchen()->handleOrder(orderBuilder_->getOrder());
 }
-void Waiter::giveMeal(std::sting customerName, Meal* meal) {
-    for (auto& table : tables_) {
-        if (table->getCustomerName() == customerName) {
-            table->serveMeal(meal);
+void Waiter::giveFoodToCustomer(Customer& customer) {
+    std::string customerName = customer.getName();
+    if (!this->readyMeals.empty()) {
+        for (auto& meal : readyMeals) {
+            if (meal->getCustomer() == customerName) {
+                Meal* CustomerMeal = meal;
+                customer.receiveMeal(meal);
+            }
         }
     }
+}
+void Waiter::callManager(CustomerState& state) {
+    std::cout << "Manager called" << std::endl;
+    Manager* manager = new Manager();
+    std::cout << "I am the manager!" << std::endl;
+    manager->accept(    state);
+    delete manager;
 }
 void Waiter::accept(CustomerState& state) { state.visit(*this); }
 std::string Waiter::getStaffType() { return "Waiter"; }

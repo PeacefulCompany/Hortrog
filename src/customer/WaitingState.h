@@ -11,5 +11,6 @@ public:
     void visit(Waiter&) override;
 
 private:
-    bool isReady_ = false;
+
+    bool isReady_ = true;
 };
