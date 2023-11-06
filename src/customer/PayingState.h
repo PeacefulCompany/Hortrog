@@ -13,7 +13,5 @@ public:
     std::string toString() const override;
 
 private:
-    std::string paymentStartegies_[3] = {
-        "EvenSplit", "PerCustomer", "OneReceipt"};
     bool isReady_ = false;
 };

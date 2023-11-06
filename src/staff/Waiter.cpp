@@ -1,11 +1,15 @@
 #include "Waiter.h"
 
+#include "billing/EvenSplit.h"
+#include "billing/OneReceipt.h"
+#include "billing/PerCustomer.h"
 #include "billing/PointOfSales.h"
 #include "customer/Customer.h"
 #include "floor/Table.h"
 #include "order/ConcreteOrderBuilder.h"
 #include "order/OrderBuilder.h"
 #include "order/OrderComposite.h"
+#include "order/Receipt.h"
 #include "staff/FloorStaff.h"
 #include "staff/Manager.h"
 #include "staff/Waiter.h"
@@ -15,6 +19,7 @@
 #include <sstream>
 
 #include <iostream>
+#include <string>
 #include <vector>
 
 /**
@@ -108,4 +113,11 @@ void Waiter::accept(CustomerState& state) { state.visit(*this); }
 
 std::string Waiter::getStaffType() { return "Waiter"; }
 
-void Waiter::synthesizeBill(std::string strategy) {}
+std::vector<Receipt> Waiter::synthesizeBill(int strategy, uint32_t tblId) {
+    switch (strategy) {
+    case 1: pointOfSales_->getReceipt(new EvenSplit, tblId); break;
+    case 2: pointOfSales_->getReceipt(new PerCustomer, tblId); break;
+    case 3: pointOfSales_->getReceipt(new OneReceipt, tblId); break;
+    default: std::cout << "Invalid strategy" << std::endl; break;
+    }
+}

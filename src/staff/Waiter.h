@@ -8,12 +8,16 @@
 #include "menu/Menu.h"
 #include "order/ConcreteOrderBuilder.h"
 #include "order/OrderBuilder.h"
+#include "order/Receipt.h"
 #include "staff/FloorStaff.h"
 #include "subsystem/Meals/Meal.h"
+#include <cstdint>
 #include <memory>
 #include <string>
 #include <vector>
-
+#include "../billing/EvenSplit.h"
+#include "../billing/PerCustomer.h"
+#include "../billing/OneReceipt.h"
 /**
  * @class Waiter
  * @brief This class represents a waiter.
@@ -95,7 +99,7 @@ public:
 
     void visitTables() override;
 
-    void synthesizeBill(std::string);
+    std::vector<Receipt> synthesizeBill(int, uint32_t);
 
     void giveFoodToCustomer(Customer& Customer);
     void callManager(CustomerState& state);

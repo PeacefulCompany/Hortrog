@@ -22,7 +22,10 @@ bool TableGroup::merge(Table* table) {
 
 bool TableGroup::seatCustomer(Customer* customer) {
     for (TableComponent* table : tables_) {
-        if (table->seatCustomer(customer)) return true;
+        if (table->seatCustomer(customer)) {
+            customer->setTableID(id());
+            return true;
+        }
     }
     return false;
 }

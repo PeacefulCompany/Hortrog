@@ -1,6 +1,7 @@
 #include "PayingState.h"
 #include "customer/Customer.h"
 
+#include <cstdlib>
 #include <iostream>
 
 void PayingState::visit(Manager& m) {
@@ -24,7 +25,8 @@ void PayingState::visit(Waiter& w) {
     // w.getPointOfSales()->payBill(int tblId);
     // w.tip(Exta Payment);
 
-    w.synthesizeBill(paymentStartegies_[rand() % 3]);
+    w.synthesizeBill((int)(rand() % 3), customer_->getTableId());
+
     customer_->changeState(nullptr);
 }
 
