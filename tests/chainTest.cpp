@@ -1,13 +1,13 @@
-#include "../src/subsystem/Chef/HeadChef.h"
-#include "../src/subsystem/Chef/Kitchen.h"
-#include "../src/subsystem/Chef/KitchenStaff.h"
-#include "../src/subsystem/Chef/NormalChef.h"
 #include "order/ConcreteOrderBuilder.h"
 #include "order/OrderBuilder.h"
 #include "order/OrderItem.h"
+#include "subsystem/Chef/HeadChef.h"
+#include "subsystem/Chef/Kitchen.h"
 #include "subsystem/Chef/KitchenStaff.h"
+#include "subsystem/Chef/NormalChef.h"
 #include "subsystem/Meals/MealItem.h"
 #include <gtest/gtest.h>
+
 
 TEST(Kitchen, chainSetup) {
     Kitchen* kitchen = new Kitchen();
@@ -15,8 +15,7 @@ TEST(Kitchen, chainSetup) {
 
     KitchenStaff* headChef = new HeadChef(5, 5, kitchen, 1, "head chef");
 
-
-     KitchenStaff* chef1 = new NormalChef(4, 5, kitchen, 2, "fast chef 1");
+    KitchenStaff* chef1 = new NormalChef(4, 5, kitchen, 2, "fast chef 1");
     ((NormalChef*)chef1)->addCanPrepareItem("Grilled Salmon");
     ((NormalChef*)chef1)->addCanPrepareItem("Margherita Pizza");
 
