@@ -6,20 +6,8 @@
 
 void PointOfSales::readyMeals(std::vector<Meal*> mealsWithOrdersIn){
     for (const auto& meal : mealsWithOrdersIn) {
-        if(!foundOrder(meal->getOrder())){
-            orders.push_back(meal->getOrder());
-        }
+         orders.push_back(meal->getOrder());
     }
-}
-
-bool PointOfSales::foundOrder(Order* o){
-    for (const auto& order : orders) {
-        if((o->getCustomer()==order->getCustomer())&&(o->getTblId()==order->getTblId())){
-            return true;
-        }
-        else return false;
-    }
-    return false;
 }
 
 void PointOfSales::printBill(int tblId) {
