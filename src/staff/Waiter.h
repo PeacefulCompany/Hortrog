@@ -35,7 +35,7 @@ public:
     /**
      * @brief Gets the staff type.
      *
-     * This function is used to get the staff type to identify the staff member.
+     * This function is used to get the staff type to id
      *
      * @return The staff type.
      */
