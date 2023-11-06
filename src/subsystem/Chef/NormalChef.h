@@ -5,10 +5,11 @@
 #include <string>
 #include <vector>
 
-#include "../Meals/Meal.h"
-#include "../Meals/MealItem.h"
-#include "../menu/OrderJSON.h"
 #include "KitchenStaff.h"
+#include "subsystem/Meals/Meal.h"
+#include "subsystem/Meals/MealItem.h"
+#include "subsystem/menu/OrderJSON.h"
+
 
 class NormalChef : public KitchenStaff {
 private:

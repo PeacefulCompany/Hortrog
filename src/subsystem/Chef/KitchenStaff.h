@@ -3,10 +3,10 @@
 #include <memory>
 
 // #include "OrderJSON.h"
-#include "../../order/Order.h"
-#include "../Meals/Meal.h"
-#include "../Meals/MealItem.h"
-#include "../menu/OrderJSON.h"
+#include "order/Order.h"
+#include "subsystem/Meals/Meal.h"
+#include "subsystem/Meals/MealItem.h"
+#include "subsystem/menu/OrderJSON.h"
 #include <iostream>
 
 class Kitchen;
