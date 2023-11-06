@@ -1,7 +1,5 @@
 #pragma once
 #include <string>
-#ifndef SUBSYSTEM_MEAL_ITEM_H
-#define SUBSYSTEM_MEAL_ITEM_H
 
 class MealItem {
 
@@ -26,5 +24,3 @@ private:
     std::string diet_ = "none";
     std::string mod_ = "none";
 };
-
-#endif // SUBSYSTEM_MEAL_ITEM_H

@@ -2,19 +2,18 @@
 
 #include "subsystem/Meals/Meal.h"
 #include <memory>
-#ifndef KITCHEN_H
-#define KITCHEN_H
 
-#include "../../order/Order.h"
-#include "../../staff/Waiter.h"
-#include "../Meals/Meal.h"
 #include "HeadChef.h"
 #include "KitchenStaff.h"
 #include "NormalChef.h"
+#include "order/Order.h"
+#include "staff/Waiter.h"
+#include "subsystem/Meals/Meal.h"
 #include <iostream>
 #include <queue>
 #include <string>
 #include <vector>
+
 
 class Waiter;
 class Kitchen {
@@ -41,5 +40,3 @@ public:
     std::string toString();
     ~Kitchen();
 };
-
-#endif

@@ -1,7 +1,8 @@
-#include "../src/order/OrderComposite.h"
-#include "../src/order/OrderItem.h"
 #include "menu/Menu.h"
+#include "order/OrderComposite.h"
+#include "order/OrderItem.h"
 #include <gtest/gtest.h>
+
 
 TEST(OrderComposite, TO_JSON) {
     MenuItem item("bonger", 2, "", {});

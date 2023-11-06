@@ -1,9 +1,6 @@
 #pragma once
-#include "SFML/Config.hpp"
 #include <stdint.h>
 #include <string>
-#ifndef SUBSYSTEM_MEAL_H
-#define SUBSYSTEM_MEAL_H
 
 // file includes
 #include "MealItem.h"
@@ -37,5 +34,3 @@ public:
     inline void setReady(bool rStatus_) { ready_ = rStatus_; }
     inline uint32_t getTableId() { return tableId_; }
 };
-
-#endif
