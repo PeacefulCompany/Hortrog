@@ -31,6 +31,7 @@ bool ConcreteOrderBuilder::addModifier(const std::string& key) {
     // Create a Modifier from the last OrderItem
     std::unique_ptr<Order> modifier =
         std::make_unique<Modifier>(std::move(lastOrder));
+	modifier->setCustomer(lastOrder->getCustomer()); // I think this is unnecessary, as modifier has the order in it
     // Add the modifier to the vector
     this->tempOrder.emplace_back(std::move(modifier));
     return true;
@@ -44,7 +45,6 @@ std::string ConcreteOrderBuilder::getResult() {
     if (this->tempOrder.empty()) {
         return "{}\n";
     }
-
     // Create a new OrderComposite
     this->order = new OrderComposite();
     // Add all the Orders in the vector to the OrderComposite
