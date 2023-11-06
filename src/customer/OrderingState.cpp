@@ -71,6 +71,7 @@ void OrderingState::visit(Waiter& w) {
     }
     customer_->setHappiness(this->customer_->getHappiness() + 5);
     customer_->changeState(new WaitingState(customer_));
+    std::cout << orderBuilder->toString() << std::endl;
 }
 void OrderingState::update(float dt) { readyTimer_.update(dt); }
 

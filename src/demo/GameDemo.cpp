@@ -1,4 +1,5 @@
 #include "GameDemo.h"
+#include "core/util.h"
 #include "order/ConcreteOrderBuilder.h"
 #include "order/Order.h"
 #include "subsystem/Chef/Kitchen.h"
@@ -12,6 +13,8 @@ void GameDemo::cleanup() {
 
 void GameDemo::gameLoop() {
     if (!current_) {
+        std::cout << util::CLEAR_SCREEN << util::HOME << std::endl;
+        std::cout << "--- COS 214 - Final Project ---" << std::endl;
         if (commands_.execute() == -1) {
             setRunning(false);
         }

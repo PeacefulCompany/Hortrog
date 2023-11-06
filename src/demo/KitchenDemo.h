@@ -38,12 +38,6 @@ public:
     void addOrderBuilderItem();
 
     /**
-     * @brief Add a modifier to the order
-     *
-     */
-    void addOrderBuilderModifier();
-
-    /**
      * @brief Simulate the time passed
      *
      */
@@ -54,12 +48,6 @@ public:
      *
      */
     void displayKitchenSnapshot();
-
-    /**
-     * @brief Display the menu
-     *
-     */
-    void displayMenu();
 
     /**
      * @brief Display the modifiers

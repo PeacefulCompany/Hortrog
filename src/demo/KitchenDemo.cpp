@@ -51,8 +51,6 @@ void KitchenDemo::displayKitchenSnapshot() {
     std::cout << kitchen_.toString() << std::endl;
 }
 
-void KitchenDemo::displayMenu() { std::cout << menu_.toString() << std::endl; }
-
 void KitchenDemo::displayModifiers() {
     // Modi
 }
@@ -78,16 +76,22 @@ void KitchenDemo::displayOrderBuilderMenu() {
 }
 
 void KitchenDemo::addOrderBuilderItem() {
-    displayMenu();
+    std::cout << menu_.toString() << std::endl;
+    const MenuItem* item = nullptr;
+    std::string key;
+    do {
+        key = util::inputString("Enter item key: ");
+        item = menu_.getMenuItem(key);
+    } while (!item);
 
-    std::string key = util::inputString("Enter key: ");
-    std::string customerName = util::inputString("Enter customer name: ");
-    if (!orderBuilder_.addItem(key, customerName)) {
-        std::cout << "Item not added" << std::endl;
+    std::string name = util::inputString("Customer name: ");
+    if (!orderBuilder_.addItem(key, name)) {
+        std::cout << "Failed to add item" << std::endl;
         return;
     }
 
-    std::cout << "Item added" << std::endl;
+    const auto& modifiers = item->supportedModifiers();
+    if (modifiers.empty()) return;
 
     std::string modifierQuery =
         util::inputString("Do you want to add a modifier? (y/n)");
@@ -97,20 +101,18 @@ void KitchenDemo::addOrderBuilderItem() {
             util::inputString("Do you want to add a modifier? (y/n)");
     }
 
-    if (modifierQuery == "y") {
-        addOrderBuilderModifier();
-    } else {
-        std::cout << "No modifier added" << std::endl;
+    if (modifierQuery != "y") {
+        return;
     }
-}
 
-void KitchenDemo::addOrderBuilderModifier() {
-    std::string key = util::inputString("Enter modifier key: ");
+    std::cout << util::options(modifiers) << std::endl;
+    int opt = -1;
+    do {
+        opt = util::input("Choose a modifier: ");
+    } while (opt < 1 || opt > modifiers.size());
 
-    if (orderBuilder_.addModifier(key)) {
-        std::cout << "Modifier added" << std::endl;
-    } else {
-        std::cout << "Modifier not added" << std::endl;
+    if (!orderBuilder_.addModifier(modifiers[opt - 1])) {
+        std::cout << "Failed to add modifier" << std::endl;
     }
 }
 
@@ -182,7 +184,8 @@ void KitchenDemo::init() {
     commands_.addCommand("Pass some time", [this]() { simulateTimePassed(); });
     commands_.addCommand(
         "Display Kitchen snapshot", [this]() { displayKitchenSnapshot(); });
-    commands_.addCommand("Display menu", [this]() { displayMenu(); });
+    commands_.addCommand("Display menu",
+        [this]() { std::cout << menu_.toString() << std::endl; });
     commands_.addCommand(
         "Display Order Builder", [this]() { displayOrderBuilderMenu(); });
     commands_.addCommand("Add chef", [this]() { displayAddChef(); });
