@@ -6,7 +6,7 @@
 #include "OrderJSON.h"
 #include <iostream>
 
-#include "json.hpp"
+#include "nlohmann/json.hpp"
 using json = nlohmann::json;
 
 /**
@@ -26,7 +26,7 @@ std::vector<ItemJSON*> OrderJSON::getItems() {
         // std::cout << "[DEBUG] Iterating through items..." << std::endl;
         std::string name = item["name"].get<std::string>();
         double price = item["price"].get<double>();
-
+        std::string customer = item["customer"].get<std::string>();
         std::string diet;
 
         if (item.contains("diet")) {
@@ -43,7 +43,7 @@ std::vector<ItemJSON*> OrderJSON::getItems() {
             mod = "none";
         }
 
-        ItemJSON* newItemJSON = new ItemJSON(name, price, diet, mod);
+        ItemJSON* newItemJSON = new ItemJSON(name, price, diet, mod, customer);
         items_.push_back(newItemJSON);
     }
 

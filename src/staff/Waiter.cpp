@@ -22,22 +22,29 @@
  */
 Kitchen* FloorStaff::kitchen_ = nullptr;
 
-Waiter::Waiter(const Menu* menu) : FloorStaff(), menu_(menu) {
+Waiter::Waiter(const Menu* menu, const Floor* floor)
+    : FloorStaff(), menu_(menu), floor_(floor) {
     FloorStaff::setKitchen(new Kitchen());
     this->orderBuilder_ = std::make_unique<ConcreteOrderBuilder>(menu);
 }
-void Waiter::checkKitchen() {
-    if (getReadyMeals().size() > 0) {
-        for (auto& Table : tables_) {
-            CustomerIterator* iterator = new CustomerIterator(Table);
-            while (!iterator->isDone()) {
-                for (auto& meal : readyMeals) {
-                    if (meal->getCustomer() == iterator->get()->getName()) {
-                        giveFoodToCustomer(*iterator->get());
-                    }
+void Waiter::serveMeals() {
+    for (auto& table : tables_) {
+        CustomerIterator* iterator = new CustomerIterator(table);
+        while (!iterator->isDone()) {
+            Customer& currentCustomer = *iterator->get();
+            for (auto& meal : readyMeals) {
+                if (meal->getCustomer() == currentCustomer.getName()) {
+                    giveFoodToCustomer(currentCustomer);
                 }
             }
+            iterator->next();
         }
+        delete iterator;
+    }
+}
+void Waiter::checkKitchen() {
+    if (getReadyMeals().size() > 0) {   
+        serveMeals();
         readyMeals.clear();
     } else {
         FetchMeals();
@@ -63,6 +70,18 @@ void Waiter::FetchMeals() {
 void Waiter::Givetokitchen() {
     FloorStaff::getKitchen()->handleOrder(orderBuilder_->getOrder());
 }
+Meal* Waiter::getMeal(Customer& customer) {
+    for (auto& meal : readyMeals) {
+        if (meal->getCustomer() == customer.getName()) {
+            return meal;
+        }
+    }
+    return nullptr;
+}
+void Waiter::giveMeal(Customer& Customer, Meal* meal) {
+    Meal* CustomerMeal = getMeal(Customer);
+    Customer.receiveMeal(CustomerMeal);
+}
 void Waiter::giveFoodToCustomer(Customer& customer) {
     std::string customerName = customer.getName();
     if (!this->readyMeals.empty()) {
@@ -74,9 +93,32 @@ void Waiter::giveFoodToCustomer(Customer& customer) {
         }
     }
 }
+std::string Waiter::toString() const {
+    std::stringstream ss;
+    ss << "Waiter (";
+    for (int i = 0; i < tables_.size(); i++) {
+        if (i != 0) ss << ", ";
+        ss << tables_[i]->id();
+    }
+    if (tables_.size() == 0) {
+        ss << "no tables";
+    }
+    ss << ")";
+    return ss.str();
+}
+void Waiter::assignTable(Table* table) { tables_.push_back(table); }
+void Waiter::visitTables() {
+    for (Table* table : tables_) {
+        CustomerIterator* it = table->createIterator();
+        while (!it->isDone()) {
+            it->get()->interact(*this);
+            it->next();
+        }
+    }
+}
 void Waiter::callManager(CustomerState& state) {
     std::cout << "Manager called" << std::endl;
-    Manager* manager = new Manager();
+    Manager* manager = new Manager(this->floor_);
     std::cout << "I am the manager!" << std::endl;
     manager->accept(state);
     delete manager;

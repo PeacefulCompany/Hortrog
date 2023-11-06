@@ -13,6 +13,7 @@ void WaitingState::visit(Manager& m) {
     }
 }
 void WaitingState::visit(Waiter& w) {
+
     if (w.getReadyMeals().size() > 0) {
         w.giveFoodToCustomer(*customer_);
         // check if customer has received their meal
@@ -29,3 +30,5 @@ void WaitingState::visit(Waiter& w) {
         std::cout << "[Waiting]: Where's the food at???" << std::endl;
     }
 }
+
+std::string WaitingState::toString() const { return "[Waiting]"; }

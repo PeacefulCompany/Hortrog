@@ -12,6 +12,8 @@ public:
 
     void update(float dt) override;
 
+    std::string toString() const override;
+
 private:
     Timer eatTime_ = Timer(2);
 };

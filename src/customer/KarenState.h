@@ -9,6 +9,8 @@ public:
     void visit(Manager&) override;
     void visit(Waiter&) override;
 
+    std::string toString() const override;
+
 private:
     bool isReady_ = false;
 };

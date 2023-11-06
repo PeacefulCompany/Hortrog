@@ -70,6 +70,8 @@ public:
     void receiveMeal(Meal* meal);
     bool getState() { if(state_ == nullptr) return false; else return true; }
 
+    std::string toString() const;
+
 private:
     /**
      * @brief The state of the customer

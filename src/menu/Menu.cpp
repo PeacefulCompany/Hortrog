@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iomanip>
 #include <sstream>
+#include <iostream>
 
 #include "nlohmann/json.hpp"
 using json = nlohmann::json;
@@ -12,7 +13,6 @@ bool Menu::loadFromFile(const std::string& path) {
     if (!file.is_open()) {
         return false;
     }
-
     json data = json::parse(file);
     // std::cout << "[DEBUG] Parsed menu_items.json" << std::endl;
     for (auto& item : data["menu"]) {
@@ -22,11 +22,15 @@ bool Menu::loadFromFile(const std::string& path) {
         if (item.contains("supported_modifiers")) {
             item["supported_modifiers"].get<std::vector<std::string>>();
         }
+
         double price = item["price"].get<double>();
 
         addMenuItem(name,
             std::make_unique<MenuItem>(name, price, prepMethod, modifiers));
+    std::cout << "[DEBUG] added" << std::endl;
+
     }
+
     return true;
 }
 std::vector<std::string> Menu::getAllKeys() const {

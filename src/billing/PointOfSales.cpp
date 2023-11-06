@@ -4,10 +4,11 @@
 #include "order/Receipt.h"
 #include <iostream>
 
-void PointOfSales::registerOrder(Order* order){
-    orders.push_back(order);
+void PointOfSales::readyMeals(std::vector<Meal*> mealsWithOrdersIn){
+    for (const auto& meal : mealsWithOrdersIn) {
+         orders.push_back(meal->getOrder());
+    }
 }
-
 
 void PointOfSales::printBill(int tblId) {
     std::cout << "========================================" << std::endl;

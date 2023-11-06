@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef HEADCHEF_H
-#define HEADCHEF_H
-
 #include "KitchenStaff.h"
 
 class HeadChef : public KitchenStaff {
@@ -18,5 +15,3 @@ public:
 
     void prepareMeal(Meal* meal);
 };
-
-#endif

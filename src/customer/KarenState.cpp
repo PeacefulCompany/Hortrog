@@ -16,3 +16,5 @@ void KarenState::visit(Waiter& w) {
     std::cout << "[Karen]: I want the manager!!!" << std::endl;
     w.callManager(*this); // unsure
 }
+
+std::string KarenState::toString() const { return "[Karen]"; }
