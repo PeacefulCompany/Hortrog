@@ -2,35 +2,30 @@
 <h3 align="center"> By the Refactoring Gurus </h3>
 
 <div align="center">
-  <img src="https://pbs.twimg.com/media/FPrkatnVkAUibUj.jpg" alt="Logo" width="80" height="80">
+  <img src="https://pbs.twimg.com/media/FPrkatnVkAUibUj.jpg" alt="Logo" width="200" height="200">
 </div>
 
 # Contents
 
 - [Description](#description)
 - [Documentation](#documentation)
-- [Demo](#demo)
 - [Setup](#setup)
 - [Tests](#tests)
 - [Team](#team)
 
 # Description
 
-Generic War Simulator providing a well-defined interface for simulations to be written, loaded, and run. A dynamic amount of different simulations can be run with varying specifications. These can be run to completion or through a design mode which allows the user to make tweaks as they step through the simulation. 
+Your average restaurant simulator with a few quirks. It allows users to simulate time passed, display kitchen snapshot, display menu, display order builder and add a chef.
 
 # Documentation
 
-[Report](https://docs.google.com/document/d/1SO2EWCa2MpqC4dWhszZaXsbHXWcP98rih0-Rxo4v2IA/)
+[Report](https://docs.google.com/document/d/1BQG2WX8L6CEYzWcNe0vgWh3lt2YmM9Rlaa8bVA0vqJQ/edit?usp=sharing)
 
 [API Documentation](https://demo.hedgedoc.org/enrh8j-uSU6jJ3V8m6NHWw?view)
 
 [Doxygen Documentation](https://drive.google.com/file/d/1q-uM2htVxp-8KeQncFkuyCWmhxxETV5i/view?usp=sharing)
 
-[Class Diagram](https://drive.google.com/uc?id=16rv7moVTcIt_6ylzExouiVvLD-Clw-pR)
-
-# Demo
-
-[Video Demo](https://drive.google.com/uc?id=1HHqHpLHMNCIoQHRqPR1zv6Di4xcEjwVe)
+[Class Diagram](https://www.dropbox.com/scl/fi/hsulqo5gh4yrpzk5pkqv4/COS-214-Final-Project.vpp?rlkey=e0tp5eztna4x5hlfotfcfegm8&dl=0)
 
 # Setup
 ### Prerequisites
@@ -39,7 +34,7 @@ Generic War Simulator providing a well-defined interface for simulations to be w
 
 ### Cloning
 ```
-git clone https://github.com/ArmandKrynauw/COS214-Project
+git clone https://github.com/Questionable-Engineering-Decisions/Hortrog
 ```
 ### Building
 This project can be built using CMake:
