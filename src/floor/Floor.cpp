@@ -15,6 +15,8 @@
 #include "order/OrderComposite.h"
 
 #include <algorithm>
+#include <cstdlib>
+#include <ctime>
 #include <iostream>
 #include <numeric>
 #include <sstream>
@@ -156,6 +158,7 @@ void Floor::checkTable(int tableId, int waiterId) {
         iterator->next();
     }
     tableWaiter->giveToKitchen();
+
     delete iterator;
 }
 

@@ -41,4 +41,12 @@ int input(const std::string& prompt);
  * @param error The error message to display
  */
 void error(const std::string& error);
+
+/**
+ * @brief Inputs a string
+ *
+ * @param prompt The prompt to display
+ * @return std::string
+ */
+std::string inputString(const std::string& prompt);
 } // namespace util

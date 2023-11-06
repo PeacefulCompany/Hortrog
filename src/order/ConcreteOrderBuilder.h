@@ -45,6 +45,9 @@ public:
 
     OrderComposite* getOrder() override;
 
+    std::string toString() const override;
+
+
 private:
     uint32_t tblId_;
     const Menu* menu_ = new Menu();

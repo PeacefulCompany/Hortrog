@@ -35,6 +35,10 @@ bool Modifier::checkForDupe(
     std::string customerName, std::vector<const MenuItem*> menuItems) {
     return component_->checkForDupe(customerName, menuItems);
 }
+bool Modifier::checkForDupe(
+    std::string customerName, std::vector<const MenuItem*> menuItems) {
+    return component_->checkForDupe(customerName, menuItems);
+}
 bool Modifier::checkForCustomer(std::string customerName) {
     return component_->checkForCustomer(customerName);
 }

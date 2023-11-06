@@ -18,6 +18,8 @@
 #include <string>
 #include <vector>
 
+FloorDemo::FloorDemo(Floor& floor, Menu& menu) : floor_(floor), menu_(menu) {}
+
 void FloorDemo::gameLoop() {
     // Draw tables
     // std::cout << util::CLEAR_SCREEN << util::HOME << std::endl;
@@ -27,7 +29,7 @@ void FloorDemo::gameLoop() {
 
     // Chose next action
     if (mainOptions_.execute()) {
-        running_ = false;
+        setRunning(false);
     }
 }
 
@@ -91,8 +93,10 @@ void FloorDemo::addCustomers() {
 
 void FloorDemo::addStaff() {
     CommandMenu menu;
+
     menu.addCommand("Waiter",
-        [this]() { floor_.addStaff(new Waiter(&menu_, &pointOfSales_)); });
+        [this]() { floor_.addStaff(new Waiter(&menu_, &floor_, &pointOfSales_)); });
+
     menu.addCommand(
         "Manager", [this]() { floor_.addStaff(new Manager(&floor_)); });
     menu.setError("Invalid staff type.");

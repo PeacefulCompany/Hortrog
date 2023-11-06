@@ -4,7 +4,10 @@
 #include "billing/OneReceipt.h"
 #include "billing/PerCustomer.h"
 #include "billing/PointOfSales.h"
+
 #include "customer/Customer.h"
+#include "floor/CustomerIterator.h"
+#include "floor/Floor.h"
 #include "floor/Table.h"
 #include "order/ConcreteOrderBuilder.h"
 #include "order/OrderBuilder.h"
@@ -14,10 +17,6 @@
 #include "staff/Manager.h"
 #include "staff/Waiter.h"
 #include "subsystem/Chef/Kitchen.h"
-
-#include "floor/CustomerIterator.h"
-#include <sstream>
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -31,29 +30,46 @@
  */
 Kitchen* FloorStaff::kitchen_ = nullptr;
 
-Waiter::Waiter(const Menu* menu, PointOfSales* point)
-    : FloorStaff(), menu_(menu) {
+
+Waiter::Waiter(const Menu* menu, const Floor* floor, PointOfSales* pos)
+    : FloorStaff(), menu_(menu), floor_(floor), pointOfSales_(pos) {
     FloorStaff::setKitchen(new Kitchen());
     this->orderBuilder_ = std::make_unique<ConcreteOrderBuilder>(menu);
     this->pointOfSales_ = point;
 }
-void Waiter::checkKitchen() {
-    // ckeck if the waiter is currenlty holdy any ready meals
-    if (getReadyMeals().size() > 0) {
-        // if so then deliver them
-        for (auto& meal : readyMeals) {
-            // std::cout << "Delivering meal to table " << meal->tableId()
-            //    << std::endl;
-            // tables_[meal->tableId()]->deliverMeal(meal);
+
+Waiter::Waiter(const Menu* menu, const Floor* floor, Kitchen* kitchen)
+    : FloorStaff(), menu_(menu), floor_(floor) {
+    this->kitchen_ = kitchen;
+    this->orderBuilder_ = std::make_unique<ConcreteOrderBuilder>(menu);
+}
+
+void Waiter::serveMeals() {
+    for (auto& table : tables_) {
+        CustomerIterator* iterator = new CustomerIterator(table);
+        while (!iterator->isDone()) {
+            Customer& currentCustomer = *iterator->get();
+            for (auto& meal : readyMeals) {
+                if (meal->getCustomer() == currentCustomer.getName()) {
+                    giveFoodToCustomer(currentCustomer);
+                }
+            }
+            iterator->next();
         }
-        readyMeals.clear();
-    } else // if not then check the kitchen for any ready meals
-    {
-        FetchMeals();
+        delete iterator;
     }
 }
+void Waiter::checkKitchen() {
+    if (getReadyMeals().size() > 0) {
+        serveMeals();
+        readyMeals.clear();
+    } else {
+        fetchMeals();
+    }
+}
+
 std::vector<Meal*> Waiter::getReadyMeals() { return this->readyMeals; }
-void Waiter::FetchMeals() {
+void Waiter::fetchMeals() {
     Meal* currentMeal;
     int x = 0;
     do {
@@ -61,13 +77,32 @@ void Waiter::FetchMeals() {
         x++;
     } while (currentMeal == nullptr && x < tables_.size());
     if (x == tables_.size()) return;
-    if (currentMeal != nullptr) readyMeals.push_back(currentMeal);
-}
-void Waiter::giveToKitchen() {
-    pointOfSales_->addOrder(orderBuilder_->getOrder());
-    FloorStaff::getKitchen()->handleOrder(orderBuilder_->getOrder());
+    if (currentMeal != nullptr) {
+        for (auto& table : tables_) {
+            if (table->id() == currentMeal->getTableId()) {
+                readyMeals.push_back(currentMeal);
+            }
+        }
+    }
 }
 
+void Waiter::giveToKitchen() {
+    pointOfSales_->addOrder(orderBuilder_->getOrder());
+
+    FloorStaff::getKitchen()->handleOrder(orderBuilder_->getOrder());
+}
+Meal* Waiter::getMeal(Customer& customer) {
+    for (auto& meal : readyMeals) {
+        if (meal->getCustomer() == customer.getName()) {
+            return meal;
+        }
+    }
+    return nullptr;
+}
+void Waiter::giveMeal(Customer& Customer, Meal* meal) {
+    Meal* CustomerMeal = getMeal(Customer);
+    Customer.receiveMeal(CustomerMeal);
+}
 void Waiter::giveFoodToCustomer(Customer& customer) {
     std::string customerName = customer.getName();
     if (!this->readyMeals.empty()) {
@@ -105,8 +140,7 @@ void Waiter::visitTables() {
 
 void Waiter::callManager(CustomerState& state) {
     std::cout << "Manager called" << std::endl;
-    Manager* manager =
-        new Manager(nullptr); // TODO: replace nullptr with actual floor
+    Manager* manager = new Manager(this->floor_);
     std::cout << "I am the manager!" << std::endl;
     manager->accept(state);
     delete manager;

@@ -13,13 +13,13 @@
 class Meal {
 
 private:
-    std::unique_ptr<Order> order_ = std::make_unique<Order>();
+    std::unique_ptr<Order> order_;
     std::vector<MealItem*> items_;
     bool ready_ = false;
     uint32_t tableId_;
 
 public:
-    inline Meal(Order* order) : order_(order) { tableId_ = order->getTblId(); }
+    inline Meal(Order* order) : order_(order) { tableId_ = order_->getTblId(); }
     float getQuality();
     Order* getOrder();
     std::vector<MealItem*>& takeMeal();
@@ -32,4 +32,5 @@ public:
     bool containsMealItem(MealItem* item);
     inline bool getReady() { return ready_; }
     inline void setReady(bool rStatus_) { ready_ = rStatus_; }
+    inline uint32_t getTableId() const { return tableId_; }
 };

@@ -17,6 +17,7 @@ public:
         std::vector<Order*> ret;
         return ret;
     };
+
     Modifier(std::unique_ptr<Order> component);
     void add(std::unique_ptr<Order>) override {}
     double total() override;

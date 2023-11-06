@@ -1,4 +1,5 @@
 #include "NullOrderBuilder.h"
+#include "nlohmann/json.hpp"
 #include <vector>
 
 void NullOrderBuilder::begin(uint32_t table) {
@@ -16,4 +17,13 @@ bool NullOrderBuilder::addItem(
 bool NullOrderBuilder::addModifier(const std::string& key) {
     orders_.back().back()["modifiers"].push_back(key);
     return true;
+}
+
+std::string NullOrderBuilder::toString() const {
+    std::stringstream ss;
+    ss << "NullOrderBuilder";
+    for (const json& j : orders_) {
+        ss << "\n- " << nlohmann::to_string(j);
+    }
+    return ss.str();
 }

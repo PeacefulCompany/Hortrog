@@ -1,4 +1,5 @@
 #include "OrderingState.h"
+#include "customer/Customer.h"
 #include "customer/WaitingState.h"
 #include "floor/Table.h"
 #include "menu/Menu.h"
@@ -26,37 +27,52 @@ void OrderingState::visit(Manager& m) {
         int randomIndex = rand() % complaints.size();
         m.lodgeComplaint(complaints[randomIndex]);
         this->customer_->setHappiness(this->customer_->getHappiness() - 5);
-        //request a waiter
+        // request a waiter
     } else {
         std::cout << "Manager talked to a cutomer" << std::endl;
         this->customer_->setHappiness(this->customer_->getHappiness() + 5);
     }
 }
 void OrderingState::visit(Waiter& w) {
-    OrderBuilder* TableOrder = w.getOrderBuilder();
-    const Menu* menu = TableOrder->getMenu();
-    std::vector<std::string> allItems = menu->getAllKeys();
-
-    int randomNumber = std::rand() % allItems.size();
-    if (readyTimer_.expired()) {
-        TableOrder->addItem(allItems[randomNumber], customer_->getName());
-        std::cout<<customer_->getName()<<std::endl;
-        int randomNumber = std::rand() % 100;
-        if (std::rand() % 4 == 0) {
-            std::string modifierName = "Wubba lubba dub dub!";
-            // allItems[randomNumber].getModifiers()[0].getName();
-            TableOrder->addModifier(modifierName);
-        }
-        std::cout << customer_->toString() << ": I ordered something"
-                  << std::endl;
-
-        this->customer_->setHappiness(this->customer_->getHappiness() + 5);
-
-        customer_->changeState(new WaitingState(customer_));
-    } else {
+    if (!readyTimer_.expired()) {
         std::cout << customer_->toString() << ": Not ready to order"
                   << std::endl;
+        return;
     }
+
+
+    OrderBuilder* orderBuilder = w.getOrderBuilder();
+    const Menu* menu = orderBuilder->getMenu();
+    std::vector<std::string> menuKeys = menu->getAllKeys();
+
+    srand(time(0));
+    int numItems = 1 + (std::rand() % 5);
+    for (int i = 0; i < numItems; i++) {
+        // Add random order item
+        int j = std::rand() % menuKeys.size();
+        std::string itemKey = menuKeys[j];
+        orderBuilder->addItem(itemKey, customer_->getName());
+
+        std::cout << customer_->toString() << ": I ordered " << itemKey;
+
+        // Get supported modifiers
+        const MenuItem* menuItem = menu->getMenuItem(itemKey);
+        std::vector<std::string> modifierNames = menuItem->supportedModifiers();
+        if (modifierNames.size() == 0) {
+            std::cout << std::endl;
+            continue;
+        }
+
+        // Select random modifier
+        j = std::rand() % (modifierNames.size() * 2);
+        if (j < modifierNames.size()) {
+            orderBuilder->addModifier(modifierNames[j]);
+        }
+        std::cout << " with " << modifierNames[j] << std::endl;
+    }
+    customer_->setHappiness(this->customer_->getHappiness() + 5);
+    customer_->changeState(new WaitingState(customer_));
+    std::cout << orderBuilder->toString() << std::endl;
 }
 void OrderingState::update(float dt) { readyTimer_.update(dt); }
 
