@@ -1,3 +1,4 @@
+
 #include "customer/Customer.h"
 #include "floor/Floor.h"
 #include "menu/Menu.h"
@@ -18,7 +19,7 @@ void floor() {
     customers.push_back(new Customer("Trinity", 0.5));
     customers.push_back(new Customer("Morpheus", 0.5));
     floor->customerEnter(customers);
-    floor->addStaff(new Waiter(&menu));
+    floor->addStaff(new Waiter(&menu, floor));
     floor->createTables(5, 4);
     floor->checkTable(0, 0);
     floor->checkTable(0, 0);

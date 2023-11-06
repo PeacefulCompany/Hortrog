@@ -28,9 +28,23 @@ public:
      * @param state The customer state to accept.
      */
     virtual void accept(CustomerState& state) = 0;
+    /**
+     * @brief Pure virtual function for getting the staff type.
+     *
+     * This function is overridden by derived classes to provide specific
+     * behavior when the staff type is gotten.
+     *
+     * @return The staff type.
+     */
     virtual std::string getStaffType() = 0;
     int currentTableId_;
-
+    /**
+     * @brief Sets the kitchen.
+     *
+     * This function is used to set the kitchen.
+     *
+     * @param kitchen The kitchen to set.
+     */
     static void setKitchen(Kitchen* kitchen) {
         if (kitchen_ == nullptr) {
             kitchen_ = kitchen;

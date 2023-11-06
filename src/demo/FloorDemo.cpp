@@ -92,7 +92,7 @@ void FloorDemo::addCustomers() {
 void FloorDemo::addStaff() {
     CommandMenu menu;
     menu.addCommand(
-        "Waiter", [this]() { floor_.addStaff(new Waiter(&menu_)); });
+        "Waiter", [this]() { floor_.addStaff(new Waiter(&menu_, &floor_)); });
     menu.addCommand(
         "Manager", [this]() { floor_.addStaff(new Manager(&floor_)); });
     menu.setError("Invalid staff type.");
