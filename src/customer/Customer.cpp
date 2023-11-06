@@ -10,6 +10,8 @@
 #include <random>
 #include <sstream>
 
+int Customer::paymentSelection = 0;
+
 Customer::Customer(const std::string& name, float happiness)
     : state_(new OrderingState(this)), name_(name), happiness_(happiness) {
     initializePaymentSelection();
