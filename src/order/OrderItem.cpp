@@ -5,14 +5,17 @@ OrderItem::OrderItem(const MenuItem* item) : item_(item) {}
 
 std::string OrderItem::toJson() {
     std::string ret = "{\"name\": \"" + item_->getName() + "\",";
+	ret += "\"customer\": \"" + customer_ + "\",";
     ret += "\"price\": " + std::to_string(item_->getPrice()) + "}";
     return ret;
 }
 
 double OrderItem::total() { return item_->getPrice(); }
+
 void OrderItem::add(std::unique_ptr<Order>) {}
 
 std::string OrderItem::getId() { return item_->getName(); }
+
 std::vector<std::pair<std::string, double>>
 OrderItem::generateReceiptOrderList() {
     std::vector<std::pair<std::string, double>> returnVec;

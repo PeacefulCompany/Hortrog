@@ -10,17 +10,22 @@ double Modifier::total() {
 std::string Modifier::toJson() {
     std::string ret = "{\"name\": \"" + component_->getId() + "\",";
     ret += "\"price\": " + std::to_string(component_->total() + price_);
+	ret += ",\"customer\": \"" + customer_ + "\"";
     ret += ",\"mod\": \"" + key_ + "\"}";
     return ret;
 }
+
 Modifier::Modifier(std::unique_ptr<Order> component) {
     this->component_ = std::move(component);
     this->price_ = 0;
 }
+
 Modifier::Modifier(std::unique_ptr<Order> component, std::string key) {
     this->component_ = std::move(component);
     this->price_ = 0;
+	this->key_ = key;
 }
+
 std::vector<std::pair<std::string, double>>
 Modifier::generateReceiptOrderList() {
     std::vector<std::pair<std::string, double>> returnVec;

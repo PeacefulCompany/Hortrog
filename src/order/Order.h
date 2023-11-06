@@ -7,7 +7,7 @@
 #include <vector>
 
 class Order {
-private:
+protected:
     std::string customer_;
     uint32_t tblId_;
 
@@ -23,7 +23,6 @@ public:
     inline virtual void setCustomer(std::string customer) {
         customer_ = customer;
     };
-
     inline std::string getCustomer() { return customer_; };
 
     virtual ~Order() = default;
