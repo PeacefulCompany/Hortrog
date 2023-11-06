@@ -118,9 +118,10 @@ std::string Waiter::getStaffType() { return "Waiter"; }
 
 std::vector<Receipt> Waiter::synthesizeBill(int strategy, uint32_t tblId) {
     switch (strategy) {
-    case 1: pointOfSales_->getReceipt(new EvenSplit(), tblId); break;
-    case 2: pointOfSales_->getReceipt(new PerCustomer(), tblId); break;
-    case 3: pointOfSales_->getReceipt(new OneReceipt(), tblId); break;
+    case 0: return pointOfSales_->getReceipt(new EvenSplit(), tblId);
+    case 1: return pointOfSales_->getReceipt(new PerCustomer(), tblId);
+    case 2: return pointOfSales_->getReceipt(new OneReceipt(), tblId);
     default: std::cout << "Invalid strategy" << std::endl; break;
     }
+    return {};
 }
