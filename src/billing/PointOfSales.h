@@ -6,6 +6,7 @@
 
 class PointOfSales {
 public:
+    PointOfSales();
     void readyMeals(std::vector<Meal*> mealsWithOrdersIn);
     void printBill(int tblId);
     bool isPaymentSettled(int tblId);
