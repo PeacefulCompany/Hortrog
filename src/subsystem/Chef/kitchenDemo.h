@@ -1,14 +1,13 @@
 #pragma once
 
-#include "Menu/Menu.h"
+#include "menu/Menu.h"
 #ifndef KITCHEN_DEMO_H
 #define KITCHEN_DEMO_H
 
-#include "../../order/ConcreteOrderBuilder.h"
-#include "../../order/Order.h"
+#include "order/ConcreteOrderBuilder.h"
+#include "order/Order.h"
 
-
-#include "../../Menu/Menu.h"
+#include "menu/Menu.h"
 #include "order/ConcreteOrderBuilder.h"
 #include "subsystem/Chef/Kitchen.h"
 
@@ -31,7 +30,6 @@ public:
 
     ConcreteOrderBuilder* getOrderBuilder();
     void setOrderBuilder(ConcreteOrderBuilder* orderBuilder);
-
 
     // other functions
     void test();
