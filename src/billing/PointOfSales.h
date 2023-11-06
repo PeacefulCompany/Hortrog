@@ -18,8 +18,8 @@ public:
     //    creditCardNumber);
 
     void addOrder(Order* order) {
-        // std::cout << "Adding order" << std::endl;
-        // orders_.push_back(order);
+        std::cout << "Adding order" << std::endl;
+        orders_.push_back(order);
     };
     std::vector<Receipt> getReceipt(POSStrategy* strategy, uint32_t tableId);
 

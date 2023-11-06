@@ -25,7 +25,7 @@ void WaiterDemo::addCustomers() {
 
 void WaiterDemo::customerOrder() {
     // set state of all customers to ordering
-
+    waiter_->getOrderBuilder()->begin(1);
     for (auto& customer : customers_) {
         customer->changeState(new OrderingState(customer));
     }
@@ -36,9 +36,9 @@ void WaiterDemo::customerOrder() {
     }
 
     // waiter sends receipt thingy wingy
-    waiter_->getOrderBuilder()->begin(1);
-    waiter_->getPointOfSales()->addOrder(
-        waiter_->getOrderBuilder()->getOrder());
+
+    Order* order = waiter_->getOrderBuilder()->getOrder();
+    waiter_->getPointOfSales()->addOrder(order);
 
     for (auto& customer : customers_) {
         customer->changeState(new PayingState(customer));
