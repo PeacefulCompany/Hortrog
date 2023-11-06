@@ -11,17 +11,18 @@ class GameDemo : public Application {
 protected:
     KitchenDemo* kitchenDemo_;
     FloorDemo* floorDemo_;
-    Kitchen* kitchen_;
-    ConcreteOrderBuilder* orderBuilder_;
-    Menu* menu_ = new Menu();
+
     CommandMenu commands_;
     bool running_ = true;
+
+    // --- Game resources ---
+
     Floor floor_;
+    Menu menu_;
+    Kitchen kitchen_;
+    ConcreteOrderBuilder* orderBuilder_;
 
 public:
-    GameDemo();
-    ~GameDemo();
-
     inline bool shouldQuit() const override { return !running_; }
     virtual void gameLoop() override;
 
