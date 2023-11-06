@@ -16,8 +16,6 @@ public:
 
     void addOrder(Order* order){orders_.push_back(order);};
     std::vector<Receipt> getReceipt(POSStrategy* strategy, uint32_t tableId);
-
-
 private:
     std::vector<Order*> orders_;
     std::vector<Payment*> payments_;
