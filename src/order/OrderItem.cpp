@@ -24,7 +24,7 @@ bool OrderItem::checkForCustomer(std::string customerName) {
     return customerName == customer_;
 }
 bool OrderItem::checkForDupe(
-    std::string customerName, std::vector<MenuItem*> menuItems) {
+    std::string customerName, std::vector<const MenuItem*> menuItems) {
     if (customerName == customer_){
         for (auto& item : menuItems) {
             if (item->getName() == item_->getName()) {
