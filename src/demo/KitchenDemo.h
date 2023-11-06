@@ -9,7 +9,7 @@
 
 class KitchenDemo : public Application {
 
-private:
+protected:
     Kitchen* kitchen_;
     ConcreteOrderBuilder* orderBuilder_;
     Menu* menu_ = new Menu();
@@ -24,7 +24,8 @@ public:
     void gameLoop() override;
     void init() override;
     void cleanup() override;
-
+    
+    void init(Kitchen* kitchen, Menu* menu);
     /**
      * @brief Get the Kitchen object
      *

@@ -114,6 +114,7 @@ void FloorDemo::visitCustomers() {
     if (opt == -1) return;
 
     staff->visitTables();
+    
 }
 
 void FloorDemo::update() {

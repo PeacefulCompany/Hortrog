@@ -3,6 +3,7 @@
 #include "order/ConcreteOrderBuilder.h"
 #include "order/Order.h"
 #include "order/OrderBuilder.h"
+#include "subsystem/Chef/Kitchen.h"
 #include "subsystem/Chef/KitchenStaff.h"
 #include <iostream>
 #include <string>
@@ -189,6 +190,24 @@ void KitchenDemo::displayAddChef() {
     kitchen_->AddChef(newChef);
     std::cout << "=============================" << std::endl;
 }
+
+void KitchenDemo::init(Kitchen* kitchen, Menu* menu) {
+    kitchen_ = kitchen;
+    menu_ = menu;
+    orderBuilder_ = new ConcreteOrderBuilder(menu_);
+
+    commands_.addCommand("Pass some time", [this]() { simulateTimePassed(); });
+    commands_.addCommand(
+        "Display Kitchen snapshot", [this]() { displayKitchenSnapshot(); });
+    commands_.addCommand("Display menu", [this]() { displayMenu(); });
+    commands_.addCommand(
+        "Display Order Builder", [this]() { displayOrderBuilderMenu(); });
+    commands_.addCommand("Add chef", [this]() { displayAddChef(); });
+
+    commands_.setPrompt("Choose an option (-1 to exit): ");
+    commands_.setExitCode(-1);
+}
+
 void KitchenDemo::init() {
     kitchen_ = new Kitchen();
     menu_->loadFromFile("menu_items.json");

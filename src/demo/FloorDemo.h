@@ -10,20 +10,20 @@
 #include <vector>
 
 class FloorDemo : public Application {
-protected:
+public:
     inline bool shouldQuit() const override { return !running_; }
 
     void gameLoop() override;
     void init() override;
     void cleanup() override;
 
-private:
     void addTable();
     void addCustomers();
     void addStaff();
     void visitCustomers();
     void update();
 
+protected:
     CommandMenu mainOptions_;
 
     Floor floor_;
