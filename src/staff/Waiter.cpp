@@ -72,6 +72,10 @@ Meal* Waiter::getMeal(Customer& customer) {
     }
     return nullptr;
 }
+void Waiter::giveMeal(Customer& Customer, Meal* meal) {
+    Meal* CustomerMeal = getMeal(Customer);
+    Customer.receiveMeal(CustomerMeal);
+}
 void Waiter::giveFoodToCustomer(Customer& customer) {
     std::string customerName = customer.getName();
     if (!this->readyMeals.empty()) {
