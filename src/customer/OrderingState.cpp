@@ -1,4 +1,5 @@
 #include "OrderingState.h"
+#include "customer/Customer.h"
 #include "customer/WaitingState.h"
 #include "floor/Table.h"
 #include "menu/Menu.h"

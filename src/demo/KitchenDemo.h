@@ -9,49 +9,20 @@
 
 class KitchenDemo : public Application {
 
-private:
-    Kitchen* kitchen_;
-    ConcreteOrderBuilder* orderBuilder_;
-    Menu* menu_ = new Menu();
+protected:
+    Kitchen& kitchen_;
+    ConcreteOrderBuilder& orderBuilder_;
+    Menu& menu_;
     CommandMenu commands_;
-    bool running_ = true;
 
     // Menu* menu_;
 
 public:
-    inline bool shouldQuit() const override { return !running_; }
+    KitchenDemo(Kitchen& kitchen, ConcreteOrderBuilder& builder, Menu& menu);
 
     void gameLoop() override;
     void init() override;
     void cleanup() override;
-
-    /**
-     * @brief Get the Kitchen object
-     *
-     * @return Kitchen*
-     */
-    Kitchen* getKitchen();
-
-    /**
-     * @brief Set the Kitchen object
-     *
-     * @param kitchen
-     */
-    void setKitchen(Kitchen* kitchen);
-
-    /**
-     * @brief Get the Order Builder object
-     *
-     * @return ConcreteOrderBuilder*
-     */
-    ConcreteOrderBuilder* getOrderBuilder();
-
-    /**
-     * @brief Set the Order Builder object
-     *
-     * @param orderBuilder
-     */
-    void setOrderBuilder(ConcreteOrderBuilder* orderBuilder);
 
     /**
      * @brief Ask for the time passed and update the kitchen
@@ -67,12 +38,6 @@ public:
     void addOrderBuilderItem();
 
     /**
-     * @brief Add a modifier to the order
-     *
-     */
-    void addOrderBuilderModifier();
-
-    /**
      * @brief Simulate the time passed
      *
      */
@@ -83,12 +48,6 @@ public:
      *
      */
     void displayKitchenSnapshot();
-
-    /**
-     * @brief Display the menu
-     *
-     */
-    void displayMenu();
 
     /**
      * @brief Display the modifiers

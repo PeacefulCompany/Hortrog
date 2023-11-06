@@ -10,23 +10,22 @@
 #include <vector>
 
 class FloorDemo : public Application {
-protected:
-    inline bool shouldQuit() const override { return !running_; }
+public:
+    FloorDemo(Floor& floor, Menu& menu);
 
     void gameLoop() override;
     void init() override;
     void cleanup() override;
 
-private:
     void addTable();
     void addCustomers();
     void addStaff();
     void visitCustomers();
     void update();
 
+protected:
     CommandMenu mainOptions_;
 
-    Floor floor_;
-    Menu menu_;
-    bool running_ = true;
+    Floor& floor_;
+    Menu& menu_;
 };

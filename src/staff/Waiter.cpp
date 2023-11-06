@@ -27,6 +27,13 @@ Waiter::Waiter(const Menu* menu, const Floor* floor)
     FloorStaff::setKitchen(new Kitchen());
     this->orderBuilder_ = std::make_unique<ConcreteOrderBuilder>(menu);
 }
+
+Waiter::Waiter(const Menu* menu, const Floor* floor, Kitchen* kitchen)
+    : FloorStaff(), menu_(menu), floor_(floor) {
+    this->kitchen_ = kitchen;
+    this->orderBuilder_ = std::make_unique<ConcreteOrderBuilder>(menu);
+}
+
 void Waiter::serveMeals() {
     for (auto& table : tables_) {
         CustomerIterator* iterator = new CustomerIterator(table);
