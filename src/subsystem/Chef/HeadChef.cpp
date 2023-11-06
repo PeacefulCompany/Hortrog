@@ -1,7 +1,8 @@
 
 #include "HeadChef.h"
 
-HeadChef::HeadChef(int rating, int capacity, Kitchen* kitchen, int speed, std::string role) {
+HeadChef::HeadChef(
+    int rating, int capacity, Kitchen* kitchen, int speed, std::string role) {
     this->rating_ = rating;
     this->capacity_ = capacity;
     this->kitchen_ = kitchen;
@@ -31,7 +32,7 @@ void HeadChef::prepareMeal(Meal* meal) {
         meal->setReady(false);
         KitchenStaff::prepareMeal(meal);
     }
-    
+
     // std::cout << "Head Chef is done preparing the meal" << std::endl;
 }
 
@@ -40,9 +41,9 @@ void HeadChef::prepareMeal(Meal* meal) {
  *
  */
 std::string HeadChef::toString() {
-    std::string output = this->role_+":\n";
-    output += "Rating: " + std::to_string(rating_) + "\n";
-    output += "Capacity: " + std::to_string(capacity_) + "\n";
-    output += "Speed: " + std::to_string(speed_) + "\n";
-    return output;
+    std::stringstream ss;
+    ss << role_ << " (rating=" << rating_;
+    ss << ", capacity=" << capacity_ << ", speed=" << speed_ << ")";
+
+    return ss.str();
 }

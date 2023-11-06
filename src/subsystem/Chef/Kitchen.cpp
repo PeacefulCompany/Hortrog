@@ -44,14 +44,11 @@ Kitchen::Kitchen(/* args */) {
     chef4->setNextStaff(chef5);
 }
 
-
-
 void Kitchen::handleOrder(Order* order) {
     std::cout << "Kitchen: recieved Order" << std::endl;
     Meal* meal = new Meal(order);
 
-    if(order->toJson() == "{}")
-    {
+    if (order->toJson() == "{}") {
         std::cout << "Kitchen: recieved empty order" << std::endl;
         return;
     }
@@ -61,7 +58,7 @@ void Kitchen::handleOrder(Order* order) {
 }
 
 void Kitchen::AddChef(KitchenStaff* chef) {
-    KitchenStaff* current  = headChef.get();
+    KitchenStaff* current = headChef.get();
     while (current->getNextStaff() != nullptr) {
         current = current->getNextStaff();
     }
@@ -136,34 +133,31 @@ void Kitchen::notify() {
 }
 
 std::string Kitchen::toString() {
-    std::string str = "=========================\n";
-    str += "Kitchen: \n";
-    str += "+~~~~~~~~~~~~~~~~~~~~~~~+\n";
-    str += "Incoming Meals: \n";
-    str += "+~~~~~~~~~~~~~~~~~~~~~~~+\n";
+    std::stringstream ss;
+    ss << "KITCHEN\n- incoming:";
+
     for (int i = 0; i < incomingMeals.size(); i++) {
-        str += incomingMeals.front()->toString() + "\n";
+        ss << "\n  - " << incomingMeals.front()->toString();
         incomingMeals.push(incomingMeals.front());
         incomingMeals.pop();
     }
-    str += "+~~~~~~~~~~~~~~~~~~~~~~~+\n";
-    str += "Outgoing Meals: \n";
-    str += "+~~~~~~~~~~~~~~~~~~~~~~~+\n";
+    ss << "\n- outgoing:";
     for (int i = 0; i < outgoingMeals.size(); i++) {
-        str += outgoingMeals[i]->toString() + "\n";
+        ss << "\n  - " << outgoingMeals[i]->toString();
     }
-    str += "+~~~~~~~~~~~~~~~~~~~~~~~+\n";
-    str += "Kitchen Staff: \n";
-    str += "+~~~~~~~~~~~~~~~~~~~~~~~+\n";
-    KitchenStaff* current = headChef.get();
-    while (current != nullptr) {
-        str += "-------------------------\n";
-        str += current->toString() + "\n";
-        current = current->getNextStaff();
-        str += "-------------------------\n";
+    ss << "\n- staff:";
+    for (KitchenStaff* cur = headChef.get(); cur; cur = cur->getNextStaff()) {
+        std::string line;
+        std::stringstream stream(cur->toString());
+        std::getline(stream, line);
+
+        ss << "\n  - " << line;
+        while (!stream.eof()) {
+            std::getline(stream, line);
+            ss << "\n    " << line;
+        }
     }
-    str += "=========================\n";
-    return str;
+    return ss.str();
 }
 
 Meal* Kitchen::getOrder(uint32_t tblId) {
