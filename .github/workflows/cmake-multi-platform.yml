@@ -20,14 +20,28 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get install doxygen graphviz
 
+      - name: Restore build files
+        uses: actions/cache/restore@v3
+        with:
+          path: ${{ github.workspace }}/build
+          restore-keys: build_files
+          key: build_files2
+
       - name: Configure CMake
         # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
         # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
         run: >
           cmake --preset other
           -S ${{ github.workspace }}
+
       - name: Build using CMake
         run: cmake --build ${{ github.workspace }}/build
+
+      - name: Save build files
+        uses: actions/cache/save@v3
+        with:
+          path: ${{ github.workspace }}/build
+          key: build_files
 
       - name: Run CTest
         run: ctest --test-dir ${{ github.workspace }}/build
