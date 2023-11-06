@@ -1,5 +1,6 @@
 
 #include "customer/Customer.h"
+#include "demo/FloorDemo.h"
 #include "demo/KitchenDemo.h"
 #include "floor/Floor.h"
 #include "menu/Menu.h"
@@ -73,6 +74,7 @@ void testImprovedKitchen() {
 }
 
 int main() {
-    testImprovedKitchen();
+    FloorDemo* floorDemo = new FloorDemo();
+    floorDemo->run();
     return 0;
 }

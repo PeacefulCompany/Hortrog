@@ -36,23 +36,32 @@ void OrderingState::visit(Waiter& w) {
     OrderBuilder* TableOrder = w.getOrderBuilder();
     const Menu* menu = TableOrder->getMenu();
     std::vector<std::string> allItems = menu->getAllKeys();
-
+    srand(time(0));
     int randomNumber = std::rand() % allItems.size();
     if (readyTimer_.expired()) {
-        TableOrder->addItem(allItems[randomNumber], customer_->getName());
-
+        std::string item = allItems[randomNumber];
+        TableOrder->addItem(item, customer_->getName());
         int randomNumber = std::rand() % 100;
         if (std::rand() % 4 == 0) {
-            std::string modifierName = "Wubba lubba dub dub!";
-            // allItems[randomNumber].getModifiers()[0].getName();
-            TableOrder->addModifier(modifierName);
+            std::vector<std::string> modifierNames;
+            const MenuItem* menuItem = menu->getMenuItem(item);
+            modifierNames = menuItem->supportedModifiers();
+            if (modifierNames.size() != 0) {
+                int randomIndex = std::rand() % modifierNames.size();
+                TableOrder->addModifier(modifierNames[randomIndex]);
+                std::cout << customer_->toString() << ": I ordered " << item
+                          << " with " << modifierNames[randomIndex]
+                          << std::endl;
+                this->customer_->setHappiness(
+                    this->customer_->getHappiness() + 5);
+                customer_->changeState(new WaitingState(customer_));
+            }
+        } else {
+            std::cout << customer_->toString() << ": I ordered " << item
+                      << std::endl;
+            this->customer_->setHappiness(this->customer_->getHappiness() + 5);
+            customer_->changeState(new WaitingState(customer_));
         }
-        std::cout << customer_->toString() << ": I ordered something"
-                  << std::endl;
-
-        this->customer_->setHappiness(this->customer_->getHappiness() + 5);
-
-        customer_->changeState(new WaitingState(customer_));
     } else {
         std::cout << customer_->toString() << ": Not ready to order"
                   << std::endl;
