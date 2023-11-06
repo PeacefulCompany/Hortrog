@@ -6,10 +6,10 @@ TEST(OrderItem, TO_JSON) {
     MenuItem item("bonger", 2, "", {});
     auto orderItem = std::unique_ptr<Order>(new OrderItem(&item));
     ASSERT_EQ(
-        orderItem->toJson(), "{\"name\": \"bonger\",\"price\": 2.000000}");
+        orderItem->toJson(), "{\"name\": \"bonger\",\"customer\": \"\",\"price\": 2.000000}");
 }
 TEST(OrderItem, TOTAL) {
-    MenuItem item("bonger", 2, "", {});
+    MenuItem item("bonger", 2.1, "", {});
     auto orderItem = std::unique_ptr<Order>(new OrderItem(&item));
     ASSERT_EQ(orderItem->total(), 2.1);
 }
