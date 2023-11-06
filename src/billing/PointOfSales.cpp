@@ -90,5 +90,13 @@ for (const auto& payment : payments) {
         return false;
 }
 
-
-
+std::vector<Receipt> PointOfSales::getReceipt(
+    POSStrategy* strategy, uint32_t tableId) {
+        std::vector<Order*> tableOrders;
+        for (auto order : orders_) {
+            if (order->getTblId() == tableId){
+                tableOrders.push_back(order);
+            }
+        }
+        strategy->getReceipts(tableOrders);
+}
