@@ -4,13 +4,11 @@
 #include <memory>
 
 TEST(MenuTests, TestGetItem_Lemonade) {
-    std::unique_ptr<MenuItem> item(new MenuItem("Lemonade", 2.99, "Vegan", {}));
-    std::unique_ptr<MenuItem> item2(
-        new MenuItem("Lemonade", 2.99, "Vegan", {}));
-
+    std::unique_ptr<MenuItem> item = std::make_unique<MenuItem>("Lemonade", 2.99, "Vegan", std::vector<std::string>{"Ice", "Sugar"});
+	std::unique_ptr<MenuItem> item2 = std::make_unique<MenuItem>("Lemonade", 2.99, "Vegan", std::vector<std::string>{"Ice", "Sugar"});
+	
     Menu m;
-    m.addMenuItem(item->getName(), std::move(item));
-    m.addMenuItem(item->getName(), std::move(item2));
+    std::cout << m.addMenuItem(item->getName(), std::move(item)) << std::endl;
     const MenuItem* i = m.getMenuItem("Lemonade");
     ASSERT_EQ(i->getName(), "Lemonade");
     ASSERT_EQ(i->getPrice(), 2.99);
