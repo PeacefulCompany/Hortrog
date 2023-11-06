@@ -118,6 +118,9 @@ public:
      *
      */
     void displayOrderBuilderMenu();
+
+
+    void displayAddChef();
 };
 
 #endif // KITCHEN_DEMO_H

@@ -10,6 +10,7 @@
  * the time.
  */
 #include "Kitchen.h"
+#include "subsystem/Chef/KitchenStaff.h"
 #include <iostream>
 
 Kitchen::Kitchen(/* args */) {
@@ -43,11 +44,21 @@ Kitchen::Kitchen(/* args */) {
     chef4->setNextStaff(chef5);
 }
 
+
+
 void Kitchen::handleOrder(Order* order) {
     std::cout << "Kitchen: recieved Order" << std::endl;
     Meal* meal = new Meal(order);
     incomingMeals.push(meal);
     // flush();
+}
+
+void Kitchen::AddChef(KitchenStaff* chef) {
+    KitchenStaff* current  = headChef.get();
+    while (current->getNextStaff() != nullptr) {
+        current = current->getNextStaff();
+    }
+    current->setNextStaff(chef);
 }
 
 void Kitchen::notifyItemReady() {

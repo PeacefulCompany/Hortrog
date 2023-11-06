@@ -1,6 +1,7 @@
 #include "kitchenDemo.h"
 #include "order/ConcreteOrderBuilder.h"
 #include "order/OrderBuilder.h"
+#include "subsystem/Chef/KitchenStaff.h"
 #include "subsystem/Chef/kitchenDemo.h"
 #include <iostream>
 #include <string>
@@ -213,4 +214,42 @@ void KitchenDemo::addOrderBuilderModifier() {
     } else {
         std::cout << "Modifier not added" << std::endl;
     }
+}
+
+void KitchenDemo::displayAddChef(){
+    std::cout << "Please enter the role of the chef you would like to add: ";
+    std::string role;
+    std::getline(std::cin, role);
+
+    std::cout << "Please enter the rating of the chef you would like to add: ";
+    int rating;
+    std::cin >> rating;
+
+    std::cout << "Please enter the capacity of the chef you would like to add: ";
+    int capacity;
+    std::cin >> capacity;
+
+    std::cout << "Please enter the speed of the chef you would like to add: ";
+    int speed;
+    std::cin >> speed;
+
+
+
+    KitchenStaff* newChef = new NormalChef(rating, capacity, this->kitchen_, speed, role);
+
+    int addMore = 1;
+
+    while (addMore != 0) {
+        std::cout << "Would you like to add a dish that this chef can prepare? (1 for yes, 0 for no): ";
+        std::cin >> addMore;
+        if (addMore == 1) {
+            std::cout << "Please enter the name of the dish: ";
+            std::string dish;
+            std::getline(std::cin, dish);
+            ((NormalChef*)newChef)->addCanPrepareItem(dish);
+        }
+    }
+
+    kitchen_->AddChef(newChef);
+
 }

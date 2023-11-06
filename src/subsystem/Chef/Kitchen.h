@@ -103,6 +103,9 @@ public:
      * @return std::string
      */
     std::string toString();
+
+    void AddChef(KitchenStaff* chef);
+
     ~Kitchen();
 };
 
