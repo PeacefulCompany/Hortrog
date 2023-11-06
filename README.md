@@ -1,7 +1,7 @@
 <h1 align="center"> COS 214 Project - Restaurant Simulator </h1>
 <h3 align="center"> By the Refactoring Gurus </h3>
 
-![image](https://pbs.twimg.com/media/FPrkatnVkAUibUj.jpg)
+<img src="https://pbs.twimg.com/media/FPrkatnVkAUibUj.jpg" alt="image" width="50%">
 
 # Contents
 
