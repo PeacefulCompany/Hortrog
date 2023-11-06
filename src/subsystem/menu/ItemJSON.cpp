@@ -62,3 +62,10 @@ std::string ItemJSON::getMod() { return mod_; }
  * @return std::string The customer name of the item
  */
 std::string ItemJSON::getCustomer() { return customer_; }
+
+std::string ItemJSON::toString() {
+    std::string ret = "{\"name\": \"" + name_ + "\",";
+    ret += "\"customer\": \"" + customer_ + "\",";
+    ret += "\"price\": " + std::to_string(cost_) + "}";
+    return ret;
+}

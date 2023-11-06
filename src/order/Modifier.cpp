@@ -11,6 +11,7 @@ double Modifier::total() {
 std::string Modifier::toJson() {
     std::string ret = "{\"name\": \"" + component_->getId() + "\",";
     ret += "\"price\": " + std::to_string(component_->total() + price_);
+    ret += ",\"customer\": \"" + customer_ + "\"";
     ret += ",\"mod\": \"" + key_ + "\"}";
     return ret;
 }

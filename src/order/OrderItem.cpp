@@ -6,6 +6,7 @@ OrderItem::OrderItem(const MenuItem* item) : item_(item) {}
 
 std::string OrderItem::toJson() {
     std::string ret = "{\"name\": \"" + item_->getName() + "\",";
+    ret += "\"customer\": \"" + customer_ + "\",";
     ret += "\"price\": " + std::to_string(item_->getPrice()) + "}";
     return ret;
 }

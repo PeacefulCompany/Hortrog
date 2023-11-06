@@ -22,6 +22,7 @@ public:
     std::string getDiet();
     std::string getMod();
     std::string getCustomer();
+    std::string toString();
 };
 
 #endif // ITEM_H
