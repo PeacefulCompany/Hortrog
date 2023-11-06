@@ -1,5 +1,6 @@
 #pragma once
 
+#include "core/Command.h"
 #include <functional>
 #include <optional>
 #include <string>
@@ -7,8 +8,6 @@
 
 class CommandMenu {
 public:
-    using Callback = std::function<void()>;
-
     /**
      * @brief Adds a command to the menu
      *
@@ -16,7 +15,7 @@ public:
      * @param callback The callback function to execute if the command is
      * selected
      */
-    void addCommand(const std::string& label, Callback&& callback);
+    void addCommand(const std::string& label, Command::Callback&& callback);
 
     /**
      * @brief Takes the user input and executes the corresponding command
@@ -34,5 +33,5 @@ private:
     std::optional<int> exitCode_;
     std::string prompt_ = "Enter an option: ";
     std::string error_ = "Invalid option. Try again.";
-    std::vector<std::pair<std::string, Callback>> commands_;
+    std::vector<std::pair<std::string, Command>> commands_;
 };

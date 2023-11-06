@@ -1,10 +1,12 @@
 #include "CommandMenu.h"
+#include "core/Command.h"
 #include "core/util.h"
 
 #include <iostream>
 
-void CommandMenu::addCommand(const std::string& label, Callback&& callback) {
-    commands_.emplace_back(label, callback);
+void CommandMenu::addCommand(
+    const std::string& label, Command::Callback&& callback) {
+    commands_.emplace_back(label, Command(std::move(callback)));
 }
 int CommandMenu::execute() {
     for (int i = 0; i < commands_.size(); i++) {
@@ -17,7 +19,7 @@ int CommandMenu::execute() {
         opt = util::input(prompt_);
     }
     if (opt == exitCode_) return -1;
-    commands_[opt - 1].second();
+    commands_[opt - 1].second.execute();
 
     return 0;
 }

@@ -36,7 +36,6 @@ void FloorDemo::init() {
     mainOptions_.addCommand("Add Table", [this]() { addTable(); });
     mainOptions_.addCommand("Add Customers", [this]() { addCustomers(); });
     mainOptions_.addCommand("Add Staff", [this]() { addStaff(); });
-    mainOptions_.addCommand("Add Staff", [this]() { addStaff(); });
     mainOptions_.addCommand("Update Time", [this]() { update(); });
     mainOptions_.setPrompt("Choose an option (-1 to quit): ");
     mainOptions_.setExitCode(-1);
