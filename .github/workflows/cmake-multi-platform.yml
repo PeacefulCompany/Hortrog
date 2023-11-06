@@ -26,10 +26,11 @@ jobs:
         run: >
           cmake --preset other
           -S ${{ github.workspace }}
+      - name: Build using CMake
+        run: cmake --build ${{ github.workspace }}/build
 
-    # - name: Build
-    # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
-    #  run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
+      - name: Run CTest
+        run: ctest --test-dir ${{ github.workspace }}/build
 
   #  - name: Test
   # working-directory: ${{ steps.strings.outputs.build-output-dir }}
