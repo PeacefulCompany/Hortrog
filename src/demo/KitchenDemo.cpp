@@ -78,7 +78,7 @@ void KitchenDemo::displayOrderBuilderMenu() {
     orderMenu.addCommand("Submit Order",
         [this]() { kitchen_->handleOrder(orderBuilder_->getOrder()); });
 
-    orderMenu.setPrompt("Enter choice (-1 to exit): ");
+    orderMenu.setPrompt("Enter choice (-1 to go back): ");
     orderMenu.setError("Invalid input");
     orderMenu.setExitCode(-1);
 
