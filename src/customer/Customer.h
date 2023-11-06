@@ -71,6 +71,9 @@ public:
 
     std::string toString() const;
 
+    void setTableID(uint32_t id) { tableID = id; }
+    uint32_t getTableId() { return tableID; }
+
 private:
     /**
      * @brief The state of the customer
@@ -88,4 +91,5 @@ private:
      * @brief The meal that the customer has received
      */
     Meal* receivedMeal;
+    uint32_t tableID;
 };
