@@ -8,7 +8,10 @@ class OrderItem : public Order {
 
 public:
     OrderItem(const MenuItem* item);
-
+    std::vector<Order*> getChildren() {
+        std::vector<Order*> ret;
+        return ret;
+    };
     std::string toJson() override;
     double total() override;
     void add(std::unique_ptr<Order>) override;

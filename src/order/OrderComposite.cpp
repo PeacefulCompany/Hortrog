@@ -93,3 +93,10 @@ std::string OrderComposite::toString() const {
     }
     return ss.str();
 }
+std::vector<Order*> OrderComposite::getChildren() {
+    std::vector<Order*> ret;
+    for (auto& order : orders_) {
+        ret.push_back(order.get());
+    }
+    return ret;
+}
