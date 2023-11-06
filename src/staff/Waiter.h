@@ -11,6 +11,7 @@
 #include "staff/FloorStaff.h"
 #include "subsystem/Meals/Meal.h"
 #include <memory>
+#include <string>
 #include <vector>
 
 /**
@@ -22,7 +23,7 @@
  */
 class Waiter : public FloorStaff {
 public:
-    Waiter(const Menu* menu);
+    Waiter(const Menu* menu, PointOfSales*);
 
     /**
      * @brief Accepts a customer state.
@@ -93,6 +94,8 @@ public:
     void assignTable(Table* table);
 
     void visitTables() override;
+
+    void synthesizeBill(std::string);
 
     void giveFoodToCustomer(Customer& Customer);
     void callManager(CustomerState& state);
