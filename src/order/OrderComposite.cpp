@@ -1,10 +1,12 @@
+//ORDERCOMPP
 #include "OrderComposite.h"
 #include <iostream>
 
 void OrderComposite::add(std::unique_ptr<Order> order) {
     std::string newCustomer = order->getCustomer();
-    bool canAdd = checkForCustomer(newCustomer);
-    if (canAdd){
+    std::vector<const MenuItem *> menuItems = order->getAllMenuItems();
+    bool hasDupe = checkForDupe(newCustomer, menuItems);
+    if (!hasDupe){
         orders_.push_back (std::move(order));
     } else {
         std::cout << "You already ordered that!!";
@@ -53,4 +55,24 @@ bool OrderComposite::checkForCustomer(std::string customerName) {
         }
     }
     return false;
+}
+bool OrderComposite::checkForDupe(
+    std::string customerName, std::vector<const MenuItem*> menuItems) {
+    for (auto& order : orders_) {
+        Order* orderPtr = order.get();
+        if (orderPtr->checkForDupe(customerName, menuItems)){
+            return true;
+        }
+    }
+    return false;
+}
+std::vector<const MenuItem*> OrderComposite::getAllMenuItems() {
+    std::vector<const MenuItem*> returnVector;
+    for (auto& order : orders_) {
+        std::vector<const MenuItem*> childVector = order->getAllMenuItems();
+        for (const MenuItem* item : childVector) {
+            returnVector.push_back(item);
+        }
+    }
+    return returnVector;
 }

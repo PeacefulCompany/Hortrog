@@ -1,3 +1,4 @@
+//ORDERH
 #pragma once
 
 #include "menu/Menu.h"
@@ -25,8 +26,9 @@ public:
     inline virtual void setCustomer(std::string customer) {
         customer_ = std::move(customer);
     };
-
     virtual bool checkForCustomer(std::string customerName) = 0;
+    virtual bool checkForDupe(std::string customerName, std::vector<const MenuItem*> menuItems) = 0;
+    virtual std::vector<const MenuItem *> getAllMenuItems()=0;
     inline std::string getCustomer() { return customer_; };
 
     virtual ~Order() = default;

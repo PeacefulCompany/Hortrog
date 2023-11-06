@@ -1,4 +1,5 @@
 #include "order/ConcreteOrderBuilder.h"
+#include "order/Modifier.h"
 #include <iostream>
 #include <memory>
 #include <string>
@@ -36,10 +37,16 @@ bool ConcreteOrderBuilder::addModifier(const std::string& key) {
     // Save then remove the  last OrderItem in the vector
     std::unique_ptr<Order> lastOrder = std::move(this->tempOrder.back());
     this->tempOrder.pop_back();
+
+    std::string name = lastOrder->getCustomer();
+
+    std::cout << lastOrder->toJson() << std::endl;
     // Create a Modifier from the last OrderItem
     std::unique_ptr<Order> modifier =
         std::make_unique<Modifier>(std::move(lastOrder));
-	modifier->setCustomer(lastOrder->getCustomer()); // I think this is unnecessary, as modifier has the order in it
+
+	modifier->setCustomer(name); // I think this is unnecessary, as modifier has the order in it
+    ((Modifier*) modifier.get())->setKey(key);
     // Add the modifier to the vector
     this->tempOrder.emplace_back(std::move(modifier));
     return true;

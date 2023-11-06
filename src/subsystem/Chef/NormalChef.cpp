@@ -71,7 +71,7 @@ void NormalChef::prepareMeal(Meal* meal) {
             } else if (itemsBeingPrepared_.size() < capacity_ &&
                        !mealItemAlreadyBeingPrepared(items[i], meal)) {
 
-                MealItem* mealItem = new MealItem(meal->getCustomer(),
+                MealItem* mealItem = new MealItem(items[i]->getCustomer(),
                     this->rating_,
                     items[i]->getName(),
                     items[i]->getDiet(),
