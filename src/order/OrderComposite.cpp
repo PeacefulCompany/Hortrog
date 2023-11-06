@@ -4,8 +4,9 @@
 
 void OrderComposite::add(std::unique_ptr<Order> order) {
     std::string newCustomer = order->getCustomer();
-    bool canAdd = checkForDupe(newCustomer, getAllMenuItems());
-    if (canAdd){
+    std::vector<const MenuItem *> menuItems = getAllMenuItems();
+    bool hasDupe = checkForDupe(newCustomer, menuItems);
+    if (!hasDupe){
         orders_.push_back (std::move(order));
     } else {
         std::cout << "You already ordered that!!";
