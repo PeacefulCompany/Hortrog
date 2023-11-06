@@ -10,17 +10,16 @@
 #include "staff/Waiter.h"
 #include "subsystem/Meals/Meal.h"
 #include <iostream>
-#include <queue>
+#include <list>
 #include <string>
 #include <vector>
-
 
 class Waiter;
 class Kitchen {
 private:
     std::vector<Waiter*> waiters_;
     std::unique_ptr<KitchenStaff> headChef;
-    std::queue<Meal*> incomingMeals;
+    std::list<Meal*> incomingMeals;
     std::vector<Meal*> outgoingMeals;
 
 public:

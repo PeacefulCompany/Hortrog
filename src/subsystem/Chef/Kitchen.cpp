@@ -52,7 +52,7 @@ void Kitchen::handleOrder(Order* order) {
         std::cout << "Kitchen: recieved empty order" << std::endl;
         return;
     }
-    incomingMeals.push(meal);
+    incomingMeals.push_back(meal);
     // flush();
 }
 
@@ -75,7 +75,7 @@ void Kitchen::flush() {
     for (int i = 0; i < incomingMeals.size(); i++) {
         // Pop an element from the incomingMeals queue.
         Meal* meal = incomingMeals.front();
-        incomingMeals.pop();
+        incomingMeals.pop_front();
 
         // Get the headChef to prepare the meal.
         headChef->prepareMeal(meal);
@@ -87,7 +87,7 @@ void Kitchen::flush() {
             notify();
         } else {
             // If the meal is not done, re-add it to the incomingMeals queue.
-            incomingMeals.push(meal);
+            incomingMeals.push_back(meal);
         }
     }
 
@@ -135,10 +135,8 @@ std::string Kitchen::toString() {
     std::stringstream ss;
     ss << "KITCHEN\n- incoming:";
 
-    for (int i = 0; i < incomingMeals.size(); i++) {
-        ss << "\n  - " << incomingMeals.front()->toString();
-        incomingMeals.push(incomingMeals.front());
-        incomingMeals.pop();
+    for (auto it = incomingMeals.begin(); it != incomingMeals.end(); it++) {
+        ss << "\n  - " << (*it)->toString();
     }
     ss << "\n- outgoing:";
     for (int i = 0; i < outgoingMeals.size(); i++) {
