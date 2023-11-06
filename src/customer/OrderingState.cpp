@@ -26,7 +26,7 @@ void OrderingState::visit(Manager& m) {
         int randomIndex = rand() % complaints.size();
         m.lodgeComplaint(complaints[randomIndex]);
         this->customer_->setHappiness(this->customer_->getHappiness() - 5);
-        //request a waiter
+        // request a waiter
     } else {
         std::cout << "Manager talked to a cutomer" << std::endl;
         this->customer_->setHappiness(this->customer_->getHappiness() + 5);

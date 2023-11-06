@@ -33,6 +33,13 @@ public:
      * @param state The customer state to accept.
      */
     void accept(CustomerState& state) override;
+    /**
+     * @brief Gets the staff type.
+     *
+     * This function is used to get the staff type to id
+     *
+     * @return The staff type.
+     */
     std::string getStaffType() override;
     /**
      * @brief Checks the kitchen.
@@ -60,6 +67,8 @@ public:
     /**
      * @brief Fetches the meals.
      *
+     * This function is used to fetch the meals from the kitchen to the correct
+     * waiter
      * This function is used to fetch the meals from the kitchen.
      */
     void FetchMeals();
@@ -101,12 +110,24 @@ public:
 
     void giveFoodToCustomer(Customer& Customer);
     /**
+     * @brief Calls the manager.
+     *
+     * This function is used to call the manager.
+     *
+     * @param state The customer state.
      * @brief Calls the managers
      *  takes in the state of the customer and create and calls
      * the manager with the customer to visit the customer
      * @param state
      */
     void callManager(CustomerState& state);
+    /**
+     * @brief Gets the point of sales.
+     *
+     * This function is used to get the point of sales.
+     *
+     * @return A pointer to the point of sales.
+     */
     PointOfSales* getPointOfSales() { return pointOfSales_; }
     /**
      * @brief Serves the meals.

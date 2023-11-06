@@ -1,6 +1,7 @@
 #include "Waiter.h"
 #include "customer/Customer.h"
 #include "floor/CustomerIterator.h"
+#include "floor/Floor.h"
 #include "floor/Table.h"
 #include "order/ConcreteOrderBuilder.h"
 #include "order/OrderBuilder.h"
@@ -42,7 +43,7 @@ void Waiter::serveMeals() {
     }
 }
 void Waiter::checkKitchen() {
-    if (getReadyMeals().size() > 0) {
+    if (getReadyMeals().size() > 0) {   
         serveMeals();
         readyMeals.clear();
     } else {

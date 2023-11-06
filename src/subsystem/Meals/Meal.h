@@ -20,6 +20,7 @@ private:
 
 public:
     inline Meal(Order* order) : order_(order) { tableId_ = order->getTblId(); }
+    uint32_t getTableId(){return tableId_;}
     float getQuality();
     Order* getOrder();
     std::vector<MealItem*>& takeMeal();

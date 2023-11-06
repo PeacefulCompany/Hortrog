@@ -68,6 +68,7 @@ public:
      * @param meal the meal that the customer is receiving
      */
     void receiveMeal(Meal* meal);
+    bool getState() { if(state_ == nullptr) return false; else return true; }
 
     std::string toString() const;
 
