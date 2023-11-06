@@ -18,4 +18,5 @@ public:
     double total() override;
     std::string getId() override { return ""; };
     bool checkForCustomer(std::string customerName) override;
+    bool checkForDupe(std::string customerName, std::vector<MenuItem*> menuItems) override;
 };

@@ -27,6 +27,10 @@ Modifier::generateReceiptOrderList() {
     returnVec.emplace_back(key_, price_);
     return returnVec;
 }
+bool Modifier::checkForDupe(
+    std::string customerName, std::vector<MenuItem*> menuItems) {
+    return component_->checkForDupe(customerName, menuItems);
+}
 bool Modifier::checkForCustomer(std::string customerName) {
     return component_->checkForCustomer(customerName);
 }

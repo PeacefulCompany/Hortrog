@@ -18,4 +18,5 @@ public:
     std::string toJson() override;
     explicit Modifier(std::unique_ptr<Order> component, std::string key);
     bool checkForCustomer(std::string customerName) override;
+    bool checkForDupe(std::string customerName, std::vector<MenuItem*> menuItems) override;
 };

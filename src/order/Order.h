@@ -26,6 +26,7 @@ public:
         customer_ = std::move(customer);
     };
     virtual bool checkForCustomer(std::string customerName) = 0;
+    virtual bool checkForDupe(std::string customerName, std::vector<MenuItem*> menuItems) = 0;
 
     inline std::string getCustomer() { return customer_; };
 
