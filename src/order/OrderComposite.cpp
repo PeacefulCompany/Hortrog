@@ -1,16 +1,18 @@
+// ORDERCOMPP
 #include "OrderComposite.h"
 #include <iostream>
+#include <sstream>
 
 void OrderComposite::add(std::unique_ptr<Order> order) {
     std::string newCustomer = order->getCustomer();
-    bool canAdd = checkForCustomer(newCustomer);
-    if (canAdd){
-        orders_.push_back (std::move(order));
+    std::vector<const MenuItem*> menuItems = order->getAllMenuItems();
+    bool hasDupe = checkForDupe(newCustomer, menuItems);
+    if (!hasDupe) {
+        orders_.push_back(std::move(order));
     } else {
         std::cout << "You already ordered that!!";
     }
 }
-
 
 std::string OrderComposite::toJson() {
     std::cout << "Function call happening" << std::endl;
@@ -48,9 +50,46 @@ OrderComposite::generateReceiptOrderList() {
 bool OrderComposite::checkForCustomer(std::string customerName) {
     for (auto& order : orders_) {
         Order* orderPtr = order.get();
-        if (orderPtr->checkForCustomer(customerName)){
+        if (orderPtr->checkForCustomer(customerName)) {
             return true;
         }
     }
     return false;
+}
+bool OrderComposite::checkForDupe(
+    std::string customerName, std::vector<const MenuItem*> menuItems) {
+    for (auto& order : orders_) {
+        Order* orderPtr = order.get();
+        if (orderPtr->checkForDupe(customerName, menuItems)) {
+            return true;
+        }
+    }
+    return false;
+}
+std::vector<const MenuItem*> OrderComposite::getAllMenuItems() {
+    std::vector<const MenuItem*> returnVector;
+    for (auto& order : orders_) {
+        std::vector<const MenuItem*> childVector = order->getAllMenuItems();
+        for (const MenuItem* item : childVector) {
+            returnVector.push_back(item);
+        }
+    }
+    return returnVector;
+}
+
+std::string OrderComposite::toString() const {
+    std::stringstream ss;
+    ss << "OrderComposite";
+    for (const auto& o : orders_) {
+        std::stringstream stream(o->toString());
+        std::string line;
+
+        std::getline(stream, line);
+        ss << "\n- " << line;
+        while (!stream.eof()) {
+            std::getline(stream, line);
+            ss << "\n  " << line;
+        }
+    }
+    return ss.str();
 }
