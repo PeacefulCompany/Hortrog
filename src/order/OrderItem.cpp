@@ -34,8 +34,7 @@ bool OrderItem::checkForDupe(
     }
     return false;
 }
-std::vector<MenuItem*> OrderItem::getAllMenuItems() {
-    std::vector<MenuItem*> returnVector;
-    MenuItem * item = item_;
-    returnVector.push_back(&(*item_));
+std::vector<const MenuItem*> OrderItem::getAllMenuItems() {
+    std::vector<const MenuItem*> returnVector;
+    returnVector.push_back(item_);
 }

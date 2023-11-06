@@ -56,7 +56,7 @@ bool OrderComposite::checkForCustomer(std::string customerName) {
     return false;
 }
 bool OrderComposite::checkForDupe(
-    std::string customerName, std::vector<MenuItem*> menuItems) {
+    std::string customerName, std::vector<const MenuItem*> menuItems) {
     for (auto& order : orders_) {
         Order* orderPtr = order.get();
         if (orderPtr->checkForDupe(customerName, menuItems)){
@@ -65,10 +65,10 @@ bool OrderComposite::checkForDupe(
     }
     return false;
 }
-std::vector<MenuItem*> OrderComposite::getAllMenuItems() {
-    std::vector<MenuItem*> returnVector;
+std::vector<const MenuItem*> OrderComposite::getAllMenuItems() {
+    std::vector<const MenuItem*> returnVector;
     for (auto& order : orders_) {
-        std::vector<MenuItem*> childVector = order->getAllMenuItems();
+        std::vector<const MenuItem*> childVector = order->getAllMenuItems();
         for (auto& item : childVector) {
             returnVector.push_back(item);
         }

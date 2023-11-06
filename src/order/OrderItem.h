@@ -15,13 +15,13 @@ public:
     std::string getId() override;
     bool checkForCustomer(std::string customerName) override;
     bool checkForDupe(std::string customerName, std::vector<MenuItem*> menuItems) override;
-    std::vector<MenuItem *> getAllMenuItems() override;
+    std::vector<const MenuItem *> getAllMenuItems() override;
 
 protected:
     std::vector<std::pair<std::string, double>>
     generateReceiptOrderList() override;
 
 private:
-    //const MenuItem* item_;
-    MenuItem* item_;
+    const MenuItem* item_;
+    //MenuItem* item_;
 };
