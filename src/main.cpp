@@ -6,7 +6,6 @@
 #include "SFML/Window/WindowStyle.hpp"
 #include "menu/Menu.h"
 
-
 #include "core/TerminalApp.h"
 #include "customer/Customer.h"
 #include "demo/FloorDemo.h"
@@ -102,7 +101,7 @@ void floor() {
     customers.push_back(new Customer("Trinity", 0.5));
     customers.push_back(new Customer("Morpheus", 0.5));
     floor->customerEnter(customers);
-    floor->addStaff(new Waiter(&menu));
+    floor->addStaff(new Waiter(&menu, floor));
     floor->createTables(5, 4);
     floor->checkTable(0, 0);
     floor->checkTable(0, 0);
@@ -153,8 +152,7 @@ void test() {
     askTimePassed(kitchen);
 }
 
-
-void testImprovedKitchen(){
+void testImprovedKitchen() {
     KitchenDemo* kitchen = new KitchenDemo();
     kitchen->menuHandler();
 }

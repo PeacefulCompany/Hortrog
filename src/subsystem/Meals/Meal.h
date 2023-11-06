@@ -20,6 +20,7 @@ private:
     std::vector<MealItem*> items_;
     bool ready_ = false;
     uint32_t tableId_;
+
 public:
     inline Meal(Order* order) : order_(order) { tableId_ = order->getTblId(); }
     float getQuality();
@@ -34,6 +35,7 @@ public:
     bool containsMealItem(MealItem* item);
     inline bool getReady() { return ready_; }
     inline void setReady(bool rStatus_) { ready_ = rStatus_; }
+    inline uint32_t getTableId() { return tableId_; }
 };
 
 #endif

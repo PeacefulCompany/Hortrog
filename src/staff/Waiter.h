@@ -4,6 +4,7 @@
 #include "billing/PointOfSales.h"
 #include "customer/Customer.h"
 #include "customer/CustomerState.h"
+#include "floor/Floor.h"
 #include "floor/Table.h"
 #include "menu/Menu.h"
 #include "order/ConcreteOrderBuilder.h"
@@ -22,7 +23,7 @@
  */
 class Waiter : public FloorStaff {
 public:
-    Waiter(const Menu* menu);
+    Waiter(const Menu* menu, const Floor* floor);
 
     /**
      * @brief Accepts a customer state.
@@ -122,4 +123,5 @@ private:
      * @brief A unique pointer to the order builder.
      */
     std::unique_ptr<OrderBuilder> orderBuilder_;
+    const Floor* floor_;
 };
