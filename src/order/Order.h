@@ -25,8 +25,8 @@ public:
     inline virtual void setCustomer(std::string customer) {
         customer_ = std::move(customer);
     };
-    virtual bool checkForCustomer(std::string customerName) = 0;
 
+    virtual bool checkForCustomer(std::string customerName) = 0;
     inline std::string getCustomer() { return customer_; };
 
     virtual ~Order() = default;
