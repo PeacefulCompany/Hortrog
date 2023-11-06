@@ -1,7 +1,7 @@
 #include "Waiter.h"
 
-#include "floor/Table.h"
 #include "customer/Customer.h"
+#include "floor/Table.h"
 #include "order/ConcreteOrderBuilder.h"
 #include "order/OrderBuilder.h"
 #include "order/OrderComposite.h"
@@ -15,7 +15,6 @@
 
 #include <iostream>
 #include <vector>
-
 
 /**
  * @brief Initialize the static member kitchen_ with nullptr.
@@ -68,7 +67,6 @@ void Waiter::giveFoodToCustomer(Customer& customer) {
                 Meal* CustomerMeal = meal;
                 customer.receiveMeal(meal);
             }
-
         }
     }
 }
@@ -97,9 +95,10 @@ void Waiter::visitTables() {
 }
 void Waiter::callManager(CustomerState& state) {
     std::cout << "Manager called" << std::endl;
-    Manager* manager = new Manager();
+    Manager* manager =
+        new Manager(nullptr); // TODO: replace nullptr with actual floor
     std::cout << "I am the manager!" << std::endl;
-    manager->accept(    state);
+    manager->accept(state);
     delete manager;
 }
 void Waiter::accept(CustomerState& state) { state.visit(*this); }
