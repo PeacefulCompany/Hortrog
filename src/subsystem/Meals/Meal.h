@@ -1,5 +1,4 @@
 #pragma once
-#include "SFML/Config.hpp"
 #include <stdint.h>
 #include <string>
 #ifndef SUBSYSTEM_MEAL_H
@@ -16,7 +15,7 @@
 class Meal {
 
 private:
-    std::unique_ptr<Order> order_ = std::make_unique<Order>();
+    std::unique_ptr<Order> order_ = nullptr;
     std::vector<MealItem*> items_;
     bool ready_ = false;
     uint32_t tableId_;

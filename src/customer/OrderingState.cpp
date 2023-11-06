@@ -9,7 +9,6 @@
 #include <ctime>
 #include <iostream>
 
-
 void OrderingState::visit(Manager& m) {
     if (readyTimer_.expired()) {
         std::cout << "Ordering: Manager" << std::endl;

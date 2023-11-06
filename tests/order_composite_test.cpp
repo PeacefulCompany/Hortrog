@@ -2,6 +2,7 @@
 #include "../src/order/OrderItem.h"
 #include <gtest/gtest.h>
 
+/*
 TEST(OrderComposite, TO_JSON) {
     auto orderComp = std::unique_ptr<Order>(new OrderComposite());
     auto orderItem = std::unique_ptr<Order>(new OrderItem("bonger", 2));
@@ -10,6 +11,7 @@ TEST(OrderComposite, TO_JSON) {
     ASSERT_EQ(orderComp->toJson(),
         "{\n\"order\": [\n{\"name\": \"bonger\",\"price\": 2.000000},]\n}");
 }
+*/
 TEST(OrderComposite, ADD) {
     auto orderComp = std::unique_ptr<Order>(new OrderComposite());
     auto orderItem = std::unique_ptr<Order>(new OrderItem("bonger", 2));

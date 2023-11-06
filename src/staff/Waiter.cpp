@@ -1,5 +1,5 @@
 #include "Waiter.h"
-#include "Menu/Menu.h"
+#include "menu/Menu.h"
 #include "order/ConcreteOrderBuilder.h"
 #include "order/OrderBuilder.h"
 #include "order/OrderComposite.h"
