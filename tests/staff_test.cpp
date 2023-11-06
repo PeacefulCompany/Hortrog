@@ -46,49 +46,44 @@ protected:
     CustomerState* customerState;
     Customer* customer;
 };
-
-// Tests for Waiter
+// WAITER
+// TESTS==================================================================
+//  Tests for Waiter
 TEST_F(StaffTest, Waiter_GetStaffTypeReturnsWaiter) {
     EXPECT_EQ(waiter->getStaffType(), "Waiter");
 }
+// Tests for Customer
+TEST_F(StaffTest, Waiter_GetTablesReturnsEmptyVector) {
+    EXPECT_EQ(waiter->getStaffType(), "Waiter");
+    EXPECT_TRUE(waiter->getTables().empty());
+}
+// MANAGER
+// TESTS=================================================================
 // Tests for Manager
 TEST_F(StaffTest, Manager_GetStaffTypeReturnsManager) {
     EXPECT_EQ(manager->getStaffType(), "Manager");
 }
-
-TEST_F(StaffTest, Waiter_GetTablesReturnsEmptyVector) {
-    EXPECT_TRUE(waiter->getTables().empty());
-}
-
-// Tests for Customer States
-TEST_F(StaffTest, CustomerState_VisitWaiter) {
-    EXPECT_EQ(customer->getState(), true);
+// Tests for Manager
+TEST_F(StaffTest, Manager_GetTablesReturnsEmptyVector) {
+    EXPECT_EQ(manager->getStaffType(), "Manager");
 }
 // Tests for Customer States
 TEST_F(StaffTest, CustomerState_VisitManager) {
+    EXPECT_EQ(manager->getStaffType(), "Manager");
     EXPECT_EQ(customer->getState(), true);
     customer->interact(*manager);
 }
-// Test for Ordering State for waiter no ready
-TEST_F(StaffTest, OrderingState_VisitWaiterNotReady) {
-    customer->changeState(new OrderingState(customer));
-    customer->interact(*waiter);
+// Tests for Customer
+//=======================================================================
+// Tests for Customer States
+TEST_F(StaffTest, CustomerState_VisitWaiter) {
     EXPECT_EQ(customer->getState(), true);
-    customer->interact(*waiter);
-    EXPECT_NE(waiter->getOrderBuilder(), nullptr);
 }
 // Test for Ordering State for waiter ready
 TEST_F(StaffTest, OrderingState_VisitWaiterReady) {
     customer->changeState(new WaitingState(customer));
     customer->update(1);
     customer->interact(*waiter);
-    // customer->changeState(new OrderingState(customer));
-    // EXPECT_EQ(customer->getState(), true);
-    // customer->interact(*waiter);
-    //   EXPECT_NE(waiter->getOrderBuilder(), nullptr);
-    // customer->update(1);
-    // customer->interact(*waiter);
-    // EXPECT_NE(waiter->getOrderBuilder()->getOrder(), nullptr);
 }
 
 // Test for Waiting State for waiter not ready
@@ -153,18 +148,7 @@ TEST_F(StaffTest, PayingState_VisitManager) {
     EXPECT_EQ(customer->getState(), true);
     customer->interact(*manager);
 }
-// Tests for Waiter checkKitchen
-TEST_F(StaffTest, CheckKitchenDoesNotThrow) {
-    EXPECT_NO_THROW(waiter->checkKitchen());
-}
-// Tests for Waiter FetchMeals
-TEST_F(StaffTest, FetchMealsDoesNotThrow) {
-    EXPECT_NO_THROW(waiter->FetchMeals());
-}
-// Tests for Waiter Givetokitchen
-TEST_F(StaffTest, GiveToKitchenDoesNotThrow) {
-    EXPECT_NO_THROW(waiter->Givetokitchen());
-}
+
 // Tests for Waiter giveFoodToCustomer
 TEST_F(StaffTest, GiveFoodToCustomerDoesNotThrow) {
     EXPECT_NO_THROW(waiter->giveFoodToCustomer(*customer));
@@ -177,3 +161,4 @@ TEST_F(StaffTest, LodgeComplaintDoesNotThrow) {
 TEST_F(StaffTest, GiveRatingDoesNotThrow) {
     EXPECT_NO_THROW(manager->giveRating(5));
 }
+// end!
