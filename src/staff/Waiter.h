@@ -97,6 +97,7 @@ public:
     void giveFoodToCustomer(Customer& Customer);
     void callManager(CustomerState& state);
     PointOfSales* getPointOfSales() { return pointOfSales_; }
+    void serveMeals();
 
 private:
     const Menu* menu_;
