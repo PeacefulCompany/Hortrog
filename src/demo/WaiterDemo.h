@@ -20,5 +20,4 @@ private:
     Waiter* waiter_;
     Menu* menu_;
     PointOfSales* pointOfSales_;
-    std::unique_ptr<OrderBuilder> orderBuilder_;
 };

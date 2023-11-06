@@ -8,7 +8,7 @@ WaiterDemo::WaiterDemo() {
     pointOfSales_ = new PointOfSales();
     table_ = new TableComponent(1, 4);
     waiter_ = new Waiter(menu_, pointOfSales_);
-    orderBuilder_ = std::make_unique<ConcreteOrderBuilder>(menu_);
+    // orderBuilder_ = std::make_unique<ConcreteOrderBuilder>(menu_);
 }
 
 void WaiterDemo::placeCustomers() {
@@ -36,6 +36,7 @@ void WaiterDemo::customerOrder() {
     }
 
     // waiter sends receipt thingy wingy
+    waiter_->getOrderBuilder()->begin(1);
     waiter_->getPointOfSales()->addOrder(
         waiter_->getOrderBuilder()->getOrder());
 
