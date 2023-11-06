@@ -1,19 +1,14 @@
 #pragma once
 
-#ifndef NORMALCHEF_H
-#define NORMALCHEF_H
-
 #include <chrono>
 #include <sstream>
 #include <string>
 #include <vector>
 
-
 #include "../Meals/Meal.h"
 #include "../Meals/MealItem.h"
 #include "../menu/OrderJSON.h"
 #include "KitchenStaff.h"
-
 
 class NormalChef : public KitchenStaff {
 private:
@@ -41,5 +36,3 @@ public:
 
     ~NormalChef();
 };
-
-#endif

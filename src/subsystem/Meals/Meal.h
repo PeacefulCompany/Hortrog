@@ -1,8 +1,6 @@
 #pragma once
 #include <stdint.h>
 #include <string>
-#ifndef SUBSYSTEM_MEAL_H
-#define SUBSYSTEM_MEAL_H
 
 // file includes
 #include "MealItem.h"
@@ -35,5 +33,3 @@ public:
     inline bool getReady() { return ready_; }
     inline void setReady(bool rStatus_) { ready_ = rStatus_; }
 };
-
-#endif

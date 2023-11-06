@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef MENU_H
-#define MENU_H
-
 #include "ItemJSON.h"
 #include <string>
 #include <vector>
@@ -18,5 +15,3 @@ public:
 
     std::vector<ItemJSON*> getItems();
 };
-
-#endif // MENU_H

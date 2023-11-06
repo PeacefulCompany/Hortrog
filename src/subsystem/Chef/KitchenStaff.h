@@ -1,8 +1,6 @@
 #pragma once
 
 #include <memory>
-#ifndef KITCHENSTAFF_H
-#define KITCHENSTAFF_H
 
 // #include "OrderJSON.h"
 #include "../../order/Order.h"
@@ -10,7 +8,6 @@
 #include "../Meals/MealItem.h"
 #include "../menu/OrderJSON.h"
 #include <iostream>
-
 
 class Kitchen;
 
@@ -41,5 +38,3 @@ public:
 };
 
 #include "Kitchen.h"
-
-#endif // !KITCHENSTAFF_H

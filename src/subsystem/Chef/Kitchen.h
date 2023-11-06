@@ -2,8 +2,6 @@
 
 #include "subsystem/Meals/Meal.h"
 #include <memory>
-#ifndef KITCHEN_H
-#define KITCHEN_H
 
 #include "../../order/Order.h"
 #include "../../staff/Waiter.h"
@@ -41,5 +39,3 @@ public:
     std::string toString();
     ~Kitchen();
 };
-
-#endif
