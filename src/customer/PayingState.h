@@ -3,6 +3,7 @@
 #include "CustomerState.h"
 #include "staff/Manager.h"
 #include "staff/Waiter.h"
+#include <string>
 class PayingState : public CustomerState {
 public:
     PayingState(Customer* c) : CustomerState(c) {}
@@ -12,5 +13,7 @@ public:
     std::string toString() const override;
 
 private:
+    std::string paymentStartegies_[3] = {
+        "EvenSplit", "PerCustomer", "OneReceipt"};
     bool isReady_ = false;
 };

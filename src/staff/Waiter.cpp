@@ -1,5 +1,6 @@
 #include "Waiter.h"
 
+#include "billing/PointOfSales.h"
 #include "customer/Customer.h"
 #include "floor/Table.h"
 #include "order/ConcreteOrderBuilder.h"
@@ -25,9 +26,11 @@
  */
 Kitchen* FloorStaff::kitchen_ = nullptr;
 
-Waiter::Waiter(const Menu* menu) : FloorStaff(), menu_(menu) {
+Waiter::Waiter(const Menu* menu, PointOfSales* point)
+    : FloorStaff(), menu_(menu) {
     FloorStaff::setKitchen(new Kitchen());
     this->orderBuilder_ = std::make_unique<ConcreteOrderBuilder>(menu);
+    this->pointOfSales_ = point;
 }
 void Waiter::checkKitchen() {
     // ckeck if the waiter is currenlty holdy any ready meals
@@ -102,4 +105,7 @@ void Waiter::callManager(CustomerState& state) {
     delete manager;
 }
 void Waiter::accept(CustomerState& state) { state.visit(*this); }
+
 std::string Waiter::getStaffType() { return "Waiter"; }
+
+void Waiter::synthesizeBill(std::string strategy) {}

@@ -17,11 +17,14 @@ void PayingState::visit(Manager& m) {
 }
 
 void PayingState::visit(Waiter& w) {
-    std::cout << "[Paying]: Give payment to waiter" << std::endl;
+    // std::cout << "[Paying]: Give payment to waiter" << std::endl;
+
     // w.getPointOfSales()->printBill(customer_->getTableId());
     // w.getPointOfSales()->isPaymentSettled(int tblId);
     // w.getPointOfSales()->payBill(int tblId);
     // w.tip(Exta Payment);
+
+    w.synthesizeBill(paymentStartegies_[rand() % 3]);
     customer_->changeState(nullptr);
 }
 
