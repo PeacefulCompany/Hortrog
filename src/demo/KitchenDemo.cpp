@@ -8,22 +8,9 @@
 #include <iostream>
 #include <string>
 
-void KitchenDemo::cleanup() {
-    delete kitchen_;
-    delete orderBuilder_;
-}
+void KitchenDemo::cleanup() {}
 
 // getters and setters
-
-Kitchen* KitchenDemo::getKitchen() { return kitchen_; }
-
-void KitchenDemo::setKitchen(Kitchen* kitchen) { kitchen_ = kitchen; }
-
-ConcreteOrderBuilder* KitchenDemo::getOrderBuilder() { return orderBuilder_; }
-
-void KitchenDemo::setOrderBuilder(ConcreteOrderBuilder* orderBuilder) {
-    orderBuilder_ = orderBuilder;
-}
 
 void KitchenDemo::askTimePassed(Kitchen* kitchen) {
     int timePassed;
@@ -57,14 +44,14 @@ void KitchenDemo::simulateTimePassed() {
         std::cout << "Invalid input" << std::endl;
         return;
     }
-    kitchen_->updateTime(timePassed);
+    kitchen_.updateTime(timePassed);
 }
 
 void KitchenDemo::displayKitchenSnapshot() {
-    std::cout << kitchen_->toString() << std::endl;
+    std::cout << kitchen_.toString() << std::endl;
 }
 
-void KitchenDemo::displayMenu() { std::cout << menu_->toString() << std::endl; }
+void KitchenDemo::displayMenu() { std::cout << menu_.toString() << std::endl; }
 
 void KitchenDemo::displayModifiers() {
     // Modi
@@ -75,16 +62,16 @@ void KitchenDemo::displayOrderBuilderMenu() {
 
     orderMenu.addCommand("Add item", [this]() { addOrderBuilderItem(); });
     orderMenu.addCommand("Show order",
-        [this]() { std::cout << orderBuilder_->toString() << std::endl; });
+        [this]() { std::cout << orderBuilder_.toString() << std::endl; });
     orderMenu.addCommand("Submit Order",
-        [this]() { kitchen_->handleOrder(orderBuilder_->getOrder()); });
+        [this]() { kitchen_.handleOrder(orderBuilder_.getOrder()); });
 
     orderMenu.setPrompt("Enter choice (-1 to exit): ");
     orderMenu.setError("Invalid input");
     orderMenu.setExitCode(-1);
 
     int choice;
-    orderBuilder_->begin(1);
+    orderBuilder_.begin(1);
     while (true) {
         if (orderMenu.execute() == -1) return;
     }
@@ -95,7 +82,7 @@ void KitchenDemo::addOrderBuilderItem() {
 
     std::string key = util::inputString("Enter key: ");
     std::string customerName = util::inputString("Enter customer name: ");
-    if (!orderBuilder_->addItem(key, customerName)) {
+    if (!orderBuilder_.addItem(key, customerName)) {
         std::cout << "Item not added" << std::endl;
         return;
     }
@@ -120,7 +107,7 @@ void KitchenDemo::addOrderBuilderItem() {
 void KitchenDemo::addOrderBuilderModifier() {
     std::string key = util::inputString("Enter modifier key: ");
 
-    if (orderBuilder_->addModifier(key)) {
+    if (orderBuilder_.addModifier(key)) {
         std::cout << "Modifier added" << std::endl;
     } else {
         std::cout << "Modifier not added" << std::endl;
@@ -169,7 +156,7 @@ void KitchenDemo::displayAddChef() {
 
     KitchenStaff* newChef = new NormalChef(std::stoi(rating),
         std::stoi(capacity),
-        this->kitchen_,
+        &kitchen_,
         std::stoi(speed),
         role);
 
@@ -187,32 +174,11 @@ void KitchenDemo::displayAddChef() {
         }
     }
 
-    kitchen_->AddChef(newChef);
+    kitchen_.AddChef(newChef);
     std::cout << "=============================" << std::endl;
 }
 
-void KitchenDemo::init(Kitchen* kitchen, Menu* menu) {
-    kitchen_ = kitchen;
-    menu_ = menu;
-    orderBuilder_ = new ConcreteOrderBuilder(menu_);
-
-    commands_.addCommand("Pass some time", [this]() { simulateTimePassed(); });
-    commands_.addCommand(
-        "Display Kitchen snapshot", [this]() { displayKitchenSnapshot(); });
-    commands_.addCommand("Display menu", [this]() { displayMenu(); });
-    commands_.addCommand(
-        "Display Order Builder", [this]() { displayOrderBuilderMenu(); });
-    commands_.addCommand("Add chef", [this]() { displayAddChef(); });
-
-    commands_.setPrompt("Choose an option (-1 to exit): ");
-    commands_.setExitCode(-1);
-}
-
 void KitchenDemo::init() {
-    kitchen_ = new Kitchen();
-    menu_->loadFromFile("menu_items.json");
-    orderBuilder_ = new ConcreteOrderBuilder(menu_);
-
     commands_.addCommand("Pass some time", [this]() { simulateTimePassed(); });
     commands_.addCommand(
         "Display Kitchen snapshot", [this]() { displayKitchenSnapshot(); });
@@ -231,3 +197,7 @@ void KitchenDemo::gameLoop() {
         running_ = false;
     }
 }
+
+KitchenDemo::KitchenDemo(
+    Kitchen& kitchen, ConcreteOrderBuilder& builder, Menu& menu)
+    : kitchen_(kitchen), orderBuilder_(builder), menu_(menu) {}

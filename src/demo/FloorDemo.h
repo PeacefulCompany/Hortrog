@@ -11,6 +11,7 @@
 
 class FloorDemo : public Application {
 public:
+    FloorDemo(Floor& floor, Menu& menu);
     inline bool shouldQuit() const override { return !running_; }
 
     void gameLoop() override;
@@ -26,7 +27,7 @@ public:
 protected:
     CommandMenu mainOptions_;
 
-    Floor floor_;
-    Menu menu_;
+    Floor& floor_;
+    Menu& menu_;
     bool running_ = true;
 };
