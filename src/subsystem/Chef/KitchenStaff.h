@@ -71,5 +71,3 @@ public:
      */
     KitchenStaff* getNextStaff();
 };
-
-#include "Kitchen.h"

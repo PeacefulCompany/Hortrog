@@ -1,5 +1,6 @@
-
 #include "HeadChef.h"
+
+#include <sstream>
 
 HeadChef::HeadChef(
     int rating, int capacity, Kitchen* kitchen, int speed, std::string role) {

@@ -12,36 +12,42 @@
 #include "Kitchen.h"
 #include "subsystem/Chef/KitchenStaff.h"
 #include <iostream>
+#include <memory>
 
 Kitchen::Kitchen(/* args */) {
-    this->headChef =
-        std::unique_ptr<KitchenStaff>(new HeadChef(5, 5, this, 1, "head chef"));
+    staff_ = std::make_unique<HeadChef>(5, 5, this, 1, "head_chef");
 
-    KitchenStaff* chef1 = new NormalChef(4, 5, this, 2, "fast chef 1");
-    ((NormalChef*)chef1)->addCanPrepareItem("Grilled Salmon");
-    ((NormalChef*)chef1)->addCanPrepareItem("Margherita Pizza");
+    std::unique_ptr<NormalChef> chef = nullptr;
 
-    KitchenStaff* chef2 = new NormalChef(2, 5, this, 3, "medium chef 1");
-    ((NormalChef*)chef2)->addCanPrepareItem("Avocado Toast");
-    ((NormalChef*)chef2)->addCanPrepareItem("Chicken Caesar Salad");
+    chef = std::make_unique<NormalChef>(4, 5, this, 2, "fast_chef1");
+    chef->addCanPrepareItem("Grilled Salmon");
+    chef->addCanPrepareItem("Margherita Pizza");
+    chef->setNextStaff(staff_.release());
+    staff_ = std::move(chef);
 
-    KitchenStaff* chef3 = new NormalChef(5, 5, this, 4, "slow chef 2");
-    ((NormalChef*)chef3)->addCanPrepareItem("Vegetable Stir-Fry");
-    ((NormalChef*)chef3)->addCanPrepareItem("Spinach and Feta Stuffed Chicken");
+    chef = std::make_unique<NormalChef>(2, 5, this, 3, "medium_chef1");
+    chef->addCanPrepareItem("Avocado Toast");
+    chef->addCanPrepareItem("Chicken Caesar Salad");
+    chef->setNextStaff(staff_.release());
+    staff_ = std::move(chef);
 
-    KitchenStaff* chef4 = new NormalChef(4, 5, this, 3, "slow chef 2");
-    ((NormalChef*)chef4)->addCanPrepareItem("Black Bean Burger");
-    ((NormalChef*)chef4)->addCanPrepareItem("Beef Tacos");
+    chef = std::make_unique<NormalChef>(5, 5, this, 4, "slow_chef2");
+    chef->addCanPrepareItem("Vegetable Stir-Fry");
+    chef->addCanPrepareItem("Spinach and Feta Stuffed Chicken");
+    chef->setNextStaff(staff_.release());
+    staff_ = std::move(chef);
 
-    KitchenStaff* chef5 = new NormalChef(3, 5, this, 1, "barrista");
-    ((NormalChef*)chef5)->addCanPrepareItem("Lemonade");
-    ((NormalChef*)chef5)->addCanPrepareItem("Coconut Water");
+    chef = std::make_unique<NormalChef>(4, 5, this, 3, "slow_chef2");
+    chef->addCanPrepareItem("Black Bean Burger");
+    chef->addCanPrepareItem("Beef Tacos");
+    chef->setNextStaff(staff_.release());
+    staff_ = std::move(chef);
 
-    headChef->setNextStaff(chef1);
-    chef1->setNextStaff(chef2);
-    chef2->setNextStaff(chef3);
-    chef3->setNextStaff(chef4);
-    chef4->setNextStaff(chef5);
+    chef = std::make_unique<NormalChef>(3, 5, this, 1, "barrista");
+    chef->addCanPrepareItem("Lemonade");
+    chef->addCanPrepareItem("Coconut Water");
+    chef->setNextStaff(staff_.release());
+    staff_ = std::move(chef);
 }
 
 void Kitchen::handleOrder(Order* order) {
@@ -57,11 +63,8 @@ void Kitchen::handleOrder(Order* order) {
 }
 
 void Kitchen::AddChef(KitchenStaff* chef) {
-    KitchenStaff* current = headChef.get();
-    while (current->getNextStaff() != nullptr) {
-        current = current->getNextStaff();
-    }
-    current->setNextStaff(chef);
+    chef->setNextStaff(staff_.release());
+    staff_.reset(chef);
 }
 
 void Kitchen::notifyItemReady() {
@@ -78,7 +81,7 @@ void Kitchen::flush() {
         incomingMeals.pop_front();
 
         // Get the headChef to prepare the meal.
-        headChef->prepareMeal(meal);
+        staff_->prepareMeal(meal);
 
         // Check if the meal is done.
         if (meal->getReady()) {
@@ -106,7 +109,7 @@ Meal* Kitchen::getOutgoingMeal() {
 
 void Kitchen::updateTime(int time) {
     std::cout << "[Kitchen]:" << time << "s have passed" << std::endl;
-    headChef->updateTime(time);
+    staff_->updateTime(time);
     // std::cout << toString() << std::endl;
 }
 
@@ -142,7 +145,7 @@ std::string Kitchen::toString() {
         ss << "\n  - " << outgoingMeals[i]->toString();
     }
     ss << "\n- staff:";
-    for (KitchenStaff* cur = headChef.get(); cur; cur = cur->getNextStaff()) {
+    for (KitchenStaff* cur = staff_.get(); cur; cur = cur->getNextStaff()) {
         std::string line;
         std::stringstream stream(cur->toString());
         std::getline(stream, line);
