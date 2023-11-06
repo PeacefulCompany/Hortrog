@@ -12,16 +12,14 @@
 #include <string>
 
 void OrderingState::visit(Manager& m) {
-    if (readyTimer_.expired()) {
-        std::cout << "Ordering: Manager" << std::endl;
-    } else {
-        std::cout << "Manager visited" << std::endl;
-    }
+    std::cout << customer_->toString() << ": Hey manager, what's cookin??"
+              << std::endl;
 }
 void OrderingState::visit(Waiter& w) {
     OrderBuilder* TableOrder = w.getOrderBuilder();
     const Menu* menu = TableOrder->getMenu();
     std::vector<std::string> allItems = menu->getAllKeys();
+
     int randomNumber = std::rand() % allItems.size();
     if (readyTimer_.expired()) {
         TableOrder->addItem(allItems[randomNumber], customer_->getName());
@@ -32,9 +30,12 @@ void OrderingState::visit(Waiter& w) {
             // allItems[randomNumber].getModifiers()[0].getName();
             TableOrder->addModifier(modifierName);
         }
+        std::cout << customer_->toString() << ": I ordered something"
+                  << std::endl;
         customer_->changeState(new WaitingState(customer_));
     } else {
-        std::cout << "Not ready to order" << std::endl;
+        std::cout << customer_->toString() << ": Not ready to order"
+                  << std::endl;
     }
 }
 void OrderingState::update(float dt) { readyTimer_.update(dt); }

@@ -12,7 +12,8 @@ void WaitingState::visit(Waiter& w) {
     w.checkKitchen(); // TEMPORARY
     // TODO: change this out for something that doesn't throw a compilation
     // error if (w.currentmealObjectPointerArray_.size() > 0) {
-    if (w.=giveMeal(this->customer_->getName())) {
+    // if (w.giveMeal(customer_->getName(), nullptr)) {
+    if (true) {
         std::cout << "[Waiting]: Thanks for the food!!" << std::endl;
         customer_->changeState(new EatingState(customer_));
     } else {

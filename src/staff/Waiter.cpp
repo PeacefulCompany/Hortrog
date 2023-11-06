@@ -47,9 +47,11 @@ void Waiter::Givetokitchen() {
 
 void Waiter::giveMeal(std::string customerName, Meal* meal) {
     for (auto& table : tables_) {
+        /*
         if (table->getCustomerName() == customerName) {
             table->serveMeal(meal);
         }
+        */
     }
 }
 std::string Waiter::toString() const {

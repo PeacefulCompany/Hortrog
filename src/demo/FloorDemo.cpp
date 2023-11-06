@@ -14,13 +14,14 @@
 #include <iterator>
 #include <memory>
 #include <set>
+#include <stdlib.h>
 #include <string>
 #include <vector>
 
 void FloorDemo::gameLoop() {
     // Draw tables
-    std::cout << util::CLEAR_SCREEN << util::HOME << std::endl;
-    std::cout << "--- THE FLOOR ---" << std::endl;
+    // std::cout << util::CLEAR_SCREEN << util::HOME << std::endl;
+    std::cout << "\n--- THE FLOOR ---" << std::endl;
     std::cout << floor_.toString() << std::endl;
     std::cout << "---------------------------" << std::endl;
 
@@ -34,8 +35,8 @@ void FloorDemo::init() {
     menu_.loadFromFile("menu_items.json");
 
     mainOptions_.addCommand("Add Table", [this]() { addTable(); });
-    mainOptions_.addCommand("Add Customers", [this]() { addCustomers(); });
     mainOptions_.addCommand("Add Staff", [this]() { addStaff(); });
+    mainOptions_.addCommand("Add Customers", [this]() { addCustomers(); });
     mainOptions_.addCommand("Visit tables", [this]() { visitCustomers(); });
     mainOptions_.addCommand("Update Time", [this]() { update(); });
     mainOptions_.setPrompt("Choose an option (-1 to quit): ");
@@ -104,7 +105,7 @@ void FloorDemo::visitCustomers() {
     FloorStaff* staff = nullptr;
     int opt = -1;
     do {
-        int opt = util::input("Enter Staff Number: ");
+        opt = util::input("Enter Staff Number: ");
         staff = floor_.getFloorStaff(opt);
         if (!staff) {
             std::cout << "Staff not found" << std::endl;
