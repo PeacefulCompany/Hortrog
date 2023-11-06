@@ -1,10 +1,10 @@
 
 #include "customer/Customer.h"
+#include "demo/KitchenDemo.h"
 #include "floor/Floor.h"
 #include "menu/Menu.h"
 #include "staff/Waiter.h"
 #include "subsystem/Chef/Kitchen.h"
-#include "subsystem/Chef/kitchenDemo.h"
 
 #include <iostream>
 
@@ -69,7 +69,7 @@ void test() {
 
 void testImprovedKitchen() {
     KitchenDemo* kitchen = new KitchenDemo();
-    kitchen->menuHandler();
+    kitchen->run();
 }
 
 int main() {
