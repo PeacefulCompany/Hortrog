@@ -106,6 +106,7 @@ void test() {
 }
 
 int main() {
+    std::cout << "Hello World" << std::endl;
 
     menuTest();
     TerminalApp app;
