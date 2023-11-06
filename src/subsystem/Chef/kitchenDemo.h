@@ -1,8 +1,6 @@
 #pragma once
 
 #include "menu/Menu.h"
-#ifndef KITCHEN_DEMO_H
-#define KITCHEN_DEMO_H
 
 #include "order/ConcreteOrderBuilder.h"
 #include "order/Order.h"
@@ -46,5 +44,3 @@ public:
 
     void displayOrderBuilderMenu();
 };
-
-#endif // KITCHEN_DEMO_H
