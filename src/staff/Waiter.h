@@ -1,5 +1,8 @@
 #pragma once
 
+#include "../billing/EvenSplit.h"
+#include "../billing/OneReceipt.h"
+#include "../billing/PerCustomer.h"
 #include "FloorStaff.h"
 #include "billing/PointOfSales.h"
 #include "customer/Customer.h"
@@ -15,9 +18,7 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include "../billing/EvenSplit.h"
-#include "../billing/PerCustomer.h"
-#include "../billing/OneReceipt.h"
+
 /**
  * @class Waiter
  * @brief This class represents a waiter.
@@ -82,7 +83,7 @@ public:
      *
      * This function is used to give the order to the kitchen.
      */
-    void Givetokitchen();
+    void giveToKitchen();
     /**
      * @brief Gives the food to the customer.
      *

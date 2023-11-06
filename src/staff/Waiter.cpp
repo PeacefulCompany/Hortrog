@@ -63,7 +63,7 @@ void Waiter::FetchMeals() {
     if (x == tables_.size()) return;
     if (currentMeal != nullptr) readyMeals.push_back(currentMeal);
 }
-void Waiter::Givetokitchen() {
+void Waiter::giveToKitchen() {
     pointOfSales_->addOrder(orderBuilder_->getOrder());
     FloorStaff::getKitchen()->handleOrder(orderBuilder_->getOrder());
 }
