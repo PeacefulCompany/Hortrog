@@ -5,13 +5,13 @@
 
 
 TEST(OrderComposite, TO_JSON) {
-    MenuItem item("bonger", 2, "", {});
+   MenuItem item("bonger", 2, "", {});
     auto orderComp = std::unique_ptr<Order>(new OrderComposite());
     auto orderItem = std::unique_ptr<Order>(new OrderItem(&item));
-    ASSERT_EQ(orderComp->toJson(), "{\n\"order\": []\n}");
+    ASSERT_EQ(orderComp->toJson(), "{\n\"order\": [\n\n]}\n");
     orderComp->add(std::move(orderItem));
     ASSERT_EQ(orderComp->toJson(),
-        "{\n\"order\": [\n{\"name\": \"bonger\",\"price\": 2.000000},]\n}");
+        "{\n\"order\": [\n{\"name\": \"bonger\",\"customer\": \"\",\"price\": 2.000000}\n]}\n");
 }
 TEST(OrderComposite, ADD) {
     MenuItem item("bonger", 2, "", {});

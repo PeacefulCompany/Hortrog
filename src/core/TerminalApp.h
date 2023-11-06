@@ -10,7 +10,6 @@
 class TerminalApp : public Application {
 protected:
     void init() override;
-    inline bool shouldQuit() const override { return !running_; }
     void gameLoop() override;
     void cleanup() override {}
 
@@ -20,7 +19,6 @@ protected:
 
 private:
     Menu menu_;
-    bool running_ = true;
     std::vector<Table*> tables_;
     TableGroup* group_;
 };

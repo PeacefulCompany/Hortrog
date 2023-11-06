@@ -21,9 +21,12 @@ std::string OrderComposite::toJson() {
 
         ret += order->toJson() + ",\n";
     }
-    // Remove trailing comma
-    ret.pop_back();
-    ret.pop_back();
+    // Remove trailing comma if orders_ wasn't empty
+	if (!orders_.empty())
+	{
+		ret.pop_back();
+		ret.pop_back();
+	}
     ret += "\n]}\n";
     return ret;
 }

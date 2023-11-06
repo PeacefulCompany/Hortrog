@@ -18,6 +18,8 @@
 #include <string>
 #include <vector>
 
+FloorDemo::FloorDemo(Floor& floor, Menu& menu) : floor_(floor), menu_(menu) {}
+
 void FloorDemo::gameLoop() {
     // Draw tables
     // std::cout << util::CLEAR_SCREEN << util::HOME << std::endl;
@@ -27,7 +29,7 @@ void FloorDemo::gameLoop() {
 
     // Chose next action
     if (mainOptions_.execute()) {
-        running_ = false;
+        setRunning(false);
     }
 }
 

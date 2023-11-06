@@ -19,7 +19,8 @@ bool Menu::loadFromFile(const std::string& path) {
         std::string prepMethod = item["prep_method"].get<std::string>();
         std::vector<std::string> modifiers = {};
         if (item.contains("supported_modifiers")) {
-            item["supported_modifiers"].get<std::vector<std::string>>();
+            modifiers =
+                item["supported_modifiers"].get<std::vector<std::string>>();
         }
 
         double price = item["price"].get<double>();
