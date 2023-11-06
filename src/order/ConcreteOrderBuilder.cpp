@@ -43,6 +43,19 @@ bool ConcreteOrderBuilder::addModifier(const std::string& key) {
     return true;
 }
 
+OrderComposite* ConcreteOrderBuilder::getOrder() {
+    if (tempOrder.empty()) return nullptr;
+
+    OrderComposite* result = new OrderComposite();
+    // Add all the Orders in the vector to the OrderComposite
+    for (auto& order : tempOrder) {
+        result->add(std::move(order));
+    }
+    // Return the OrderComposite as a JSON string
+    result->setTblId(tblId_);
+    return result;
+};
+
 std::string ConcreteOrderBuilder::toString() const {
     std::stringstream ss;
     ss << "ConcreteOrderBuilder";
@@ -56,17 +69,9 @@ ConcreteOrderBuilder::ConcreteOrderBuilder(const Menu* menu)
     : OrderBuilder(), menu_(menu) {}
 
 std::string ConcreteOrderBuilder::getResult() {
-    // return empty string if the vector is empty
-    if (tempOrder.empty()) {
-        return "{}\n";
-    }
-    // Create a new OrderComposite
-    order = new OrderComposite();
-    // Add all the Orders in the vector to the OrderComposite
-    for (auto& order : tempOrder) {
-        order->add(std::move(order));
-    }
-    // Return the OrderComposite as a JSON string
-    order->setTblId(tblId_);
-    return order->toJson();
+    OrderComposite* order = getOrder();
+    if (!order) return "{}\n";
+    std::string res = order->toJson();
+    delete order;
+    return res;
 }
