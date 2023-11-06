@@ -70,7 +70,7 @@ std::vector<const MenuItem*> OrderComposite::getAllMenuItems() {
     std::vector<const MenuItem*> returnVector;
     for (auto& order : orders_) {
         std::vector<const MenuItem*> childVector = order->getAllMenuItems();
-        for (auto& item : childVector) {
+        for (const MenuItem* item : childVector) {
             returnVector.push_back(item);
         }
     }
