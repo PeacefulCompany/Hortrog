@@ -13,5 +13,6 @@ public:
     std::string toString() const override;
 
 private:
-    bool isReady_ = false;
+
+    bool isReady_ = true;
 };

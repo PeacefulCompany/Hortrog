@@ -51,4 +51,6 @@ public:
 private:
     const Floor* floor_;
     std::vector<std::string*> complaintArray_;
+    int numberOfRatings_ = 0;
+    int totalRating_ = 0;
 };

@@ -1,7 +1,8 @@
 #pragma once
 
 #include "CustomerState.h"
-
+#include "staff/Manager.h"
+#include "staff/Waiter.h"
 class KarenState : public CustomerState {
 public:
     KarenState(Customer* c) : CustomerState(c) {}

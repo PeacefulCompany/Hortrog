@@ -8,8 +8,11 @@ void Manager::lodgeComplaint(const std::string& complaint) {
 }
 
 void Manager::giveRating(int rating) {
-    std::cout << "Customer rating: " << rating << std::endl;
-    // Handle the rating...
+    this->totalRating_ ++;
+    this->numberOfRatings_++;
+    std::cout << "[Manager/giveRating] Rating: " << rating << std::endl;
+    std::cout << "[Manager/giveRating] Average Rating: "
+              << this->totalRating_ / this->numberOfRatings_ << std::endl;
 }
 std::string Manager::toString() const { return "Manager"; }
 

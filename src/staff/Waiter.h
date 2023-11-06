@@ -1,6 +1,7 @@
 #pragma once
 
 #include "FloorStaff.h"
+#include "billing/PointOfSales.h"
 #include "customer/Customer.h"
 #include "customer/CustomerState.h"
 #include "floor/Table.h"
@@ -60,7 +61,7 @@ public:
      *
      * @return A vector of meals that are ready.
      */
-    std::vector<Meal*> getReadyMeals() { return readyMeals; }
+    std::vector<Meal*> getReadyMeals();
 
     void FetchMeals();
     /**
@@ -78,12 +79,13 @@ public:
      */
     void Givetokitchen();
     /**
-     * @brief Gives the meal to the customer.
+     * @brief Gives the food to the customer.
      *
-     * This function is used to give the meal to the customer.
+     * This function is used to give the food to the customer.
      *
-     * @param meal The meal to give to the customer.
+     * @param Customer The customer to give the food to.
      */
+
     void giveMeal(std::string customerName, Meal* meal);
 
     std::string toString() const override;
@@ -92,10 +94,13 @@ public:
 
     void visitTables() override;
 
+    void giveFoodToCustomer(Customer& Customer);
+    void callManager(CustomerState& state);
+    PointOfSales* getPointOfSales() { return pointOfSales_; }
+
 private:
     const Menu* menu_;
     Kitchen* kitchen_; // dont think waiter should hold the kitchen
-
     /**
      * @brief A vector of meals that are ready.
      */
@@ -104,8 +109,10 @@ private:
      * @brief A static member kitchen_.
      */
     //  static Kitchen* kitchen_;
-
-    // PointOfSales* pointOfSales_;
+    /**
+     * @brief A pointer to the point of sales.
+     */
+    PointOfSales* pointOfSales_;
 
     /**
      * @brief A vector of tables.

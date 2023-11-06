@@ -12,6 +12,7 @@ public:
     double total() override;
     void add(std::unique_ptr<Order>) override;
     std::string getId() override;
+    bool checkForCustomer(std::string customerName) override;
 
 protected:
     std::vector<std::pair<std::string, double>>
