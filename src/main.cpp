@@ -1,13 +1,15 @@
+#include "billing/PointOfSales.h"
 #include "customer/Customer.h"
+#include "demo/WaiterDemo.h"
 #include "floor/Floor.h"
 #include "menu/Menu.h"
 #include "staff/Waiter.h"
 #include "subsystem/Chef/Kitchen.h"
 #include "subsystem/Chef/kitchenDemo.h"
-
 #include <iostream>
 
 void floor() {
+    PointOfSales pointOfSales;
     Menu menu;
     menu.loadFromFile("menu_items.json");
 
@@ -18,12 +20,18 @@ void floor() {
     customers.push_back(new Customer("Trinity", 0.5));
     customers.push_back(new Customer("Morpheus", 0.5));
     floor->customerEnter(customers);
-    floor->addStaff(new Waiter(&menu));
+    floor->addStaff(new Waiter(&menu, &pointOfSales));
     floor->createTables(5, 4);
     floor->checkTable(0, 0);
     floor->checkTable(0, 0);
 }
 
+void CustomerWaiterPOS() {
+    WaiterDemo* waiterDemo = new WaiterDemo();
+    waiterDemo->addCustomers();
+    waiterDemo->placeCustomers();
+    waiterDemo->customerOrder();
+}
 // out:
 //  Floor
 //  Table 0 has 3 customers.
@@ -72,6 +80,7 @@ void testImprovedKitchen() {
 }
 
 int main() {
-    testImprovedKitchen();
+    CustomerWaiterPOS();
+    // testImprovedKitchen();
     return 0;
 }

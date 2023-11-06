@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../src/staff/Waiter.h"
 #include "billing/PointOfSales.h"
 #include "customer/Customer.h"

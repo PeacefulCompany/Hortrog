@@ -1,5 +1,6 @@
 #pragma once
 
+#include "billing/PointOfSales.h"
 #include "core/Application.h"
 #include "core/CommandMenu.h"
 #include "floor/Floor.h"
@@ -25,7 +26,7 @@ private:
     void update();
 
     CommandMenu mainOptions_;
-
+    PointOfSales pointOfSales_;
     Floor floor_;
     Menu menu_;
     bool running_ = true;

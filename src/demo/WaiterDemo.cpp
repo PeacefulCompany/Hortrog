@@ -25,9 +25,11 @@ void WaiterDemo::addCustomers() {
 
 void WaiterDemo::customerOrder() {
     // set state of all customers to ordering
+
     for (auto& customer : customers_) {
         customer->changeState(new OrderingState(customer));
     }
+    table_->update(1);
     // waiter takes order
     for (auto& customer : customers_) {
         customer->interact(*waiter_);

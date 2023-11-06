@@ -40,7 +40,7 @@ void OrderingState::visit(Waiter& w) {
     int randomNumber = std::rand() % allItems.size();
     if (readyTimer_.expired()) {
         TableOrder->addItem(allItems[randomNumber], customer_->getName());
-
+        std::cout<<customer_->getName()<<std::endl;
         int randomNumber = std::rand() % 100;
         if (std::rand() % 4 == 0) {
             std::string modifierName = "Wubba lubba dub dub!";
