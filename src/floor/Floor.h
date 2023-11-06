@@ -190,10 +190,13 @@ public:
     std::string toString() const;
 
     Waiter* getWaiter(int waiterId) const;
+    FloorStaff* getFloorStaff(int waiterId) const;
 
     void update(float dt);
 
     inline size_t getFloorStaffSize() const { return staff_.size(); }
+
+    inline const std::vector<Table*>& getTables() const { return tables_; }
 
 private:
     uint32_t tableCount_ = 0;

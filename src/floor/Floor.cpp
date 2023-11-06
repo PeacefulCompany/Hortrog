@@ -46,6 +46,9 @@ Table* Floor::requestSeating(int n) {
     if (it != emptyTables.end()) {
         emptyTables.erase(it);
     }
+    if (emptyTables.size() == 1) {
+        return emptyTables[0];
+    }
 
     // Group them together
     TableGroup* group = new TableGroup();
@@ -193,6 +196,12 @@ Waiter* Floor::getWaiter(int waiterId) const {
     if (waiterId >= staff_.size()) return nullptr;
 
     return dynamic_cast<Waiter*>(staff_[waiterId]);
+}
+
+FloorStaff* Floor::getFloorStaff(int waiterId) const {
+    if (waiterId < 0) return nullptr;
+    if (waiterId >= staff_.size()) return nullptr;
+    return staff_[waiterId];
 }
 
 void Floor::update(float dt) {
