@@ -1,4 +1,4 @@
-#include "../src/subsystem/Meals/mealItem.h"
+#include "subsystem/Meals/MealItem.h"
 #include <gtest/gtest.h>
 
 TEST(MealItemTests, TestGetCustomer) {

@@ -1,16 +1,17 @@
-#include "Menu/Menu.h"
 #include "customer/Customer.h"
 #include "customer/CustomerState.h"
 #include "customer/EatingState.h"
 #include "customer/KarenState.h"
 #include "customer/OrderingState.h"
 #include "customer/WaitingState.h"
+#include "menu/Menu.h"
 #include "staff/Manager.h"
 #include "staff/Waiter.h"
 #include "gtest/gtest.h"
 #include <cmath>
 #include <cstddef>
 #include <sstream>
+
 
 class StaffTest : public ::testing::Test {
 protected:
