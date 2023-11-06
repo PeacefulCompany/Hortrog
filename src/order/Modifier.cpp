@@ -32,3 +32,6 @@ Modifier::generateReceiptOrderList() {
     returnVec.emplace_back(key_, price_);
     return returnVec;
 }
+bool Modifier::checkForCustomer(std::string customerName) {
+    return component_->checkForCustomer(customerName);
+}

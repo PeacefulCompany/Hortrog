@@ -37,4 +37,5 @@ public:
 	 * @param key 
 	 */
     explicit Modifier(std::unique_ptr<Order> component, std::string key);
+    bool checkForCustomer(std::string customerName) override;
 };

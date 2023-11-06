@@ -99,7 +99,7 @@ void NormalChef::prepareMeal(Meal* meal) {
 void NormalChef::getItemFromPrepared(ItemJSON* item, Meal* meal) {
     for (int i = 0; i < preparedItems_.size(); i++) {
         if (preparedItems_[i]->getFood() == item->getName() &&
-            preparedItems_[i]->getCustomer() == meal->getCustomer()) {
+            preparedItems_[i]->getCustomer() == item->getCustomer()) {
             meal->addItem(preparedItems_[i]);
             preparedItems_.erase(preparedItems_.begin() + i);
         }
@@ -116,7 +116,7 @@ void NormalChef::getItemFromPrepared(ItemJSON* item, Meal* meal) {
 bool NormalChef::mealItemAlreadyPrepared(ItemJSON* item, Meal* meal) {
     for (int i = 0; i < preparedItems_.size(); i++) {
         if (preparedItems_[i]->getFood() == item->getName() &&
-            preparedItems_[i]->getCustomer() == meal->getCustomer()) {
+            preparedItems_[i]->getCustomer() == item->getCustomer()) {
             return true;
         }
     }
@@ -133,7 +133,7 @@ bool NormalChef::mealItemAlreadyPrepared(ItemJSON* item, Meal* meal) {
 bool NormalChef::mealItemAlreadyBeingPrepared(ItemJSON* item, Meal* meal) {
     for (int i = 0; i < itemsBeingPrepared_.size(); i++) {
         if (itemsBeingPrepared_[i]->getFood() == item->getName() &&
-            itemsBeingPrepared_[i]->getCustomer() == meal->getCustomer()) {
+            itemsBeingPrepared_[i]->getCustomer() == item->getCustomer()) {
             return true;
         }
     }
