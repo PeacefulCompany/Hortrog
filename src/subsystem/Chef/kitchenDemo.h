@@ -1,5 +1,6 @@
 #pragma once
 
+#include "core/CommandMenu.h"
 #include "menu/Menu.h"
 
 #include "order/ConcreteOrderBuilder.h"
@@ -11,6 +12,8 @@ private:
     Kitchen* kitchen_;
     ConcreteOrderBuilder* orderBuilder_;
     Menu* menu_ = new Menu();
+    CommandMenu commands_;
+
     // Menu* menu_;
 
 public:
@@ -76,12 +79,6 @@ public:
      *
      */
     void menuHandler();
-
-    /**
-     * @brief Display the main menu
-     *
-     */
-    void displayMainMenu();
 
     /**
      * @brief Simulate the time passed

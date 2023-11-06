@@ -1,5 +1,6 @@
 #include "kitchenDemo.h"
 #include "order/ConcreteOrderBuilder.h"
+#include "order/Order.h"
 #include "order/OrderBuilder.h"
 #include "subsystem/Chef/KitchenStaff.h"
 #include "subsystem/Chef/kitchenDemo.h"
@@ -43,6 +44,17 @@ KitchenDemo::KitchenDemo() {
     kitchen_ = new Kitchen();
     menu_->loadFromFile("menu_items.json");
     orderBuilder_ = new ConcreteOrderBuilder(menu_);
+
+    commands_.addCommand("Pass some time", [this]() { simulateTimePassed(); });
+    commands_.addCommand(
+        "Display Kitchen snapshot", [this]() { displayKitchenSnapshot(); });
+    commands_.addCommand("Display menu", [this]() { displayMenu(); });
+    commands_.addCommand(
+        "Display Order Builder", [this]() { displayOrderBuilderMenu(); });
+    commands_.addCommand("Add chef", [this]() { displayAddChef(); });
+
+    commands_.setPrompt("Choose an option (-1 to exit): ");
+    commands_.setExitCode(-1);
 }
 
 KitchenDemo::~KitchenDemo() {
@@ -93,19 +105,9 @@ void KitchenDemo::askTimePassed(Kitchen* kitchen) {
         // Do something with timePassed
     }
 }
-
-void KitchenDemo::displayMainMenu() {
-    std::cout << "=============================" << std::endl;
-    std::cout << "Welcome to the Kitchen Demo!" << std::endl;
-    std::cout << "Please select an option:" << std::endl;
-    std::cout << "1. Simulate time passed" << std::endl;
-    std::cout << "2. Display kitchen snapshot" << std::endl;
-    std::cout << "3. Display menu" << std::endl;
-    std::cout << "4. Display order builder" << std::endl;
-    std::cout << "5. Add Chef" << std::endl;
-    std::cout << "6. Exit" << std::endl;
-    std::cout << "=============================" << std::endl;
-}
+/*
+When a user prints result of order, they can't add anything to the order :(
+*/
 
 void KitchenDemo::simulateTimePassed() {
     int timePassed;
@@ -129,51 +131,34 @@ void KitchenDemo::displayModifiers() {
 }
 
 void KitchenDemo::menuHandler() {
-    int choice;
     while (true) {
-        displayMainMenu();
-        std::cout << "Enter choice: ";
-        std::cin >> choice;
-        switch (choice) {
-        case 1: simulateTimePassed(); break;
-        case 2: displayKitchenSnapshot(); break;
-        case 3: displayMenu(); break;
-        case 4: displayOrderBuilderMenu(); break;
-        case 5: displayAddChef(); break;
-        case 6: return;
-        default: std::cout << "Invalid input" << std::endl; break;
-        }
+        std::cout << "Welcome to the Kitchen Demo!" << std::endl;
+        if (commands_.execute() == -1) break;
     }
 }
 
 void KitchenDemo::displayOrderBuilderMenu() {
+    CommandMenu orderMenu;
+
+    orderMenu.addCommand("Add item", [this]() { addOrderBuilderItem(); });
+    orderMenu.addCommand("Show order",
+        [this]() { std::cout << orderBuilder_->getResult() << std::endl; });
+    orderMenu.addCommand("Submit Order",
+        [this]() { kitchen_->handleOrder(orderBuilder_->getOrder()); });
+
+    orderMenu.setPrompt("Enter choice (-1 to exit): ");
+    orderMenu.setError("Invalid input");
+    orderMenu.setExitCode(-1);
+
     int choice;
     orderBuilder_->begin(1);
     while (true) {
-        std::cout << "=============================" << std::endl;
-        std::cout << "Welcome to the Order Builder!" << std::endl;
-        std::cout << "Please select an option:" << std::endl;
-        // std::cout << "0. Add Modifier" << std::endl;
-        std::cout << "1. Add item to order" << std::endl;
-        std::cout << "2. Display order" << std::endl;
-        std::cout << "3. Submit order" << std::endl;
-        std::cout << "4. Exit" << std::endl;
-        std::cout << "=============================" << std::endl;
-        std::cout << "Enter choice: ";
-        std::cin >> choice;
-        switch (choice) {
-        // case 0: addOrderBuilderModifier(); break;
-        case 1: addOrderBuilderItem(); break;
-        case 2: std::cout << orderBuilder_->getResult() << std::endl; break;
-        case 3: kitchen_->handleOrder(orderBuilder_->getOrder()); break;
-        case 4: return;
-        default: std::cout << "Invalid input" << std::endl; break;
-        }
+        if (orderMenu.execute() == -1) return;
     }
 }
 
 void KitchenDemo::addOrderBuilderItem() {
-        std::cout << "=============================" << std::endl;
+    std::cout << "=============================" << std::endl;
     displayMenu();
     std::string key;
     std::string customerName;
@@ -207,8 +192,7 @@ void KitchenDemo::addOrderBuilderItem() {
     } else {
         std::cout << "Item not added" << std::endl;
     }
-        std::cout << "=============================" << std::endl;
-
+    std::cout << "=============================" << std::endl;
 }
 
 void KitchenDemo::addOrderBuilderModifier() {
@@ -226,7 +210,7 @@ void KitchenDemo::addOrderBuilderModifier() {
 
 void KitchenDemo::displayAddChef() {
 
-        std::cout << "=============================" << std::endl;
+    std::cout << "=============================" << std::endl;
 
     std::cout << "Please enter the role of the chef you would like to add: \n";
     std::string role;
@@ -285,6 +269,5 @@ void KitchenDemo::displayAddChef() {
     }
 
     kitchen_->AddChef(newChef);
-        std::cout << "=============================" << std::endl;
-
+    std::cout << "=============================" << std::endl;
 }
