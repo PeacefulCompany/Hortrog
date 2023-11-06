@@ -1,4 +1,4 @@
-#include "Menu/Menu.h"
+#include "menu/Menu.h"
 
 #include "core/TerminalApp.h"
 #include "customer/Customer.h"

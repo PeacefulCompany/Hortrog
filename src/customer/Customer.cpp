@@ -2,7 +2,7 @@
 
 #include "customer/CustomerState.h"
 #include "customer/OrderingState.h"
-#include "Menu/Menu.h"
+#include "menu/Menu.h"
 #include "order/OrderBuilder.h"
 #include "staff/FloorStaff.h"
 #include <iostream>

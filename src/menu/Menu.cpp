@@ -1,4 +1,4 @@
-#include "Menu/Menu.h"
+#include "menu/Menu.h"
 using json = nlohmann::json;
 
 Menu::Menu() {
