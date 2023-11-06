@@ -108,7 +108,7 @@ Meal* Kitchen::getOutgoingMeal() {
 }
 
 void Kitchen::updateTime(int time) {
-    std::cout << "[Kitchen]:" << time << "s have passed" << std::endl;
+    std::cout << "[Kitchen]: " << time << "'s have passed" << std::endl;
     for (int i = 0; i < time; i++) {
         staff_->updateTime(1);
     }
