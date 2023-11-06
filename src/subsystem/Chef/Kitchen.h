@@ -105,5 +105,7 @@ public:
 
     void AddChef(KitchenStaff* chef);
 
+    inline KitchenStaff* getFirstChef() { return headChef.get(); }
+
     ~Kitchen();
 };
