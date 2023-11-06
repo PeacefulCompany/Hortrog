@@ -64,7 +64,14 @@ void Waiter::FetchMeals() {
 void Waiter::Givetokitchen() {
     FloorStaff::getKitchen()->handleOrder(orderBuilder_->getOrder());
 }
-void Waiter::giveMeal(std::string customerName, Meal* meal) { return; }
+Meal* Waiter::getMeal(Customer& customer) {
+    for (auto& meal : readyMeals) {
+        if (meal->getCustomer() == customer.getName()) {
+            return meal;
+        }
+    }
+    return nullptr;
+}
 void Waiter::giveFoodToCustomer(Customer& customer) {
     std::string customerName = customer.getName();
     if (!this->readyMeals.empty()) {
