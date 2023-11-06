@@ -49,6 +49,13 @@ Kitchen::Kitchen(/* args */) {
 void Kitchen::handleOrder(Order* order) {
     std::cout << "Kitchen: recieved Order" << std::endl;
     Meal* meal = new Meal(order);
+
+    if(order->toJson() == "{}")
+    {
+        std::cout << "Kitchen: recieved empty order" << std::endl;
+        return;
+    }
+
     incomingMeals.push(meal);
     // flush();
 }

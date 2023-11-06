@@ -41,11 +41,8 @@
 
 KitchenDemo::KitchenDemo() {
     kitchen_ = new Kitchen();
-    std::cout << "gets here1" << std::endl;
     menu_->loadFromFile("menu_items.json");
-    std::cout << "gets here1" << std::endl;
     orderBuilder_ = new ConcreteOrderBuilder(menu_);
-    std::cout << "gets here1" << std::endl;
 }
 
 KitchenDemo::~KitchenDemo() {
@@ -98,13 +95,16 @@ void KitchenDemo::askTimePassed(Kitchen* kitchen) {
 }
 
 void KitchenDemo::displayMainMenu() {
+    std::cout << "=============================" << std::endl;
     std::cout << "Welcome to the Kitchen Demo!" << std::endl;
     std::cout << "Please select an option:" << std::endl;
     std::cout << "1. Simulate time passed" << std::endl;
     std::cout << "2. Display kitchen snapshot" << std::endl;
     std::cout << "3. Display menu" << std::endl;
     std::cout << "4. Display order builder" << std::endl;
-    std::cout << "5. Exit" << std::endl;
+    std::cout << "5. Add Chef" << std::endl;
+    std::cout << "6. Exit" << std::endl;
+    std::cout << "=============================" << std::endl;
 }
 
 void KitchenDemo::simulateTimePassed() {
@@ -132,13 +132,15 @@ void KitchenDemo::menuHandler() {
     int choice;
     while (true) {
         displayMainMenu();
+        std::cout << "Enter choice: ";
         std::cin >> choice;
         switch (choice) {
         case 1: simulateTimePassed(); break;
         case 2: displayKitchenSnapshot(); break;
         case 3: displayMenu(); break;
         case 4: displayOrderBuilderMenu(); break;
-        case 5: return;
+        case 5: displayAddChef(); break;
+        case 6: return;
         default: std::cout << "Invalid input" << std::endl; break;
         }
     }
@@ -148,6 +150,7 @@ void KitchenDemo::displayOrderBuilderMenu() {
     int choice;
     orderBuilder_->begin(1);
     while (true) {
+        std::cout << "=============================" << std::endl;
         std::cout << "Welcome to the Order Builder!" << std::endl;
         std::cout << "Please select an option:" << std::endl;
         // std::cout << "0. Add Modifier" << std::endl;
@@ -155,6 +158,8 @@ void KitchenDemo::displayOrderBuilderMenu() {
         std::cout << "2. Display order" << std::endl;
         std::cout << "3. Submit order" << std::endl;
         std::cout << "4. Exit" << std::endl;
+        std::cout << "=============================" << std::endl;
+        std::cout << "Enter choice: ";
         std::cin >> choice;
         switch (choice) {
         // case 0: addOrderBuilderModifier(); break;
@@ -168,6 +173,7 @@ void KitchenDemo::displayOrderBuilderMenu() {
 }
 
 void KitchenDemo::addOrderBuilderItem() {
+        std::cout << "=============================" << std::endl;
     displayMenu();
     std::string key;
     std::string customerName;
@@ -201,6 +207,8 @@ void KitchenDemo::addOrderBuilderItem() {
     } else {
         std::cout << "Item not added" << std::endl;
     }
+        std::cout << "=============================" << std::endl;
+
 }
 
 void KitchenDemo::addOrderBuilderModifier() {
@@ -216,40 +224,67 @@ void KitchenDemo::addOrderBuilderModifier() {
     }
 }
 
-void KitchenDemo::displayAddChef(){
-    std::cout << "Please enter the role of the chef you would like to add: ";
+void KitchenDemo::displayAddChef() {
+
+        std::cout << "=============================" << std::endl;
+
+    std::cout << "Please enter the role of the chef you would like to add: \n";
     std::string role;
-    std::getline(std::cin, role);
+    std::cin >> role;
 
-    std::cout << "Please enter the rating of the chef you would like to add: ";
-    int rating;
+    std::cout
+        << "Please enter the rating of the chef you would like to add: \n";
+    std::string rating;
     std::cin >> rating;
+    try {
+        int intRating = std::stoi(rating);
+    } catch (const std::invalid_argument& ia) {
+        std::cerr << "Invalid argument: " << ia.what() << '\n';
+        return;
+    }
 
-    std::cout << "Please enter the capacity of the chef you would like to add: ";
-    int capacity;
+    std::cout
+        << "Please enter the capacity of the chef you would like to add: \n";
+    std::string capacity;
     std::cin >> capacity;
+    try {
+        int intCapacity = std::stoi(capacity);
+    } catch (const std::invalid_argument& ia) {
+        std::cerr << "Invalid argument: " << ia.what() << '\n';
+        return;
+    }
 
-    std::cout << "Please enter the speed of the chef you would like to add: ";
-    int speed;
+    std::cout << "Please enter the speed of the chef you would like to add: \n";
+    std::string speed;
     std::cin >> speed;
+    try {
+        int intSpeed = std::stoi(speed);
+    } catch (const std::invalid_argument& ia) {
+        std::cerr << "Invalid argument: " << ia.what() << '\n';
+        return;
+    }
 
-
-
-    KitchenStaff* newChef = new NormalChef(rating, capacity, this->kitchen_, speed, role);
+    KitchenStaff* newChef = new NormalChef(std::stoi(rating),
+        std::stoi(capacity),
+        this->kitchen_,
+        std::stoi(speed),
+        role);
 
     int addMore = 1;
 
     while (addMore != 0) {
-        std::cout << "Would you like to add a dish that this chef can prepare? (1 for yes, 0 for no): ";
+        std::cout << "Would you like to add a dish that this chef can prepare? "
+                     "(1 for yes, 0 for no): ";
         std::cin >> addMore;
         if (addMore == 1) {
             std::cout << "Please enter the name of the dish: ";
             std::string dish;
-            std::getline(std::cin, dish);
+            std::cin >> dish;
             ((NormalChef*)newChef)->addCanPrepareItem(dish);
         }
     }
 
     kitchen_->AddChef(newChef);
+        std::cout << "=============================" << std::endl;
 
 }

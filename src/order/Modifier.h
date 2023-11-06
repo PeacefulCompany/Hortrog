@@ -21,4 +21,6 @@ public:
     bool checkForCustomer(std::string customerName) override;
     bool checkForDupe(std::string customerName, std::vector<const MenuItem*> menuItems) override;
     std::vector<const MenuItem *> getAllMenuItems() override;
+    inline std::string getKey() { return key_; }
+    inline void setKey(std::string key) { key_ = key; }
 };
