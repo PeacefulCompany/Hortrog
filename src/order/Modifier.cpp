@@ -35,3 +35,6 @@ bool Modifier::checkForDupe(
 bool Modifier::checkForCustomer(std::string customerName) {
     return component_->checkForCustomer(customerName);
 }
+std::vector<MenuItem*> Modifier::getAllMenuItems() {
+    return component_->getAllMenuItems();
+}

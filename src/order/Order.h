@@ -28,7 +28,7 @@ public:
     };
     virtual bool checkForCustomer(std::string customerName) = 0;
     virtual bool checkForDupe(std::string customerName, std::vector<MenuItem*> menuItems) = 0;
-
+    virtual std::vector<MenuItem *> getAllMenuItems()=0;
     inline std::string getCustomer() { return customer_; };
 
     virtual ~Order() = default;

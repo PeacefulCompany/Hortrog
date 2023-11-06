@@ -4,7 +4,7 @@
 
 void OrderComposite::add(std::unique_ptr<Order> order) {
     std::string newCustomer = order->getCustomer();
-    bool canAdd = checkForDupe(newCustomer, );
+    bool canAdd = checkForDupe(newCustomer, getAllMenuItems());
     if (canAdd){
         orders_.push_back (std::move(order));
     } else {
@@ -64,4 +64,14 @@ bool OrderComposite::checkForDupe(
         }
     }
     return false;
+}
+std::vector<MenuItem*> OrderComposite::getAllMenuItems() {
+    std::vector<MenuItem*> returnVector;
+    for (auto& order : orders_) {
+        std::vector<MenuItem*> childVector = order->getAllMenuItems();
+        for (auto& item : childVector) {
+            returnVector.push_back(item);
+        }
+    }
+    return returnVector;
 }
