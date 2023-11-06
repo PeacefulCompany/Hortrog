@@ -3,7 +3,12 @@
 
 void OrderComposite::add(std::unique_ptr<Order> order) {
     std::string newCustomer = order->getCustomer();
-    orders_.push_back(std::move(order));
+    bool canAdd = checkForCustomer(newCustomer);
+    if (canAdd){
+        orders_.push_back (std::move(order));
+    } else {
+        std::cout << "You already ordered that!!";
+    }
 }
 
 
