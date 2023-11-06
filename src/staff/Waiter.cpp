@@ -64,6 +64,7 @@ void Waiter::FetchMeals() {
     if (currentMeal != nullptr) readyMeals.push_back(currentMeal);
 }
 void Waiter::Givetokitchen() {
+    pointOfSales_->addOrder(orderBuilder_->getOrder());
     FloorStaff::getKitchen()->handleOrder(orderBuilder_->getOrder());
 }
 
@@ -101,6 +102,7 @@ void Waiter::visitTables() {
         }
     }
 }
+
 void Waiter::callManager(CustomerState& state) {
     std::cout << "Manager called" << std::endl;
     Manager* manager =
@@ -109,15 +111,16 @@ void Waiter::callManager(CustomerState& state) {
     manager->accept(state);
     delete manager;
 }
+
 void Waiter::accept(CustomerState& state) { state.visit(*this); }
 
 std::string Waiter::getStaffType() { return "Waiter"; }
 
 std::vector<Receipt> Waiter::synthesizeBill(int strategy, uint32_t tblId) {
     switch (strategy) {
-    case 1: pointOfSales_->getReceipt(new EvenSplit, tblId); break;
-    case 2: pointOfSales_->getReceipt(new PerCustomer, tblId); break;
-    case 3: pointOfSales_->getReceipt(new OneReceipt, tblId); break;
+    case 1: pointOfSales_->getReceipt(new EvenSplit(), tblId); break;
+    case 2: pointOfSales_->getReceipt(new PerCustomer(), tblId); break;
+    case 3: pointOfSales_->getReceipt(new OneReceipt(), tblId); break;
     default: std::cout << "Invalid strategy" << std::endl; break;
     }
 }
