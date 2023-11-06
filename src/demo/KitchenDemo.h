@@ -54,12 +54,6 @@ public:
     void setOrderBuilder(ConcreteOrderBuilder* orderBuilder);
 
     /**
-     * @brief Test function that pulls everything together into a demo
-     *
-     */
-    void test();
-
-    /**
      * @brief Ask for the time passed and update the kitchen
      *
      * @param kitchen

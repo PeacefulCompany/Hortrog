@@ -1,4 +1,5 @@
 #include "KitchenDemo.h"
+#include "core/util.h"
 #include "order/ConcreteOrderBuilder.h"
 #include "order/Order.h"
 #include "order/OrderBuilder.h"
@@ -21,17 +22,6 @@ ConcreteOrderBuilder* KitchenDemo::getOrderBuilder() { return orderBuilder_; }
 
 void KitchenDemo::setOrderBuilder(ConcreteOrderBuilder* orderBuilder) {
     orderBuilder_ = orderBuilder;
-}
-
-// other functions
-
-void KitchenDemo::test() {
-    // Kitchen* kitchen = new Kitchen();
-    // Order* o = new Order("bob");
-    // Order* b = new Order("alice");
-    // kitchen->handleOrder(o);
-    // kitchen->handleOrder(b);
-    // askTimePassed(kitchen);
 }
 
 void KitchenDemo::askTimePassed(Kitchen* kitchen) {
@@ -100,48 +90,34 @@ void KitchenDemo::displayOrderBuilderMenu() {
 }
 
 void KitchenDemo::addOrderBuilderItem() {
-    std::cout << "=============================" << std::endl;
     displayMenu();
-    std::string key;
-    std::string customerName;
-    std::string modifierQuery;
-    std::cin.ignore();
-    std::cout << "Enter item key: \n";
-    // std::cin.ignore();
-    std::getline(std::cin, key);
-    std::cout << "Enter customer name: ";
-    std::getline(std::cin, customerName);
-    std::cout << "Customer Name: " << customerName << std::endl;
-    if (orderBuilder_->addItem(key, customerName)) {
-        std::cout << "Item added" << std::endl;
-        std::cout << "Do you want to add a modifier? (y/n)" << std::endl;
-        std::getline(std::cin, modifierQuery);
-        std::cout << modifierQuery << std::endl;
-        if (modifierQuery == "y" || modifierQuery == "n") {
-            while (modifierQuery != "y" && modifierQuery != "n") {
-                std::cout << "Invalid input" << std::endl;
-                std::cout << "Do you want to add a modifier? (y/n)"
-                          << std::endl;
-                std::getline(std::cin, modifierQuery);
-            }
-        }
 
-        if (modifierQuery == "y") {
-            addOrderBuilderModifier();
-        } else {
-            std::cout << "No modifier added" << std::endl;
-        }
-    } else {
+    std::string key = util::inputString("Enter key: ");
+    std::string customerName = util::inputString("Enter customer name: ");
+    if (!orderBuilder_->addItem(key, customerName)) {
         std::cout << "Item not added" << std::endl;
+        return;
     }
-    std::cout << "=============================" << std::endl;
+
+    std::cout << "Item added" << std::endl;
+
+    std::string modifierQuery =
+        util::inputString("Do you want to add a modifier? (y/n)");
+    while (modifierQuery != "y" && modifierQuery != "n") {
+        std::cout << "Invalid input" << std::endl;
+        modifierQuery =
+            util::inputString("Do you want to add a modifier? (y/n)");
+    }
+
+    if (modifierQuery == "y") {
+        addOrderBuilderModifier();
+    } else {
+        std::cout << "No modifier added" << std::endl;
+    }
 }
 
 void KitchenDemo::addOrderBuilderModifier() {
-    displayMenu();
-    std::string key;
-    std::cout << "Enter modifier key: \n";
-    std::getline(std::cin, key);
+    std::string key = util::inputString("Enter modifier key: ");
 
     if (orderBuilder_->addModifier(key)) {
         std::cout << "Modifier added" << std::endl;
