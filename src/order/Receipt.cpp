@@ -14,7 +14,7 @@ std::string Receipt::toString() {
     std::string returnString = "";
     for (auto pair : orderList_) {
         returnString += pair.first + " : ";
-        returnString += pair.second;
+        returnString += std::to_string(pair.second);
         returnString += "\n";
     }
     return returnString;
