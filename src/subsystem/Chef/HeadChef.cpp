@@ -6,7 +6,7 @@ HeadChef::HeadChef(
     this->rating_ = rating;
     this->capacity_ = capacity;
     this->kitchen_ = kitchen;
-    this->speed_ = speed;
+    this->timer_ = Timer(speed);
     this->role_ = role;
 }
 
@@ -19,7 +19,7 @@ HeadChef::~HeadChef() {}
  * @param meal A pointer to the Meal object to be prepared.
  */
 void HeadChef::prepareMeal(Meal* meal) {
-    lastTime_ = 0;
+    timer_.reset();
     std::cout << "Head Chef: is checking a meal" << std::endl;
     OrderJSON* orderJSON = new OrderJSON(meal->getOrder()->toJson());
     std::vector<ItemJSON*> items = orderJSON->getItems();
@@ -43,7 +43,7 @@ void HeadChef::prepareMeal(Meal* meal) {
 std::string HeadChef::toString() {
     std::stringstream ss;
     ss << role_ << " (rating=" << rating_;
-    ss << ", capacity=" << capacity_ << ", speed=" << speed_ << ")";
+    ss << ", capacity=" << capacity_ << ", speed=" << timer_.duration() << ")";
 
     return ss.str();
 }

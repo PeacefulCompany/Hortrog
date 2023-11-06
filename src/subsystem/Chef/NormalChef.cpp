@@ -38,7 +38,7 @@ NormalChef::NormalChef(
     this->capacity_ = capacity;
     this->kitchen_ = kitchen;
     nextStaff_ = nullptr;
-    this->speed_ = speed;
+    this->timer_ = Timer(speed);
     this->role_ = role;
 }
 
@@ -183,10 +183,10 @@ void NormalChef::removeCanPrepareItem(std::string item) {
  */
 void NormalChef::update() {
     // lastTime = 0;
-    if (!itemsBeingPrepared_.empty() && lastTime_ >= speed_) {
+    if (!itemsBeingPrepared_.empty() && timer_.expired()) {
         preparedItems_.push_back(itemsBeingPrepared_.front());
         itemsBeingPrepared_.erase(itemsBeingPrepared_.begin());
-        lastTime_ = 0;
+        timer_.reset();
     }
     notify();
 }
@@ -198,7 +198,7 @@ void NormalChef::update() {
 std::string NormalChef::toString() {
     std::stringstream ss;
     ss << role_ << " (rating=" << rating_;
-    ss << ", capacity=" << capacity_ << ", speed=" << speed_ << ")";
+    ss << ", capacity=" << capacity_ << ", speed=" << timer_.duration() << ")";
     ss << "\n- can_prepare: [";
     for (int i = 0; i < canPrepareItems_.size(); i++) {
         if (i != 0) ss << ", ";

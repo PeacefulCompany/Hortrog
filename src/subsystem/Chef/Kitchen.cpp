@@ -105,9 +105,8 @@ Meal* Kitchen::getOutgoingMeal() {
 }
 
 void Kitchen::updateTime(int time) {
-    std::cout << "Kitchen:" << time << " seconds hava passed" << std::endl;
+    std::cout << "[Kitchen]:" << time << "s have passed" << std::endl;
     headChef->updateTime(time);
-    flush();
     // std::cout << toString() << std::endl;
 }
 

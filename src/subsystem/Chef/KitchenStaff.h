@@ -3,6 +3,7 @@
 #include <memory>
 
 // #include "OrderJSON.h"
+#include "core/Timer.h"
 #include "order/Order.h"
 #include "subsystem/Meals/Meal.h"
 #include "subsystem/Meals/MealItem.h"
@@ -17,9 +18,9 @@ protected:
     std::unique_ptr<KitchenStaff> nextStaff_;
     int rating_;
     int capacity_;
-    int speed_;
     Kitchen* kitchen_;
-    int lastTime_ = 0;
+
+    Timer timer_;
     virtual void update();
 
     std::string role_;
