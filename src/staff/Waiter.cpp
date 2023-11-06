@@ -21,10 +21,11 @@
  */
 Kitchen* FloorStaff::kitchen_ = nullptr;
 
-Waiter::Waiter(const Menu* menu, const Floor* floor)
+Waiter::Waiter(const Menu* menu, const Floor* floor, PointOfSales* pointOfSales)
     : FloorStaff(), menu_(menu), floor_(floor) {
     FloorStaff::setKitchen(new Kitchen());
     this->orderBuilder_ = std::make_unique<ConcreteOrderBuilder>(menu);
+    pointOfSales_=pointOfSales;
 }
 void Waiter::serveMeals() {
     for (auto& table : tables_) {

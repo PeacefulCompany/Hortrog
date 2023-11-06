@@ -23,7 +23,7 @@
  */
 class Waiter : public FloorStaff {
 public:
-    Waiter(const Menu* menu, const Floor* floor);
+    Waiter(const Menu* menu, const Floor* floor, PointOfSales* pointOfSales);
 
     /**
      * @brief Accepts a customer state.
