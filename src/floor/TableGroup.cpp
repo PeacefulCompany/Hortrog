@@ -60,3 +60,9 @@ std::string TableGroup::toString() const {
     }
     return s.str();
 }
+
+void TableGroup::update(float dt) {
+    for (TableComponent* table : tables_) {
+        table->update(dt);
+    }
+}

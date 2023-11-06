@@ -69,6 +69,8 @@ public:
      */
     void receiveMeal(Meal* meal);
 
+    std::string toString() const;
+
 private:
     /**
      * @brief The state of the customer

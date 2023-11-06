@@ -7,6 +7,7 @@
 #include "order/OrderComposite.h"
 #include <cstdlib>
 #include <ctime>
+#include <iomanip>
 #include <iostream>
 #include <string>
 
@@ -35,6 +36,7 @@ void OrderingState::visit(Waiter& w) {
     OrderBuilder* TableOrder = w.getOrderBuilder();
     const Menu* menu = TableOrder->getMenu();
     std::vector<std::string> allItems = menu->getAllKeys();
+
     int randomNumber = std::rand() % allItems.size();
     if (readyTimer_.expired()) {
         TableOrder->addItem(allItems[randomNumber], customer_->getName());
@@ -45,11 +47,26 @@ void OrderingState::visit(Waiter& w) {
             // allItems[randomNumber].getModifiers()[0].getName();
             TableOrder->addModifier(modifierName);
         }
+        std::cout << customer_->toString() << ": I ordered something"
+                  << std::endl;
+
         this->customer_->setHappiness(this->customer_->getHappiness() + 5);
+
         customer_->changeState(new WaitingState(customer_));
     } else {
-        readyTimer_.update(1); // to be removed
-        std::cout << "Not ready to order" << std::endl;
+        std::cout << customer_->toString() << ": Not ready to order"
+                  << std::endl;
     }
 }
 void OrderingState::update(float dt) { readyTimer_.update(dt); }
+
+std::string OrderingState::toString() const {
+    std::stringstream ss;
+    ss << "[Ordering] ";
+    if (readyTimer_.expired()) {
+        ss << "Ready to order";
+    } else {
+        ss << std::setprecision(5) << readyTimer_.remaining();
+    }
+    return ss.str();
+}

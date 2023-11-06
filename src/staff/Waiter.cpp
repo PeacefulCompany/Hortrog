@@ -1,4 +1,6 @@
 #include "Waiter.h"
+
+#include "floor/Table.h"
 #include "customer/Customer.h"
 #include "order/ConcreteOrderBuilder.h"
 #include "order/OrderBuilder.h"
@@ -7,8 +9,13 @@
 #include "staff/Manager.h"
 #include "staff/Waiter.h"
 #include "subsystem/Chef/Kitchen.h"
+
+#include "floor/CustomerIterator.h"
+#include <sstream>
+
 #include <iostream>
 #include <vector>
+
 
 /**
  * @brief Initialize the static member kitchen_ with nullptr.
@@ -52,6 +59,7 @@ void Waiter::FetchMeals() {
 void Waiter::Givetokitchen() {
     FloorStaff::getKitchen()->handleOrder(orderBuilder_->getOrder());
 }
+
 void Waiter::giveFoodToCustomer(Customer& customer) {
     std::string customerName = customer.getName();
     if (!this->readyMeals.empty()) {
@@ -60,6 +68,30 @@ void Waiter::giveFoodToCustomer(Customer& customer) {
                 Meal* CustomerMeal = meal;
                 customer.receiveMeal(meal);
             }
+
+        }
+    }
+}
+std::string Waiter::toString() const {
+    std::stringstream ss;
+    ss << "Waiter (";
+    for (int i = 0; i < tables_.size(); i++) {
+        if (i != 0) ss << ", ";
+        ss << tables_[i]->id();
+    }
+    if (tables_.size() == 0) {
+        ss << "no tables";
+    }
+    ss << ")";
+    return ss.str();
+}
+void Waiter::assignTable(Table* table) { tables_.push_back(table); }
+void Waiter::visitTables() {
+    for (Table* table : tables_) {
+        CustomerIterator* it = table->createIterator();
+        while (!it->isDone()) {
+            it->get()->interact(*this);
+            it->next();
         }
     }
 }

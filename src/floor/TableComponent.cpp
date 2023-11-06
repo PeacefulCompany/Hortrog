@@ -30,9 +30,15 @@ std::string TableComponent::toString() const {
     std::stringstream s;
     s << "TableComponent: id=" << id_ << ", capacity=" << capacity_;
     for (auto& c : customers_) {
-        s << "\n- " << c->getName();
+        s << "\n- " << c->toString();
     }
     return s.str();
+}
+
+void TableComponent::update(float dt) {
+    for (Customer* c : customers_) {
+        c->update(dt);
+    }
 }
 
 bool TableComponent::merge(Table* table) { return false; }

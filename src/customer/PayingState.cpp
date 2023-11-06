@@ -24,3 +24,5 @@ void PayingState::visit(Waiter& w) {
     // w.tip(Exta Payment);
     customer_->changeState(nullptr);
 }
+
+std::string PayingState::toString() const { return "[Paying]"; }

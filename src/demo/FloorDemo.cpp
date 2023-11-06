@@ -2,6 +2,7 @@
 #include "core/util.h"
 
 #include "customer/Customer.h"
+#include "customer/CustomerState.h"
 #include "floor/CustomerIterator.h"
 #include "floor/Table.h"
 #include "floor/TableComponent.h"
@@ -13,185 +14,111 @@
 #include <iterator>
 #include <memory>
 #include <set>
+#include <stdlib.h>
+#include <string>
 #include <vector>
 
 void FloorDemo::gameLoop() {
     // Draw tables
     // std::cout << util::CLEAR_SCREEN << util::HOME << std::endl;
-    std::cout << "--- THE FLOOR ---" << std::endl;
-
-    for (auto& table : tables_) {
-        std::cout << table->toString() << std::endl;
-    }
+    std::cout << "\n--- THE FLOOR ---" << std::endl;
+    std::cout << floor_.toString() << std::endl;
     std::cout << "---------------------------" << std::endl;
 
     // Chose next action
-    std::cout << util::options({"Add Table",
-                    "Merge table",
-                    "Split table",
-                    "Add customer",
-                    "Remove customer"})
-              << std::endl;
-    int opt = util::input("Choose an option (-1 to quit): ");
-
-    switch (opt) {
-    case -1: {
+    if (mainOptions_.execute()) {
         running_ = false;
-        break;
-    }
-    case 1: {
-        addTable();
-        break;
-    }
-    case 2: {
-        mergeTable();
-        break;
-    }
-    case 3: {
-        splitTable();
-        break;
-    }
-    case 4: {
-        addCustomer();
-        break;
-    }
-    case 5: {
-        removeCustomer();
-        break;
-    }
-    default: {
-        std::cout << "Not an option. Try again." << std::endl;
-        break;
-    }
     }
 }
 
-void FloorDemo::init() { return; }
+void FloorDemo::init() {
+    menu_.loadFromFile("menu_items.json");
+
+    mainOptions_.addCommand("Add Table", [this]() { addTable(); });
+    mainOptions_.addCommand("Add Staff", [this]() { addStaff(); });
+    mainOptions_.addCommand("Add Customers", [this]() { addCustomers(); });
+    mainOptions_.addCommand("Visit tables", [this]() { visitCustomers(); });
+    mainOptions_.addCommand("Update Time", [this]() { update(); });
+    mainOptions_.setPrompt("Choose an option (-1 to quit): ");
+    mainOptions_.setExitCode(-1);
+}
 
 void FloorDemo::cleanup() {}
 
 void FloorDemo::addTable() {
-    std::cout << "--- TABLE ADD ---" << std::endl;
+    int capacity;
+    do {
+        capacity = util::input("Number of seats: ");
+    } while (capacity < 1);
 
-    int id = tableCount_++;
-    std::cout << "Creating table with id " << id << std::endl;
-
-    int capacity = util::input("Number of seats: ");
-    tables_.emplace_back(std::make_unique<TableComponent>(id, capacity));
+    std::cout << "Table ID: " << floor_.addTable(capacity);
 }
-
-void FloorDemo::splitTable() {
-    std::cout << "--- TABLE SPLIT ---" << std::endl;
-
-    // Find the table
-    int toSplit = util::input("Enter table ID to split: ");
-    auto it = findTable(toSplit);
-    if (it == tables_.end()) {
-        error("Table not found");
-        return;
-    }
-    if (!(*it)->isEmpty() || (*it)->split().size() == 1) {
-        error("Table cannot be split");
+void FloorDemo::addCustomers() {
+    if (floor_.getFloorStaffSize() < 1) {
+        util::error("No staff available to serve customers");
         return;
     }
 
-    // Split table up
-    std::vector<TableComponent*> split = (*it)->split();
-    std::transform(split.begin(),
-        split.end(),
-        std::back_inserter(tables_),
-        [](TableComponent* t) { return std::unique_ptr<Table>(t); });
-
-    // Remove group from array
-    it->reset();
-    std::erase(tables_, nullptr);
-}
-
-void FloorDemo::mergeTable() {
-    std::cout << "--- TABLE MERGE ---" << std::endl;
-    int numToMerge = util::input("Number of tables to merge: ");
-    std::set<int> merged;
-    for (int i = 0; i < numToMerge; i++) {
-        merged.insert(util::input("Table ID: "));
+    // Request table from floor
+    int numCustomers = util::input("Number of customers: ");
+    Table* table = floor_.requestSeating(numCustomers);
+    if (!table) {
+        util::error("Cannot accomadate that many customers");
+        return;
     }
 
-    std::vector<Table*> toMerge;
-    for (auto& t : tables_) {
-        if (merged.contains(t->id())) {
-            toMerge.push_back(t.release());
+    // Add customers to table
+    std::string line;
+    for (int i = 0; i < numCustomers; i++) {
+        std::cout << "Customer name: ";
+        std::getline(std::cin, line);
+        Customer* c = new Customer(line, 100);
+        table->seatCustomer(c);
+    }
+
+    // Assign waiter to table
+    Waiter* waiter = nullptr;
+    int opt = -1;
+    do {
+        int opt = util::input("Enter Waiter Number: ");
+        waiter = floor_.getWaiter(opt);
+        if (!waiter) {
+            std::cout << "Waiter not found" << std::endl;
         }
-    }
-    std::erase(tables_, nullptr);
-
-    std::unique_ptr<TableGroup> group(new TableGroup());
-    for (Table* x : toMerge) {
-        group->merge(x);
-    }
-    tables_.emplace_back(std::move(group));
+    } while (!waiter && opt != -1);
+    waiter->assignTable(table);
 }
 
-void FloorDemo::addCustomer() {
-    std::cout << "--- ADD CUSTOMER ---" << std::endl;
+void FloorDemo::addStaff() {
+    CommandMenu menu;
+    menu.addCommand(
+        "Waiter", [this]() { floor_.addStaff(new Waiter(&menu_)); });
+    menu.addCommand(
+        "Manager", [this]() { floor_.addStaff(new Manager(&floor_)); });
+    menu.setError("Invalid staff type.");
+    menu.setPrompt("Enter staff type: ");
 
-    // Find the table
-    int id = util::input("Enter table ID: ");
-    auto it = findTable(id);
-    if (it == tables_.end()) {
-        error("Table not found");
-        return;
-    }
-
-    // Create customer
-    std::cout << "Enter customer name: ";
-    std::string name;
-    std::getline(std::cin, name);
-    Customer* customer = new Customer(name, 10);
-
-    // Add customer to table
-    if (!(*it)->seatCustomer(customer)) {
-        error("Table is at capacity");
-        delete customer;
-    }
+    menu.execute();
 }
 
-void FloorDemo::removeCustomer() {
-    std::cout << "--- REMOVE CUSTOMER ---" << std::endl;
-
-    // Find the table
-    int id = util::input("Enter table ID: ");
-    auto it = findTable(id);
-    if (it == tables_.end()) {
-        error("Table not found");
-        return;
-    }
-
-    int customerNumber = util::input("Customer number: ");
-    CustomerIterator* customers = (*it)->createIterator();
-    for (int i = 0; i < customerNumber; i++) {
-        if (customers->isDone()) {
-            error("Customer not found");
-            delete customers;
-            return;
+void FloorDemo::visitCustomers() {
+    FloorStaff* staff = nullptr;
+    int opt = -1;
+    do {
+        opt = util::input("Enter Staff Number: ");
+        staff = floor_.getFloorStaff(opt);
+        if (!staff) {
+            std::cout << "Staff not found" << std::endl;
         }
-        customers->next();
-    }
+    } while (!staff && opt != -1);
+    if (opt == -1) return;
 
-    // Create customer
-    if (!(*it)->removeCustomer(customers->get())) {
-        error("Customer not found");
-        delete customers;
-        return;
-    }
+    staff->visitTables();
 }
 
-std::vector<std::unique_ptr<Table>>::iterator FloorDemo::findTable(int id) {
-    for (auto it = tables_.begin(); it != tables_.end(); it++) {
-        if ((*it)->id() == id) return it;
-    }
-    return tables_.end();
-}
-
-void FloorDemo::error(const std::string& message) {
-    std::cout << message << std::endl;
-    std::cin.get();
+void FloorDemo::update() {
+    float dt;
+    std::cout << "How much time has passed (seconds): ";
+    std::cin >> dt;
+    floor_.update(dt);
 }

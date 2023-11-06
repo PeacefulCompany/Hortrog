@@ -85,6 +85,15 @@ public:
      *
      * @param Customer The customer to give the food to.
      */
+
+    void giveMeal(std::string customerName, Meal* meal);
+
+    std::string toString() const override;
+
+    void assignTable(Table* table);
+
+    void visitTables() override;
+
     void giveFoodToCustomer(Customer& Customer);
     void callManager(CustomerState& state);
     PointOfSales* getPointOfSales() { return pointOfSales_; }

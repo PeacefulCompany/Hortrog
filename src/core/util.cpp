@@ -42,4 +42,9 @@ int input(const std::string& prompt) {
     std::cin.ignore(255, '\n');
     return value;
 }
+
+void error(const std::string& error) {
+    std::cout << error << std::endl;
+    std::cin.get();
+}
 } // namespace util
