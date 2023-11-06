@@ -47,12 +47,16 @@ OrderComposite* ConcreteOrderBuilder::getOrder() {
     if (tempOrder.empty()) return nullptr;
 
     OrderComposite* result = new OrderComposite();
+    std::string customer = tempOrder.back()->getCustomer();
     // Add all the Orders in the vector to the OrderComposite
     for (auto& order : tempOrder) {
         result->add(std::move(order));
     }
+    tempOrder.clear();
+
     // Return the OrderComposite as a JSON string
     result->setTblId(tblId_);
+    result->setCustomer(customer);
     return result;
 };
 

@@ -46,10 +46,7 @@ std::vector<ItemJSON*> OrderJSON::getItems() {
         ItemJSON* newItemJSON = new ItemJSON(name, price, diet, mod, customer);
         items_.push_back(newItemJSON);
     }
-    
-    std::cout<< "[debug] items_ size: " << items_.size() << std::endl;
     for (int i = 0; i < items_.size(); i++) {
-        std::cout << "[debug] item " << i << ": " << items_[i]->toString() << std::endl;
     }
 
     return items_;

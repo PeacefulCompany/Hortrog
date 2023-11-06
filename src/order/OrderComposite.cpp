@@ -15,7 +15,6 @@ void OrderComposite::add(std::unique_ptr<Order> order) {
 }
 
 std::string OrderComposite::toJson() {
-    std::cout << "Function call happening" << std::endl;
     std::string ret = "{\n";
     ret += "\"order\": [\n";
     for (auto& order : orders_) {

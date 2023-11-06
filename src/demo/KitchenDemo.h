@@ -62,4 +62,6 @@ public:
     void displayOrderBuilderMenu();
 
     void displayAddChef();
+
+    void completeOrder();
 };
