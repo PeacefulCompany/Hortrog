@@ -1,13 +1,8 @@
-#include "demo/WaiterDemo.h"
-
-void CustomerWaiterPOS() {
-    WaiterDemo* waiterDemo = new WaiterDemo();
-    waiterDemo->addCustomers();
-    waiterDemo->placeCustomers();
-    waiterDemo->customerOrder();
-}
+#include "demo/GameDemo.h"
 
 int main() {
-    CustomerWaiterPOS();
+    GameDemo demo;
+    demo.run();
+
     return 0;
 }

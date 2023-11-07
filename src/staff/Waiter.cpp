@@ -9,6 +9,7 @@
 #include "floor/CustomerIterator.h"
 #include "floor/Floor.h"
 #include "floor/Table.h"
+
 #include "order/ConcreteOrderBuilder.h"
 #include "order/OrderBuilder.h"
 #include "order/OrderComposite.h"
@@ -30,10 +31,8 @@
  */
 Kitchen* FloorStaff::kitchen_ = nullptr;
 
-Waiter::Waiter(
-    const Menu* menu, const Floor* floor, Kitchen* kitchen, PointOfSales* pos)
-    : FloorStaff(), menu_(menu), floor_(floor), pointOfSales_(pos),
-      kitchen_(kitchen) {
+Waiter::Waiter(const Menu* menu, Kitchen* kitchen, PointOfSales* pos)
+    : FloorStaff(), menu_(menu), pointOfSales_(pos), kitchen_(kitchen) {
     FloorStaff::setKitchen(new Kitchen());
     this->orderBuilder_ = std::make_unique<ConcreteOrderBuilder>(menu);
 }
@@ -81,9 +80,10 @@ void Waiter::fetchMeals() {
 }
 
 void Waiter::giveToKitchen() {
-    pointOfSales_->addOrder(orderBuilder_->getOrder());
+    OrderComposite* order = orderBuilder_->getOrder();
+    pointOfSales_->addOrder(order);
 
-    FloorStaff::getKitchen()->handleOrder(orderBuilder_->getOrder());
+    FloorStaff::getKitchen()->handleOrder(order);
 }
 Meal* Waiter::getMeal(Customer& customer) {
     for (auto& meal : readyMeals) {
@@ -133,8 +133,8 @@ void Waiter::visitTables() {
 }
 
 void Waiter::callManager(CustomerState& state) {
-    std::cout << "Manager called" << std::endl;
-    Manager* manager = new Manager(this->floor_);
+    std::cout << "The manager has been summoned!!" << std::endl;
+    Manager* manager = new Manager(nullptr);
     std::cout << "I am the manager!" << std::endl;
     manager->accept(state);
     delete manager;

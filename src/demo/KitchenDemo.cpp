@@ -36,17 +36,6 @@ void KitchenDemo::askTimePassed(Kitchen* kitchen) {
 When a user prints result of order, they can't add anything to the order :(
 */
 
-void KitchenDemo::simulateTimePassed() {
-    int timePassed;
-    std::cout << "Enter time passed (sec): ";
-    std::cin >> timePassed;
-    if (timePassed <= 0) {
-        std::cout << "Invalid input" << std::endl;
-        return;
-    }
-    kitchen_.updateTime(timePassed);
-}
-
 void KitchenDemo::displayKitchenSnapshot() {
     std::cout << kitchen_.toString() << std::endl;
 }
@@ -183,7 +172,6 @@ void KitchenDemo::displayAddChef() {
 }
 
 void KitchenDemo::init() {
-    commands_.addCommand("Pass some time", [this]() { simulateTimePassed(); });
     commands_.addCommand(
         "Display Kitchen snapshot", [this]() { displayKitchenSnapshot(); });
     commands_.addCommand("Display menu",

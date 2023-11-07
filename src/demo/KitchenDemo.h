@@ -38,12 +38,6 @@ public:
     void addOrderBuilderItem();
 
     /**
-     * @brief Simulate the time passed
-     *
-     */
-    void simulateTimePassed();
-
-    /**
      * @brief Display the current state of the kitchen
      *
      */

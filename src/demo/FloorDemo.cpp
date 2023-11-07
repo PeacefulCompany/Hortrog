@@ -18,7 +18,8 @@
 #include <string>
 #include <vector>
 
-FloorDemo::FloorDemo(Floor& floor, Menu& menu) : floor_(floor), menu_(menu) {}
+FloorDemo::FloorDemo(Floor& floor, Menu& menu, Kitchen& k)
+    : floor_(floor), menu_(menu), kitchen_(k) {}
 
 void FloorDemo::gameLoop() {
     // Draw tables
@@ -37,10 +38,9 @@ void FloorDemo::init() {
     menu_.loadFromFile("menu_items.json");
 
     mainOptions_.addCommand("Add Table", [this]() { addTable(); });
-    mainOptions_.addCommand("Add Staff", [this]() { addStaff(); });
+    mainOptions_.addCommand("Add Waiter", [this]() { addStaff(); });
     mainOptions_.addCommand("Add Customers", [this]() { addCustomers(); });
     mainOptions_.addCommand("Visit tables", [this]() { visitCustomers(); });
-    mainOptions_.addCommand("Update Time", [this]() { update(); });
     mainOptions_.setPrompt("Choose an option (-1 to quit): ");
     mainOptions_.setExitCode(-1);
 }
@@ -92,18 +92,7 @@ void FloorDemo::addCustomers() {
 }
 
 void FloorDemo::addStaff() {
-    CommandMenu menu;
-
-    menu.addCommand("Waiter", [this]() {
-        floor_.addStaff(new Waiter(&menu_, &floor_, nullptr, &pointOfSales_));
-    });
-
-    menu.addCommand(
-        "Manager", [this]() { floor_.addStaff(new Manager(&floor_)); });
-    menu.setError("Invalid staff type.");
-    menu.setPrompt("Enter staff type: ");
-
-    menu.execute();
+    floor_.addStaff(new Waiter(&menu_, &kitchen_, &pointOfSales_));
 }
 
 void FloorDemo::visitCustomers() {
@@ -119,11 +108,4 @@ void FloorDemo::visitCustomers() {
     if (opt == -1) return;
 
     staff->visitTables();
-}
-
-void FloorDemo::update() {
-    float dt;
-    std::cout << "How much time has passed (seconds): ";
-    std::cin >> dt;
-    floor_.update(dt);
 }

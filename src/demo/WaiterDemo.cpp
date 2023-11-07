@@ -1,13 +1,17 @@
 #include "WaiterDemo.h"
 #include "customer/OrderingState.h"
 #include "customer/PayingState.h"
+#include "subsystem/Chef/Kitchen.h"
+#include "subsystem/Chef/KitchenStaff.h"
 
 WaiterDemo::WaiterDemo() {
     menu_ = new Menu();
     menu_->loadFromFile("menu_items.json");
     pointOfSales_ = new PointOfSales();
     table_ = new TableComponent(1, 4);
-    waiter_ = new Waiter(menu_, nullptr, nullptr, pointOfSales_);
+    kitchen_ = new Kitchen();
+    waiter_ = new Waiter(menu_, kitchen_, pointOfSales_);
+
     // orderBuilder_ = std::make_unique<ConcreteOrderBuilder>(menu_);
 }
 
@@ -36,10 +40,6 @@ void WaiterDemo::customerOrder() {
     }
 
     // waiter sends receipt thingy wingy
-
-    Order* order = waiter_->getOrderBuilder()->getOrder();
-    waiter_->getPointOfSales()->addOrder(order);
-
     for (auto& customer : customers_) {
         customer->changeState(new PayingState(customer));
     }
