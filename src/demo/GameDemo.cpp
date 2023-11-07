@@ -38,6 +38,10 @@ void GameDemo::init() {
 
     commands_.addCommand("Kitchen", [this]() { current_ = kitchenDemo_; });
     commands_.addCommand("Floor", [this]() { current_ = floorDemo_; });
+    commands_.addCommand("Waiter Demo", [this]() {
+        WaiterDemo().run();
+        wait();
+    });
     commands_.addCommand("Pass some time", [this]() { update(); });
     commands_.setExitCode(-1);
     commands_.setPrompt("Enter your choice (-1 to quit): ");
@@ -49,6 +53,9 @@ void GameDemo::update() {
     std::cin >> dt;
     floor_.update(dt);
     kitchen_->updateTime(dt);
+    wait();
+}
+void GameDemo::wait() {
     std::cin.clear();
     std::cin.ignore();
     std::cin.get();

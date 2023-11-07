@@ -87,7 +87,7 @@ void FloorDemo::addCustomers() {
         if (!waiter) {
             std::cout << "Waiter not found" << std::endl;
         }
-    } while (!waiter && opt != -1);
+    } while (!waiter);
     waiter->assignTable(table);
 }
 
