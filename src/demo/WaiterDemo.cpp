@@ -10,7 +10,7 @@ WaiterDemo::WaiterDemo() {
     pointOfSales_ = new PointOfSales();
     table_ = new TableComponent(1, 4);
     kitchen_ = new Kitchen();
-    waiter_ = new Waiter(menu_, nullptr, kitchen_, pointOfSales_);
+    waiter_ = new Waiter(menu_, kitchen_, pointOfSales_);
 
     // orderBuilder_ = std::make_unique<ConcreteOrderBuilder>(menu_);
 }

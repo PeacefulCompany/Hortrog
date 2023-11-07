@@ -12,7 +12,7 @@
 
 class FloorDemo : public Application {
 public:
-    FloorDemo(Floor& floor, Menu& menu);
+    FloorDemo(Floor& floor, Menu& menu, Kitchen& kitchen);
 
     void gameLoop() override;
     void init() override;
@@ -31,5 +31,5 @@ protected:
 
     Floor& floor_;
     Menu& menu_;
-
+    Kitchen& kitchen_;
 };

@@ -18,7 +18,8 @@
 #include <string>
 #include <vector>
 
-FloorDemo::FloorDemo(Floor& floor, Menu& menu) : floor_(floor), menu_(menu) {}
+FloorDemo::FloorDemo(Floor& floor, Menu& menu, Kitchen& k)
+    : floor_(floor), menu_(menu), kitchen_(k) {}
 
 void FloorDemo::gameLoop() {
     // Draw tables
@@ -94,7 +95,7 @@ void FloorDemo::addStaff() {
     CommandMenu menu;
 
     menu.addCommand("Waiter", [this]() {
-        floor_.addStaff(new Waiter(&menu_, &floor_, nullptr, &pointOfSales_));
+        floor_.addStaff(new Waiter(&menu_, &kitchen_, &pointOfSales_));
     });
 
     menu.addCommand(

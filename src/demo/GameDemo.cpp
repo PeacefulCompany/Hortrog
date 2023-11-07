@@ -31,7 +31,7 @@ void GameDemo::init() {
     menu_.loadFromFile("menu_items.json");
     orderBuilder_ = new ConcreteOrderBuilder(&menu_);
     kitchenDemo_ = new KitchenDemo(kitchen_, *orderBuilder_, menu_);
-    floorDemo_ = new FloorDemo(floor_, menu_);
+    floorDemo_ = new FloorDemo(floor_, menu_, kitchen_);
 
     kitchenDemo_->init();
     floorDemo_->init();

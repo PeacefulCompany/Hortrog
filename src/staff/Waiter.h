@@ -29,10 +29,7 @@
  */
 class Waiter : public FloorStaff {
 public:
-    Waiter(const Menu* menu,
-        const Floor* floor,
-        Kitchen* kitchen,
-        PointOfSales* pos);
+    Waiter(const Menu* menu, Kitchen* kitchen, PointOfSales* pos);
 
     /**
      * @brief Accepts a customer state.
@@ -173,5 +170,4 @@ private:
      * @brief A unique pointer to the order builder.
      */
     std::unique_ptr<OrderBuilder> orderBuilder_;
-    const Floor* floor_;
 };
