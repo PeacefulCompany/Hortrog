@@ -19,6 +19,7 @@ void TableComponent::buildOrder(OrderBuilder& builder) {
 bool TableComponent::seatCustomer(Customer* customer) {
     if (customers_.size() >= capacity_) return false;
     customers_.push_back(customer);
+    customers_.back()->setTableID(id());
     return true;
 }
 

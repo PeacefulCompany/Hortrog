@@ -26,9 +26,10 @@ Modifier::Modifier(std::unique_ptr<Order> component, std::string key) {
 }
 std::vector<std::pair<std::string, double>>
 Modifier::generateReceiptOrderList() {
-    std::vector<std::pair<std::string, double>> returnVec;
-    returnVec.emplace_back(key_, price_);
-    return returnVec;
+    // std::vector<std::pair<std::string, double>> returnVec;
+    // returnVec.emplace_back(key_, price_);
+    // return returnVec;
+    return component_->generateReceiptOrderList();
 }
 bool Modifier::checkForDupe(
     std::string customerName, std::vector<const MenuItem*> menuItems) {

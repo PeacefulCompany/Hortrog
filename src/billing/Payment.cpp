@@ -20,7 +20,7 @@ void Payment::setAmountOfPayment(float amount) {
     amountOfPayment = amount;
 }
 
-int Payment::gettableId() const {
+float Payment::gettableId() const {
     return tableId;
 }
 

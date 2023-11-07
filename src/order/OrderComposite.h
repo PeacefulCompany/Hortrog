@@ -14,6 +14,8 @@ private:
     std::vector<std::unique_ptr<Order>> orders_;
 
 public:
+    std::vector<Order*> getChildren() override;
+
     void add(std::unique_ptr<Order> order) override;
     std::string toJson() override;
     double total() override;

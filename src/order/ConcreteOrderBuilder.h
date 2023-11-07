@@ -47,10 +47,11 @@ public:
 
     std::string toString() const override;
 
+
 private:
     uint32_t tblId_;
     const Menu* menu_ = new Menu();
 
     std::vector<std::unique_ptr<Order>> tempOrder;
-    OrderComposite* order;
+    OrderComposite* order = nullptr;
 };

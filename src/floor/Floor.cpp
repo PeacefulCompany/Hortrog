@@ -157,7 +157,8 @@ void Floor::checkTable(int tableId, int waiterId) {
         iterator->get()->interact(*staff_[waiterId]);
         iterator->next();
     }
-    tableWaiter->giveTokitchen();
+    tableWaiter->giveToKitchen();
+
     delete iterator;
 }
 
