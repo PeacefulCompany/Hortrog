@@ -1,30 +1,35 @@
 #pragma once
 
+#include "billing/PointOfSales.h"
 #include "core/Application.h"
+#include "core/CommandMenu.h"
+#include "floor/Floor.h"
 #include "floor/Table.h"
 
+#include <functional>
 #include <memory>
 #include <vector>
 
 class FloorDemo : public Application {
-protected:
-    inline bool shouldQuit() const override { return !running_; }
+public:
+    FloorDemo(Floor& floor, Menu& menu, Kitchen& kitchen);
 
     void gameLoop() override;
     void init() override;
     void cleanup() override;
 
-private:
     void addTable();
-    void splitTable();
-    void mergeTable();
-    void addCustomer();
-    void removeCustomer();
+    void addCustomers();
+    void addStaff();
+    void visitCustomers();
+    void update();
 
-    std::vector<std::unique_ptr<Table>>::iterator findTable(int id);
-    static void error(const std::string& message);
+protected:
+    CommandMenu mainOptions_;
 
-    std::vector<std::unique_ptr<Table>> tables_;
-    bool running_ = true;
-    int tableCount_ = 0;
+    PointOfSales pointOfSales_;
+
+    Floor& floor_;
+    Menu& menu_;
+    Kitchen& kitchen_;
 };

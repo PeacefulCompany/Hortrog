@@ -1,79 +1,87 @@
 #pragma once
+
+#include <memory>
 #include <string>
-#include <sstream>
-#include <iostream>
 #include <unordered_map>
-#include <fstream>
-#include "nlohmann/json.hpp"
+#include <vector>
 
+class MenuItem {
+public:
+    MenuItem(const std::string& name,
+        double price,
+        const std::string& prepMethod,
+        const std::vector<std::string>& modifiers)
+        : name_(name), price_(price), preparationMethod_(prepMethod),
+          supportedModifiers_(modifiers) {}
 
-struct Item {
-	
-	Item(const std::string& name, double price, const std::string& restrictions)
-		: name(name), price(price), restrictions(restrictions) {}
-	//default constructor
-	Item() : name(""), price(0), restrictions("") {}
-	std::string getName() const { return name; }
-	double getPrice() const { return price; }
-	std::string getRestrictions() const { return restrictions; }
+    const std::string& getName() const { return name_; }
+    double getPrice() const { return price_; }
 
-    private:
-        std::string name;
-        double price;
-        std::string restrictions;
+    const std::vector<std::string> supportedModifiers() const {
+        return supportedModifiers_;
+    }
+    const std::string& preparationMethod() const { return preparationMethod_; }
+
+    std::string toString() const;
+
+private:
+    std::string name_;
+    double price_;
+    std::string preparationMethod_;
+    std::vector<std::string> supportedModifiers_;
 };
 
 class Menu {
 public:
-	Menu();
-	//function to initialise the menu from the .json file
-	void initMenu();
-	/**
-	* @brief Add an item to the menu.
-	*
-	* This function adds an item to the menu with the provided name and details.
-	*
-	* @param name The name of the item.
-	* @param item The item to be added to the menu.
-	*
-	* @return void
-	*/
-    void addItem(const std::string& name, const Item& item) {
-        menuItems_[name] = item;
-    }
-	/**
-	* @brief Get the Item object.
-	* 
-	* This function returns the item with the provided name.
-	*
-	* @param name The name of the item.
-	* @return Item 
-	*/
-    Item getItem(const std::string& name) {
-        if (menuItems_.find(name) != menuItems_.end()) {
-            return menuItems_[name];
-        } else {
-            return Item("", 0, "");
-        }
+    /**
+     * @brief Loads a menu from a JSON file
+     *
+     * @param path The path (relative to assets) of the menu
+     * @return true The file was loaded successfully
+     * @return false The file failed to load
+     */
+    bool loadFromFile(const std::string& path);
+
+    /**
+     * @brief Add an item to the menu.
+     *
+     * This function adds an item to the menu with the provided name and
+     * details.
+     *
+     * @param name The name of the item.
+     * @param item The item to be added to the menu.
+     *
+     * @return void
+     */
+    bool addMenuItem(const std::string& name, std::unique_ptr<MenuItem> item) {
+        if (menuItems_.contains(name)) return false;
+        menuItems_[name] = std::move(item);
+        return true;
     }
 
-	std::vector<Item> &getAllItems(){
-		std::vector<Item> *items = new std::vector<Item>();
-		for (auto& item : menuItems_) {
-			items->push_back(item.second);
-		}
-		return *items;
-	}
+    /**
+     * @brief Retrieves an item from the menu (if found)
+     *
+     * @param key The key of the item
+     * @return const MenuItem* The menu item with the given key, or `nullptr`
+     * otherwise
+     */
+    const MenuItem* getMenuItem(const std::string& key) const {
+        auto it = menuItems_.find(key);
+        if (it == menuItems_.end()) return nullptr;
+        return it->second.get();
+    }
 
-	std::string toString() {
-		std::stringstream ss;
-		for (auto& item : menuItems_) {
-			ss << item.second.getName() << " " << item.second.getPrice() << " " << item.second.getRestrictions() << std::endl;
-		}
-		return ss.str();
-	}
+    /**
+     * @brief Retrieves the keys for all menu items in the menu
+     *
+     * @return The keys for all menu items in the menu
+     */
+    std::vector<std::string> getAllKeys() const;
+
+    std::string toString() const;
 
 private:
-    std::unordered_map<std::string, Item> menuItems_;
+    std::unordered_map<std::string, std::unique_ptr<const MenuItem>> menuItems_;
 };
 

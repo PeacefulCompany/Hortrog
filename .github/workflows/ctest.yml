@@ -1,0 +1,31 @@
+# This starter workflow is for a CMake project running on multiple platforms. There is a different starter workflow if you just want a single platform.
+# See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-single-platform.yml
+name: CTest on Ubuntu
+
+on:
+  push:
+    branches: ["master", "develop"]
+  pull_request:
+    branches: ["master", "develop"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Linux Dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install doxygen graphviz
+
+      - name: Configure CMake
+        run: >
+          cmake --preset other
+          -S ${{ github.workspace }}
+
+      - name: Build using CMake
+        run: cmake --build ${{ github.workspace }}/build
+
+      - name: Run CTest
+        run: ctest --test-dir ${{ github.workspace }}/build

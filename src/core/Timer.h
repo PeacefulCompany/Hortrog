@@ -45,6 +45,7 @@ public:
     inline float duration() const { return duration_; }
 
     inline float current() const { return current_; }
+    inline float remaining() const { return duration_ - current_; }
 
 private:
     float duration_;

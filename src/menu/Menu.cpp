@@ -1,30 +1,56 @@
 #include "menu/Menu.h"
+
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <sstream>
+
+#include "nlohmann/json.hpp"
 using json = nlohmann::json;
 
-Menu::Menu() {
-    // print all items as debug
-    //  for (auto& item : menuItems_) {
-    //  	std::cout << "[DEBUG] Item OUT: ";
-    //  	std::cout << item.second.getName() << std::endl;
-    //  	std::cout << item.second.getPrice() << std::endl;
-    //  	std::cout << item.second.getRestrictions() << std::endl;
-    //  }
-}
-
-void Menu::initMenu() {
-    std::string path = "menu_items.json";
+bool Menu::loadFromFile(const std::string& path) {
     std::ifstream file("assets/" + path);
     if (!file.is_open()) {
-        std::cout << "Cannot open asset" << std::endl;
-        return;
+        return false;
     }
     json data = json::parse(file);
-    // std::cout << "[DEBUG] Parsed menu_items.json" << std::endl;
     for (auto& item : data["menu"]) {
-        // std::cout << "[DEBUG] Iterating through items..." << std::endl;
         std::string name = item["name"].get<std::string>();
+        std::string prepMethod = item["prep_method"].get<std::string>();
+        std::vector<std::string> modifiers = {};
+        if (item.contains("supported_modifiers")) {
+            modifiers =
+                item["supported_modifiers"].get<std::vector<std::string>>();
+        }
+
         double price = item["price"].get<double>();
-        std::string restrictions = item["diet"].get<std::string>();
-        addItem(name, Item(name, price, restrictions));
+
+        addMenuItem(name,
+            std::make_unique<MenuItem>(name, price, prepMethod, modifiers));
     }
+
+    return true;
+}
+std::vector<std::string> Menu::getAllKeys() const {
+    std::vector<std::string> keys;
+    for (auto& item : menuItems_) {
+        keys.push_back(item.first);
+    }
+    return keys;
+}
+
+std::string Menu::toString() const {
+    std::stringstream ss;
+    ss << "Menu";
+    for (const auto& item : menuItems_) {
+        ss << "\n- " << item.second->toString();
+    }
+    return ss.str();
+}
+
+std::string MenuItem::toString() const {
+    std::stringstream ss;
+    ss << "R" << std::left << std::setw(8) << price_;
+    ss << name_ << " (" << preparationMethod_ << ")";
+    return ss.str();
 }
