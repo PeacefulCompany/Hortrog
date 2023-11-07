@@ -3,6 +3,7 @@
 #include "CustomerState.h"
 #include "staff/Manager.h"
 #include "staff/Waiter.h"
+#include <string>
 class PayingState : public CustomerState {
 public:
     PayingState(Customer* c) : CustomerState(c) {}

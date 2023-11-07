@@ -1,4 +1,10 @@
 #include "Waiter.h"
+
+#include "billing/EvenSplit.h"
+#include "billing/OneReceipt.h"
+#include "billing/PerCustomer.h"
+#include "billing/PointOfSales.h"
+
 #include "customer/Customer.h"
 #include "floor/CustomerIterator.h"
 #include "floor/Floor.h"
@@ -6,11 +12,13 @@
 #include "order/ConcreteOrderBuilder.h"
 #include "order/OrderBuilder.h"
 #include "order/OrderComposite.h"
+#include "order/Receipt.h"
 #include "staff/FloorStaff.h"
 #include "staff/Manager.h"
 #include "staff/Waiter.h"
 #include "subsystem/Chef/Kitchen.h"
 #include <iostream>
+#include <string>
 #include <vector>
 
 /**
@@ -22,15 +30,11 @@
  */
 Kitchen* FloorStaff::kitchen_ = nullptr;
 
-Waiter::Waiter(const Menu* menu, const Floor* floor)
-    : FloorStaff(), menu_(menu), floor_(floor) {
+Waiter::Waiter(
+    const Menu* menu, const Floor* floor, Kitchen* kitchen, PointOfSales* pos)
+    : FloorStaff(), menu_(menu), floor_(floor), pointOfSales_(pos),
+      kitchen_(kitchen) {
     FloorStaff::setKitchen(new Kitchen());
-    this->orderBuilder_ = std::make_unique<ConcreteOrderBuilder>(menu);
-}
-
-Waiter::Waiter(const Menu* menu, const Floor* floor, Kitchen* kitchen)
-    : FloorStaff(), menu_(menu), floor_(floor) {
-    this->kitchen_ = kitchen;
     this->orderBuilder_ = std::make_unique<ConcreteOrderBuilder>(menu);
 }
 
@@ -75,7 +79,10 @@ void Waiter::fetchMeals() {
         }
     }
 }
-void Waiter::giveTokitchen() {
+
+void Waiter::giveToKitchen() {
+    pointOfSales_->addOrder(orderBuilder_->getOrder());
+
     FloorStaff::getKitchen()->handleOrder(orderBuilder_->getOrder());
 }
 Meal* Waiter::getMeal(Customer& customer) {
@@ -124,6 +131,7 @@ void Waiter::visitTables() {
         }
     }
 }
+
 void Waiter::callManager(CustomerState& state) {
     std::cout << "Manager called" << std::endl;
     Manager* manager = new Manager(this->floor_);
@@ -131,5 +139,26 @@ void Waiter::callManager(CustomerState& state) {
     manager->accept(state);
     delete manager;
 }
+
 void Waiter::accept(CustomerState& state) { state.visit(*this); }
+
 std::string Waiter::getStaffType() { return "Waiter"; }
+
+std::vector<Receipt> Waiter::synthesizeBill(int strategy, uint32_t tblId) {
+    switch (strategy) {
+    case 0:
+        std::cout << "Even Split" << std::endl;
+        return pointOfSales_->getReceipt(new EvenSplit(), tblId);
+        break;
+    case 1:
+        std::cout << "Per Customer" << std::endl;
+        return pointOfSales_->getReceipt(new PerCustomer(), tblId);
+        break;
+    case 2:
+        std::cout << "One Rich boi" << std::endl;
+        return pointOfSales_->getReceipt(new OneReceipt(), tblId);
+        break;
+    default: std::cout << "Invalid strategy" << std::endl; break;
+    }
+    return {};
+}

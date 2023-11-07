@@ -15,7 +15,6 @@ void OrderComposite::add(std::unique_ptr<Order> order) {
 }
 
 std::string OrderComposite::toJson() {
-    std::cout << "Function call happening" << std::endl;
     std::string ret = "{\n";
     ret += "\"order\": [\n";
     for (auto& order : orders_) {
@@ -96,3 +95,12 @@ std::string OrderComposite::toString() const {
     }
     return ss.str();
 }
+
+std::vector<Order*> OrderComposite::getChildren() {
+    std::vector<Order*> ret;
+    for (auto& order : orders_) {
+        ret.push_back(order.get());
+    }
+    return ret;
+}
+

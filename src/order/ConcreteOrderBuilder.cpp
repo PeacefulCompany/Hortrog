@@ -1,5 +1,9 @@
 #include "order/ConcreteOrderBuilder.h"
+
+#include "order/OrderComposite.h"
+
 #include "order/Modifier.h"
+
 #include <iostream>
 #include <memory>
 #include <sstream>
@@ -27,14 +31,15 @@ bool ConcreteOrderBuilder::addModifier(const std::string& key) {
     if (tempOrder.empty()) return false;
 
     // Save then remove the  last OrderItem in the vector
-    std::unique_ptr<Order> lastOrder = std::move(tempOrder.back());
-    tempOrder.pop_back();
-
+    std::unique_ptr<Order> lastOrder = std::move(this->tempOrder.back());
     std::string name = lastOrder->getCustomer();
+    this->tempOrder.pop_back();
 
     // Create a Modifier from the last OrderItem
     std::unique_ptr<Modifier> modifier =
         std::make_unique<Modifier>(std::move(lastOrder));
+  
+    // I think this is unnecessary, as modifier has the order in it
     modifier->setCustomer(name);
     modifier->setKey(key);
 
@@ -44,15 +49,20 @@ bool ConcreteOrderBuilder::addModifier(const std::string& key) {
 }
 
 OrderComposite* ConcreteOrderBuilder::getOrder() {
+
     if (tempOrder.empty()) return nullptr;
 
     OrderComposite* result = new OrderComposite();
+    std::string customer = tempOrder.back()->getCustomer();
     // Add all the Orders in the vector to the OrderComposite
     for (auto& order : tempOrder) {
         result->add(std::move(order));
     }
+    tempOrder.clear();
+
     // Return the OrderComposite as a JSON string
     result->setTblId(tblId_);
+    result->setCustomer(customer);
     return result;
 };
 
@@ -65,13 +75,15 @@ std::string ConcreteOrderBuilder::toString() const {
     return ss.str();
 }
 
+
 ConcreteOrderBuilder::ConcreteOrderBuilder(const Menu* menu)
     : OrderBuilder(), menu_(menu) {}
 
 std::string ConcreteOrderBuilder::getResult() {
-    OrderComposite* order = getOrder();
-    if (!order) return "{}\n";
-    std::string res = order->toJson();
-    delete order;
-    return res;
+    OrderComposite* res = getOrder();
+    if (!res) return "{}\n";
+    std::string json = res->toJson();
+    delete res;
+    return json;
+
 }

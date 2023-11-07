@@ -19,7 +19,6 @@
  */
 NormalChef::NormalChef() {
     rating_ = 1;
-    capacity_ = 1;
     kitchen_ = nullptr;
     nextStaff_ = nullptr;
 }
@@ -35,10 +34,9 @@ NormalChef::NormalChef() {
 NormalChef::NormalChef(
     int rating, int capacity, Kitchen* kitchen, int speed, std::string role) {
     this->rating_ = rating;
-    this->capacity_ = capacity;
     this->kitchen_ = kitchen;
     nextStaff_ = nullptr;
-    this->speed_ = speed;
+    this->timer_ = Timer(speed);
     this->role_ = role;
 }
 
@@ -55,7 +53,7 @@ NormalChef::~NormalChef() {}
  * @param meal The meal to be prepared
  */
 void NormalChef::prepareMeal(Meal* meal) {
-    std::cout << "Normal Chef: is checking a meal" << std::endl;
+    std::cout << role_ << ": is checking a meal" << std::endl;
 
     OrderJSON* orderJSON = new OrderJSON(meal->getOrder()->toJson());
     std::vector<ItemJSON*> items = orderJSON->getItems();
@@ -64,11 +62,11 @@ void NormalChef::prepareMeal(Meal* meal) {
         if (canPrepareItem(items[i]->getName())) {
 
             if (mealItemAlreadyPrepared(items[i], meal)) {
-                std::cout << "Normal Chef: adding prepared item to a meal "
+                std::cout << role_ <<": adding "
                           << items[i]->getName() << std::endl;
                 getItemFromPrepared(items[i], meal);
 
-            } else if (itemsBeingPrepared_.size() < capacity_ &&
+            } else if (
                        !mealItemAlreadyBeingPrepared(items[i], meal)) {
 
                 MealItem* mealItem = new MealItem(items[i]->getCustomer(),
@@ -79,7 +77,7 @@ void NormalChef::prepareMeal(Meal* meal) {
 
                 if (!meal->containsMealItem(mealItem)) {
                     std::cout
-                        << "Normal Chef: preparing an item required by a meal "
+                        <<  role_ << ": preparing "
                         << items[i]->getName() << std::endl;
                     itemsBeingPrepared_.push_back(mealItem);
                 }
@@ -183,12 +181,12 @@ void NormalChef::removeCanPrepareItem(std::string item) {
  */
 void NormalChef::update() {
     // lastTime = 0;
-    if (!itemsBeingPrepared_.empty() && lastTime_ >= speed_) {
+    if (!itemsBeingPrepared_.empty() && timer_.expired()) {
         preparedItems_.push_back(itemsBeingPrepared_.front());
         itemsBeingPrepared_.erase(itemsBeingPrepared_.begin());
-        lastTime_ = 0;
+        timer_.reset();
+        notify();
     }
-    notify();
 }
 
 /**
@@ -198,37 +196,26 @@ void NormalChef::update() {
 std::string NormalChef::toString() {
     std::stringstream ss;
     ss << role_ << " (rating=" << rating_;
-    ss << ", capacity=" << capacity_ << ", speed=" << speed_ << ")";
+    ss << ", speed=" << timer_.duration() << ")";
     ss << "\n- can_prepare: [";
     for (int i = 0; i < canPrepareItems_.size(); i++) {
         if (i != 0) ss << ", ";
         ss << canPrepareItems_[i];
     }
+
     ss << "]\n- pending:";
+
+    for (int i = 0; i < itemsBeingPrepared_.size(); i++) {
+        ss << "\n  - " << itemsBeingPrepared_[i]->getFood() << " for "
+           << itemsBeingPrepared_[i]->getCustomer() << std::endl;
+    }
+
+    ss << "\n- done:" << std::endl;
 
     for (int i = 0; i < preparedItems_.size(); i++) {
         ss << "\n  - " << preparedItems_[i]->getFood() << " for "
            << preparedItems_[i]->getCustomer() << std::endl;
     }
-    ss << "\n- done:" << std::endl;
-    for (int i = 0; i < itemsBeingPrepared_.size(); i++) {
-        ss << "\n  - " << itemsBeingPrepared_[i]->getFood() << " for "
-           << itemsBeingPrepared_[i]->getCustomer() << std::endl;
-    }
+
     return ss.str();
-}
-
-/**
- * @brief Causes the chef to wait for a certain amount of time
- *
- */
-void NormalChef::wait() {
-    std::chrono::system_clock::time_point current_time =
-        std::chrono::system_clock::now();
-    std::chrono::system_clock::time_point end_time =
-        current_time + std::chrono::seconds(capacity_);
-
-    while (current_time < end_time) {
-        current_time = std::chrono::system_clock::now();
-    }
 }

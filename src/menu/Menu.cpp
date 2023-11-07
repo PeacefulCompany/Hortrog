@@ -5,7 +5,6 @@
 #include <iostream>
 #include <sstream>
 
-
 #include "nlohmann/json.hpp"
 using json = nlohmann::json;
 
@@ -15,7 +14,6 @@ bool Menu::loadFromFile(const std::string& path) {
         return false;
     }
     json data = json::parse(file);
-    // std::cout << "[DEBUG] Parsed menu_items.json" << std::endl;
     for (auto& item : data["menu"]) {
         std::string name = item["name"].get<std::string>();
         std::string prepMethod = item["prep_method"].get<std::string>();
@@ -29,7 +27,6 @@ bool Menu::loadFromFile(const std::string& path) {
 
         addMenuItem(name,
             std::make_unique<MenuItem>(name, price, prepMethod, modifiers));
-        std::cout << "[DEBUG] added" << std::endl;
     }
 
     return true;

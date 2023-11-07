@@ -1,5 +1,8 @@
 #pragma once
 
+#include "../billing/EvenSplit.h"
+#include "../billing/OneReceipt.h"
+#include "../billing/PerCustomer.h"
 #include "FloorStaff.h"
 #include "billing/PointOfSales.h"
 #include "customer/Customer.h"
@@ -9,9 +12,12 @@
 #include "menu/Menu.h"
 #include "order/ConcreteOrderBuilder.h"
 #include "order/OrderBuilder.h"
+#include "order/Receipt.h"
 #include "staff/FloorStaff.h"
 #include "subsystem/Meals/Meal.h"
+#include <cstdint>
 #include <memory>
+#include <string>
 #include <vector>
 
 /**
@@ -23,9 +29,10 @@
  */
 class Waiter : public FloorStaff {
 public:
-    Waiter(const Menu* menu, const Floor* floor);
-    Waiter(const Menu* menu, const Floor* floor, Kitchen* kitchen);
-
+    Waiter(const Menu* menu,
+        const Floor* floor,
+        Kitchen* kitchen,
+        PointOfSales* pos);
 
     /**
      * @brief Accepts a customer state.
@@ -87,7 +94,8 @@ public:
      *
      * This function is used to give the order to the kitchen.
      */
-    void giveTokitchen();
+    void giveToKitchen();
+
     /**
      * @brief Gives the food to the customer.
      *
@@ -109,6 +117,8 @@ public:
     void assignTable(Table* table);
 
     void visitTables() override;
+
+    std::vector<Receipt> synthesizeBill(int, uint32_t);
 
     void giveFoodToCustomer(Customer& Customer);
     /**

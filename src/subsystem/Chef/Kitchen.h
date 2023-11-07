@@ -1,5 +1,6 @@
 #pragma once
 
+#include "subsystem/Chef/KitchenStaff.h"
 #include "subsystem/Meals/Meal.h"
 #include <memory>
 
@@ -10,17 +11,16 @@
 #include "staff/Waiter.h"
 #include "subsystem/Meals/Meal.h"
 #include <iostream>
-#include <queue>
+#include <list>
 #include <string>
 #include <vector>
-
 
 class Waiter;
 class Kitchen {
 private:
     std::vector<Waiter*> waiters_;
-    std::unique_ptr<KitchenStaff> headChef;
-    std::queue<Meal*> incomingMeals;
+    std::unique_ptr<KitchenStaff> staff_;
+    std::list<Meal*> incomingMeals;
     std::vector<Meal*> outgoingMeals;
 
 public:
@@ -105,7 +105,7 @@ public:
 
     void AddChef(KitchenStaff* chef);
 
-    inline KitchenStaff* getFirstChef() { return headChef.get(); }
+    inline KitchenStaff* getFirstChef() { return staff_.get(); }
 
     ~Kitchen();
 };
