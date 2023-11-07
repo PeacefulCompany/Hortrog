@@ -17,6 +17,7 @@ public:
 private:
     std::vector<Customer*> customers_;
     TableComponent* table_;
+    Kitchen* kitchen_;
     Waiter* waiter_;
     Menu* menu_;
     PointOfSales* pointOfSales_;

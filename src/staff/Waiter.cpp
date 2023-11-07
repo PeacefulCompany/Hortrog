@@ -81,9 +81,10 @@ void Waiter::fetchMeals() {
 }
 
 void Waiter::giveToKitchen() {
-    pointOfSales_->addOrder(orderBuilder_->getOrder());
+    OrderComposite* order = orderBuilder_->getOrder();
+    pointOfSales_->addOrder(order);
 
-    FloorStaff::getKitchen()->handleOrder(orderBuilder_->getOrder());
+    FloorStaff::getKitchen()->handleOrder(order);
 }
 Meal* Waiter::getMeal(Customer& customer) {
     for (auto& meal : readyMeals) {
