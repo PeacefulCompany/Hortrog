@@ -39,12 +39,11 @@ void OrderingState::visit(Waiter& w) {
                   << std::endl;
         return;
     }
-
     OrderBuilder* orderBuilder = w.getOrderBuilder();
     const Menu* menu = orderBuilder->getMenu();
     std::vector<std::string> menuKeys = menu->getAllKeys();
-
     srand(time(0));
+
     int numItems = 1 + (std::rand() % 5);
     for (int i = 0; i < numItems; i++) {
         // Add random order item
@@ -69,9 +68,9 @@ void OrderingState::visit(Waiter& w) {
             std::cout << " with " << modifierNames[j] << std::endl;
         }
     }
+    w.giveToKitchen();
     customer_->setHappiness(this->customer_->getHappiness() + 5);
     customer_->changeState(new WaitingState(customer_));
-    std::cout << orderBuilder->toString() << std::endl;
 }
 void OrderingState::update(float dt) { readyTimer_.update(dt); }
 

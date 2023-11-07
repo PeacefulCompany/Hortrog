@@ -59,9 +59,7 @@ void KitchenDemo::displayOrderBuilderMenu() {
     CommandMenu orderMenu;
 
     orderMenu.addCommand("Add item", [this]() { addOrderBuilderItem(); });
-    orderMenu.addCommand("Submit Order",
-        [this]() { completeOrder(); });
-
+    orderMenu.addCommand("Submit Order", [this]() { completeOrder(); });
 
     orderMenu.setPrompt("Enter choice (-1 to go back): ");
     orderMenu.setError("Invalid input");
@@ -75,8 +73,8 @@ void KitchenDemo::displayOrderBuilderMenu() {
 }
 
 void KitchenDemo::completeOrder() {
-    std::cout << orderBuilder_->toString() << std::endl;
-    kitchen_->handleOrder(orderBuilder_->getOrder());
+    std::cout << orderBuilder_.toString() << std::endl;
+    kitchen_.handleOrder(orderBuilder_.getOrder());
 }
 
 void KitchenDemo::addOrderBuilderItem() {
