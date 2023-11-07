@@ -38,7 +38,7 @@ void FloorDemo::init() {
     menu_.loadFromFile("menu_items.json");
 
     mainOptions_.addCommand("Add Table", [this]() { addTable(); });
-    mainOptions_.addCommand("Add Staff", [this]() { addStaff(); });
+    mainOptions_.addCommand("Add Waiter", [this]() { addStaff(); });
     mainOptions_.addCommand("Add Customers", [this]() { addCustomers(); });
     mainOptions_.addCommand("Visit tables", [this]() { visitCustomers(); });
     mainOptions_.setPrompt("Choose an option (-1 to quit): ");
@@ -92,18 +92,7 @@ void FloorDemo::addCustomers() {
 }
 
 void FloorDemo::addStaff() {
-    CommandMenu menu;
-
-    menu.addCommand("Waiter", [this]() {
-        floor_.addStaff(new Waiter(&menu_, &kitchen_, &pointOfSales_));
-    });
-
-    menu.addCommand(
-        "Manager", [this]() { floor_.addStaff(new Manager(&floor_)); });
-    menu.setError("Invalid staff type.");
-    menu.setPrompt("Enter staff type: ");
-
-    menu.execute();
+    floor_.addStaff(new Waiter(&menu_, &kitchen_, &pointOfSales_));
 }
 
 void FloorDemo::visitCustomers() {
