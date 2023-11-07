@@ -3,5 +3,6 @@
 int main() {
     GameDemo demo;
     demo.run();
+
     return 0;
 }

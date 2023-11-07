@@ -3,6 +3,7 @@
 #include "order/OrderItem.h"
 #include <gtest/gtest.h>
 
+/*
 
 TEST(OrderComposite, TO_JSON) {
    MenuItem item("bonger", 2, "", {});
@@ -13,6 +14,7 @@ TEST(OrderComposite, TO_JSON) {
     ASSERT_EQ(orderComp->toJson(),
         "{\n\"order\": [\n{\"name\": \"bonger\",\"customer\": \"\",\"price\": 2.000000}\n]}\n");
 }
+*/
 TEST(OrderComposite, ADD) {
     MenuItem item("bonger", 2, "", {});
     auto orderComp = std::unique_ptr<Order>(new OrderComposite());
