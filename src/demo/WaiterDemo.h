@@ -9,9 +9,13 @@
 class WaiterDemo {
 public:
     WaiterDemo();
+    void run() {
+        addCustomers();
+        placeCustomers();
+        customerOrder();
+    }
     void addCustomers();
     void placeCustomers();
-    void changeCustomerState(int);
     void customerOrder();
 
 private:

@@ -10,7 +10,7 @@
 class KitchenDemo : public Application {
 
 protected:
-    Kitchen& kitchen_;
+    Kitchen* kitchen_;
     ConcreteOrderBuilder& orderBuilder_;
     Menu& menu_;
     CommandMenu commands_;
@@ -18,7 +18,7 @@ protected:
     // Menu* menu_;
 
 public:
-    KitchenDemo(Kitchen& kitchen, ConcreteOrderBuilder& builder, Menu& menu);
+    KitchenDemo(Kitchen* kitchen, ConcreteOrderBuilder& builder, Menu& menu);
 
     void gameLoop() override;
     void init() override;
