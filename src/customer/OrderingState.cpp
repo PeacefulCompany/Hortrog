@@ -40,7 +40,6 @@ void OrderingState::visit(Waiter& w) {
         return;
     }
 
-
     OrderBuilder* orderBuilder = w.getOrderBuilder();
     const Menu* menu = orderBuilder->getMenu();
     std::vector<std::string> menuKeys = menu->getAllKeys();
@@ -67,8 +66,8 @@ void OrderingState::visit(Waiter& w) {
         j = std::rand() % (modifierNames.size() * 2);
         if (j < modifierNames.size()) {
             orderBuilder->addModifier(modifierNames[j]);
+            std::cout << " with " << modifierNames[j] << std::endl;
         }
-        std::cout << " with " << modifierNames[j] << std::endl;
     }
     customer_->setHappiness(this->customer_->getHappiness() + 5);
     customer_->changeState(new WaitingState(customer_));

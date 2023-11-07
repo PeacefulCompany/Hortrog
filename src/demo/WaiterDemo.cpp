@@ -7,7 +7,7 @@ WaiterDemo::WaiterDemo() {
     menu_->loadFromFile("menu_items.json");
     pointOfSales_ = new PointOfSales();
     table_ = new TableComponent(1, 4);
-    waiter_ = new Waiter(menu_, pointOfSales_);
+    waiter_ = new Waiter(menu_, nullptr, nullptr, pointOfSales_);
     // orderBuilder_ = std::make_unique<ConcreteOrderBuilder>(menu_);
 }
 

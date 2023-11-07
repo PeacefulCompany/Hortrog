@@ -30,17 +30,11 @@
  */
 Kitchen* FloorStaff::kitchen_ = nullptr;
 
-
-Waiter::Waiter(const Menu* menu, const Floor* floor, PointOfSales* pos)
-    : FloorStaff(), menu_(menu), floor_(floor), pointOfSales_(pos) {
+Waiter::Waiter(
+    const Menu* menu, const Floor* floor, Kitchen* kitchen, PointOfSales* pos)
+    : FloorStaff(), menu_(menu), floor_(floor), pointOfSales_(pos),
+      kitchen_(kitchen) {
     FloorStaff::setKitchen(new Kitchen());
-    this->orderBuilder_ = std::make_unique<ConcreteOrderBuilder>(menu);
-    this->pointOfSales_ = point;
-}
-
-Waiter::Waiter(const Menu* menu, const Floor* floor, Kitchen* kitchen)
-    : FloorStaff(), menu_(menu), floor_(floor) {
-    this->kitchen_ = kitchen;
     this->orderBuilder_ = std::make_unique<ConcreteOrderBuilder>(menu);
 }
 

@@ -13,7 +13,7 @@ protected:
     generateReceiptOrderList() override;
 
 public:
-    std::vector<Order*> getChildren() {
+    std::vector<Order*> getChildren() override {
         std::vector<Order*> ret;
         return ret;
     };

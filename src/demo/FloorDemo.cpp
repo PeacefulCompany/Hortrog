@@ -94,8 +94,9 @@ void FloorDemo::addCustomers() {
 void FloorDemo::addStaff() {
     CommandMenu menu;
 
-    menu.addCommand("Waiter",
-        [this]() { floor_.addStaff(new Waiter(&menu_, &floor_, &pointOfSales_)); });
+    menu.addCommand("Waiter", [this]() {
+        floor_.addStaff(new Waiter(&menu_, &floor_, nullptr, &pointOfSales_));
+    });
 
     menu.addCommand(
         "Manager", [this]() { floor_.addStaff(new Manager(&floor_)); });

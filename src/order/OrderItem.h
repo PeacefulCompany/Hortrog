@@ -8,7 +8,7 @@ class OrderItem : public Order {
 
 public:
     OrderItem(const MenuItem* item);
-    std::vector<Order*> getChildren() {
+    std::vector<Order*> getChildren() override {
         std::vector<Order*> ret;
         return ret;
     };
