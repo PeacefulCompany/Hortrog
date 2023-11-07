@@ -19,7 +19,7 @@ protected:
 
     Floor floor_;
     Menu menu_;
-    Kitchen kitchen_;
+    Kitchen *kitchen_ = new Kitchen();
     ConcreteOrderBuilder* orderBuilder_;
 
 public:

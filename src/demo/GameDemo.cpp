@@ -48,7 +48,7 @@ void GameDemo::update() {
     std::cout << "How much time has passed (seconds): ";
     std::cin >> dt;
     floor_.update(dt);
-    kitchen_.updateTime(dt);
+    kitchen_->updateTime(dt);
     std::cin.clear();
     std::cin.ignore();
     std::cin.get();
