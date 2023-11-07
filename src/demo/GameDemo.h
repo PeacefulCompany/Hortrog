@@ -23,6 +23,8 @@ protected:
     ConcreteOrderBuilder* orderBuilder_;
 
 public:
+    void update();
+
     virtual void gameLoop() override;
 
     virtual void init() override;

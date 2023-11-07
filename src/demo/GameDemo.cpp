@@ -38,7 +38,18 @@ void GameDemo::init() {
 
     commands_.addCommand("Kitchen", [this]() { current_ = kitchenDemo_; });
     commands_.addCommand("Floor", [this]() { current_ = floorDemo_; });
+    commands_.addCommand("Pass some time", [this]() { update(); });
     commands_.setExitCode(-1);
     commands_.setPrompt("Enter your choice (-1 to quit): ");
     commands_.setError("Invalid input");
+}
+void GameDemo::update() {
+    float dt;
+    std::cout << "How much time has passed (seconds): ";
+    std::cin >> dt;
+    floor_.update(dt);
+    kitchen_.updateTime(dt);
+    std::cin.clear();
+    std::cin.ignore();
+    std::cin.get();
 }

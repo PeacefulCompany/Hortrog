@@ -40,7 +40,6 @@ void FloorDemo::init() {
     mainOptions_.addCommand("Add Staff", [this]() { addStaff(); });
     mainOptions_.addCommand("Add Customers", [this]() { addCustomers(); });
     mainOptions_.addCommand("Visit tables", [this]() { visitCustomers(); });
-    mainOptions_.addCommand("Update Time", [this]() { update(); });
     mainOptions_.setPrompt("Choose an option (-1 to quit): ");
     mainOptions_.setExitCode(-1);
 }
@@ -119,11 +118,4 @@ void FloorDemo::visitCustomers() {
     if (opt == -1) return;
 
     staff->visitTables();
-}
-
-void FloorDemo::update() {
-    float dt;
-    std::cout << "How much time has passed (seconds): ";
-    std::cin >> dt;
-    floor_.update(dt);
 }
