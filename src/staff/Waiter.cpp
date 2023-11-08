@@ -33,8 +33,9 @@ Kitchen* FloorStaff::kitchen_ = nullptr;
 
 Waiter::Waiter(const Menu* menu, Kitchen* kitchen, PointOfSales* pos)
     : FloorStaff(), menu_(menu), pointOfSales_(pos), kitchen_(kitchen) {
-    FloorStaff::setKitchen(new Kitchen());
+    // FloorStaff::setKitchen(new Kitchen());
     this->orderBuilder_ = std::make_unique<ConcreteOrderBuilder>(menu);
+    kitchen->subscribe(this);
 }
 
 void Waiter::serveMeals() {
@@ -53,9 +54,10 @@ void Waiter::serveMeals() {
     }
 }
 void Waiter::checkKitchen() {
+    std::cout << "[Waiter] Notified by kitchen" << std::endl;
     if (getReadyMeals().size() > 0) {
         serveMeals();
-        readyMeals.clear();
+        // readyMeals.clear();
     } else {
         fetchMeals();
     }
@@ -66,7 +68,7 @@ void Waiter::fetchMeals() {
     Meal* currentMeal;
     int x = 0;
     do {
-        currentMeal = FloorStaff::getKitchen()->getOrder(tables_[x]->id());
+        currentMeal = kitchen_->getOrder(tables_[x]->id());
         x++;
     } while (currentMeal == nullptr && x < tables_.size());
     if (x == tables_.size()) return;
@@ -82,8 +84,7 @@ void Waiter::fetchMeals() {
 void Waiter::giveToKitchen() {
     OrderComposite* order = orderBuilder_->getOrder();
     pointOfSales_->addOrder(order);
-
-    FloorStaff::getKitchen()->handleOrder(order);
+    kitchen_->handleOrder(order);
 }
 Meal* Waiter::getMeal(Customer& customer) {
     for (auto& meal : readyMeals) {
