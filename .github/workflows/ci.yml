@@ -41,6 +41,13 @@ jobs:
           -DBUILD_EXE=OFF
           -DBUILD_DOCS=OFF
 
+      - name: Cache Google Test files
+        id: cache-gtest
+        uses: actions/cache@v3
+        with:
+          key: test-deps
+          path: ${{ github.workspace }}/build
+
       - name: Build using CMake
         run: cmake --build ${{ github.workspace }}/build
 
