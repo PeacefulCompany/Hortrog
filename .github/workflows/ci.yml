@@ -8,6 +8,11 @@ on:
   pull_request:
     branches: ["master", "develop"]
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   build:
     name: "Build on Ubuntu"
@@ -57,7 +62,7 @@ jobs:
           -DBUILD_TESTS=OFF
           -DBUILD_EXE=OFF
 
-      - name: Configure CMake for documentation
+      - name: Build Documentation
         run: >
           cmake --build ${{ github.workspace }}/build
           --target doc_doxygen
