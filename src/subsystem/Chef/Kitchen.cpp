@@ -10,44 +10,61 @@
  * the time.
  */
 #include "Kitchen.h"
+#include "subsystem/Chef/KitchenStaff.h"
 #include <iostream>
+#include <memory>
 
 Kitchen::Kitchen(/* args */) {
-    this->headChef =
-        std::unique_ptr<KitchenStaff>(new HeadChef(5, 5, this, 1, "head chef"));
+    staff_ = std::make_unique<HeadChef>(5, 5, this, 1, "head_chef");
 
-    KitchenStaff* chef1 = new NormalChef(4, 5, this, 2, "fast chef 1");
-    ((NormalChef*)chef1)->addCanPrepareItem("Grilled Salmon");
-    ((NormalChef*)chef1)->addCanPrepareItem("Margherita Pizza");
+    std::unique_ptr<NormalChef> chef = nullptr;
 
-    KitchenStaff* chef2 = new NormalChef(2, 5, this, 3, "medium chef 1");
-    ((NormalChef*)chef2)->addCanPrepareItem("Avocado Toast");
-    ((NormalChef*)chef2)->addCanPrepareItem("Chicken Caesar Salad");
+    chef = std::make_unique<NormalChef>(4, 5, this, 2, "fast_chef1");
+    chef->addCanPrepareItem("Grilled Salmon");
+    chef->addCanPrepareItem("Margherita Pizza");
+    chef->setNextStaff(staff_.release());
+    staff_ = std::move(chef);
 
-    KitchenStaff* chef3 = new NormalChef(5, 5, this, 4, "slow chef 2");
-    ((NormalChef*)chef3)->addCanPrepareItem("Vegetable Stir-Fry");
-    ((NormalChef*)chef3)->addCanPrepareItem("Spinach and Feta Stuffed Chicken");
+    chef = std::make_unique<NormalChef>(2, 5, this, 3, "medium_chef1");
+    chef->addCanPrepareItem("Avocado Toast");
+    chef->addCanPrepareItem("Chicken Caesar Salad");
+    chef->setNextStaff(staff_.release());
+    staff_ = std::move(chef);
 
-    KitchenStaff* chef4 = new NormalChef(4, 5, this, 3, "slow chef 2");
-    ((NormalChef*)chef4)->addCanPrepareItem("Black Bean Burger");
-    ((NormalChef*)chef4)->addCanPrepareItem("Beef Tacos");
+    chef = std::make_unique<NormalChef>(5, 5, this, 4, "slow_chef2");
+    chef->addCanPrepareItem("Vegetable Stir-Fry");
+    chef->addCanPrepareItem("Spinach and Feta Stuffed Chicken");
+    chef->setNextStaff(staff_.release());
+    staff_ = std::move(chef);
 
-    KitchenStaff* chef5 = new NormalChef(3, 5, this, 1, "barrista");
-    ((NormalChef*)chef5)->addCanPrepareItem("Lemonade");
-    ((NormalChef*)chef5)->addCanPrepareItem("Coconut Water");
+    chef = std::make_unique<NormalChef>(4, 5, this, 3, "slow_chef2");
+    chef->addCanPrepareItem("Black Bean Burger");
+    chef->addCanPrepareItem("Beef Tacos");
+    chef->setNextStaff(staff_.release());
+    staff_ = std::move(chef);
 
-    headChef->setNextStaff(chef1);
-    chef1->setNextStaff(chef2);
-    chef2->setNextStaff(chef3);
-    chef3->setNextStaff(chef4);
-    chef4->setNextStaff(chef5);
+    chef = std::make_unique<NormalChef>(3, 5, this, 1, "barrista");
+    chef->addCanPrepareItem("Lemonade");
+    chef->addCanPrepareItem("Coconut Water");
+    chef->setNextStaff(staff_.release());
+    staff_ = std::move(chef);
 }
 
 void Kitchen::handleOrder(Order* order) {
     std::cout << "Kitchen: recieved Order" << std::endl;
     Meal* meal = new Meal(order);
-    incomingMeals.push(meal);
-    // flush();
+
+    if (order->toJson() == "{}") {
+        std::cout << "Kitchen: recieved empty order" << std::endl;
+        return;
+    }
+    incomingMeals.push_back(meal);
+    flush();
+}
+
+void Kitchen::AddChef(KitchenStaff* chef) {
+    chef->setNextStaff(staff_.release());
+    staff_.reset(chef);
 }
 
 void Kitchen::notifyItemReady() {
@@ -56,15 +73,16 @@ void Kitchen::notifyItemReady() {
 }
 
 void Kitchen::flush() {
-    std::cout << "Kitchen: Flushing unhandled orders through the system"
+    std::cout << "-----------Kitchen flushing unhandled orders-----------"
               << std::endl;
+
     for (int i = 0; i < incomingMeals.size(); i++) {
         // Pop an element from the incomingMeals queue.
         Meal* meal = incomingMeals.front();
-        incomingMeals.pop();
+        incomingMeals.pop_front();
 
         // Get the headChef to prepare the meal.
-        headChef->prepareMeal(meal);
+        staff_->prepareMeal(meal);
 
         // Check if the meal is done.
         if (meal->getReady()) {
@@ -73,11 +91,10 @@ void Kitchen::flush() {
             notify();
         } else {
             // If the meal is not done, re-add it to the incomingMeals queue.
-            incomingMeals.push(meal);
+            incomingMeals.push_back(meal);
         }
     }
-
-    std::cout << "Kitchen: completed flushing orders through the system"
+    std::cout << "---------------Kitchen finished flushing---------------"
               << std::endl;
 }
 
@@ -91,9 +108,11 @@ Meal* Kitchen::getOutgoingMeal() {
 }
 
 void Kitchen::updateTime(int time) {
-    std::cout << "Kitchen:" << time << " seconds hava passed" << std::endl;
-    headChef->updateTime(time);
-    flush();
+    std::cout << "[Kitchen]: " << time << "'s have passed" << std::endl;
+    for (int i = 0; i < time; i++) {
+        staff_->updateTime(1);
+    }
+
     // std::cout << toString() << std::endl;
 }
 
@@ -118,34 +137,29 @@ void Kitchen::notify() {
 }
 
 std::string Kitchen::toString() {
-    std::string str = "=========================\n";
-    str += "Kitchen: \n";
-    str += "+~~~~~~~~~~~~~~~~~~~~~~~+\n";
-    str += "Incoming Meals: \n";
-    str += "+~~~~~~~~~~~~~~~~~~~~~~~+\n";
-    for (int i = 0; i < incomingMeals.size(); i++) {
-        str += incomingMeals.front()->toString() + "\n";
-        incomingMeals.push(incomingMeals.front());
-        incomingMeals.pop();
+    std::stringstream ss;
+    ss << "KITCHEN\n- incoming:";
+
+    for (auto it = incomingMeals.begin(); it != incomingMeals.end(); it++) {
+        ss << "\n  - " << (*it)->toString();
     }
-    str += "+~~~~~~~~~~~~~~~~~~~~~~~+\n";
-    str += "Outgoing Meals: \n";
-    str += "+~~~~~~~~~~~~~~~~~~~~~~~+\n";
+    ss << "\n- outgoing:";
     for (int i = 0; i < outgoingMeals.size(); i++) {
-        str += outgoingMeals[i]->toString() + "\n";
+        ss << "\n  - " << outgoingMeals[i]->toString();
     }
-    str += "+~~~~~~~~~~~~~~~~~~~~~~~+\n";
-    str += "Kitchen Staff: \n";
-    str += "+~~~~~~~~~~~~~~~~~~~~~~~+\n";
-    KitchenStaff* current = headChef.get();
-    while (current != nullptr) {
-        str += "-------------------------\n";
-        str += current->toString() + "\n";
-        current = current->getNextStaff();
-        str += "-------------------------\n";
+    ss << "\n- staff:";
+    for (KitchenStaff* cur = staff_.get(); cur; cur = cur->getNextStaff()) {
+        std::string line;
+        std::stringstream stream(cur->toString());
+        std::getline(stream, line);
+
+        ss << "\n  - " << line;
+        while (!stream.eof()) {
+            std::getline(stream, line);
+            ss << "\n    " << line;
+        }
     }
-    str += "=========================\n";
-    return str;
+    return ss.str();
 }
 
 Meal* Kitchen::getOrder(uint32_t tblId) {

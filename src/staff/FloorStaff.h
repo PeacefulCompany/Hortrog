@@ -1,5 +1,7 @@
 #pragma once
+#include "customer/Customer.h"
 #include "customer/CustomerState.h"
+#include "subsystem/Meals/Meal.h"
 #include <string>
 /**
  * @class FloorStaff
@@ -9,6 +11,8 @@
  * different types of floor staff aswell as a being the element in the visitor
  * pattern.
  */
+
+class Kitchen;
 class FloorStaff {
 public:
     /**
@@ -24,8 +28,40 @@ public:
      * @param state The customer state to accept.
      */
     virtual void accept(CustomerState& state) = 0;
+    /**
+     * @brief Pure virtual function for getting the staff type.
+     *
+     * This function is overridden by derived classes to provide specific
+     * behavior when the staff type is gotten.
+     *
+     * @return The staff type.
+     */
     virtual std::string getStaffType() = 0;
     int currentTableId_;
+    /**
+     * @brief Sets the kitchen.
+     *
+     * This function is used to set the kitchen.
+     *
+     * @param kitchen The kitchen to set.
+     */
+    static void setKitchen(Kitchen* kitchen) {
+        if (kitchen_ == nullptr) {
+            kitchen_ = kitchen;
+        } else {
+            //  std::cout << "Kitchen already set" << std::endl;
+        }
+    }
+    static Kitchen* getKitchen() { return kitchen_; }
+
+    virtual std::string toString() const = 0;
+
+    virtual void visitTables() = 0;
 
 private:
+    /**
+     * @brief all children know about one kitchen
+     *
+     */
+    static Kitchen* kitchen_;
 };

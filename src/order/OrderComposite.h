@@ -1,3 +1,4 @@
+// ORDERCOMPH
 #pragma once
 
 #include "Order.h"
@@ -13,10 +14,16 @@ private:
     std::vector<std::unique_ptr<Order>> orders_;
 
 public:
+    std::vector<Order*> getChildren() override;
+
     void add(std::unique_ptr<Order> order) override;
     std::string toJson() override;
     double total() override;
     std::string getId() override { return ""; };
-    void setPrice(double) override{};
-    double getPrice() override { return 0; };
+    bool checkForCustomer(std::string customerName) override;
+    bool checkForDupe(std::string customerName,
+        std::vector<const MenuItem*> menuItems) override;
+    std::vector<const MenuItem*> getAllMenuItems() override;
+
+    std::string toString() const override;
 };

@@ -3,6 +3,9 @@
 #include "customer/CustomerState.h"
 #include <iostream>
 #include <vector>
+
+class Floor;
+
 /**
  * @class Manager
  * @brief This class represents a manager.
@@ -12,10 +15,8 @@
  */
 class Manager : public FloorStaff {
 public:
-    /**
-     * @brief Default constructor for Manager.
-     */
-    Manager();
+    Manager(const Floor* floor) : floor_(floor) {}
+
     /**
      * @brief Accepts a customer state.
      *
@@ -43,6 +44,13 @@ public:
      */
     void giveRating(int rating);
 
+    std::string toString() const override;
+
+    void visitTables() override;
+
 private:
+    const Floor* floor_;
     std::vector<std::string*> complaintArray_;
+    int numberOfRatings_ = 0;
+    int totalRating_ = 0;
 };

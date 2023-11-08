@@ -9,6 +9,7 @@
 
 void TerminalApp::init() {
     std::cout << "COS 214 - Final Project" << std::endl;
+    menu_.loadFromFile("menu_items.json");
 
     tables_.push_back(new TableComponent(0, 2));
     group_ = new TableGroup();
@@ -30,7 +31,7 @@ void TerminalApp::gameLoop() {
 
     switch (opt) {
     case -1: {
-        running_ = false;
+        setRunning(false);
         break;
     }
     case 1: {
@@ -44,7 +45,7 @@ void TerminalApp::gameLoop() {
     }
 
     std::cout << "Option chosen: " << opt << std::endl;
-    if (opt == -1) running_ = false;
+    if (opt == -1) setRunning(false);
 
     for (Table* table : tables_) {
         NullOrderBuilder builder;

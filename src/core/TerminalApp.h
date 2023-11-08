@@ -4,12 +4,12 @@
 #include "floor/Floor.h"
 #include "floor/TableGroup.h"
 
+#include <memory>
 #include <vector>
 
 class TerminalApp : public Application {
 protected:
     void init() override;
-    inline bool shouldQuit() const override { return !running_; }
     void gameLoop() override;
     void cleanup() override {}
 
@@ -18,7 +18,7 @@ protected:
     void printOptions(const std::vector<std::string>& options);
 
 private:
-    bool running_ = true;
+    Menu menu_;
     std::vector<Table*> tables_;
     TableGroup* group_;
 };

@@ -3,52 +3,53 @@
 	  {
 		"name": "Avocado Toast",
 		"price": 8.99,
-		"diet": "Vegan"
+		"prep_method": "assemble"
 	  },
 	  {
 		"name": "Grilled Salmon",
 		"price": 14.99,
-		"diet": "Pescatarian"
+		"prep_method": "grill",
+		"supported_modifiers": ["lemon_butter", "cajun", "fucked"]
 	  },
 	  {
 		"name": "Margherita Pizza",
 		"price": 12.99,
-		"diet": "Vegetarian"
+		"prep_method": "pizza"
 	  },
 	  {
 		"name": "Chicken Caesar Salad",
 		"price": 10.99,
-		"diet": "None"
+		"prep_method": "assemble"
 	  },
 	  {
 		"name": "Vegetable Stir-Fry",
 		"price": 9.99,
-		"diet": "Vegan"
+		"prep_method": "grill"
 	  },
 	  {
 		"name": "Spinach and Feta Stuffed Chicken",
 		"price": 13.99,
-		"diet": "None"
+		"prep_method": "grill"
 	  },
 	  {
 		"name": "Black Bean Burger",
 		"price": 11.99,
-		"diet": "Vegan"
+		"prep_method": "grill"
 	  },
 	  {
 		"name": "Beef Tacos",
 		"price": 9.99,
-		"diet": "None"
+		"prep_method": "grill"
 	  },
 	  {
 		"name": "Lemonade",
 		"price": 2.99,
-		"diet": "None"
+		"prep_method": "barista"
 	  },
 	  {
 		"name": "Coconut Water",
 		"price": 3.49,
-		"diet": "Vegan"
+		"prep_method": "barista"
 	  }
 	]
   }

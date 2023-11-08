@@ -6,8 +6,8 @@
 
 void TableComponent::buildOrder(OrderBuilder& builder) {
     for (Customer* c : customers_) {
-        builder.begin();
-        builder.addItem(c->getName() + "_burger");
+        builder.begin(id());
+        builder.addItem(c->getName() + "_burger", c->getName());
         if (rand() % 2 == 0) {
             builder.addModifier("bingus");
         } else if (rand() % 3 == 0) {
@@ -19,6 +19,7 @@ void TableComponent::buildOrder(OrderBuilder& builder) {
 bool TableComponent::seatCustomer(Customer* customer) {
     if (customers_.size() >= capacity_) return false;
     customers_.push_back(customer);
+    customers_.back()->setTableID(id());
     return true;
 }
 
@@ -30,9 +31,15 @@ std::string TableComponent::toString() const {
     std::stringstream s;
     s << "TableComponent: id=" << id_ << ", capacity=" << capacity_;
     for (auto& c : customers_) {
-        s << "\n- " << c->getName();
+        s << "\n- " << c->toString();
     }
     return s.str();
+}
+
+void TableComponent::update(float dt) {
+    for (Customer* c : customers_) {
+        c->update(dt);
+    }
 }
 
 bool TableComponent::merge(Table* table) { return false; }

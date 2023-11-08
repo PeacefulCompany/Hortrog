@@ -7,10 +7,14 @@
 
 void KarenState::visit(Manager& m) {
     std::cout << "[Karen]: COMPLAIN" << std::endl;
-    m.lodgeComplaint("Karen is complaining");
+    m.lodgeComplaint("Crazy customer Karen type complaining about everything");
+    m.giveRating(0);
+    std::cout << "custom leaves the restaurant without paying" << std::endl;
     customer_->changeState(nullptr);
 }
 void KarenState::visit(Waiter& w) {
     std::cout << "[Karen]: I want the manager!!!" << std::endl;
-    // w.callManager(); ???
+    w.callManager(*this); // unsure
 }
+
+std::string KarenState::toString() const { return "[Karen]"; }

@@ -1,12 +1,16 @@
 #include "menu/Menu.h"
+
 #include <gtest/gtest.h>
+#include <memory>
 
 TEST(MenuTests, TestGetItem_Lemonade) {
-    Item item = Item("Lemonade", 2.99, "Vegan");
-	Menu * m = new Menu();
-	m->addItem(item.getName(), item);
-	Item item2 = m->getItem("Lemonade");
-    ASSERT_EQ(item2.getName(), "Lemonade");
-    ASSERT_EQ(item2.getPrice(), 2.99);
-    ASSERT_EQ(item2.getRestrictions(), "Vegan");
+    std::unique_ptr<MenuItem> item = std::make_unique<MenuItem>("Lemonade", 2.99, "Vegan", std::vector<std::string>{"Ice", "Sugar"});
+	std::unique_ptr<MenuItem> item2 = std::make_unique<MenuItem>("Lemonade", 2.99, "Vegan", std::vector<std::string>{"Ice", "Sugar"});
+	
+    Menu m;
+    std::cout << m.addMenuItem(item->getName(), std::move(item)) << std::endl;
+    const MenuItem* i = m.getMenuItem("Lemonade");
+    ASSERT_EQ(i->getName(), "Lemonade");
+    ASSERT_EQ(i->getPrice(), 2.99);
+    ASSERT_EQ(i->preparationMethod(), "Vegan");
 }

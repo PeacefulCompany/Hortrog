@@ -1,14 +1,24 @@
 #pragma once
+
+#include "../billing/EvenSplit.h"
+#include "../billing/OneReceipt.h"
+#include "../billing/PerCustomer.h"
 #include "FloorStaff.h"
+#include "billing/PointOfSales.h"
 #include "customer/Customer.h"
 #include "customer/CustomerState.h"
+#include "floor/Floor.h"
 #include "floor/Table.h"
+#include "menu/Menu.h"
+#include "order/ConcreteOrderBuilder.h"
 #include "order/OrderBuilder.h"
-#include "subsystem/Chef/Kitchen.h"
+#include "order/Receipt.h"
+#include "staff/FloorStaff.h"
 #include "subsystem/Meals/Meal.h"
+#include <cstdint>
 #include <memory>
+#include <string>
 #include <vector>
-class Kitchen;
 
 /**
  * @class Waiter
@@ -19,28 +29,10 @@ class Kitchen;
  */
 class Waiter : public FloorStaff {
 public:
-    /**
-     * @brief Default constructor for Waiter.
-     */
-    Waiter();
+    Waiter(const Menu* menu, Kitchen* kitchen, PointOfSales* pos);
 
     Meal* getCustomerMeal(const Customer* c) const;
 
-    /**
-     * @brief Checks the kitchen.
-     *
-     * This function is used to check the kitchen for orders.
-     */
-    std::string getStaffType() override;
-    void checkKitchen();
-    /**
-     * @brief Gets the order builder.
-     *
-     * This function is used to get the order builder.
-     *
-     * @return A pointer to the order builder.
-     */
-    OrderBuilder* getOrderBuilder();
     /**
      * @brief Accepts a customer state.
      *
@@ -49,13 +41,132 @@ public:
      * @param state The customer state to accept.
      */
     void accept(CustomerState& state) override;
+    /**
+     * @brief Gets the staff type.
+     *
+     * This function is used to get the staff type to id
+     *
+     * @return The staff type.
+     */
+    std::string getStaffType() override;
+    /**
+     * @brief Checks the kitchen.
+     * this fucntion checks if the waiter hase ready meals in had
+     * if it does it will serve them
+     *  else it will try to get meals from the kitchen
+     */
+    void checkKitchen();
+    /**
+     * @brief Gets the order builder.
+     *
+     * This function is used to get the order builder for the customers to use
+     *
+     * @return A pointer to the order builder.
+     */
+    OrderBuilder* getOrderBuilder() { return orderBuilder_.get(); }
+    /**
+     * @brief Gets the ready meals.
+     *
+     * This function is used to get the ready meals from the kitchen
+     *
+     * @return A vector of meals that are ready.
+     */
+    std::vector<Meal*> getReadyMeals();
+    /**
+     * @brief Fetches the meals.
+     *
+     * This function is used to fetch the meals from the kitchen to the correct
+     * waiter
+     * This function is used to fetch the meals from the kitchen.
+     */
+    void fetchMeals();
+    /**
+     * @brief Gets the tables.
+     *
+     * This function is used to get the tables.
+     *
+     * @return A vector of tables.
+     */
     std::vector<Table*> getTables() { return tables_; }
-    std::vector<Meal*> readyMeals;
-    void setKitchen(Kitchen*);
+    /**
+     * @brief Gives the order to the kitchen.
+     *
+     * This function is used to give the order to the kitchen.
+     */
+    void giveToKitchen();
+
+    /**
+     * @brief Gives the food to the customer.
+     *
+     * This function is used to give the food to the correct customer
+     *
+     * @param Customer The customer to give the food to.
+     */
+    void giveMeal(Customer& Customer, Meal* meal);
+    /**
+     * @brief Get the Meal object
+     *  tries to get the meal for the ready meals vector or returns null
+     * @param Customer
+     * @return Meal*
+     */
+    Meal* getMeal(Customer& Customer);
+
+    std::string toString() const override;
+
+    void assignTable(Table* table);
+
+    void visitTables() override;
+
+    std::vector<Receipt> synthesizeBill(int, uint32_t);
+
+    void giveFoodToCustomer(Customer& Customer);
+    /**
+     * @brief Calls the manager.
+     *
+     * This function is used to call the manager.
+     *
+     * @param state The customer state.
+     * @brief Calls the managers
+     *  takes in the state of the customer and create and calls
+     * the manager with the customer to visit the customer
+     * @param state
+     */
+    void callManager(CustomerState& state);
+    /**
+     * @brief Gets the point of sales.
+     *
+     * This function is used to get the point of sales.
+     *
+     * @return A pointer to the point of sales.
+     */
+    PointOfSales* getPointOfSales() { return pointOfSales_; }
+    /**
+     * @brief Serves the meals.
+     *
+     * This goes through the all the tables
+     * and serves the meals to the correct customers
+     */
+    void serveMeals();
 
 private:
+    const Menu* menu_;
     Kitchen* kitchen_; // dont think waiter should hold the kitchen
-    // PointOfSales* pointOfSales_;
+    /**
+     * @brief A vector of meals that are ready.
+     */
+    std::vector<Meal*> readyMeals;
+    /**
+     * @brief A static member kitchen_.
+     */
+    //  static Kitchen* kitchen_;
+    /**
+     * @brief A pointer to the point of sales.
+     */
+    PointOfSales* pointOfSales_;
+
+    /**
+     * @brief A vector of tables.
+     */
     std::vector<Table*> tables_;
     /**
      * @brief A unique pointer to the order builder.

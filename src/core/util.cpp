@@ -1,6 +1,7 @@
 #include "util.h"
 #include <iostream>
 #include <sstream>
+#include <string>
 
 namespace util {
 std::string trim(const std::string& str) {
@@ -41,5 +42,17 @@ int input(const std::string& prompt) {
     }
     std::cin.ignore(255, '\n');
     return value;
+}
+
+void error(const std::string& error) {
+    std::cout << error << std::endl;
+    std::cin.get();
+}
+
+std::string inputString(const std::string& prompt) {
+    std::string line;
+    std::cout << prompt;
+    std::getline(std::cin, line);
+    return line;
 }
 } // namespace util

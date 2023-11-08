@@ -12,6 +12,8 @@ public:
     void visit(Waiter&) override;
     void update(float dt) override;
 
+    std::string toString() const override;
+
 private:
     bool isReady_ = false;
     Timer waitTimeout_ = Timer(2);
