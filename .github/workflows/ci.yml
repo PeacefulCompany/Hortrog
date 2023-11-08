@@ -10,21 +10,14 @@ on:
 
 jobs:
   build:
-    name: "Build on Ubuntu with CLang"
+    name: "Build on Ubuntu"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: Install Linux Dependencies
-        run: |
-          sudo apt-get update && sudo apt-get install doxygen graphviz clang
-
       - name: Configure CMake
         run: >
           cmake --preset other
           -S ${{ github.workspace }}
-          -DCMAKE_CXX_COMPILER="clang++"
-          -DCMAKE_C_COMPILER="clang"
 
       - name: Build using CMake
         run: cmake --build ${{ github.workspace }}/build --target COS214_FinalProject
@@ -34,17 +27,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: Install Linux Dependencies
-        run: |
-          sudo apt-get update && sudo apt-get install doxygen graphviz clang
-
       - name: Configure CMake
         run: >
           cmake --preset other
           -S ${{ github.workspace }}
-          -DCMAKE_CXX_COMPILER="clang++"
-          -DCMAKE_C_COMPILER="clang"
+          -DBUILD_TESTS=ON
 
       - name: Build using CMake
         run: cmake --build ${{ github.workspace }}/build

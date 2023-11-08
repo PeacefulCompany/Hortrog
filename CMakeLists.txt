@@ -8,51 +8,33 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(BUILD_SHARED_LIBS OFF)
 
+# --- BUILD OPTIONS ---
+option(BUILD_TESTS "Build Tests" OFF)
+option(BUILD_DOCS "Build Documentation" OFF)
 
 # --- PROJECT CONFIGURATION ---
-# Name of the executable target
 set(BINARY ${CMAKE_PROJECT_NAME})
-
-# Name of the compiled library
 set(LIBRARY ${CMAKE_PROJECT_NAME}_lib)
 
-# File containing the entry point(main)
 set(ENTRY_POINT "main.cpp")
-
-# Destination folder for Doxygen docs
 set(DOCS_DOXYGEN "doc_doxygen")
-
-# Folder containing all project assets (sprites, configs, etc.)
-set(DIR_ASSETS "assets")
-
+set(DIR_ASSETS ${CMAKE_SOURCE_DIR}/assets)
+set(DIR_VENDOR ${CMAKE_SOURCE_DIR}/vendor)
 enable_testing()
 
 # --- COPY ASSETS ---
 add_custom_target(assets ALL
     COMMAND ${CMAKE_COMMAND} -E copy_directory
-    ${CMAKE_SOURCE_DIR}/${DIR_ASSETS}
+    ${DIR_ASSETS}
     ${CMAKE_CURRENT_BINARY_DIR}/src/assets
     COMMENT "Copying assets to build directory"
 )
 
 add_subdirectory(src)
-add_subdirectory(tests)
 
-# --- GENERATE DOCUMENTATION ---
-# Source: https://vicrucann.github.io/tutorials/quick-cmake-doxygen/
-find_package(Doxygen REQUIRED)
-
-# set input and output files
-set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/docs/Doxyfile.in)
-set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
-
-# request to configure the file
-configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
-message("Doxygen build started")
-
-# note the option ALL which allows to build the docs together with the application
-add_custom_target( doc_doxygen ALL
-    COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    COMMENT "Generating API documentation with Doxygen"
-    VERBATIM )
+if(BUILD_DOCS)
+    add_subdirectory(docs)
+endif()
+if(BUILD_TESTS)
+    add_subdirectory(tests)
+endif()
