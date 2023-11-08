@@ -7,6 +7,8 @@
 
 # Contents
 
+test
+
 - [Description](#description)
 - [Documentation](#documentation)
 - [Setup](#setup)
@@ -17,25 +19,31 @@
 Your average restaurant simulator with a few quirks. It allows users to simulate time passed, display kitchen snapshot, display menu, display order builder and add a chef.
 
 # Documentation
-* You can find the doxygen documents in the directory: build/doc_doxygen
+
+- You can find the doxygen documents in the directory: build/doc_doxygen
 
 [Report](https://docs.google.com/document/d/1BQG2WX8L6CEYzWcNe0vgWh3lt2YmM9Rlaa8bVA0vqJQ/edit?usp=sharing)
 
 [Class Diagram](https://www.dropbox.com/scl/fi/hsulqo5gh4yrpzk5pkqv4/COS-214-Final-Project.vpp?rlkey=e0tp5eztna4x5hlfotfcfegm8&dl=0)
 
 # Setup
+
 ### Prerequisites
 
-* CMake >= 3.16
-* Windows: You need either MSVC or Clang, other platforms will be able to use whatever is available
-* Doxygen
+- CMake >= 3.16
+- Windows: You need either MSVC or Clang, other platforms will be able to use whatever is available
+- Doxygen
 
 ### Cloning
+
 ```
 git clone https://github.com/Questionable-Engineering-Decisions/Hortrog
 ```
+
 ### Building
+
 This project can be built using CMake:
+
 ```
 Terminal Commands:
 CMake -S .--preset other
@@ -43,12 +51,13 @@ CMake --build build
 ```
 
 ### Running
+
 ```
 - Note that CMake creates an executable in the directory: "build/src/COS214_FinalProject/"
-- Run the executable in the root directory or the build/src directory.  
+- Run the executable in the root directory or the build/src directory.
 ```
 
-# Team 
+# Team
 
 <table>
     <tr><th>Member</th><th>Message to reader</th></tr>
