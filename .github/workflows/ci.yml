@@ -19,6 +19,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      - name: Cache Build files
+        id: cache-lib
+        uses: actions/cache@v3
+        with:
+          key: lib-cache
+          path: ${{ github.workspace }}/build/src
+
       - name: Configure CMake
         run: >
           cmake --preset other
@@ -41,6 +49,13 @@ jobs:
         with:
           key: test-deps
           path: ${{ github.workspace }}/build/_deps
+
+      - name: Cache Build files
+        id: cache-lib
+        uses: actions/cache@v3
+        with:
+          key: lib-cache
+          path: ${{ github.workspace }}/build/src
 
       - name: Configure CMake
         run: >
