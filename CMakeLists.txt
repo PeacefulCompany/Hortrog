@@ -18,7 +18,7 @@ set(BINARY ${CMAKE_PROJECT_NAME})
 set(LIBRARY ${CMAKE_PROJECT_NAME}_lib)
 
 set(ENTRY_POINT "main.cpp")
-set(DOCS_DOXYGEN "doc_doxygen")
+set(DOCS_DOXYGEN "docs")
 set(DIR_ASSETS ${CMAKE_SOURCE_DIR}/assets)
 set(DIR_VENDOR ${CMAKE_SOURCE_DIR}/vendor)
 
