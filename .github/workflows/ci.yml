@@ -39,6 +39,7 @@ jobs:
           cmake --preset other
           -S ${{ github.workspace }}
           -DBUILD_EXE=OFF
+          -DBUILD_DOCS=OFF
 
       - name: Build using CMake
         run: cmake --build ${{ github.workspace }}/build
