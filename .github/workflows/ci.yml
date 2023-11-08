@@ -58,7 +58,9 @@ jobs:
           -DBUILD_EXE=OFF
 
       - name: Configure CMake for documentation
-        run: cmake --build --target dox_doxygen
+        run: >
+          cmake --build ${{ github.workspace }}/build
+          --target dox_doxygen
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
