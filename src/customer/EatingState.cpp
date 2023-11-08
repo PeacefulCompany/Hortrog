@@ -47,6 +47,7 @@ void EatingState::visit(Manager& m) {
     }
 }
 void EatingState::visit(Waiter& w) {
+
     if (this->customer_->getHappiness() < 5) {
         std::cout << this->customer_->getName() +
                          " says 'This does not tast right'"
@@ -57,17 +58,18 @@ void EatingState::visit(Waiter& w) {
 }
 void EatingState::update(float dt) {
     eatTime_.update(dt);
-    if (eatTime_.expired()) {
-        if (rand() % 2 == 0) {
-            std::cout << "[Eating] Done eating, but I want more" << std::endl;
-            customer_->changeState(new OrderingState(customer_));
-        } else {
-            std::cout << "[Eating] Done eating, let me pay" << std::endl;
-            customer_->changeState(new PayingState(customer_));
-        }
-    } else {
-        std::cout << "Still eating: "
+    if (!eatTime_.expired()) {
+        std::cout << "[Eating/update] Still eating: "
                   << (eatTime_.duration() - eatTime_.current()) << std::endl;
+        return;
+    }
+
+    if (rand() % 2 == 0) {
+        std::cout << "[Eating] What's cookin? Gimme more food" << std::endl;
+        customer_->changeState(new OrderingState(customer_));
+    } else {
+        std::cout << "[Eating/update] I'm stuffed! Lemme pay" << std::endl;
+        customer_->changeState(new PayingState(customer_));
     }
 }
 

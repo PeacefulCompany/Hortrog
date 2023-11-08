@@ -53,6 +53,8 @@ void Waiter::serveMeals() {
         delete iterator;
     }
 }
+
+Meal* Waiter::getCustomerMeal(const Customer* c) const { return nullptr; }
 void Waiter::checkKitchen() {
     std::cout << "[Waiter] Notified by kitchen" << std::endl;
     if (getReadyMeals().size() > 0) {

@@ -31,6 +31,8 @@ class Waiter : public FloorStaff {
 public:
     Waiter(const Menu* menu, Kitchen* kitchen, PointOfSales* pos);
 
+    Meal* getCustomerMeal(const Customer* c) const;
+
     /**
      * @brief Accepts a customer state.
      *

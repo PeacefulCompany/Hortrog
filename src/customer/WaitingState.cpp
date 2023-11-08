@@ -1,9 +1,11 @@
 #include "WaitingState.h"
 #include "customer/EatingState.h"
 #include "customer/KarenState.h"
+
 #include <iostream>
 #include <stdlib.h>
 void WaitingState::visit(Manager& m) {
+
     if (this->isReady_ == false) {
         return customer_->changeState(new KarenState(customer_));
     } else {
@@ -13,7 +15,6 @@ void WaitingState::visit(Manager& m) {
     }
 }
 void WaitingState::visit(Waiter& w) {
-
     if (w.getReadyMeals().size() > 0) {
         w.giveFoodToCustomer(*customer_);
         // check if customer has received their meal
@@ -28,6 +29,15 @@ void WaitingState::visit(Waiter& w) {
         }
     } else {
         std::cout << "[Waiting]: Where's the food at???" << std::endl;
+    }
+}
+
+
+void WaitingState::update(float dt) {
+    waitTimeout_.update(dt);
+    if (waitTimeout_.expired()) {
+        std::cout << "[Waiting/update]: I've had enough!!!" << std::endl;
+        customer_->changeState(new KarenState(customer_));
     }
 }
 

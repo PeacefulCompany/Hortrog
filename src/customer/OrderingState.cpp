@@ -6,13 +6,12 @@
 #include "order/ConcreteOrderBuilder.h"
 #include "order/OrderBuilder.h"
 #include "order/OrderComposite.h"
+
 #include <cstdlib>
 #include <ctime>
 #include <iomanip>
 #include <iostream>
-
 #include <string>
-
 
 void OrderingState::visit(Manager& m) {
     if (readyTimer_.expired()) {
