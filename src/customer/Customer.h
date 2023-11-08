@@ -68,12 +68,16 @@ public:
      * @param meal the meal that the customer is receiving
      */
     void receiveMeal(Meal* meal);
-    bool getState() { if(state_ == nullptr) return false; else return true; }
+    bool getState() {
+        if (state_ == nullptr) return false;
+        else return true;
+    }
 
     std::string toString() const;
     void setTableID(uint32_t id) { tableID = id; }
     uint32_t getTableId() { return tableID; }
     static int paymentSelection;
+    static constexpr bool I_CARE = false;
 
 private:
     /**

@@ -1,0 +1,102 @@
+# This starter workflow is for a CMake project running on multiple platforms. There is a different starter workflow if you just want a single platform.
+# See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-single-platform.yml
+name: CI
+
+on:
+  push:
+    branches: ["master", "develop"]
+  pull_request:
+    branches: ["master", "develop"]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    name: "Build on Ubuntu"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Cache Build files
+        id: cache-lib
+        uses: actions/cache@v3
+        with:
+          key: lib-cache
+          path: ${{ github.workspace }}/build/src/CMakeFiles/COS214_FinalProject_lib.dir
+
+      - name: Configure CMake
+        run: >
+          cmake --preset other
+          -S ${{ github.workspace }}
+          -DBUILD_TESTS=OFF
+          -DBUILD_DOCS=OFF
+
+      - name: Build using CMake
+        run: cmake --build ${{ github.workspace }}/build
+
+  test:
+    name: "CTest on Ubuntu"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Cache Google Test files
+        id: cache-gtest
+        uses: actions/cache@v3
+        with:
+          key: test-deps
+          path: ${{ github.workspace }}/build/_deps
+
+      - name: Cache Build files
+        id: cache-lib
+        uses: actions/cache@v3
+        with:
+          key: lib-cache
+          path: ${{ github.workspace }}/build/src/CMakeFiles/COS214_FinalProject_lib.dir
+
+      - name: Configure CMake
+        run: >
+          cmake --preset other
+          -S ${{ github.workspace }}
+          -DBUILD_EXE=OFF
+          -DBUILD_DOCS=OFF
+
+      - name: Build using CMake
+        run: cmake --build ${{ github.workspace }}/build
+
+      - name: Run CTest
+        run: ctest --test-dir ${{ github.workspace }}/build
+
+  docs:
+    name: "Doxygen Documentation on GitHub Pages"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Packages
+        run: sudo apt update && sudo apt install doxygen graphviz
+
+      - name: Configure CMake for documentation
+        run: >
+          cmake --preset other
+          -S ${{ github.workspace }}
+          -DBUILD_TESTS=OFF
+          -DBUILD_EXE=OFF
+
+      - name: Build Documentation
+        run: >
+          cmake --build ${{ github.workspace }}/build
+          --target doc_doxygen
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: ${{github.workspace}}/build/docs/html
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
