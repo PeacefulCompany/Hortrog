@@ -16,7 +16,7 @@ TEST(StaffTest, TestCustomerOrderVisit) {
     const Menu menu = Menu();
     const Floor floor = Floor();
     Customer* c = new Customer("Bob", 1);
-    Waiter* w = new Waiter(&menu, &floor);
+    Waiter* w = new Waiter(&menu, nullptr, nullptr);
     c->changeState(new WaitingState(c));
     c->update(1);
     c->interact(*w);

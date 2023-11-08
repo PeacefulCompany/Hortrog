@@ -8,26 +8,24 @@
 #include "subsystem/Meals/MealItem.h"
 #include <gtest/gtest.h>
 
-
 TEST(Kitchen, chainSetup) {
     Kitchen* kitchen = new Kitchen();
-    // KitchenStaff* kitchenStaff = new KitchenStaff();
 
-    KitchenStaff* headChef = new HeadChef(5, 5, kitchen, 1, "head chef");
+    KitchenStaff* headChef = new HeadChef(5, 5, kitchen, 1, "head_chef");
 
-    KitchenStaff* chef1 = new NormalChef(4, 5, kitchen, 2, "fast chef 1");
+    KitchenStaff* chef1 = new NormalChef(4, 5, kitchen, 2, "fast_chef1");
     ((NormalChef*)chef1)->addCanPrepareItem("Grilled Salmon");
     ((NormalChef*)chef1)->addCanPrepareItem("Margherita Pizza");
 
-    KitchenStaff* chef2 = new NormalChef(2, 5, kitchen, 3, "medium chef 1");
+    KitchenStaff* chef2 = new NormalChef(2, 5, kitchen, 3, "medium_chef1");
     ((NormalChef*)chef2)->addCanPrepareItem("Avocado Toast");
     ((NormalChef*)chef2)->addCanPrepareItem("Chicken Caesar Salad");
 
-    KitchenStaff* chef3 = new NormalChef(5, 5, kitchen, 4, "slow chef 2");
+    KitchenStaff* chef3 = new NormalChef(5, 5, kitchen, 4, "slow_chef2");
     ((NormalChef*)chef3)->addCanPrepareItem("Vegetable Stir-Fry");
     ((NormalChef*)chef3)->addCanPrepareItem("Spinach and Feta Stuffed Chicken");
 
-    KitchenStaff* chef4 = new NormalChef(4, 5, kitchen, 3, "slow chef 2");
+    KitchenStaff* chef4 = new NormalChef(4, 5, kitchen, 3, "slow_chef2");
     ((NormalChef*)chef4)->addCanPrepareItem("Black Bean Burger");
     ((NormalChef*)chef4)->addCanPrepareItem("Beef Tacos");
 
@@ -36,17 +34,17 @@ TEST(Kitchen, chainSetup) {
     ((NormalChef*)chef5)->addCanPrepareItem("Coconut Water");
 
     KitchenStaff* current = kitchen->getFirstChef();
-    ASSERT_EQ(current->toString(), headChef->toString());
-    current = current->getNextStaff();
-    ASSERT_EQ(current->toString(), chef1->toString());
-    current = current->getNextStaff();
-    ASSERT_EQ(current->toString(), chef2->toString());
-    current = current->getNextStaff();
-    ASSERT_EQ(current->toString(), chef3->toString());
+    ASSERT_EQ(current->toString(), chef5->toString());
     current = current->getNextStaff();
     ASSERT_EQ(current->toString(), chef4->toString());
     current = current->getNextStaff();
-    ASSERT_EQ(current->toString(), chef5->toString());
+    ASSERT_EQ(current->toString(), chef3->toString());
+    current = current->getNextStaff();
+    ASSERT_EQ(current->toString(), chef2->toString());
+    current = current->getNextStaff();
+    ASSERT_EQ(current->toString(), chef1->toString());
+    current = current->getNextStaff();
+    ASSERT_EQ(current->toString(), headChef->toString());
 }
 
 // TEST(Kitchen, orderHandle) {
