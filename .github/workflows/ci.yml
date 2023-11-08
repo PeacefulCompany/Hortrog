@@ -18,6 +18,8 @@ jobs:
         run: >
           cmake --preset other
           -S ${{ github.workspace }}
+          -DBUILD_TESTS=OFF
+          -DBUILD_DOCS=OFF
 
       - name: Build using CMake
         run: cmake --build ${{ github.workspace }}/build
@@ -31,7 +33,6 @@ jobs:
         run: >
           cmake --preset other
           -S ${{ github.workspace }}
-          -DBUILD_TESTS=ON
           -DBUILD_EXE=OFF
 
       - name: Build using CMake
@@ -39,3 +40,33 @@ jobs:
 
       - name: Run CTest
         run: ctest --test-dir ${{ github.workspace }}/build
+
+  docs:
+    name: "Doxygen Documentation on GitHub Pages"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Packages
+        run: sudo apt update && supo apt install doxygen graphviz
+
+      - name: Configure CMake for documentation
+        run: >
+          cmake --preset other
+          -S ${{ github.workspace }}
+          -DBUILD_TESTS=OFF
+          -DBUILD_EXE=OFF
+
+      - name: Configure CMake for documentation
+        run: cmake --build --target dox_doxygen
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          # Upload entire repository
+          path: ${{github.workspace}}/build/doc_doxygen
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2

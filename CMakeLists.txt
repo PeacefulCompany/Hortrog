@@ -9,8 +9,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(BUILD_SHARED_LIBS OFF)
 
 # --- BUILD OPTIONS ---
-option(BUILD_TESTS "Build Tests" OFF)
-option(BUILD_DOCS "Build Documentation" OFF)
+option(BUILD_TESTS "Build Tests" ON)
+option(BUILD_DOCS "Build Documentation" ON)
 option(BUILD_EXE "Build Executable" ON)
 
 # --- PROJECT CONFIGURATION ---
@@ -21,7 +21,10 @@ set(ENTRY_POINT "main.cpp")
 set(DOCS_DOXYGEN "doc_doxygen")
 set(DIR_ASSETS ${CMAKE_SOURCE_DIR}/assets)
 set(DIR_VENDOR ${CMAKE_SOURCE_DIR}/vendor)
-enable_testing()
+
+if(BUILD_TESTS)
+    enable_testing()
+endif()
 
 # --- COPY ASSETS ---
 add_custom_target(assets ALL
