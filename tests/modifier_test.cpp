@@ -4,10 +4,10 @@
 #include "order/OrderItem.h"
 #include <gtest/gtest.h>
 
-
 TEST(Modifier, TOTAL) {
     MenuItem menuItem("ABC", 2.1, "", {""});
     auto component = std::unique_ptr<Order>(new OrderItem(&menuItem));
+
     auto modifier =
         std::unique_ptr<Order>(new Modifier(std::move(component), "VEGAN"));
 }
