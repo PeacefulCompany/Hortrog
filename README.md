@@ -17,6 +17,7 @@
 Your average restaurant simulator with a few quirks. It allows users to simulate time passed, display kitchen snapshot, display menu, display order builder and add a chef.
 
 # Documentation
+* You can find the doxygen documents in the directory: build/doc_doxygen
 
 [Report](https://docs.google.com/document/d/1BQG2WX8L6CEYzWcNe0vgWh3lt2YmM9Rlaa8bVA0vqJQ/edit?usp=sharing)
 
@@ -26,6 +27,8 @@ Your average restaurant simulator with a few quirks. It allows users to simulate
 ### Prerequisites
 
 * CMake >= 3.16
+* Windows: You need either MSVC or Clang, other platforms will be able to use whatever is available
+* Doxygen
 
 ### Cloning
 ```
@@ -34,12 +37,15 @@ git clone https://github.com/Questionable-Engineering-Decisions/Hortrog
 ### Building
 This project can be built using CMake:
 ```
-f7
+Terminal Commands:
+CMake -S .--preset other
+CMake --build build
 ```
 
 ### Running
 ```
-shift+f5
+- Note that CMake creates an executable in the directory: "build/src/COS214_FinalProject/"
+- Run the executable in the root directory or the build/src directory.  
 ```
 
 # Team 

@@ -37,3 +37,4 @@ TEST(StaffTest, TestManagerVisit) {
     c->changeState(new EatingState(c));
     c->update(1);
 }
+

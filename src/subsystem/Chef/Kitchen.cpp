@@ -51,7 +51,7 @@ Kitchen::Kitchen(/* args */) {
 }
 
 void Kitchen::handleOrder(Order* order) {
-    std::cout << "Kitchen: recieved Order" << std::endl;
+    std::cout << "Kitchen: recieved order" << std::endl;
     Meal* meal = new Meal(order);
 
     if (order->toJson() == "{}") {
@@ -83,13 +83,14 @@ void Kitchen::flush() {
 
         // Get the headChef to prepare the meal.
         staff_->prepareMeal(meal);
-
         // Check if the meal is done.
         if (meal->getReady()) {
+            std::cout << "adding meal to outgoing meals" << std::endl;
             // If the meal is done, add it to the outgoingMeals vector.
             outgoingMeals.push_back(meal);
             notify();
         } else {
+            std::cout << "adding meal to incoming meals" << std::endl;
             // If the meal is not done, re-add it to the incomingMeals queue.
             incomingMeals.push_back(meal);
         }
@@ -131,6 +132,7 @@ std::vector<Meal*> Kitchen::collectOrders() {
 }
 
 void Kitchen::notify() {
+    std::cout << "Kitchen: Notifying waiters" << std::endl;
     for (Waiter* w : waiters_) {
         w->checkKitchen();
     }

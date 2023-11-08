@@ -18,7 +18,7 @@
 #include <string>
 #include <vector>
 
-FloorDemo::FloorDemo(Floor& floor, Menu& menu, Kitchen& k)
+FloorDemo::FloorDemo(Floor& floor, Menu& menu, Kitchen* k)
     : floor_(floor), menu_(menu), kitchen_(k) {}
 
 void FloorDemo::gameLoop() {
@@ -87,12 +87,12 @@ void FloorDemo::addCustomers() {
         if (!waiter) {
             std::cout << "Waiter not found" << std::endl;
         }
-    } while (!waiter && opt != -1);
+    } while (!waiter);
     waiter->assignTable(table);
 }
 
 void FloorDemo::addStaff() {
-    floor_.addStaff(new Waiter(&menu_, &kitchen_, &pointOfSales_));
+    floor_.addStaff(new Waiter(&menu_, kitchen_, &pointOfSales_));
 }
 
 void FloorDemo::visitCustomers() {
@@ -108,4 +108,7 @@ void FloorDemo::visitCustomers() {
     if (opt == -1) return;
 
     staff->visitTables();
+    std::cout << "Visited tables" << std::endl;
+    std::cout << kitchen_->toString() << std::endl;
+
 }
