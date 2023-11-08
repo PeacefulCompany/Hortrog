@@ -37,7 +37,7 @@ When a user prints result of order, they can't add anything to the order :(
 */
 
 void KitchenDemo::displayKitchenSnapshot() {
-    std::cout << kitchen_.toString() << std::endl;
+    std::cout << kitchen_->toString() << std::endl;
 }
 
 void KitchenDemo::displayModifiers() {
@@ -63,7 +63,7 @@ void KitchenDemo::displayOrderBuilderMenu() {
 
 void KitchenDemo::completeOrder() {
     std::cout << orderBuilder_.toString() << std::endl;
-    kitchen_.handleOrder(orderBuilder_.getOrder());
+    kitchen_->handleOrder(orderBuilder_.getOrder());
 }
 
 void KitchenDemo::addOrderBuilderItem() {
@@ -149,7 +149,7 @@ void KitchenDemo::displayAddChef() {
 
     KitchenStaff* newChef = new NormalChef(std::stoi(rating),
         std::stoi(capacity),
-        &kitchen_,
+        kitchen_,
         std::stoi(speed),
         role);
 
@@ -167,7 +167,7 @@ void KitchenDemo::displayAddChef() {
         }
     }
 
-    kitchen_.AddChef(newChef);
+    kitchen_->AddChef(newChef);
     std::cout << "=============================" << std::endl;
 }
 
@@ -192,5 +192,5 @@ void KitchenDemo::gameLoop() {
 }
 
 KitchenDemo::KitchenDemo(
-    Kitchen& kitchen, ConcreteOrderBuilder& builder, Menu& menu)
+    Kitchen* kitchen, ConcreteOrderBuilder& builder, Menu& menu)
     : kitchen_(kitchen), orderBuilder_(builder), menu_(menu) {}

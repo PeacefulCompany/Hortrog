@@ -81,6 +81,7 @@ ConcreteOrderBuilder::ConcreteOrderBuilder(const Menu* menu)
 
 std::string ConcreteOrderBuilder::getResult() {
     OrderComposite* res = getOrder();
+    res->setTblId(tblId_);
     if (!res) return "{}\n";
     std::string json = res->toJson();
     delete res;
