@@ -25,7 +25,7 @@ jobs:
         uses: actions/cache@v3
         with:
           key: lib-cache
-          path: ${{ github.workspace }}/build/src
+          path: ${{ github.workspace }}/build/src/CMakeFiles/COS214_FinalProject_lib.dir
 
       - name: Configure CMake
         run: >
@@ -55,7 +55,7 @@ jobs:
         uses: actions/cache@v3
         with:
           key: lib-cache
-          path: ${{ github.workspace }}/build/src
+          path: ${{ github.workspace }}/build/src/CMakeFiles/COS214_FinalProject_lib.dir
 
       - name: Configure CMake
         run: >
