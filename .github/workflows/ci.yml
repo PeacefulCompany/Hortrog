@@ -1,0 +1,53 @@
+# This starter workflow is for a CMake project running on multiple platforms. There is a different starter workflow if you just want a single platform.
+# See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-single-platform.yml
+name: CMake on a single platform
+
+on:
+  push:
+    branches: ["master", "develop"]
+  pull_request:
+    branches: ["master", "develop"]
+
+jobs:
+  build:
+    name: "Build on Ubuntu with CLang"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Linux Dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install doxygen graphviz clang
+
+      - name: Configure CMake
+        run: >
+          cmake --preset other
+          -S ${{ github.workspace }}
+          -DCMAKE_CXX_COMPILER="clang++"
+          -DCMAKE_C_COMPILER="clang"
+
+      - name: Build using CMake
+        run: cmake --build ${{ github.workspace }}/build --target COS214_FinalProject
+
+  test:
+    name: "CTest on Ubuntu"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Linux Dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install doxygen graphviz clang
+
+      - name: Configure CMake
+        run: >
+          cmake --preset other
+          -S ${{ github.workspace }}
+          -DCMAKE_CXX_COMPILER="clang++"
+          -DCMAKE_C_COMPILER="clang"
+
+      - name: Build using CMake
+        run: cmake --build ${{ github.workspace }}/build
+
+      - name: Run CTest
+        run: ctest --test-dir ${{ github.workspace }}/build
