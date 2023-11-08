@@ -34,19 +34,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Configure CMake
-        run: >
-          cmake --preset other
-          -S ${{ github.workspace }}
-          -DBUILD_EXE=OFF
-          -DBUILD_DOCS=OFF
 
       - name: Cache Google Test files
         id: cache-gtest
         uses: actions/cache@v3
         with:
           key: test-deps
-          path: ${{ github.workspace }}/build
+          path: ${{ github.workspace }}/build/_deps
+
+      - name: Configure CMake
+        run: >
+          cmake --preset other
+          -S ${{ github.workspace }}
+          -DBUILD_EXE=OFF
+          -DBUILD_DOCS=OFF
 
       - name: Build using CMake
         run: cmake --build ${{ github.workspace }}/build
