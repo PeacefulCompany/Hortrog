@@ -1,6 +1,6 @@
 # This starter workflow is for a CMake project running on multiple platforms. There is a different starter workflow if you just want a single platform.
 # See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-single-platform.yml
-name: CMake on a single platform
+name: CI
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
           -S ${{ github.workspace }}
 
       - name: Build using CMake
-        run: cmake --build ${{ github.workspace }}/build --target COS214_FinalProject
+        run: cmake --build ${{ github.workspace }}/build
 
   test:
     name: "CTest on Ubuntu"
@@ -32,6 +32,7 @@ jobs:
           cmake --preset other
           -S ${{ github.workspace }}
           -DBUILD_TESTS=ON
+          -DBUILD_EXE=OFF
 
       - name: Build using CMake
         run: cmake --build ${{ github.workspace }}/build

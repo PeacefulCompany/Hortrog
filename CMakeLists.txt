@@ -11,6 +11,7 @@ set(BUILD_SHARED_LIBS OFF)
 # --- BUILD OPTIONS ---
 option(BUILD_TESTS "Build Tests" OFF)
 option(BUILD_DOCS "Build Documentation" OFF)
+option(BUILD_EXE "Build Executable" ON)
 
 # --- PROJECT CONFIGURATION ---
 set(BINARY ${CMAKE_PROJECT_NAME})

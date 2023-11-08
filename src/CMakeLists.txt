@@ -23,10 +23,12 @@ target_include_directories(${LIBRARY}
   PRIVATE ${DIR_VENDOR}
 )
 
-add_executable(${BINARY} main.cpp ${SOURCES_BIN})
-target_link_libraries(${BINARY} ${LIBRARY})
-target_include_directories(${BINARY}
-  PRIVATE .
-  PRIVATE ${DIR_VENDOR}
-)
-add_dependencies(${BINARY} assets)
+if(BUILD_EXE)
+  add_executable(${BINARY} main.cpp ${SOURCES_BIN})
+  target_link_libraries(${BINARY} ${LIBRARY})
+  target_include_directories(${BINARY}
+    PRIVATE .
+    PRIVATE ${DIR_VENDOR}
+  )
+  add_dependencies(${BINARY} assets)
+endif()
